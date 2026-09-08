@@ -1,1 +1,898 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Impact — GreenWise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Poppins:wght@400;500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --g900: #022d18;
+  --g800: #057331;
+  --g700: #0d9740;
+  --g600: #26b33e;
+  --g400: #44c536;
+  --g300: #75de34;
+  --g100: #aef339;
+
+  --sur:  #ffffff;
+  --bg:   #f2f6f2;
+  --bg2:  #eaf2ea;
+  --hi:   #0f1a12;
+  --md:   #253029;
+  --lo:   #5d6f68;
+  --bdr:  #dde7dd;
+
+  --r: 12px;
+  --fh: 'Lexend',  sans-serif;
+  --fs: 'Poppins', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+svg { display: block; flex-shrink: 0; }
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+
+/* ─── HEADER ─── */
+.hdr {
+  position: sticky; top: 0; z-index: 200;
+  background: #fff;
+  border-bottom: 1px solid var(--bdr);
+}
+.hdr-in {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  height: 64px; gap: 12px;
+}
+
+.logo { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.logo-wm {
+  font-family: var(--fh); font-size: 1.18rem; font-weight: 700;
+  color: var(--g800); letter-spacing: -.02em;
+}
+.logo-wm b { font-weight: 700; color: var(--g400); }
+
+.nav {
+  display: none;
+  background: #f0f5f0;
+  border: 1px solid #d2e6d2;
+  border-radius: 100px;
+  padding: 4px;
+  gap: 2px;
+}
+.nav a {
+  font-family: var(--fs); font-size: .85rem; font-weight: 500;
+  color: var(--lo); padding: 6px 18px; border-radius: 100px;
+  transition: color .14s; display: block; white-space: nowrap;
+}
+.nav a:hover { color: var(--g800); }
+.nav a.on {
+  background: #fff; color: var(--g800); font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.uchip {
+  display: flex; align-items: center; gap: 8px;
+  background: #f0f5f0; border: 1px solid #d2e6d2;
+  border-radius: 100px; padding: 4px 12px 4px 4px;
+  flex-shrink: 0; cursor: default;
+}
+.uav {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--g700), var(--g600));
+  color: #fff; font-family: var(--fs); font-size: .72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.umeta { display: none; flex-direction: column; line-height: 1.2; }
+.uname { font-family: var(--fs); font-size: .82rem; font-weight: 600; color: var(--hi); }
+.upts  { font-family: var(--fs); font-size: .69rem; color: var(--g800); }
+.ucaret { width: 12px; height: 12px; color: var(--lo); display: none; }
+
+.ham {
+  display: flex; flex-direction: column; gap: 4px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.ham span { display: block; width: 19px; height: 1.5px; background: var(--g800); border-radius: 2px; }
+
+.mnav {
+  display: none; flex-direction: column;
+  background: #fff; border-top: 1px solid var(--bdr);
+  padding: 8px 20px 14px; gap: 2px;
+}
+.mnav.open { display: flex; }
+.mnav a {
+  font-family: var(--fs); font-size: .87rem; font-weight: 500;
+  color: var(--lo); padding: 8px 12px; border-radius: 8px;
+  transition: background .12s, color .12s;
+}
+.mnav a:hover, .mnav a.on { background: #eaf5ec; color: var(--g800); }
+
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--g900);
+  padding: 64px 0 96px;
+}
+
+/* background foto alam bertema hijau + overlay gelap agar teks tetap terbaca */
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(125deg,
+      rgba(2, 26, 13, .88) 0%,
+      rgba(3, 69, 32, .78) 45%,
+      rgba(2, 45, 24, .88) 100%),
+    url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* subtle horizontal rule at bottom */
+.hero-rule {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; z-index: 3;
+  background: linear-gradient(90deg,
+    transparent, rgba(174,243,57,.35) 35%,
+    rgba(117,222,52,.25) 65%, transparent);
+}
+
+.hero-in {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+/* ── left ─ */
+.hero-label {
+  display: inline-block;
+  font-family: var(--fs); font-size: .66rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--g100);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(174,243,57,.35);
+  margin-bottom: 18px;
+}
+
+.hero-h1 {
+  font-family: var(--fh);
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  font-weight: 700; color: #fff;
+  line-height: 1.06; letter-spacing: -.028em;
+  margin-bottom: 16px;
+}
+.hero-h1 span { color: var(--g100); }
+
+.hero-p {
+  font-size: .92rem; color: rgba(255,255,255,.62);
+  max-width: 380px; margin-bottom: 28px; line-height: 1.76;
+}
+
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--g100); color: var(--g900);
+  font-family: var(--fs); font-size: .83rem; font-weight: 700;
+  padding: 11px 22px; border-radius: 100px;
+  border: none; cursor: pointer;
+  transition: opacity .18s, transform .2s var(--ease);
+}
+.hero-btn:hover { opacity: .88; transform: translateY(-1px); }
+.hero-btn svg { width: 13px; height: 13px; }
+
+/* ── right: glass panel ── */
+.hero-panel {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.hp-cell { padding: 20px 18px; display: flex; flex-direction: column; gap: 3px; }
+.hp-cell:nth-child(1),
+.hp-cell:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.07); }
+.hp-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.07); }
+
+.hp-n {
+  font-family: var(--fh); font-size: 1.7rem; font-weight: 700;
+  color: var(--g100); line-height: 1; letter-spacing: -.02em;
+}
+.hp-u { font-size: .88rem; color: rgba(255,255,255,.35); margin-left: 1px; }
+.hp-l { font-family: var(--fs); font-size: .68rem; color: rgba(255,255,255,.45); font-weight: 500; margin-top: 2px; }
+.hp-d {
+  font-family: var(--fs); font-size: .64rem; font-weight: 600;
+  color: rgba(174,243,57,.7); margin-top: 4px;
+}
+
+
+/* ─── STAT CARDS (A) ─── */
+.stat-pull { position: relative; z-index: 10; margin-top: -48px; }
+
+.sg { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+.sc {
+  background: var(--sur); border-radius: var(--r);
+  padding: 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 6px 18px rgba(5,115,49,.07);
+  display: flex; flex-direction: column; gap: 3px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .38s var(--ease), transform .38s var(--ease);
+}
+.sc.in { opacity: 1; transform: none; }
+
+.sc-ico {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: #e6f5e9; color: var(--g700);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 6px;
+}
+.sc-ico svg { width: 16px; height: 16px; }
+.sc-n { font-family: var(--fh); font-size: 1.45rem; font-weight: 700; color: var(--hi); line-height: 1; }
+.sc-l { font-family: var(--fs); font-size: .76rem; color: var(--lo); margin-top: 1px; }
+
+
+/* ─── SECTION ── */
+.sec { padding: 50px 0; }
+.sec.alt { background: var(--bg2); }
+
+.sh { margin-bottom: 22px; }
+.sh h2 { font-family: var(--fh); font-size: 1.18rem; font-weight: 600; color: var(--hi); margin-bottom: 3px; }
+.sh p  { font-size: .86rem; color: var(--lo); max-width: 440px; }
+
+.sec-row { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
+
+
+/* ─── BREAKDOWN (B) ─── */
+.bdg { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+.bdc {
+  background: var(--sur); border: 1px solid var(--bdr);
+  border-radius: var(--r); padding: 18px;
+}
+.bd-t { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+
+.bd-ico {
+  width: 30px; height: 30px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.bd-ico svg { width: 14px; height: 14px; }
+.ia { background: var(--g700); }
+.ib { background: var(--g600); }
+.ic { background: var(--g400); }
+.id { background: var(--g800); }
+
+.bd-n   { font-family: var(--fh); font-size: 1.3rem; font-weight: 700; color: var(--hi); }
+.bd-lbl { display: block; font-family: var(--fs); font-size: .77rem; color: var(--lo); margin-bottom: 10px; }
+.bd-trk { height: 4px; background: var(--bdr); border-radius: 4px; overflow: hidden; }
+.bd-bar { height: 100%; background: linear-gradient(90deg, var(--g700), var(--g300)); border-radius: 4px; width: 0; transition: width 1.1s var(--ease); }
+
+
+/* ─── HISTORY (C) ─── */
+.fbar { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.fb {
+  font-family: var(--fs); font-size: .76rem; font-weight: 500;
+  padding: 5px 12px; border-radius: 100px;
+  border: 1px solid var(--bdr); background: var(--sur);
+  color: var(--lo); cursor: pointer;
+  transition: border-color .13s, color .13s, background .13s;
+}
+.fb:hover  { border-color: var(--g600); color: var(--g800); }
+.fb.on { background: var(--g700); border-color: var(--g700); color: #fff; }
+
+.tshell {
+  background: var(--sur); border: 1px solid var(--bdr);
+  border-radius: var(--r); overflow: hidden; margin-top: 16px;
+}
+
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  text-align: left; font-family: var(--fs); font-size: .67rem;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--lo); background: #f1f6f1;
+  padding: 11px 15px; border-bottom: 1px solid var(--bdr);
+}
+tbody td {
+  padding: 12px 15px; font-size: .86rem;
+  border-bottom: 1px solid var(--bdr); color: var(--md);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f4f9f4; }
+tbody tr.rh { display: none; }
+
+.pts { font-family: var(--fs); font-weight: 600; color: var(--g800); }
+
+.pill {
+  display: inline-block; font-family: var(--fs);
+  font-size: .67rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 100px; white-space: nowrap;
+}
+.p-done  { background: #dbf5e2; color: #09612d; }
+.p-verif { background: #f8f4c8; color: #615907; }
+.p-pend  { background: #eaeaea; color: #505050; }
+.p-appv  { background: #d2ede4; color: #095c38; }
+
+.tempty { display: none; text-align: center; padding: 28px; color: var(--lo); font-size: .84rem; }
+
+
+/* ─── ACHIEVEMENTS (D) ─── */
+.ag { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+.ac {
+  background: var(--sur); border: 1px solid var(--bdr);
+  border-radius: var(--r); padding: 20px 18px;
+}
+.ac-ico {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: #e6f5e9; color: var(--g700);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.ac-ico svg { width: 18px; height: 18px; }
+.ac h3 { font-family: var(--fh); font-size: .88rem; font-weight: 600; color: var(--hi); margin-bottom: 4px; }
+.ac p  { font-size: .8rem; color: var(--lo); margin-bottom: 11px; line-height: 1.5; }
+.ac-tag { font-family: var(--fs); font-size: .69rem; font-weight: 600; color: var(--g800); }
+
+.ac.locked { opacity: .58; }
+.ac.locked .ac-ico { background: #ececec; color: #98a29c; }
+
+.ptrk { height: 3px; background: var(--bdr); border-radius: 3px; overflow: hidden; margin-bottom: 5px; }
+.pfil { display: block; height: 100%; background: var(--g400); border-radius: 3px; }
+.plbl { font-family: var(--fs); font-size: .68rem; color: var(--lo); }
+
+
+/* ─── FOOTER ─── */
+.ftr {
+  position: relative; overflow: hidden;
+  background: linear-gradient(162deg, #0d6b2c 0%, #057331 50%, #044723 100%);
+  color: #fff;
+}
+.ftr-body { position: relative; z-index: 2; padding: 52px 0 38px; }
+.ftr-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+
+.fl { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+.flwm { font-family: var(--fh); font-size: 1.15rem; font-weight: 700; color: #fff; }
+.flwm em { font-style: normal; color: var(--g100); }
+.fdesc { font-size: .84rem; color: rgba(255,255,255,.55); line-height: 1.72; max-width: 250px; margin-bottom: 18px; }
+
+.fsoc { display: flex; gap: 7px; }
+.fsb {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.05);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.58); cursor: pointer;
+  transition: background .14s, border-color .14s, color .14s;
+}
+.fsb:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); color: #fff; }
+.fsb svg { width: 13px; height: 13px; }
+
+.fct { font-family: var(--fs); font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--g100); margin-bottom: 12px; }
+.fcl { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.fcl a { font-size: .84rem; color: rgba(255,255,255,.55); transition: color .13s; }
+.fcl a:hover { color: #fff; }
+
+.fcon { display: flex; flex-direction: column; gap: 10px; }
+.fcr { display: flex; align-items: flex-start; gap: 8px; font-size: .83rem; color: rgba(255,255,255,.55); }
+.fcr svg { width: 13px; height: 13px; color: var(--g100); margin-top: 3px; flex-shrink: 0; }
+
+.fbtm { position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,.08); padding: 15px 0; }
+.fbtm-in { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.fcopy, .flove { font-size: .75rem; color: rgba(255,255,255,.32); }
+.flove em { font-style: normal; color: var(--g100); }
+
+/* deco — daun kiri atas + recycle kanan atas */
+.fdeco { position: absolute; opacity: .05; pointer-events: none; z-index: 1; }
+
+/* ghost watermark */
+.fwm {
+  position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+  font-family: var(--fh); font-size: clamp(50px,11vw,130px); font-weight: 700;
+  color: rgba(255,255,255,.03); white-space: nowrap;
+  pointer-events: none; user-select: none; z-index: 1; letter-spacing: -2px;
+}
+.fwm-leaf {
+  position: absolute; top: -.45em; left: 9%;
+  width: .32em; height: .32em;
+  color: rgba(255,255,255,.06);
+}
+
+
+/* ─── RESPONSIVE ─── */
+@media (min-width: 480px) { .umeta { display: flex; } .ucaret { display: block; } }
+
+@media (min-width: 640px) {
+  .sg       { grid-template-columns: repeat(4,1fr); }
+  .hero-in  { grid-template-columns: 1fr 1fr; }
+  .sec-row  { flex-direction: row; align-items: flex-start; justify-content: space-between; }
+  .ftr-grid { grid-template-columns: 1.5fr 1fr 1fr; }
+  .fbtm-in  { flex-direction: row; justify-content: space-between; text-align: left; }
+}
+
+@media (min-width: 860px) {
+  .nav  { display: flex; }
+  .ham  { display: none; }
+  .bdg  { grid-template-columns: repeat(4,1fr); }
+  .ftr-grid { grid-template-columns: 1.5fr 1fr 1fr 1.1fr; }
+}
+
+@media (min-width: 1024px) { .ag { grid-template-columns: repeat(4,1fr); } }
+
+@media (max-width: 639px) {
+  table thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { padding: 11px 14px; border-bottom: 1px solid var(--bdr); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    border: none; padding: 3px 0;
+    display: flex; justify-content: space-between; align-items: center; font-size: .83rem;
+  }
+  td::before {
+    content: attr(data-label);
+    font-family: var(--fs); font-size: .65rem; font-weight: 600;
+    color: var(--lo); text-transform: uppercase; letter-spacing: .04em;
+  }
+  .ag { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) { .ag { grid-template-columns: 1fr; } }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="wrap hdr-in">
+
+    <a href="#" class="logo">
+      <svg width="36" height="30" viewBox="0 0 44 36" fill="none" aria-hidden="true">
+        <rect x="0" y="0" width="22" height="22" rx="6" fill="url(#hg1)"/>
+        <path d="M4 18C4 10 10 4 19 4C19 12 13 18 4 18Z" fill="rgba(255,255,255,.35)"/>
+        <path d="M11 18C11 12 16 7 21 7C21 13 16 18 11 18Z" fill="rgba(255,255,255,.15)"/>
+        <rect x="15" y="12" width="22" height="22" rx="6" fill="url(#hg2)"/>
+        <path d="M19 32C19 24 25 18 35 18C35 26 29 32 19 32Z" fill="rgba(255,255,255,.35)"/>
+        <path d="M26 32C26 26 31 21 37 21C37 27 32 32 26 32Z" fill="rgba(255,255,255,.15)"/>
+        <defs>
+          <linearGradient id="hg1" x1="0" y1="0" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#aef339"/>
+            <stop offset="55%" stop-color="#36bc33"/>
+            <stop offset="100%" stop-color="#057331"/>
+          </linearGradient>
+          <linearGradient id="hg2" x1="15" y1="12" x2="37" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#75de34"/>
+            <stop offset="55%" stop-color="#16a635"/>
+            <stop offset="100%" stop-color="#0a7c31"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-wm">Green<b>Wise</b></span>
+    </a>
+
+    <nav class="nav" aria-label="Utama">
+      <a href="#">Beranda</a>
+      <a href="#">Green Hub</a>
+      <a href="#" class="on">My Impact</a>
+      <a href="#">Leaderboard</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:9px">
+      <div class="uchip">
+        <span class="uav" aria-hidden="true">DA</span>
+        <div class="umeta">
+          <span class="uname">Dwi Anugrah</span>
+          <span class="upts">★ 1.240 poin</span>
+        </div>
+        <svg class="ucaret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </div>
+      <button class="ham" id="ham" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mnav" id="mnav">
+    <a href="#">Beranda</a>
+    <a href="#">Green Hub</a>
+    <a href="#" class="on">My Impact</a>
+    <a href="#">Leaderboard</a>
+  </nav>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero-rule" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="hero-in">
+
+      <!-- copy -->
+      <div>
+        <div class="hero-label">My Impact</div>
+
+        <h1 class="hero-h1">
+          Setiap aksimu<br>membentuk<br>
+          <span>masa depan.</span>
+        </h1>
+
+        <p class="hero-p">
+          Lihat kontribusi nyatamu — barang yang dikelola, dampak lingkungan yang dihasilkan, dan rekam jejak setiap tindakanmu.
+        </p>
+
+        <a href="#" class="hero-btn">
+          Mulai Aksi Baru
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <!-- stats panel -->
+      <div class="hero-panel" aria-label="Statistik singkat">
+        <div class="hp-cell">
+          <div class="hp-n">128</div>
+          <div class="hp-l">Items Managed</div>
+          <div class="hp-d">↑ +12 bulan ini</div>
+        </div>
+        <div class="hp-cell">
+          <div class="hp-n">64.5 <span class="hp-u">kg</span></div>
+          <div class="hp-l">Waste Diverted</div>
+          <div class="hp-d">↑ +8.2 kg bulan ini</div>
+        </div>
+        <div class="hp-cell">
+          <div class="hp-n">3.240</div>
+          <div class="hp-l">Points Earned</div>
+          <div class="hp-d">↑ +340 minggu ini</div>
+        </div>
+        <div class="hp-cell">
+          <div class="hp-n">96</div>
+          <div class="hp-l">Actions Done</div>
+          <div class="hp-d">↑ +7 minggu ini</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- A — IMPACT SUMMARY -->
+<div class="stat-pull">
+  <div class="wrap">
+    <div class="sg">
+
+      <div class="sc" data-a>
+        <div class="sc-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        </div>
+        <div class="sc-n"><span data-to="128">0</span></div>
+        <div class="sc-l">Items Managed</div>
+      </div>
+
+      <div class="sc" data-a>
+        <div class="sc-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c3 3 5 6 5 9a5 5 0 1 1-10 0c0-3 2-6 5-9Z"/></svg>
+        </div>
+        <div class="sc-n"><span data-to="64.5" data-dec="1">0</span> <span style="font-size:.88rem;color:var(--lo);font-weight:500">kg</span></div>
+        <div class="sc-l">Waste Diverted</div>
+      </div>
+
+      <div class="sc" data-a>
+        <div class="sc-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7-6.2-3.6-6.2 3.6 1.4-7L2 9.3l7-.8L12 2Z"/></svg>
+        </div>
+        <div class="sc-n"><span data-to="3240">0</span></div>
+        <div class="sc-l">Points Earned</div>
+      </div>
+
+      <div class="sc" data-a>
+        <div class="sc-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <div class="sc-n"><span data-to="96">0</span></div>
+        <div class="sc-l">Actions Completed</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- B — ACTION BREAKDOWN -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh">
+      <h2>Action Breakdown</h2>
+      <p>Distribusi tindakan yang kamu lakukan terhadap barang-barangmu.</p>
+    </div>
+    <div class="bdg">
+
+      <div class="bdc">
+        <div class="bd-t">
+          <span class="bd-ico ia" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 19H4.8a2 2 0 0 1-1.7-3l1.9-3.2"/><path d="M11 5.5 9.5 8l2 1.3"/><path d="M18.4 15.5 21 19.8"/><path d="M17 5H14a2 2 0 0 0-1.7 1l-1 1.6"/><path d="M13.5 19h4.4a2 2 0 0 0 1.7-3l-1-1.7"/></svg></span>
+          <span class="bd-n">42</span>
+        </div>
+        <span class="bd-lbl">Recycled</span>
+        <div class="bd-trk"><div class="bd-bar" data-w="42"></div></div>
+      </div>
+
+      <div class="bdc">
+        <div class="bd-t">
+          <span class="bd-ico ib" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2 21 6l-4 4"/><path d="M3 12v-1a4 4 0 0 1 4-4h14"/><path d="M7 22 3 18l4-4"/><path d="M21 12v1a4 4 0 0 1-4 4H3"/></svg></span>
+          <span class="bd-n">28</span>
+        </div>
+        <span class="bd-lbl">Reused</span>
+        <div class="bd-trk"><div class="bd-bar" data-w="28"></div></div>
+      </div>
+
+      <div class="bdc">
+        <div class="bd-t">
+          <span class="bd-ico ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.6-9.5 9-9.5 9Z"/></svg></span>
+          <span class="bd-n">19</span>
+        </div>
+        <span class="bd-lbl">Donated</span>
+        <div class="bd-trk"><div class="bd-bar" data-w="19"></div></div>
+      </div>
+
+      <div class="bdc">
+        <div class="bd-t">
+          <span class="bd-ico id" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.6 12.6 12.7 20.5a2 2 0 0 1-2.8 0l-6.4-6.4a2 2 0 0 1 0-2.8L11.4 3.3 20.6 3v9.6Z"/><circle cx="16" cy="7" r="1.2"/></svg></span>
+          <span class="bd-n">12</span>
+        </div>
+        <span class="bd-lbl">Sold</span>
+        <div class="bd-trk"><div class="bd-bar" data-w="12"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- C — ACTIVITY HISTORY -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-row">
+      <div class="sh" style="margin-bottom:0">
+        <h2>Activity History</h2>
+        <p>Riwayat item, tindakan, poin, dan status pengelolaannya.</p>
+      </div>
+      <div class="fbar" id="fbar" role="group" aria-label="Filter">
+        <button class="fb on" data-f="all">Semua</button>
+        <button class="fb" data-f="done">Completed</button>
+        <button class="fb" data-f="verif">Verification</button>
+        <button class="fb" data-f="pend">Pending</button>
+        <button class="fb" data-f="appv">Approved</button>
+      </div>
+    </div>
+
+    <div class="tshell">
+      <table id="tbl">
+        <thead>
+          <tr><th>Item</th><th>Tindakan</th><th>Poin</th><th>Status</th><th>Waktu</th></tr>
+        </thead>
+        <tbody>
+          <tr data-s="done"><td data-label="Item">Running Shoes</td><td data-label="Tindakan">Sold</td><td data-label="Poin" class="pts">+60</td><td data-label="Status"><span class="pill p-done">Completed</span></td><td data-label="Waktu">2 hari lalu</td></tr>
+          <tr data-s="done"><td data-label="Item">Old Textbooks</td><td data-label="Tindakan">Donated</td><td data-label="Poin" class="pts">+50</td><td data-label="Status"><span class="pill p-done">Completed</span></td><td data-label="Waktu">3 hari lalu</td></tr>
+          <tr data-s="verif"><td data-label="Item">Winter Jacket</td><td data-label="Tindakan">Donated</td><td data-label="Poin" class="pts">+50</td><td data-label="Status"><span class="pill p-verif">Verification</span></td><td data-label="Waktu">4 hari lalu</td></tr>
+          <tr data-s="pend"><td data-label="Item">Plastic Bottles (12)</td><td data-label="Tindakan">Recycled</td><td data-label="Poin" class="pts">+30</td><td data-label="Status"><span class="pill p-pend">Pending</span></td><td data-label="Waktu">5 hari lalu</td></tr>
+          <tr data-s="appv"><td data-label="Item">Wooden Chair</td><td data-label="Tindakan">Upcycled</td><td data-label="Poin" class="pts">+40</td><td data-label="Status"><span class="pill p-appv">Approved</span></td><td data-label="Waktu">1 minggu lalu</td></tr>
+          <tr data-s="verif"><td data-label="Item">E-Waste Charger</td><td data-label="Tindakan">Recycled</td><td data-label="Poin" class="pts">+30</td><td data-label="Status"><span class="pill p-verif">Verification</span></td><td data-label="Waktu">1 minggu lalu</td></tr>
+          <tr data-s="done"><td data-label="Item">Broken Keyboard</td><td data-label="Tindakan">Recycled</td><td data-label="Poin" class="pts">+30</td><td data-label="Status"><span class="pill p-done">Completed</span></td><td data-label="Waktu">2 minggu lalu</td></tr>
+          <tr data-s="appv"><td data-label="Item">Glass Bottles (6)</td><td data-label="Tindakan">Recycled</td><td data-label="Poin" class="pts">+30</td><td data-label="Status"><span class="pill p-appv">Approved</span></td><td data-label="Waktu">2 minggu lalu</td></tr>
+          <tr data-s="done"><td data-label="Item">Denim Jacket</td><td data-label="Tindakan">Reused</td><td data-label="Poin" class="pts">+40</td><td data-label="Status"><span class="pill p-done">Completed</span></td><td data-label="Waktu">3 minggu lalu</td></tr>
+          <tr data-s="pend"><td data-label="Item">Laptop Bag</td><td data-label="Tindakan">Sold</td><td data-label="Poin" class="pts">+60</td><td data-label="Status"><span class="pill p-pend">Pending</span></td><td data-label="Waktu">3 minggu lalu</td></tr>
+        </tbody>
+      </table>
+      <p class="tempty" id="tempty">Tidak ada aktivitas untuk filter ini.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- D — ACHIEVEMENTS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh">
+      <h2>Achievements</h2>
+      <p>Pencapaian dari setiap aksi nyata yang kamu selesaikan.</p>
+    </div>
+    <div class="ag">
+
+      <div class="ac">
+        <div class="ac-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 19H4.8a2 2 0 0 1-1.7-3l1.9-3.2"/><path d="M11 5.5 9.5 8l2 1.3"/><path d="M18.4 15.5 21 19.8"/><path d="M17 5H14a2 2 0 0 0-1.7 1l-1 1.6"/><path d="M13.5 19h4.4a2 2 0 0 0 1.7-3l-1-1.7"/></svg></div>
+        <h3>First Recycler</h3>
+        <p>Menyelesaikan aksi recycling pertama.</p>
+        <span class="ac-tag">Earned · 3 minggu lalu</span>
+      </div>
+
+      <div class="ac">
+        <div class="ac-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c3 3 5 6 5 9a5 5 0 1 1-10 0c0-3 2-6 5-9Z"/></svg></div>
+        <h3>Green Starter</h3>
+        <p>Menyelesaikan 10 aksi pengelolaan barang.</p>
+        <span class="ac-tag">Earned · 2 minggu lalu</span>
+      </div>
+
+      <div class="ac">
+        <div class="ac-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7-6.2-3.6-6.2 3.6 1.4-7L2 9.3l7-.8L12 2Z"/></svg></div>
+        <h3>Recycling Hero</h3>
+        <p>Me-recycle lebih dari 40 barang.</p>
+        <span class="ac-tag">Earned · 4 hari lalu</span>
+      </div>
+
+      <div class="ac locked">
+        <div class="ac-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg></div>
+        <h3>Community Contributor</h3>
+        <p>Bergabung dalam 5 event komunitas.</p>
+        <div class="ptrk"><span class="pfil" style="width:60%"></span></div>
+        <span class="plbl">3 / 5 events</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <svg class="fdeco" style="top:8px;left:-12px;width:88px" viewBox="0 0 88 88" fill="none" aria-hidden="true"><path d="M5 83C5 38 38 5 83 5C83 50 50 83 5 83Z" fill="white"/></svg>
+  <svg class="fdeco" style="top:30px;right:30px;width:72px" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.1" aria-hidden="true"><path d="M7 19H4.8a2 2 0 0 1-1.7-3l1.9-3.2"/><path d="M11 5.5 9.5 8l2 1.3"/><path d="M18.4 15.5 21 19.8"/><path d="M17 5H14a2 2 0 0 0-1.7 1l-1 1.6"/><path d="M13.5 19h4.4a2 2 0 0 0 1.7-3l-1-1.7"/></svg>
+
+  <div class="ftr-body">
+    <div class="wrap ftr-grid">
+
+      <div>
+        <div class="fl">
+          <svg width="32" height="26" viewBox="0 0 44 36" fill="none" aria-hidden="true">
+            <rect x="0" y="0" width="22" height="22" rx="6" fill="url(#fg1)"/>
+            <path d="M4 18C4 10 10 4 19 4C19 12 13 18 4 18Z" fill="rgba(255,255,255,.35)"/>
+            <path d="M11 18C11 12 16 7 21 7C21 13 16 18 11 18Z" fill="rgba(255,255,255,.15)"/>
+            <rect x="15" y="12" width="22" height="22" rx="6" fill="url(#fg2)"/>
+            <path d="M19 32C19 24 25 18 35 18C35 26 29 32 19 32Z" fill="rgba(255,255,255,.35)"/>
+            <path d="M26 32C26 26 31 21 37 21C37 27 32 32 26 32Z" fill="rgba(255,255,255,.15)"/>
+            <defs>
+              <linearGradient id="fg1" x1="0" y1="0" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#aef339"/><stop offset="55%" stop-color="#36bc33"/><stop offset="100%" stop-color="#057331"/></linearGradient>
+              <linearGradient id="fg2" x1="15" y1="12" x2="37" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#75de34"/><stop offset="55%" stop-color="#16a635"/><stop offset="100%" stop-color="#0a7c31"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="flwm">Green<em>Wise</em></span>
+        </div>
+        <p class="fdesc">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas — demi masa depan bumi yang lebih hijau.</p>
+        <div class="fsoc">
+          <button class="fsb" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></button>
+          <button class="fsb" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></button>
+          <button class="fsb" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></button>
+          <button class="fsb" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></button>
+        </div>
+      </div>
+
+      <div>
+        <p class="fct">Navigasi</p>
+        <ul class="fcl">
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Green Hub</a></li>
+          <li><a href="#">Leaderboard</a></li>
+          <li><a href="#">Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="fct">Sumber Daya</p>
+        <ul class="fcl">
+          <li><a href="#">Panduan Daur Ulang</a></li>
+          <li><a href="#">Blog Lingkungan</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Pusat Bantuan</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="fct">Hubungi Kami</p>
+        <div class="fcon">
+          <div class="fcr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>halo@greenwise.id</div>
+          <div class="fcr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.7A2 2 0 0 1 22 16.9z"/></svg>+62 812 3456 7890</div>
+          <div class="fcr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>Bandung, Indonesia</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="fbtm">
+    <div class="wrap fbtm-in">
+      <span class="fcopy">© 2025 GreenWise. Semua hak dilindungi.</span>
+      <span class="flove">Dibuat dengan <em>♥</em> untuk bumi yang lebih hijau.</span>
+    </div>
+  </div>
+
+  <div class="fwm" aria-hidden="true">
+    <svg class="fwm-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-6.5-4.2-9-9.5A5 5 0 0 1 12 6a5 5 0 0 1 9 5.5C18.5 16.8 12 21 12 21Z"/></svg>
+    GreenWise
+  </div>
+</footer>
+
+
+<script>
+'use strict';
+
+/* hamburger */
+const ham  = document.getElementById('ham');
+const mnav = document.getElementById('mnav');
+ham.addEventListener('click', () => {
+  const o = mnav.classList.toggle('open');
+  ham.setAttribute('aria-expanded', String(o));
+});
+
+/* count-up */
+function countUp(el, target, dec) {
+  const dur = 1250, t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const v = target * (1 - Math.pow(1 - p, 3));
+    el.textContent = dec ? v.toFixed(dec) : Math.round(v).toLocaleString('id-ID');
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+/* bars */
+const bars = [...document.querySelectorAll('.bd-bar')];
+const maxW = Math.max(...bars.map(b => +b.dataset.w));
+
+/* one-shot observer */
+let fired = false;
+const cards = [...document.querySelectorAll('.sc[data-a]')];
+
+new IntersectionObserver((entries, obs) => {
+  if (!entries[0].isIntersecting || fired) return;
+  fired = true;
+  cards.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 70));
+  document.querySelectorAll('[data-to]').forEach(el =>
+    countUp(el, parseFloat(el.dataset.to), parseInt(el.dataset.dec || 0))
+  );
+  bars.forEach(b => { b.style.width = (+b.dataset.w / maxW * 100) + '%'; });
+  obs.disconnect();
+}, { threshold: 0.08 }).observe(document.querySelector('.stat-pull'));
+
+/* filter */
+const fbar  = document.getElementById('fbar');
+const rows  = [...document.querySelectorAll('#tbl tbody tr')];
+const empty = document.getElementById('tempty');
+
+fbar.addEventListener('click', e => {
+  const btn = e.target.closest('.fb');
+  if (!btn) return;
+  fbar.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const f = btn.dataset.f;
+  let n = 0;
+  rows.forEach(r => {
+    const show = f === 'all' || r.dataset.s === f;
+    r.classList.toggle('rh', !show);
+    if (show) n++;
+  });
+  empty.style.display = n ? 'none' : 'block';
+});
+</script>
+
+</body>
+</html>

@@ -1,1 +1,827 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard — GreenWise</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark:   #057331;
+    --green-mid:    #0d9740;
+    --green-bright: #26b33e;
+    --green-light:  #44c536;
+    --green-lime:   #75de34;
+    --green-lemon:  #aef339;
+    --white:        #ffffff;
+    --off-white:    #f5faf5;
+    --gray-light:   #eef5ee;
+    --gray-text:    #6b7280;
+    --text-dark:    #0f2918;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); min-height: 100vh; }
+
+  /* LOGO IMAGE */
+  .logo-img { display: block; object-fit: contain; flex-shrink: 0; }
+  .logo-img.size-header { width: 40px; height: auto; }
+  .logo-img.size-footer { width: 42px; height: auto; }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white); border-bottom: 1px solid #e4f0e6;
+    padding: 0 clamp(1rem,4vw,3rem);
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 1rem;
+  }
+  .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; flex-shrink: 0; }
+  .logo-name { font-family: 'Lexend', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--text-dark); }
+
+  nav { display: flex; align-items: center; gap: 4px; }
+  nav a {
+    font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500;
+    color: var(--gray-text); text-decoration: none;
+    padding: 6px 14px; border-radius: 20px; transition: all .2s; white-space: nowrap;
+  }
+  nav a:hover { color: var(--green-mid); background: var(--gray-light); }
+  nav a.active { background: #e8f5e9; color: var(--green-dark); font-weight: 600; }
+
+  .user-chip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-light); border-radius: 24px;
+    padding: 5px 12px 5px 5px; cursor: pointer; flex-shrink: 0;
+  }
+  .user-info { line-height: 1.2; }
+  .user-name   { font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 600; color: var(--text-dark); }
+  .user-points { font-size: .7rem; color: var(--green-mid); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text-dark); border-radius: 2px; }
+
+  .mobile-nav {
+    display: none; position: fixed; top: 64px; left: 0; right: 0;
+    background: var(--white); border-bottom: 1px solid #e4f0e6;
+    padding: 1rem clamp(1rem,4vw,3rem); z-index: 99; flex-direction: column; gap: 4px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 500;
+    color: var(--gray-text); text-decoration: none; padding: 10px 14px; border-radius: 10px; transition: all .2s;
+  }
+  .mobile-nav a:hover, .mobile-nav a.active { background: #e8f5e9; color: var(--green-dark); }
+
+  /* AVATAR */
+  .av-img {
+    border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    display: block; background: var(--gray-light);
+  }
+  .av-img.size-header { width: 32px; height: 32px; border: 2px solid #fff; }
+  .av-img.size-podium {
+    width: clamp(54px,8vw,70px); height: clamp(54px,8vw,70px);
+    border: 3px solid #fff; box-shadow: 0 4px 14px rgba(0,0,0,.13);
+  }
+  .av-img.size-row   { width: 38px; height: 38px; border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,.1); }
+  .av-img.size-mini  { width: 30px; height: 30px; border: 2px solid #fff; }
+  .av-img.size-table { width: 34px; height: 34px; border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.1); }
+
+  .rank-1 .av-img { border-color: #fcd34d !important; box-shadow: 0 4px 18px rgba(245,158,11,.22) !important; }
+  .rank-2 .av-img { border-color: #d1d5db !important; }
+  .rank-3 .av-img { border-color: var(--green-lime) !important; }
+
+  /* ═══ PAGE HERO — real photo background, not AI-generated ═══ */
+  /* ═══ PAGE HERO — real photo background, not AI-generated ═══ */
+.page-hero {
+  background: linear-gradient(160deg, rgba(5,115,49,.93) 0%, rgba(13,151,64,.88) 55%, rgba(38,179,62,.85) 100%);
+  padding: clamp(2.5rem,5vw,4rem) clamp(1rem,4vw,3rem);
+  text-align: center; position: relative; overflow: hidden;
+}
+/* foto background — opacity diturunkan */
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1800&q=80') center 40% / cover no-repeat;
+  opacity: .45;
+  z-index: 0;
+
+  }
+  .hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+    backdrop-filter: blur(4px);
+    color: var(--green-lemon); font-family: 'DM Sans', sans-serif;
+    font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 20px; margin-bottom: 1rem;
+  }
+  .page-hero h1 {
+    font-family: 'Lexend', sans-serif; font-size: clamp(1.8rem,4vw,2.8rem);
+    font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: .75rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,.15);
+  }
+  .page-hero p {
+    font-family: 'DM Sans', sans-serif; font-size: clamp(.9rem,2vw,1.05rem);
+    color: rgba(255,255,255,.9); line-height: 1.6; max-width: 520px; margin: 0 auto;
+    text-shadow: 0 1px 8px rgba(0,0,0,.12);
+  }
+
+  /* MY RANK BAR */
+  .my-rank-bar { background: var(--white); border-bottom: 1px solid #e4f0e6; padding: 1rem clamp(1rem,4vw,3rem); }
+  .my-rank-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .my-rank-label { font-family: 'Poppins', sans-serif; font-size: .75rem; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+  .my-rank-stats { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; flex: 1; }
+  .my-rank-item  { display: flex; align-items: center; gap: 8px; }
+  .rank-badge-me {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--green-lemon), var(--green-bright));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lexend', sans-serif; font-size: .85rem; font-weight: 800; color: var(--green-dark);
+  }
+  .my-rank-item-label { font-family: 'DM Sans', sans-serif; font-size: .75rem; color: var(--gray-text); }
+  .my-rank-item-value { font-family: 'Lexend', sans-serif; font-size: .95rem; font-weight: 700; color: var(--text-dark); }
+  .my-rank-sep { width: 1px; height: 28px; background: #e4f0e6; }
+  .btn-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-mid); color: #fff;
+    font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 600;
+    padding: 8px 18px; border-radius: 20px; text-decoration: none; border: none;
+    cursor: pointer; transition: background .2s; white-space: nowrap; margin-left: auto;
+  }
+  .btn-action:hover { background: var(--green-dark); }
+
+  /* MAIN */
+  .main-content { max-width: 1200px; margin: 0 auto; padding: clamp(1.5rem,3vw,2.5rem) clamp(1rem,4vw,3rem); }
+
+  .controls-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .scope-tabs { display: flex; background: var(--white); border: 1px solid #e4f0e6; border-radius: 12px; padding: 4px; gap: 2px; }
+  .scope-tab {
+    font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500;
+    color: var(--gray-text); padding: 7px 18px; border-radius: 9px;
+    border: none; background: none; cursor: pointer; transition: all .2s; white-space: nowrap;
+  }
+  .scope-tab.active { background: var(--green-mid); color: #fff; font-weight: 600; }
+  .scope-tab:hover:not(.active) { background: var(--gray-light); color: var(--green-dark); }
+  .period-select {
+    font-family: 'DM Sans', sans-serif; font-size: .875rem; color: var(--text-dark);
+    padding: 7px 14px; border: 1px solid #e4f0e6; border-radius: 10px;
+    background: var(--white); cursor: pointer; outline: none;
+  }
+
+  /* GRID */
+  .lb-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+
+  /* PODIUM */
+  .podium-section { background: var(--white); border-radius: 16px; border: 1px solid #e4f0e6; overflow: hidden; }
+  .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #f0f7f0; display: flex; align-items: center; justify-content: space-between; }
+  .section-title    { font-family: 'Lexend', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+  .section-subtitle { font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--gray-text); margin-top: 2px; }
+
+  .podium-wrap { padding: 2.5rem 1.5rem 1rem; display: flex; align-items: flex-end; justify-content: center; gap: clamp(.5rem,2vw,1.5rem); }
+  .podium-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 160px; }
+  .podium-item.rank-1 { order: 2; }
+  .podium-item.rank-2 { order: 1; }
+  .podium-item.rank-3 { order: 3; }
+
+  .podium-avatar-wrap { position: relative; }
+  .podium-crown {
+    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 18px;
+  }
+
+  .podium-rank-badge {
+    position: absolute; bottom: -5px; right: -5px;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lexend', sans-serif; font-size: .62rem; font-weight: 800;
+    color: #fff; border: 2px solid #fff;
+  }
+  .rank-1 .podium-rank-badge { background: #f59e0b; }
+  .rank-2 .podium-rank-badge { background: #9ca3af; }
+  .rank-3 .podium-rank-badge { background: var(--green-bright); }
+
+  .podium-name { font-family: 'Poppins', sans-serif; font-size: clamp(.75rem,1.5vw,.85rem); font-weight: 600; color: var(--text-dark); text-align: center; line-height: 1.25; }
+  .podium-pts  { font-family: 'Lexend', sans-serif; font-size: clamp(.8rem,1.5vw,.95rem); font-weight: 700; color: var(--green-mid); }
+  .podium-meta { font-family: 'DM Sans', sans-serif; font-size: .72rem; color: var(--gray-text); }
+
+  .podium-block { width: 100%; border-radius: 10px 10px 0 0; display: flex; align-items: center; justify-content: center; }
+  .rank-1 .podium-block { height: 72px; background: linear-gradient(180deg,#fcd34d14,#fcd34d30); border: 1px solid #fcd34d20; }
+  .rank-2 .podium-block { height: 52px; background: linear-gradient(180deg,#e5e7eb14,#e5e7eb30); border: 1px solid #d1d5db20; }
+  .rank-3 .podium-block { height: 38px; background: linear-gradient(180deg,#aef33914,#aef33930); border: 1px solid #aef33920; }
+
+  .podium-block span {
+    font-family: 'Lexend', sans-serif; font-size: 1.4rem; font-weight: 800; opacity: .3;
+  }
+  .rank-1 .podium-block span { color: #b45309; }
+  .rank-2 .podium-block span { color: #6b7280; }
+  .rank-3 .podium-block span { color: var(--green-dark); }
+
+  /* RANK ROWS */
+  .rank-table-wrap { padding: 0 1.5rem 1.5rem; }
+  .rank-row { display: flex; align-items: center; gap: .875rem; padding: 10px; border-radius: 10px; transition: background .15s; }
+  .rank-row:hover { background: var(--gray-light); }
+  .rank-row.is-me { background: linear-gradient(90deg,#e8f5e9,#f0faf0); border: 1px solid #c8e6c9; }
+  .rank-divider { border: none; border-top: 1px solid #f0f7f0; margin: 2px 0; }
+
+  .rank-num { width: 26px; font-family: 'Lexend', sans-serif; font-size: .85rem; font-weight: 700; color: var(--gray-text); text-align: center; flex-shrink: 0; }
+  .rank-num.top { color: var(--green-mid); }
+
+  .rank-user-info { flex: 1; min-width: 0; }
+  .rank-username { font-family: 'Poppins', sans-serif; font-size: .85rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rank-school   { font-family: 'DM Sans', sans-serif; font-size: .72rem; color: var(--gray-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .me-tag { background: var(--green-mid); color: #fff; font-family: 'DM Sans', sans-serif; font-size: .6rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; letter-spacing: .02em; }
+
+  .rank-impact-col { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; min-width: 64px; }
+  .impact-val   { font-family: 'DM Sans', sans-serif; font-size: .78rem; font-weight: 600; color: var(--green-dark); }
+  .impact-label { font-family: 'DM Sans', sans-serif; font-size: .66rem; color: var(--gray-text); }
+  .rank-stats-col { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+  .rank-pts   { font-family: 'Lexend', sans-serif; font-size: .9rem; font-weight: 700; color: var(--green-mid); }
+  .rank-items { font-family: 'DM Sans', sans-serif; font-size: .72rem; color: var(--gray-text); }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+  .card { background: var(--white); border-radius: 16px; border: 1px solid #e4f0e6; overflow: hidden; }
+
+  .cat-list { padding: .75rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: .4rem; }
+  .cat-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; cursor: pointer; transition: all .18s; border: 1px solid transparent; }
+  .cat-item:hover, .cat-item.active { background: #f0faf0; border-color: #c8e6c9; }
+  .cat-item.active .cat-name { color: var(--green-dark); font-weight: 700; }
+  .cat-icon  { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cat-icon svg { width: 16px; height: 16px; }
+  .cat-name  { font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; color: var(--text-dark); flex: 1; }
+  .cat-count { font-family: 'Lexend', sans-serif; font-size: .73rem; font-weight: 700; color: var(--gray-text); background: var(--gray-light); padding: 2px 8px; border-radius: 10px; }
+
+  .mini-list { padding: .75rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: .5rem; }
+  .mini-row  { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f7f0; }
+  .mini-row:last-child { border-bottom: none; }
+  .mini-rank { width: 20px; font-family: 'Lexend', sans-serif; font-size: .75rem; font-weight: 700; color: var(--gray-text); text-align: center; flex-shrink: 0; }
+  .mini-name { font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500; color: var(--text-dark); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 5px; }
+  .mini-val  { font-family: 'Lexend', sans-serif; font-size: .78rem; font-weight: 700; color: var(--green-mid); white-space: nowrap; }
+
+  .progress-wrap { padding: 1.25rem; }
+  .progress-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .progress-title { font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 600; color: var(--text-dark); }
+  .progress-value { font-family: 'Lexend', sans-serif; font-size: .8rem; font-weight: 700; color: var(--green-mid); }
+  .progress-bar-bg   { height: 7px; background: var(--gray-light); border-radius: 8px; overflow: hidden; margin-bottom: 5px; }
+  .progress-bar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--green-mid), var(--green-lemon)); }
+  .progress-hint { font-family: 'DM Sans', sans-serif; font-size: .71rem; color: var(--gray-text); }
+
+  /* FULL TABLE */
+  .full-table-section { background: var(--white); border-radius: 16px; border: 1px solid #e4f0e6; margin-top: 1.5rem; }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  thead tr { background: var(--gray-light); }
+  th { font-family: 'Poppins', sans-serif; font-size: .72rem; font-weight: 600; color: var(--gray-text); text-transform: uppercase; letter-spacing: .05em; padding: 10px 14px; text-align: left; white-space: nowrap; }
+  th:last-child { text-align: right; }
+  td { font-family: 'DM Sans', sans-serif; font-size: .85rem; color: var(--text-dark); padding: 10px 14px; border-bottom: 1px solid #f0f7f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.is-me-row td { background: linear-gradient(90deg,#e8f5e9,#f0faf0); }
+  tr:hover:not(.is-me-row) td { background: #fafffe; }
+  .td-rank     { font-family: 'Lexend', sans-serif; font-weight: 700; color: var(--gray-text); width: 44px; }
+  .td-user     { display: flex; align-items: center; gap: 10px; }
+  .td-pts      { font-family: 'Lexend', sans-serif; font-weight: 700; color: var(--green-mid); text-align: right; }
+  .td-items    { color: var(--gray-text); font-size: .8rem; }
+  .td-impact   { color: var(--green-dark); font-size: .8rem; font-weight: 600; }
+  .td-recycled { color: #0ea5e9; font-size: .8rem; }
+  .td-donated  { color: #8b5cf6; font-size: .8rem; }
+  .change-up   { color: var(--green-bright); font-size: .72rem; font-weight: 600; }
+  .change-down { color: #ef4444; font-size: .72rem; font-weight: 600; }
+  .change-same { color: var(--gray-text); font-size: .72rem; }
+
+  .medal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 6px;
+    font-family: 'Lexend', sans-serif; font-size: .7rem; font-weight: 800; color: #fff;
+  }
+  .medal-1 { background: linear-gradient(135deg,#f59e0b,#d97706); }
+  .medal-2 { background: linear-gradient(135deg,#9ca3af,#6b7280); }
+  .medal-3 { background: linear-gradient(135deg,var(--green-bright),var(--green-mid)); }
+
+  /* FOOTER */
+  footer { background: var(--green-dark); color: #fff; margin-top: 3rem; position: relative; overflow: hidden; }
+  .footer-bg-text { position: absolute; bottom: -30px; right: -20px; font-family: 'Lexend', sans-serif; font-size: clamp(4rem,12vw,9rem); font-weight: 900; color: rgba(255,255,255,.04); pointer-events: none; white-space: nowrap; line-height: 1; }
+  .footer-top { padding: clamp(2.5rem,5vw,4rem) clamp(1rem,4vw,3rem) 2rem; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2.5rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .footer-logo-row { display: flex; align-items: center; gap: 9px; margin-bottom: .75rem; }
+  .footer-logo-name { font-family: 'Lexend', sans-serif; font-weight: 700; font-size: 1.25rem; color: #fff; }
+  .footer-desc { font-family: 'DM Sans', sans-serif; font-size: .85rem; color: rgba(255,255,255,.65); line-height: 1.65; margin-bottom: 1.25rem; }
+  .social-row { display: flex; gap: 8px; }
+  .social-btn {
+    width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,.1);
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    text-decoration: none; transition: background .2s;
+  }
+  .social-btn:hover { background: rgba(255,255,255,.2); }
+  .social-btn svg { width: 15px; height: 15px; fill: currentColor; }
+  .footer-col-title { font-family: 'Poppins', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--green-lemon); margin-bottom: 1rem; }
+  .footer-col a { display: block; font-family: 'DM Sans', sans-serif; font-size: .85rem; color: rgba(255,255,255,.65); text-decoration: none; margin-bottom: .5rem; transition: color .2s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-contact-item { display: flex; align-items: flex-start; gap: 8px; font-family: 'DM Sans', sans-serif; font-size: .83rem; color: rgba(255,255,255,.65); margin-bottom: .6rem; line-height: 1.4; }
+  .footer-contact-item svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding: 1.25rem clamp(1rem,4vw,3rem); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .footer-copy  { font-family: 'DM Sans', sans-serif; font-size: .78rem; color: rgba(255,255,255,.45); }
+  .footer-heart { font-family: 'DM Sans', sans-serif; font-size: .78rem; color: rgba(255,255,255,.45); }
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
+    .lb-grid { grid-template-columns: 1fr; }
+    .sidebar  { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .footer-top { grid-template-columns: 1.2fr 1fr 1fr; }
+    .footer-top .footer-col:last-child { grid-column: span 2; }
+    .rank-impact-col { display: none; }
+  }
+  @media (max-width:768px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .user-chip .user-info { display: none; }
+    .sidebar { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: span 2; }
+    .podium-wrap { gap: .5rem; }
+    .controls-row { flex-direction: column; align-items: flex-start; }
+    .my-rank-inner { gap: 1rem; }
+    .btn-action { margin-left: 0; }
+  }
+  @media (max-width:480px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-brand { grid-column: span 1; }
+    .scope-tabs { width: 100%; }
+    .scope-tab  { flex: 1; text-align: center; font-size: .8rem; padding: 7px 8px; }
+    .my-rank-sep { display: none; }
+    .my-rank-stats { gap: .75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <img src="logo/logo.png" alt="GreenWise Logo" class="logo-img size-header">
+      <span class="logo-name">GreenWise</span>
+    </a>
+
+    <nav>
+      <a href="#">Beranda</a>
+      <a href="#">Green Hub</a>
+      <a href="#" class="active">Leaderboard</a>
+    </nav>
+
+    <div class="user-chip">
+      <img class="av-img size-header" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dwi Anugrah">
+      <div class="user-info">
+        <div class="user-name">Dwi Anugrah</div>
+        <div class="user-points">1.240 poin</div>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#">Beranda</a>
+  <a href="#">Green Hub</a>
+  <a href="#" class="active">Leaderboard</a>
+  <a href="#">Dashboard</a>
+</div>
+
+<!-- HERO — now with real photo background -->
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Leaderboard</div>
+    <h1>Lihat Posisimu,<br>Lampaui Batasmu</h1>
+    <p>Bersaing secara positif bersama komunitas GreenWise. Setiap aksi hijau membawamu selangkah lebih dekat ke puncak.</p>
+  </div>
+</section>
+
+<!-- MY RANK BAR -->
+<div class="my-rank-bar">
+  <div class="my-rank-inner">
+    <span class="my-rank-label">Posisiku</span>
+    <div class="my-rank-stats">
+      <div class="my-rank-item">
+        <div class="rank-badge-me">#8</div>
+        <div>
+          <div class="my-rank-item-label">Rank Global</div>
+          <div class="my-rank-item-value">Dwi Anugrah</div>
+        </div>
+      </div>
+      <div class="my-rank-sep"></div>
+      <div class="my-rank-item">
+        <div>
+          <div class="my-rank-item-label">Poin</div>
+          <div class="my-rank-item-value">1.240 pts</div>
+        </div>
+      </div>
+      <div class="my-rank-sep"></div>
+      <div class="my-rank-item">
+        <div>
+          <div class="my-rank-item-label">Items Managed</div>
+          <div class="my-rank-item-value">34 items</div>
+        </div>
+      </div>
+      <div class="my-rank-sep"></div>
+      <div class="my-rank-item">
+        <div>
+          <div class="my-rank-item-label">Impact</div>
+          <div class="my-rank-item-value">−12.4 kg CO₂</div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-action">Tambah Aksi</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main-content">
+  <div class="controls-row">
+    <div class="scope-tabs" id="scopeTabs">
+      <button class="scope-tab active" data-scope="global">Global</button>
+      <button class="scope-tab" data-scope="school">My School</button>
+      <button class="scope-tab" data-scope="class">My Class</button>
+    </div>
+    <select class="period-select" id="periodSelect">
+      <option value="alltime">All Time</option>
+      <option value="monthly" selected>Bulan Ini</option>
+      <option value="weekly">Minggu Ini</option>
+    </select>
+  </div>
+
+  <div class="lb-grid">
+    <div>
+      <div class="podium-section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Top 3 Pejuang Hijau</div>
+            <div class="section-subtitle" id="scopeLabel">Peringkat Global · Bulan Ini</div>
+          </div>
+        </div>
+        <div class="podium-wrap" id="podiumWrap"></div>
+        <div class="rank-table-wrap" id="rankRows"></div>
+      </div>
+
+      <div class="full-table-section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Semua Peserta</div>
+            <div class="section-subtitle">Rank lengkap dengan detail kontribusi</div>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>Pengguna</th><th>Items</th>
+                <th>Recycled</th><th>Donated</th><th>Impact</th>
+                <th>Perubahan</th><th>Poin</th>
+              </tr>
+            </thead>
+            <tbody id="fullTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Achievement Categories</div>
+            <div class="section-subtitle">Pilih kategori untuk melihat top performer</div>
+          </div>
+        </div>
+        <div class="cat-list" id="catList"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title" id="catTitle">Most Points</div>
+            <div class="section-subtitle">Top 5 di kategori ini</div>
+          </div>
+        </div>
+        <div class="mini-list" id="miniList"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Progress ke Rank #7</div>
+            <div class="section-subtitle">Kamu butuh 80 poin lagi</div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div class="progress-label">
+                <span class="progress-title">Poin (1.240 / 1.320)</span>
+                <span class="progress-value">94%</span>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:94%"></div></div>
+              <div class="progress-hint">80 poin lagi untuk melampaui Rizky M.</div>
+            </div>
+            <div>
+              <div class="progress-label">
+                <span class="progress-title">Items Managed (34 / 50)</span>
+                <span class="progress-value">68%</span>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:68%"></div></div>
+              <div class="progress-hint">16 item lagi untuk mencapai milestone.</div>
+            </div>
+            <div>
+              <div class="progress-label">
+                <span class="progress-title">Impact (12.4 / 20 kg CO₂)</span>
+                <span class="progress-value">62%</span>
+              </div>
+              <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:62%"></div></div>
+              <div class="progress-hint">7.6 kg CO₂ lagi untuk badge Highest Impact.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bg-text">GreenWise</div>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <img src="logo/logo.png" alt="GreenWise Logo" class="logo-img size-footer">
+        <span class="footer-logo-name">GreenWise</span>
+      </div>
+      <p class="footer-desc">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas — demi masa depan bumi yang lebih hijau.</p>
+      <div class="social-row">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigasi</div>
+      <a href="#">Beranda</a>
+      <a href="#">Green Hub</a>
+      <a href="#">Leaderboard</a>
+      <a href="#">Dashboard</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Sumber Daya</div>
+      <a href="#">Panduan Daur Ulang</a>
+      <a href="#">Blog Lingkungan</a>
+      <a href="#">FAQ</a>
+      <a href="#">Pusat Bantuan</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Hubungi Kami</div>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        halo@greenwise.id
+      </div>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.41-1.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +62 812 3456 7890
+      </div>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Bandung, Indonesia
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 GreenWise. Semua hak dilindungi.</span>
+    <span class="footer-heart">Dibuat dengan sepenuh hati untuk bumi yang lebih hijau.</span>
+  </div>
+</footer>
+
+<script>
+const USERS = {
+  'Budi Wicaksono': 'https://randomuser.me/api/portraits/men/45.jpg',
+  'Sari Rahayu'   : 'https://randomuser.me/api/portraits/women/22.jpg',
+  'Fajar Aditya'  : 'https://randomuser.me/api/portraits/men/67.jpg',
+  'Mega Lestari'  : 'https://randomuser.me/api/portraits/women/44.jpg',
+  'Hendri Kurnia' : 'https://randomuser.me/api/portraits/men/12.jpg',
+  'Rini Susanti'  : 'https://randomuser.me/api/portraits/women/31.jpg',
+  'Rizky Maulana' : 'https://randomuser.me/api/portraits/men/58.jpg',
+  'Dwi Anugrah'   : 'https://randomuser.me/api/portraits/men/32.jpg',
+  'Eka Putri'     : 'https://randomuser.me/api/portraits/women/55.jpg',
+  'Yusuf Hakim'   : 'https://randomuser.me/api/portraits/men/76.jpg',
+  'Andini Putri'  : 'https://randomuser.me/api/portraits/women/14.jpg',
+  'Citra Dewi'    : 'https://randomuser.me/api/portraits/women/63.jpg',
+  'Dimas Saputra' : 'https://randomuser.me/api/portraits/men/29.jpg',
+};
+
+function imgHtml(name, sizeClass) {
+  const src = USERS[name] || 'https://randomuser.me/api/portraits/lego/1.jpg';
+  return `<img class="av-img ${sizeClass}" src="${src}" alt="${name}" loading="lazy" onerror="this.src='https://randomuser.me/api/portraits/lego/1.jpg'">`;
+}
+
+const CAT_ICONS = {
+  points : `<svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  items  : `<svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>`,
+  recycle: `<svg viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>`,
+  donate : `<svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>`,
+  reuse  : `<svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>`,
+  impact : `<svg viewBox="0 0 24 24" fill="none" stroke="#057331" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+};
+
+const leaderboardData = {
+  global: [
+    { rank:1,  name:'Budi Wicaksono', school:'SMAN 3 Bandung', cls:'XII IPA 1', pts:3450, items:72, recycled:38, donated:18, impact:28.6, change:0  },
+    { rank:2,  name:'Sari Rahayu',    school:'SMAN 3 Bandung', cls:'XI IPS 2',  pts:2180, items:48, recycled:22, donated:14, impact:18.2, change:+1 },
+    { rank:3,  name:'Fajar Aditya',   school:'SMAN 5 Bandung', cls:'XII IPA 3', pts:1920, items:41, recycled:19, donated:10, impact:15.8, change:-1 },
+    { rank:4,  name:'Mega Lestari',   school:'SMAN 5 Bandung', cls:'X IPA 2',   pts:1760, items:38, recycled:16, donated:9,  impact:14.1, change:+2 },
+    { rank:5,  name:'Hendri Kurnia',  school:'SMAN 1 Cimahi',  cls:'XI IPA 1',  pts:1620, items:35, recycled:14, donated:7,  impact:12.9, change:0  },
+    { rank:6,  name:'Rini Susanti',   school:'SMAN 1 Cimahi',  cls:'XII IPS 1', pts:1490, items:32, recycled:13, donated:8,  impact:11.7, change:-1 },
+    { rank:7,  name:'Rizky Maulana',  school:'SMAN 3 Bandung', cls:'XI IPA 3',  pts:1320, items:29, recycled:11, donated:6,  impact:10.5, change:+1 },
+    { rank:8,  name:'Dwi Anugrah',    school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:1240, items:34, recycled:15, donated:7,  impact:12.4, change:0, isMe:true },
+    { rank:9,  name:'Eka Putri',      school:'SMAN 7 Bandung', cls:'X IPS 1',   pts:1100, items:24, recycled:9,  donated:5,  impact:8.8,  change:+3 },
+    { rank:10, name:'Yusuf Hakim',    school:'SMAN 7 Bandung', cls:'XI IPA 2',  pts:980,  items:21, recycled:8,  donated:4,  impact:7.6,  change:-2 },
+  ],
+  school: [
+    { rank:1, name:'Budi Wicaksono', school:'SMAN 3 Bandung', cls:'XII IPA 1', pts:3450, items:72, recycled:38, donated:18, impact:28.6, change:0  },
+    { rank:2, name:'Sari Rahayu',    school:'SMAN 3 Bandung', cls:'XI IPS 2',  pts:2180, items:48, recycled:22, donated:14, impact:18.2, change:0  },
+    { rank:3, name:'Rizky Maulana',  school:'SMAN 3 Bandung', cls:'XI IPA 3',  pts:1320, items:29, recycled:11, donated:6,  impact:10.5, change:0  },
+    { rank:4, name:'Dwi Anugrah',    school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:1240, items:34, recycled:15, donated:7,  impact:12.4, change:0, isMe:true },
+    { rank:5, name:'Andini Putri',   school:'SMAN 3 Bandung', cls:'X IPA 1',   pts:890,  items:19, recycled:7,  donated:4,  impact:6.9,  change:+1 },
+  ],
+  class: [
+    { rank:1, name:'Budi Wicaksono', school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:2100, items:45, recycled:24, donated:10, impact:16.8, change:0  },
+    { rank:2, name:'Dwi Anugrah',    school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:1240, items:34, recycled:15, donated:7,  impact:12.4, change:+1, isMe:true },
+    { rank:3, name:'Citra Dewi',     school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:980,  items:21, recycled:9,  donated:5,  impact:7.8,  change:0  },
+    { rank:4, name:'Dimas Saputra',  school:'SMAN 3 Bandung', cls:'XII IPA 2', pts:760,  items:16, recycled:6,  donated:4,  impact:5.9,  change:-1 },
+  ],
+};
+
+const categories = [
+  { id:'points',  label:'Most Points',        color:'#fef3c7' },
+  { id:'items',   label:'Most Items Managed', color:'#dcfce7' },
+  { id:'recycle', label:'Most Recycled',      color:'#dbeafe' },
+  { id:'donate',  label:'Most Donated',       color:'#ede9fe' },
+  { id:'reuse',   label:'Most Reused',        color:'#fef9c3' },
+  { id:'impact',  label:'Highest Impact',     color:'#d1fae5' },
+];
+const catUnit = { points:'pts', items:'items', recycle:'recycled', donate:'donated', reuse:'reused', impact:'kg CO₂' };
+
+let currentScope = 'global';
+let currentCat   = 'points';
+
+const getVal  = (u,cat) => ({points:u.pts,items:u.items,recycle:u.recycled,donate:u.donated,reuse:Math.round(u.items*.3),impact:u.impact}[cat]);
+const meTag   = u => u.isMe ? '<span class="me-tag">Saya</span>' : '';
+const chgHtml = c => c>0?`<span class="change-up">+${c}</span>`:c<0?`<span class="change-down">${c}</span>`:`<span class="change-same">—</span>`;
+const medalHtml = r => r===1?'<span class="medal medal-1">1</span>':r===2?'<span class="medal medal-2">2</span>':r===3?'<span class="medal medal-3">3</span>':r;
+
+const crownSVG = `<svg class="podium-crown" viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg"><path d="M2 19h20v2H2v-2zM2 7l5 5 5-7 5 7 5-5v10H2V7z"/></svg>`;
+
+function renderPodium(scope) {
+  const d = leaderboardData[scope];
+  const order = [
+    { rc:'rank-2', u:d[1] },
+    { rc:'rank-1', u:d[0], crown:true },
+    { rc:'rank-3', u:d[2] },
+  ];
+  const label = ['1st','2nd','3rd'];
+  document.getElementById('podiumWrap').innerHTML = order.map(p => {
+    if (!p.u) return '';
+    const pos = p.rc==='rank-1'?0:p.rc==='rank-2'?1:2;
+    return `
+      <div class="podium-item ${p.rc}">
+        <div class="podium-avatar-wrap">
+          ${p.crown ? crownSVG : ''}
+          ${imgHtml(p.u.name,'size-podium')}
+          <div class="podium-rank-badge">${p.u.rank}</div>
+        </div>
+        <div class="podium-name">${p.u.name}</div>
+        <div class="podium-pts">${p.u.pts.toLocaleString('id')} pts</div>
+        <div class="podium-meta">${p.u.items} items</div>
+        <div class="podium-block"><span>${label[pos]}</span></div>
+      </div>`;
+  }).join('');
+}
+
+function renderRankRows(scope) {
+  const rows = leaderboardData[scope].slice(3);
+  const el   = document.getElementById('rankRows');
+  if (!rows.length) { el.innerHTML='<p style="padding:1rem 1.5rem;color:var(--gray-text);font-size:.85rem">Tidak ada peserta lain.</p>'; return; }
+  el.innerHTML = rows.map(u => `
+    <hr class="rank-divider">
+    <div class="rank-row ${u.isMe?'is-me':''}">
+      <div class="rank-num ${u.rank<=5?'top':''}">${u.rank}</div>
+      ${imgHtml(u.name,'size-row')}
+      <div class="rank-user-info">
+        <div class="rank-username">${u.name} ${meTag(u)}</div>
+        <div class="rank-school">${u.cls} · ${u.school}</div>
+      </div>
+      <div class="rank-impact-col">
+        <div class="impact-val">−${u.impact} kg</div>
+        <div class="impact-label">CO₂ saved</div>
+      </div>
+      <div class="rank-stats-col">
+        <div class="rank-pts">${u.pts.toLocaleString('id')}</div>
+        <div class="rank-items">${u.items} items</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderTable(scope) {
+  document.getElementById('fullTableBody').innerHTML = leaderboardData[scope].map(u => `
+    <tr class="${u.isMe?'is-me-row':''}">
+      <td class="td-rank">${medalHtml(u.rank)}</td>
+      <td>
+        <div class="td-user">
+          ${imgHtml(u.name,'size-table')}
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:600;display:flex;gap:6px;align-items:center">${u.name} ${meTag(u)}</div>
+            <div style="font-size:.7rem;color:var(--gray-text)">${u.cls}</div>
+          </div>
+        </div>
+      </td>
+      <td class="td-items">${u.items}</td>
+      <td class="td-recycled">${u.recycled}</td>
+      <td class="td-donated">${u.donated}</td>
+      <td class="td-impact">−${u.impact} kg</td>
+      <td>${chgHtml(u.change)}</td>
+      <td class="td-pts">${u.pts.toLocaleString('id')}</td>
+    </tr>`).join('');
+}
+
+function renderCategories() {
+  const data = leaderboardData[currentScope];
+  document.getElementById('catList').innerHTML = categories.map(c => {
+    const top = Math.max(...data.map(u=>getVal(u,c.id)));
+    return `
+      <div class="cat-item ${c.id===currentCat?'active':''}" data-cat="${c.id}">
+        <div class="cat-icon" style="background:${c.color}">${CAT_ICONS[c.id]}</div>
+        <span class="cat-name">${c.label}</span>
+        <span class="cat-count">${top.toLocaleString('id')}</span>
+      </div>`;
+  }).join('');
+  document.querySelectorAll('.cat-item').forEach(el=>{
+    el.addEventListener('click',()=>{ currentCat=el.dataset.cat; renderCategories(); renderMiniList(); });
+  });
+}
+
+function renderMiniList() {
+  const cat  = categories.find(c=>c.id===currentCat);
+  const data = [...leaderboardData[currentScope]].sort((a,b)=>getVal(b,cat.id)-getVal(a,cat.id)).slice(0,5);
+  document.getElementById('catTitle').textContent = cat.label;
+  document.getElementById('miniList').innerHTML = data.map((u,i)=>`
+    <div class="mini-row">
+      <div class="mini-rank">${i+1}</div>
+      ${imgHtml(u.name,'size-mini')}
+      <div class="mini-name">${u.name} ${meTag(u)}</div>
+      <div class="mini-val">${getVal(u,cat.id).toLocaleString('id')} ${catUnit[cat.id]}</div>
+    </div>`).join('');
+}
+
+function updateScopeLabel() {
+  const sn={global:'Global',school:'My School',class:'My Class'};
+  const pn={alltime:'All Time',monthly:'Bulan Ini',weekly:'Minggu Ini'};
+  document.getElementById('scopeLabel').textContent=
+    `Peringkat ${sn[currentScope]} · ${pn[document.getElementById('periodSelect').value]}`;
+}
+
+function renderAll() {
+  renderPodium(currentScope);
+  renderRankRows(currentScope);
+  renderTable(currentScope);
+  renderCategories();
+  renderMiniList();
+  updateScopeLabel();
+}
+
+document.getElementById('scopeTabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.scope-tab');
+  if(!btn)return;
+  document.querySelectorAll('.scope-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentScope=btn.dataset.scope;
+  renderAll();
+});
+document.getElementById('periodSelect').addEventListener('change',updateScopeLabel);
+document.getElementById('hamburgerBtn').addEventListener('click',()=>{
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+renderAll();
+</script>
+</body>
+</html>
