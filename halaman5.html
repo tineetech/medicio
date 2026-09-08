@@ -1,1 +1,777 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Keputusan · GreenWise</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#12241a',
+          paper: '#f6f7f1',
+          paperalt: '#edf0e2',
+          line: '#dde3d1',
+          deep: '#057331',
+          primary: '#0d9740',
+          mid: '#26b33e',
+          bright: '#44c536',
+          light: '#75de34',
+          lime: '#aef339'
+        },
+        fontFamily: {
+          display: ['Lexend', 'sans-serif'],
+          body: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #f6f7f1; }
+  ::selection { background: #aef339; color: #12241a; }
+  .leaf-mark { background: linear-gradient(135deg, #aef339 0%, #44c536 45%, #057331 100%); }
+
+  .fade-swap { animation: fadeSwap .4s ease; }
+  @keyframes fadeSwap {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .coin-pop { animation: coinPop .5s cubic-bezier(.22,1.4,.4,1); }
+  @keyframes coinPop {
+    0%   { transform: scale(.6); opacity: 0; }
+    60%  { transform: scale(1.12); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  .opt-card { border-color: #dde3d1; background: #ffffff; }
+  .opt-card[data-selected="true"] { border-color: #0d9740; background: rgba(13,151,64,.05); }
+  .opt-card[data-selected="true"] .opt-check { opacity: 1; transform: scale(1); }
+  .opt-check { opacity: 0; transform: scale(.6); transition: all .2s ease; }
+
+  .pill-card { border-color: #dde3d1; background: #ffffff; }
+  .pill-card[data-selected="true"] { border-color: #0d9740; background: rgba(13,151,64,.05); }
+
+  .step-line { background: #dde3d1; }
+  .step-dot { background: #edf0e2; color: #7a8a76; border: 2px solid #dde3d1; }
+  .step-dot[data-state="active"] { background: #0d9740; color: #fff; border-color: #0d9740; }
+  .step-dot[data-state="done"] { background: #12241a; color: #aef339; border-color: #12241a; }
+
+  .panel { display: none; }
+  .panel[data-visible="true"] { display: block; }
+
+  input:focus, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid #0d9740;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+</head>
+
+<body class="font-body text-ink antialiased">
+
+<!-- ===================== TOP NAVBAR ===================== -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-line">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
+
+    <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 shrink-0">
+      <div class="relative w-7 h-7 shrink-0">
+        <span class="absolute left-0 top-0 w-[18px] h-[18px] rounded-md leaf-mark"></span>
+        <span class="absolute right-0 bottom-0 w-[18px] h-[18px] rounded-md leaf-mark opacity-90"></span>
+      </div>
+      <span class="font-display font-semibold text-lg tracking-tight text-ink">GreenWise</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 font-ui text-sm text-ink/60">
+      <a href="https://greenwises.web.app/halaman1.html#beranda" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Beranda</a>
+      <a href="https://greenwises.web.app/green-hub.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Green Hub</a>
+      <a href="https://greenwises.web.app/leaderboard.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Leaderboard</a>
+      <a href="dashboard.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Dashboard</a>
+    </nav>
+
+    <div class="relative">
+      <button id="profileBtn" type="button" class="flex items-center gap-2.5 pl-2 pr-1 py-1 rounded-full hover:bg-paperalt transition-colors">
+        <div class="w-9 h-9 rounded-full bg-deep text-lime font-ui text-xs font-semibold flex items-center justify-center shrink-0">DA</div>
+        <span class="hidden sm:flex flex-col items-start leading-tight">
+          <span class="font-ui text-sm text-ink">Dwi Anugrah</span>
+          <span class="font-body text-xs text-ink/45" id="pointsDisplay">1.240 poin</span>
+        </span>
+        <i class='bx bx-chevron-down text-lg text-ink/40'></i>
+      </button>
+      <div id="profileMenu" class="hidden absolute right-0 top-[calc(100%+8px)] w-56 rounded-2xl border border-line bg-white shadow-lg shadow-ink/5 py-2 font-ui text-sm">
+        <div class="px-4 py-2.5 border-b border-line/70">
+          <p class="text-ink font-medium">Dwi Anugrah</p>
+          <p class="text-ink/40 text-xs font-body mt-0.5">dwi.anugrah@email.com</p>
+        </div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/70 hover:bg-paperalt transition-colors">
+          <i class='bx bx-grid-alt text-base'></i> Dashboard
+        </a>
+        <a href="my-impact.html" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/70 hover:bg-paperalt transition-colors">
+          <i class='bx bx-line-chart text-base'></i> My Impact
+        </a>
+        <div class="border-t border-line/70 mt-1 pt-1">
+          <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/50 hover:bg-paperalt transition-colors">
+            <i class='bx bx-log-out text-base'></i> Keluar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== MAIN ===================== -->
+<div class="pb-20 md:pb-10">
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 py-8 lg:py-10">
+
+    <a href="dashboard.html" class="inline-flex items-center gap-1.5 font-ui text-sm text-ink/50 hover:text-primary transition-colors mb-4">
+      <i class='bx bx-arrow-back text-base'></i> Kembali ke Dashboard
+    </a>
+
+    <div class="mb-6">
+      <h1 class="font-display font-semibold text-[28px] sm:text-3xl leading-tight text-ink">Detail Keputusan</h1>
+      <p class="font-body text-ink/60 text-sm sm:text-base mt-1 max-w-lg">Pilih tindakan yang sesuai dan selesaikan langkahnya untuk mendapatkan Green Coins.</p>
+    </div>
+
+    <!-- ===================== ITEM RECAP ===================== -->
+    <section class="rounded-2xl border border-line bg-white/70 p-5 mb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+        <div class="flex items-center gap-4 min-w-0 flex-1">
+          <div id="itemThumb" class="w-14 h-14 rounded-2xl leaf-mark flex items-center justify-center text-white text-xl shrink-0">
+            <i id="itemIcon" class='bx bxs-run'></i>
+          </div>
+          <div class="min-w-0">
+            <h2 id="itemName" class="font-display font-semibold text-lg text-ink leading-snug truncate">Sepatu Lari</h2>
+            <p id="itemCategory" class="font-body text-sm text-ink/50 truncate">Alas kaki · Olahraga</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span id="classBadge" class="font-ui text-xs font-medium px-3 py-1.5 rounded-full bg-deep text-lime whitespace-nowrap">Baik &amp; Bernilai</span>
+          <span class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/50 whitespace-nowrap">
+            <i class='bx bx-coin-stack text-sm align-[-2px]'></i> <span id="pointsPreview">hingga 60</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- demo switcher, hanya untuk pratinjau tanpa parameter -->
+      <div id="demoSwitcher" class="flex items-center gap-2 flex-wrap mt-4 pt-4 border-t border-line/70">
+        <span class="font-ui text-xs text-ink/35">Pratinjau skenario</span>
+        <button data-demo="shoes" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-lime/40 text-deep hover:bg-lime/60 transition-colors">Baik &amp; Bernilai</button>
+        <button data-demo="keyboard" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/60 hover:bg-line transition-colors">Kondisi Rendah</button>
+      </div>
+    </section>
+
+    <!-- ===================== PILIH TINDAKAN ===================== -->
+    <section class="mb-4">
+      <h2 class="font-display font-medium text-lg text-ink mb-3">Pilih tindakan</h2>
+
+      <!-- opsi untuk barang Good & Valuable -->
+      <div id="optionsGood" class="panel grid sm:grid-cols-3 gap-3">
+        <button type="button" data-action="jual" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-store'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Jual</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Jual melalui platform dan dapatkan Green Coins atau uang tunai.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">hingga +60 koin</span>
+        </button>
+        <button type="button" data-action="pakaiUlang" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-repeat'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Pakai Ulang</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Gunakan kembali sendiri atau berikan ke orang terdekat.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">+35 koin</span>
+        </button>
+        <button type="button" data-action="donasi" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-gift'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Donasi</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Salurkan ke mitra donasi yang membutuhkan.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">+50 koin</span>
+        </button>
+      </div>
+
+      <!-- opsi untuk barang Low Condition / Raw Material -->
+      <div id="optionsLow" class="panel grid sm:grid-cols-3 gap-3">
+        <button type="button" data-action="upcycle" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-brush'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Process / Upcycle</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Olah menjadi barang baru yang masih bisa dipakai.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">+40 koin</span>
+        </button>
+        <button type="button" data-action="recycle" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-recycle'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Recycle</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Serahkan material ke fasilitas daur ulang terdekat.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">+30 koin</span>
+        </button>
+        <button type="button" data-action="dispose" class="opt-card relative text-left rounded-2xl border-2 p-4 transition-colors">
+          <i class='bx bx-check-circle opt-check absolute top-3 right-3 text-lg text-primary'></i>
+          <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg mb-3"><i class='bx bx-trash'></i></div>
+          <p class="font-display font-semibold text-base text-ink mb-1">Dispose Properly</p>
+          <p class="font-body text-xs text-ink/50 leading-relaxed mb-3">Buang ke titik pengumpulan yang tepat, bukan sembarangan.</p>
+          <span class="font-ui text-[11px] px-2 py-0.5 rounded-full bg-lime/40 text-deep">hingga +50 koin</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== DETAIL PANELS ===================== -->
+    <div id="detailWrap" class="fade-swap">
+
+      <!-- ---------- JUAL ---------- -->
+      <section id="detailJual" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Jual via Platform</h3>
+          <i class='bx bx-store text-xl text-primary'></i>
+        </div>
+        <div class="rounded-xl bg-paperalt p-4 mb-5">
+          <p class="font-body text-xs text-ink/45 mb-1">Estimasi nilai barang</p>
+          <p id="jualEstimasi" class="font-display font-semibold text-xl text-ink">Rp120.000 – Rp165.000</p>
+        </div>
+
+        <p class="font-ui text-sm text-ink/70 mb-3">Pilih bentuk hasil penjualan</p>
+        <div class="grid sm:grid-cols-2 gap-3 mb-5">
+          <button type="button" data-payout="coins" class="pill-card text-left rounded-xl border-2 p-4 transition-colors">
+            <div class="flex items-center gap-2.5 mb-2">
+              <i class='bx bx-coin-stack text-lg text-primary'></i>
+              <p class="font-display font-semibold text-sm text-ink">Green Coins</p>
+            </div>
+            <p class="font-body text-xs text-ink/50 leading-relaxed">Cair instan ke akunmu, tanpa proses verifikasi. +60 koin.</p>
+          </button>
+          <button type="button" data-payout="money" class="pill-card text-left rounded-xl border-2 p-4 transition-colors">
+            <div class="flex items-center gap-2.5 mb-2">
+              <i class='bx bx-wallet text-lg text-primary'></i>
+              <p class="font-display font-semibold text-sm text-ink">Real Money</p>
+            </div>
+            <p class="font-body text-xs text-ink/50 leading-relaxed">Uang tunai ke rekeningmu, perlu verifikasi barang dulu.</p>
+          </button>
+        </div>
+
+        <!-- payout: green coins -->
+        <div id="payoutCoins" class="panel">
+          <button id="claimCoinsBtn" type="button" class="w-full sm:w-auto font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center justify-center gap-2">
+            <i class='bx bx-coin-stack'></i> Klaim 60 Green Coins
+          </button>
+        </div>
+
+        <!-- payout: real money -->
+        <div id="payoutMoney" class="panel">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2 w-full">
+              <div class="flex items-center gap-2 flex-1" id="moneyStepper"></div>
+            </div>
+          </div>
+          <p id="moneyStepLabel" class="font-body text-sm text-ink/60 mb-4">Ajukan barangmu untuk diverifikasi sebelum dana dicairkan.</p>
+          <button id="advanceMoneyBtn" type="button" class="w-full sm:w-auto font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center justify-center gap-2">
+            <i class='bx bx-send'></i> Ajukan Verifikasi
+          </button>
+        </div>
+      </section>
+
+      <!-- ---------- PAKAI ULANG ---------- -->
+      <section id="detailPakaiUlang" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Pakai Ulang</h3>
+          <i class='bx bx-repeat text-xl text-primary'></i>
+        </div>
+        <ul class="space-y-2.5 mb-5 font-body text-sm text-ink/70">
+          <li class="flex items-start gap-2"><i class='bx bx-check text-primary shrink-0 mt-0.5'></i> Gunakan kembali di rumah untuk keperluan sehari-hari.</li>
+          <li class="flex items-start gap-2"><i class='bx bx-check text-primary shrink-0 mt-0.5'></i> Tawarkan ke keluarga atau teman yang membutuhkan.</li>
+          <li class="flex items-start gap-2"><i class='bx bx-check text-primary shrink-0 mt-0.5'></i> Simpan sebagai cadangan jika masih relevan digunakan.</li>
+        </ul>
+        <button data-simple-confirm="pakaiUlang" data-coins="35" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+          <i class='bx bx-check'></i> Tandai Sudah Dipakai Ulang
+        </button>
+      </section>
+
+      <!-- ---------- DONASI ---------- -->
+      <section id="detailDonasi" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Donasi</h3>
+          <i class='bx bx-gift text-xl text-primary'></i>
+        </div>
+        <p class="font-body text-sm text-ink/60 mb-3">Pilih mitra donasi tujuan</p>
+        <div id="donasiList" class="space-y-2 mb-5"></div>
+        <button id="confirmDonasiBtn" data-coins="50" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+          <i class='bx bx-check'></i> Konfirmasi Donasi
+        </button>
+      </section>
+
+      <!-- ---------- PROCESS / UPCYCLE ---------- -->
+      <section id="detailUpcycle" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Panduan Process / Upcycle</h3>
+          <i class='bx bx-brush text-xl text-primary'></i>
+        </div>
+        <p id="upcycleIntro" class="font-body text-sm text-ink/50 mb-4">Panduan berikut disesuaikan dengan jenis material barangmu.</p>
+        <ol id="upcycleSteps" class="space-y-3 mb-5"></ol>
+        <button data-simple-confirm="upcycle" data-coins="40" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+          <i class='bx bx-check'></i> Tandai Selesai Diproses
+        </button>
+      </section>
+
+      <!-- ---------- RECYCLE ---------- -->
+      <section id="detailRecycle" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Panduan Recycle</h3>
+          <i class='bx bx-recycle text-xl text-primary'></i>
+        </div>
+        <ol id="recycleSteps" class="space-y-3 mb-5"></ol>
+        <p class="font-body text-sm text-ink/60 mb-3">Pilih fasilitas daur ulang tujuan</p>
+        <div id="recycleFacilityList" class="space-y-2 mb-5"></div>
+        <button id="confirmRecycleBtn" data-coins="30" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+          <i class='bx bx-check'></i> Konfirmasi Penyerahan
+        </button>
+      </section>
+
+      <!-- ---------- DISPOSE PROPERLY ---------- -->
+      <section id="detailDispose" class="panel rounded-2xl border border-line bg-white/70 p-5 mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-medium text-lg text-ink">Dispose Properly</h3>
+          <i class='bx bx-trash text-xl text-primary'></i>
+        </div>
+        <p class="font-body text-sm text-ink/60 mb-3">Pilih jenis titik pembuangan</p>
+        <div class="grid sm:grid-cols-2 gap-3 mb-5">
+          <button type="button" data-bin="hijau" class="pill-card text-left rounded-xl border-2 p-4 transition-colors">
+            <div class="flex items-center gap-2.5 mb-2">
+              <i class='bx bx-leaf text-lg text-primary'></i>
+              <p class="font-display font-semibold text-sm text-ink">Green Collection Bin</p>
+            </div>
+            <p class="font-body text-xs text-ink/50 leading-relaxed">Bin kerja sama mitra, material diproses lebih lanjut. +50 koin.</p>
+          </button>
+          <button type="button" data-bin="umum" class="pill-card text-left rounded-xl border-2 p-4 transition-colors">
+            <div class="flex items-center gap-2.5 mb-2">
+              <i class='bx bx-trash-alt text-lg text-primary'></i>
+              <p class="font-display font-semibold text-sm text-ink">Public Waste Bin</p>
+            </div>
+            <p class="font-body text-xs text-ink/50 leading-relaxed">Tempat sampah umum terdekat sebagai opsi terakhir. +10 koin.</p>
+          </button>
+        </div>
+        <p class="font-body text-sm text-ink/60 mb-3">Titik terdekat yang direkomendasikan</p>
+        <div id="disposeFacilityList" class="space-y-2 mb-5"></div>
+        <button id="confirmDisposeBtn" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+          <i class='bx bx-check'></i> Konfirmasi Pembuangan
+        </button>
+      </section>
+
+    </div>
+
+    <!-- ===================== SUCCESS STATE ===================== -->
+    <section id="successState" class="hidden rounded-2xl bg-deep text-paper p-6 sm:p-8 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-lime/20 flex items-center justify-center mx-auto mb-4 coin-pop">
+        <i class='bx bxs-badge-check text-3xl text-lime'></i>
+      </div>
+      <p class="font-ui text-xs text-paper/60 mb-2">Tindakan berhasil dicatat</p>
+      <h3 id="successTitle" class="font-display font-semibold text-2xl text-paper mb-2">Kamu mendapatkan +60 Green Coins</h3>
+      <p id="successNote" class="font-body text-sm text-paper/70 max-w-md mx-auto mb-6 leading-relaxed">Terima kasih sudah membuat keputusan yang lebih baik untuk lingkungan.</p>
+      <div class="flex items-center justify-center gap-3 flex-wrap">
+        <a href="dashboard.html" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-white text-ink hover:bg-paperalt transition-colors">Kembali ke Dashboard</a>
+        <a href="my-impact.html" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-lime text-deep hover:bg-light transition-colors">Lihat My Impact</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MOBILE BOTTOM NAV ===================== -->
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line px-4 py-2 flex items-center justify-between">
+  <a href="dashboard.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-grid-alt text-xl'></i>
+    <span class="font-ui text-[10px]">Dashboard</span>
+  </a>
+  <a href="https://greenwises.web.app/green-hub.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-leaf text-xl'></i>
+    <span class="font-ui text-[10px]">Green Hub</span>
+  </a>
+  <a href="my-impact.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-line-chart text-xl'></i>
+    <span class="font-ui text-[10px]">Dampak</span>
+  </a>
+  <a href="https://greenwises.web.app/leaderboard.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-trophy text-xl'></i>
+    <span class="font-ui text-[10px]">Peringkat</span>
+  </a>
+</nav>
+
+<script>
+  // ---------- data ----------
+  const ITEMS = {
+    shoes: {
+      name: 'Sepatu Lari', category: 'Alas kaki · Olahraga', icon: 'bxs-run', classification: 'good',
+      value: 'Rp120.000 – Rp165.000', material: 'tekstil'
+    },
+    keyboard: {
+      name: 'Keyboard Rusak', category: 'Elektronik · Aksesori komputer', icon: 'bx-keyboard', classification: 'low',
+      material: 'e-waste'
+    },
+    bottle: {
+      name: 'Botol Plastik Bekas', category: 'Kemasan · Minuman', icon: 'bx-drink', classification: 'low',
+      material: 'plastik'
+    },
+    phone: {
+      name: 'Ponsel Rusak Ringan', category: 'Elektronik · Gawai', icon: 'bx-mobile-alt', classification: 'good',
+      value: 'Rp350.000 – Rp600.000', material: 'e-waste'
+    }
+  };
+
+  const GUIDES = {
+    'e-waste': {
+      intro: 'Material elektronik memerlukan penanganan khusus agar aman dan komponennya bisa dimanfaatkan kembali.',
+      upcycle: [
+        'Matikan perangkat dan lepaskan baterai bila memungkinkan.',
+        'Pisahkan bagian yang masih berfungsi, seperti kabel atau casing.',
+        'Bungkus bagian tajam atau pecah agar aman saat dibawa.',
+        'Serahkan ke komunitas atau mitra upcycle elektronik terdekat.'
+      ],
+      recycle: [
+        'Jangan buang ke tempat sampah biasa, pisahkan sejak dari rumah.',
+        'Hapus data pribadi dari perangkat sebelum diserahkan.',
+        'Kumpulkan di wadah tertutup untuk menghindari kebocoran komponen.',
+        'Antarkan ke drop point khusus e-waste resmi terdekat.'
+      ],
+      facilities: ['E-Waste Center GreenWise', 'Bank Sampah Elektronik Kota', 'Drop Point Mitra Ritel Elektronik']
+    },
+    plastik: {
+      intro: 'Material plastik umumnya bisa langsung dipilah dan disetor ke bank sampah terdekat.',
+      upcycle: [
+        'Bersihkan sisa cairan dan label pada kemasan.',
+        'Pipihkan agar lebih ringkas saat disimpan atau dibawa.',
+        'Kelompokkan berdasarkan jenis plastik jika memungkinkan.',
+        'Salurkan ke komunitas kreatif yang mengolah plastik jadi produk baru.'
+      ],
+      recycle: [
+        'Pisahkan tutup botol dari badan botol sebelum disetor.',
+        'Bilas bagian dalam agar bebas dari sisa cairan.',
+        'Kumpulkan bersama sampah plastik sejenis lainnya.',
+        'Setorkan ke bank sampah atau TPS 3R terdekat.'
+      ],
+      facilities: ['Bank Sampah Hijau Sejahtera', 'TPS 3R Kelurahan Sukamaju', 'Drop Point Daur Ulang Plastik']
+    },
+    tekstil: {
+      intro: 'Material tekstil masih bisa diproses lebih lanjut meski sudah tidak nyaman dipakai.',
+      upcycle: [
+        'Periksa bagian yang masih utuh untuk dijadikan produk baru.',
+        'Pisahkan aksesori seperti tali sepatu atau kancing.',
+        'Bersihkan permukaan sebelum diserahkan ke pengrajin.',
+        'Salurkan ke komunitas upcycle tekstil terdekat.'
+      ],
+      recycle: [
+        'Pisahkan berdasarkan jenis bahan bila memungkinkan.',
+        'Pastikan barang dalam kondisi kering sebelum dikumpulkan.',
+        'Kumpulkan bersama tekstil bekas lain yang sudah tidak terpakai.',
+        'Setorkan ke bank sampah atau mitra daur ulang tekstil.'
+      ],
+      facilities: ['Bank Sampah Hijau Sejahtera', 'Komunitas Daur Ulang Tekstil', 'Drop Point Mitra Ritel']
+    }
+  };
+
+  const DONATION_PARTNERS = ['Rumah Yatim Sejahtera', 'Komunitas Baju Layak Pakai', 'Posko Bencana Terdekat'];
+  const DISPOSE_FACILITIES = ['Bank Sampah Hijau Sejahtera', 'TPS 3R Kelurahan Sukamaju', 'Tempat sampah umum terdekat'];
+
+  const MONEY_STEPS = ['Submit Item', 'Verification', 'Approved', 'Payment'];
+
+  // ---------- state ----------
+  let currentItem = null;
+  let selectedAction = null;
+  let selectedPayout = null;
+  let selectedBin = null;
+  let moneyStepIndex = 0;
+
+  // ---------- helpers ----------
+  function qs(id) { return document.getElementById(id); }
+
+  function loadItem(key) {
+    const data = ITEMS[key] || ITEMS.shoes;
+    currentItem = data;
+    qs('itemIcon').className = 'bx ' + data.icon;
+    qs('itemName').textContent = data.name;
+    qs('itemCategory').textContent = data.category;
+
+    const badge = qs('classBadge');
+    if (data.classification === 'good') {
+      badge.textContent = 'Baik & Bernilai';
+      badge.className = 'font-ui text-xs font-medium px-3 py-1.5 rounded-full bg-deep text-lime whitespace-nowrap';
+      qs('pointsPreview').textContent = 'hingga 60';
+    } else {
+      badge.textContent = 'Kondisi Rendah / Bahan Baku';
+      badge.className = 'font-ui text-xs font-medium px-3 py-1.5 rounded-full bg-paperalt text-primary whitespace-nowrap';
+      qs('pointsPreview').textContent = 'hingga 50';
+    }
+
+    qs('optionsGood').removeAttribute('data-visible');
+    qs('optionsLow').removeAttribute('data-visible');
+    if (data.classification === 'good') {
+      qs('optionsGood').setAttribute('data-visible', 'true');
+    } else {
+      qs('optionsLow').setAttribute('data-visible', 'true');
+    }
+
+    if (data.value) qs('jualEstimasi').textContent = data.value;
+
+    const guide = GUIDES[data.material] || GUIDES['e-waste'];
+    qs('upcycleIntro').textContent = guide.intro;
+    buildSteps('upcycleSteps', guide.upcycle);
+    buildSteps('recycleSteps', guide.recycle);
+    buildFacilityList('recycleFacilityList', guide.facilities, 'recycleFacility');
+
+    resetSelection();
+  }
+
+  function buildSteps(containerId, steps) {
+    const el = qs(containerId);
+    el.innerHTML = '';
+    steps.forEach((text, i) => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-3';
+      li.innerHTML = `
+        <span class="w-6 h-6 rounded-full bg-primary/10 text-primary font-ui text-xs font-medium flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span>
+        <span class="font-body text-sm text-ink/70 leading-relaxed">${text}</span>
+      `;
+      el.appendChild(li);
+    });
+  }
+
+  function buildFacilityList(containerId, facilities, groupName) {
+    const el = qs(containerId);
+    el.innerHTML = '';
+    facilities.forEach((name, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.group = groupName;
+      btn.className = 'pill-card w-full text-left rounded-xl border-2 p-3.5 flex items-center gap-3 transition-colors';
+      btn.innerHTML = `
+        <i class='bx bx-map-pin text-lg text-primary shrink-0'></i>
+        <span class="font-body text-sm text-ink/70">${name}</span>
+      `;
+      if (i === 0) btn.setAttribute('data-selected', 'true');
+      btn.addEventListener('click', () => {
+        el.querySelectorAll('.pill-card').forEach(b => b.removeAttribute('data-selected'));
+        btn.setAttribute('data-selected', 'true');
+      });
+      el.appendChild(btn);
+    });
+  }
+
+  // donasi & dispose facility lists dibangun sekali saja
+  buildFacilityList('donasiList', DONATION_PARTNERS, 'donasi');
+  buildFacilityList('disposeFacilityList', DISPOSE_FACILITIES, 'dispose');
+
+  // ---------- money stepper ----------
+  function buildMoneyStepper() {
+    const wrap = qs('moneyStepper');
+    wrap.innerHTML = '';
+    MONEY_STEPS.forEach((label, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'flex items-center flex-1 last:flex-none';
+      dot.innerHTML = `
+        <div class="flex flex-col items-center gap-1.5 shrink-0">
+          <div class="step-dot w-8 h-8 rounded-full flex items-center justify-center font-ui text-xs font-medium" data-step="${i}">${i + 1}</div>
+          <span class="font-ui text-[10px] text-ink/40 whitespace-nowrap hidden sm:block">${label}</span>
+        </div>
+        ${i < MONEY_STEPS.length - 1 ? '<div class="step-line h-0.5 flex-1 mx-1.5" data-line="' + i + '"></div>' : ''}
+      `;
+      wrap.appendChild(dot);
+    });
+    updateMoneyStepper();
+  }
+
+  function updateMoneyStepper() {
+    MONEY_STEPS.forEach((label, i) => {
+      const dot = document.querySelector(`.step-dot[data-step="${i}"]`);
+      if (!dot) return;
+      if (i < moneyStepIndex) dot.setAttribute('data-state', 'done');
+      else if (i === moneyStepIndex) dot.setAttribute('data-state', 'active');
+      else dot.removeAttribute('data-state');
+    });
+    document.querySelectorAll('[data-line]').forEach(line => {
+      const i = parseInt(line.dataset.line, 10);
+      line.style.background = i < moneyStepIndex ? '#12241a' : '#dde3d1';
+    });
+    qs('moneyStepLabel').textContent = {
+      0: 'Ajukan barangmu untuk diverifikasi sebelum dana dicairkan.',
+      1: 'Tim kami sedang memeriksa kondisi dan kelengkapan barangmu.',
+      2: 'Barangmu telah disetujui, dana akan segera diproses.',
+      3: 'Pembayaran berhasil dikirim ke metode pencairanmu.'
+    }[moneyStepIndex] || '';
+
+    const btn = qs('advanceMoneyBtn');
+    if (moneyStepIndex >= MONEY_STEPS.length - 1) {
+      btn.innerHTML = '<i class="bx bx-check"></i> Selesaikan Pembayaran';
+    } else {
+      btn.innerHTML = '<i class="bx bx-send"></i> Lanjutkan ke ' + MONEY_STEPS[moneyStepIndex + 1];
+    }
+  }
+
+  // ---------- selection reset ----------
+  function resetSelection() {
+    selectedAction = null;
+    selectedPayout = null;
+    selectedBin = null;
+    moneyStepIndex = 0;
+
+    document.querySelectorAll('.opt-card').forEach(b => b.removeAttribute('data-selected'));
+    document.querySelectorAll('.pill-card[data-payout], .pill-card[data-bin]').forEach(b => b.removeAttribute('data-selected'));
+    document.querySelectorAll('#detailWrap .panel').forEach(p => p.removeAttribute('data-visible'));
+    qs('payoutCoins').removeAttribute('data-visible');
+    qs('payoutMoney').removeAttribute('data-visible');
+    qs('successState').classList.add('hidden');
+  }
+
+  // ---------- action selection ----------
+  const DETAIL_MAP = {
+    jual: 'detailJual',
+    pakaiUlang: 'detailPakaiUlang',
+    donasi: 'detailDonasi',
+    upcycle: 'detailUpcycle',
+    recycle: 'detailRecycle',
+    dispose: 'detailDispose'
+  };
+
+  document.querySelectorAll('.opt-card').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.opt-card').forEach(b => b.removeAttribute('data-selected'));
+      btn.setAttribute('data-selected', 'true');
+      selectedAction = btn.dataset.action;
+
+      document.querySelectorAll('#detailWrap .panel').forEach(p => p.removeAttribute('data-visible'));
+      const targetId = DETAIL_MAP[selectedAction];
+      qs(targetId).setAttribute('data-visible', 'true');
+      qs('successState').classList.add('hidden');
+
+      qs('detailWrap').classList.remove('fade-swap');
+      void qs('detailWrap').offsetWidth;
+      qs('detailWrap').classList.add('fade-swap');
+
+      qs(targetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ---------- payout choice (jual) ----------
+  document.querySelectorAll('[data-payout]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-payout]').forEach(b => b.removeAttribute('data-selected'));
+      btn.setAttribute('data-selected', 'true');
+      selectedPayout = btn.dataset.payout;
+      qs('payoutCoins').removeAttribute('data-visible');
+      qs('payoutMoney').removeAttribute('data-visible');
+      if (selectedPayout === 'coins') {
+        qs('payoutCoins').setAttribute('data-visible', 'true');
+      } else {
+        moneyStepIndex = 0;
+        buildMoneyStepper();
+        qs('payoutMoney').setAttribute('data-visible', 'true');
+      }
+    });
+  });
+
+  qs('claimCoinsBtn').addEventListener('click', () => {
+    showSuccess(60, 'Kamu mendapatkan +60 Green Coins', 'Dana instan sudah ditambahkan ke saldo Green Coins-mu.');
+  });
+
+  qs('advanceMoneyBtn').addEventListener('click', () => {
+    if (moneyStepIndex >= MONEY_STEPS.length - 1) {
+      const amount = (currentItem && currentItem.value) ? currentItem.value.split('–')[0].trim() : 'Rp120.000';
+      showSuccess(null, `Pembayaran sebesar ${amount} berhasil dikirim`, 'Dana akan diterima sesuai metode pencairan yang kamu daftarkan.');
+      return;
+    }
+    moneyStepIndex += 1;
+    updateMoneyStepper();
+  });
+
+  // ---------- simple confirm actions (pakai ulang, upcycle) ----------
+  document.querySelectorAll('[data-simple-confirm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const coins = parseInt(btn.dataset.coins, 10);
+      const label = btn.dataset.simpleConfirm === 'pakaiUlang' ? 'Pakai Ulang' : 'Process / Upcycle';
+      showSuccess(coins, `Kamu mendapatkan +${coins} Green Coins`, `Tindakan "${label}" berhasil dicatat. Terima kasih sudah berkontribusi!`);
+    });
+  });
+
+  // ---------- donasi confirm ----------
+  qs('confirmDonasiBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#donasiList [data-selected="true"]');
+    const partner = selected ? selected.textContent.trim() : DONATION_PARTNERS[0];
+    showSuccess(50, 'Kamu mendapatkan +50 Green Coins', `Donasi akan disalurkan ke ${partner}.`);
+  });
+
+  // ---------- recycle confirm ----------
+  qs('confirmRecycleBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#recycleFacilityList [data-selected="true"]');
+    const facility = selected ? selected.textContent.trim() : '';
+    showSuccess(30, 'Kamu mendapatkan +30 Green Coins', `Barang akan diproses melalui ${facility}.`);
+  });
+
+  // ---------- dispose bin + confirm ----------
+  document.querySelectorAll('[data-bin]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-bin]').forEach(b => b.removeAttribute('data-selected'));
+      btn.setAttribute('data-selected', 'true');
+      selectedBin = btn.dataset.bin;
+    });
+  });
+
+  qs('confirmDisposeBtn').addEventListener('click', () => {
+    if (!selectedBin) selectedBin = 'hijau';
+    const coins = selectedBin === 'hijau' ? 50 : 10;
+    const binLabel = selectedBin === 'hijau' ? 'Green Collection Bin' : 'Public Waste Bin';
+    const selected = document.querySelector('#disposeFacilityList [data-selected="true"]');
+    const facility = selected ? selected.textContent.trim() : DISPOSE_FACILITIES[0];
+    showSuccess(coins, `Kamu mendapatkan +${coins} Green Coins`, `Barang dapat diserahkan melalui ${binLabel} di ${facility}.`);
+  });
+
+  // ---------- success state ----------
+  let currentPoints = 1240;
+  function showSuccess(coins, title, note) {
+    qs('successTitle').textContent = title;
+    qs('successNote').textContent = note;
+    qs('successState').classList.remove('hidden');
+    const icon = qs('successState').querySelector('.coin-pop');
+    icon.classList.remove('coin-pop');
+    void icon.offsetWidth;
+    icon.classList.add('coin-pop');
+
+    if (coins) {
+      currentPoints += coins;
+      qs('pointsDisplay').textContent = currentPoints.toLocaleString('id-ID') + ' poin';
+    }
+    qs('successState').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // ---------- demo switcher ----------
+  document.querySelectorAll('[data-demo]').forEach(btn => {
+    btn.addEventListener('click', () => loadItem(btn.dataset.demo));
+  });
+
+  // ---------- profile dropdown ----------
+  const profileBtn = qs('profileBtn');
+  const profileMenu = qs('profileMenu');
+  profileBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+  });
+  document.addEventListener('click', e => {
+    if (!profileMenu.contains(e.target) && e.target !== profileBtn) profileMenu.classList.add('hidden');
+  });
+
+  // ---------- init from query params ----------
+  const params = new URLSearchParams(window.location.search);
+  const initialItem = params.get('item');
+  loadItem(initialItem && ITEMS[initialItem] ? initialItem : 'shoes');
+</script>
+
+</body>
+</html>

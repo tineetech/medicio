@@ -1,1 +1,1003 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keputusan Sampah · GreenWise</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#12241a',
+          paper: '#f6f7f1',
+          paperalt: '#edf0e2',
+          line: '#dde3d1',
+          deep: '#057331',
+          primary: '#0d9740',
+          mid: '#26b33e',
+          bright: '#44c536',
+          light: '#75de34',
+          lime: '#aef339'
+        },
+        fontFamily: {
+          display: ['Lexend', 'sans-serif'],
+          body: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #f6f7f1; }
+  ::selection { background: #aef339; color: #12241a; }
+  .leaf-mark {
+    background: linear-gradient(135deg, #aef339 0%, #44c536 45%, #057331 100%);
+  }
+  .welcome-glow {
+    background: radial-gradient(circle at 85% 20%, rgba(174,243,57,0.35), transparent 55%),
+                linear-gradient(120deg, #057331 0%, #0d9740 55%, #26b33e 100%);
+  }
+  .metric-bar { transition: width .8s cubic-bezier(.22,.9,.3,1); }
+  .fade-swap { animation: fadeSwap .5s ease; }
+  .stat-bump { animation: statBump .5s ease; }
+  @keyframes fadeSwap {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes statBump {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.18); color: #0d9740; }
+    100% { transform: scale(1); }
+  }
+  .ring-progress { transition: stroke-dashoffset 1s cubic-bezier(.22,.9,.3,1); }
+  .tab-btn[data-active="true"] {
+    background: #12241a;
+    color: #f6f7f1;
+  }
+  .method-panel { display: none; }
+  .method-panel[data-visible="true"] { display: block; }
+  .rec-option-btn {
+    border-color: #dde3d1;
+    background: #ffffff;
+  }
+  .rec-option-btn[data-selected="true"] {
+    border-color: #0d9740;
+    background: rgba(13, 151, 64, 0.06);
+  }
+  .rec-option-btn[data-selected="true"] .rec-option-check {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .rec-option-check {
+    opacity: 0;
+    transform: scale(.6);
+    transition: all .2s ease;
+  }
+  input:focus, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid #0d9740;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+</head>
+
+<body class="font-body text-ink antialiased">
+
+<!-- ===================== TOP NAVBAR ===================== -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-line">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
+
+    <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 shrink-0">
+      <div class="relative w-7 h-7 shrink-0">
+        <span class="absolute left-0 top-0 w-[18px] h-[18px] rounded-md leaf-mark"></span>
+        <span class="absolute right-0 bottom-0 w-[18px] h-[18px] rounded-md leaf-mark opacity-90"></span>
+      </div>
+      <span class="font-display font-semibold text-lg tracking-tight text-ink">GreenWise</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 font-ui text-sm text-ink/60">
+      <a href="https://greenwises.web.app/halaman1.html#beranda" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Beranda</a>
+      <a href="https://greenwises.web.app/green-hub.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Green Hub</a>
+      <a href="https://greenwises.web.app/leaderboard.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Leaderboard</a>
+      <a href="dashboard.html" class="px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium">Dashboard</a>
+    </nav>
+
+    <div class="relative">
+      <button id="profileBtn" type="button" class="flex items-center gap-2.5 pl-2 pr-1 py-1 rounded-full hover:bg-paperalt transition-colors">
+        <div class="w-9 h-9 rounded-full bg-deep text-lime font-ui text-xs font-semibold flex items-center justify-center shrink-0">DA</div>
+        <span class="hidden sm:flex flex-col items-start leading-tight">
+          <span class="font-ui text-sm text-ink">Dwi Anugrah</span>
+          <span class="font-body text-xs text-ink/45">1.240 poin</span>
+        </span>
+        <i class='bx bx-chevron-down text-lg text-ink/40'></i>
+      </button>
+
+      <div id="profileMenu" class="hidden absolute right-0 top-[calc(100%+8px)] w-56 rounded-2xl border border-line bg-white shadow-lg shadow-ink/5 py-2 font-ui text-sm">
+        <div class="px-4 py-2.5 border-b border-line/70">
+          <p class="text-ink font-medium">Dwi Anugrah</p>
+          <p class="text-ink/40 text-xs font-body mt-0.5">dwi.anugrah@email.com</p>
+        </div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 px-4 py-2.5 text-primary bg-primary/5">
+          <i class='bx bx-grid-alt text-base'></i> Dashboard
+        </a>
+        <a href="my-impact.html" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/70 hover:bg-paperalt transition-colors">
+          <i class='bx bx-line-chart text-base'></i> My Impact
+        </a>
+        <div class="border-t border-line/70 mt-1 pt-1">
+          <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/50 hover:bg-paperalt transition-colors">
+            <i class='bx bx-log-out text-base'></i> Keluar
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ===================== MAIN ===================== -->
+<div class="pb-20 lg:pb-10">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-8 lg:py-10">
+
+    <!-- Page header -->
+    <div class="mb-6">
+      <h1 class="font-display font-semibold text-[28px] sm:text-3xl leading-tight text-ink">Keputusan Sampah</h1>
+      <p class="font-body text-ink/60 text-sm sm:text-base mt-1 max-w-lg">Analisis kondisi, nilai, dan dampak lingkungan barangmu sebelum menentukan tindakan.</p>
+    </div>
+
+    <!-- ===================== WELCOME + STATS ===================== -->
+    <section class="mb-8">
+      <div class="welcome-glow rounded-2xl text-paper p-6 sm:p-7 relative overflow-hidden">
+        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+          <div class="min-w-0">
+            <p id="greetingTime" class="font-ui text-sm text-paper/70 mb-1">Selamat datang kembali,</p>
+            <h2 class="font-display font-semibold text-2xl sm:text-[26px] text-paper leading-tight">Dwi Anugrah</h2>
+            <p class="font-body text-sm text-paper/70 mt-1.5 max-w-md leading-relaxed">Yuk lanjutkan kebiasaan baikmu memilah barang sebelum dibuang. Setiap keputusan kecil punya dampak besar bagi lingkungan.</p>
+          </div>
+          <div class="shrink-0 flex items-center gap-3 rounded-xl bg-white/10 backdrop-blur px-4 py-3">
+            <div class="w-10 h-10 rounded-lg bg-lime/20 flex items-center justify-center shrink-0">
+              <i class='bx bxs-flame text-xl text-lime'></i>
+            </div>
+            <div>
+              <p class="font-display font-semibold text-xl text-paper leading-none" id="streakCount">7</p>
+              <p class="font-ui text-[11px] text-paper/60 mt-1">Hari beruntun</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- stats grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+        <div class="rounded-2xl border border-line bg-white/70 p-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-2.5">
+            <i class='bx bx-scan text-lg text-primary'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statTotal">42</p>
+          <p class="font-body text-xs text-ink/45 mt-0.5">Total barang dianalisis</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white/70 p-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-2.5">
+            <i class='bx bx-calendar-week text-lg text-primary'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statWeek">5</p>
+          <p class="font-body text-xs text-ink/45 mt-0.5">Analisis minggu ini</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white/70 p-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-2.5">
+            <i class='bx bx-store text-lg text-primary'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statSold">18</p>
+          <p class="font-body text-xs text-ink/45 mt-0.5">Barang dijual</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white/70 p-4">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-2.5">
+            <i class='bx bx-recycle text-lg text-primary'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statRecycled">24</p>
+          <p class="font-body text-xs text-ink/45 mt-0.5">Barang didaur ulang</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INPUT ITEM ===================== -->
+    <section class="mb-8">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-medium text-lg text-ink">Masukkan barang</h2>
+      </div>
+
+      <div class="rounded-2xl border border-line bg-white/60 p-2 sm:p-3">
+        <!-- tabs -->
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <button type="button" data-method="scan" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/70 flex items-center justify-center gap-2 transition-colors" data-active="true">
+            <i class='bx bx-camera text-base'></i><span class="hidden sm:inline">Pindai Foto</span>
+          </button>
+          <button type="button" data-method="upload" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/70 flex items-center justify-center gap-2 transition-colors">
+            <i class='bx bx-upload text-base'></i><span class="hidden sm:inline">Unggah Gambar</span>
+          </button>
+          <button type="button" data-method="search" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/70 flex items-center justify-center gap-2 transition-colors">
+            <i class='bx bx-search text-base'></i><span class="hidden sm:inline">Cari Manual</span>
+          </button>
+        </div>
+
+        <!-- panels -->
+        <div class="px-2 pb-2">
+
+          <!-- SCAN / CAMERA PANEL -->
+          <div class="method-panel" data-panel="scan" data-visible="true">
+
+            <!-- idle state: belum buka kamera -->
+            <div id="cameraIdle" class="rounded-xl border border-dashed border-line px-5 py-8 text-center">
+              <i class='bx bx-camera text-3xl text-primary mb-2'></i>
+              <p class="font-ui text-sm text-ink/70">Ambil foto langsung menggunakan kamera perangkatmu.</p>
+              <p class="font-body text-xs text-ink/45 mt-1 mb-4">Didukung di desktop &amp; mobile — butuh izin akses kamera browser.</p>
+              <button id="openCameraBtn" type="button" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-primary text-white hover:bg-deep transition-colors inline-flex items-center gap-2">
+                <i class='bx bx-camera'></i> Buka Kamera
+              </button>
+              <p id="cameraError" class="font-body text-xs text-red-500 mt-3 hidden"></p>
+            </div>
+
+            <!-- active state: video stream -->
+            <div id="cameraActive" class="hidden rounded-xl overflow-hidden border border-line bg-black relative">
+              <video id="cameraVideo" autoplay playsinline muted class="w-full max-h-[380px] object-cover bg-black"></video>
+              <div class="absolute inset-x-0 bottom-0 p-4 flex items-center justify-center gap-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                <button id="closeCameraBtn" type="button" title="Tutup kamera" class="w-10 h-10 rounded-full bg-white/15 text-white flex items-center justify-center hover:bg-white/25 transition-colors">
+                  <i class='bx bx-x text-xl'></i>
+                </button>
+                <button id="captureBtn" type="button" title="Ambil foto" class="w-16 h-16 rounded-full bg-white border-4 border-white/40 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+                  <span class="w-11 h-11 rounded-full bg-primary"></span>
+                </button>
+                <button id="switchCameraBtn" type="button" title="Ganti kamera" class="w-10 h-10 rounded-full bg-white/15 text-white flex items-center justify-center hover:bg-white/25 transition-colors">
+                  <i class='bx bx-refresh text-xl'></i>
+                </button>
+              </div>
+            </div>
+
+            <canvas id="cameraCanvas" class="hidden"></canvas>
+          </div>
+
+          <!-- UPLOAD PANEL -->
+          <div class="method-panel" data-panel="upload">
+            <label for="fileInput" class="cursor-pointer block rounded-xl border border-dashed border-line px-5 py-8 text-center hover:border-primary/50 hover:bg-primary/5 transition-colors">
+              <i class='bx bx-image-add text-3xl text-primary mb-2'></i>
+              <p class="font-ui text-sm text-ink/70">Klik untuk memilih foto barang</p>
+              <p class="font-body text-xs text-ink/45 mt-1">JPG atau PNG, maksimal 10MB</p>
+            </label>
+            <input id="fileInput" type="file" accept="image/*" class="hidden">
+          </div>
+
+          <!-- SEARCH PANEL -->
+          <div class="method-panel" data-panel="search">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <div class="relative flex-1">
+                <i class='bx bx-search absolute left-3.5 top-1/2 -translate-y-1/2 text-ink/40'></i>
+                <input id="searchInput" type="text" placeholder="Contoh: sepatu lari, keyboard rusak"
+                  class="w-full font-body text-sm bg-paperalt rounded-xl pl-10 pr-3 py-3 text-ink placeholder:text-ink/35 border border-transparent focus:border-primary/40 focus:bg-white transition-colors">
+              </div>
+              <button id="searchBtn" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-deep transition-colors shrink-0">
+                Analisis
+              </button>
+            </div>
+            <p id="searchHint" class="font-body text-xs text-ink/40 mt-2 min-h-[1rem]"></p>
+          </div>
+
+        </div>
+
+        <!-- quick demo -->
+        <div class="flex items-center gap-2 flex-wrap px-2 pb-2 pt-1 border-t border-line/70 mt-1">
+          <span class="font-ui text-xs text-ink/40">Coba contoh</span>
+          <button data-demo="shoes" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-lime/40 text-deep hover:bg-lime/60 transition-colors">Sepatu Lari</button>
+          <button data-demo="keyboard" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/60 hover:bg-line transition-colors">Keyboard Rusak</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RESULTS ===================== -->
+    <div id="results" class="transition-opacity duration-300">
+
+      <!-- LOADING STATE -->
+      <div id="loadingState" class="hidden rounded-2xl border border-line bg-white/70 p-10 sm:p-14 flex flex-col items-center justify-center text-center gap-3 mb-4">
+        <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <p class="font-ui text-sm font-medium text-ink/80">Menganalisis barang dengan AI...</p>
+        <p class="font-body text-xs text-ink/40">Mendeteksi kategori, kondisi, dan estimasi nilai barang</p>
+      </div>
+
+      <!-- RESULTS CONTENT -->
+      <div id="resultsContent">
+
+        <!-- Identification + Classification -->
+        <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+
+          <!-- identification -->
+          <div class="md:col-span-2 rounded-2xl border border-line bg-white/70 p-5 flex flex-col">
+            <p class="font-ui text-xs text-ink/40 mb-3">Identifikasi barang</p>
+            <div class="flex items-start gap-4">
+              <div id="itemThumb" class="w-16 h-16 rounded-2xl leaf-mark flex items-center justify-center text-white text-2xl shrink-0 overflow-hidden">
+                <i class='bx bxs-run'></i>
+              </div>
+              <div class="min-w-0">
+                <h3 id="itemName" class="font-display font-semibold text-xl text-ink leading-snug">Sepatu Lari</h3>
+                <p id="itemCategory" class="font-body text-sm text-ink/50 mt-0.5">Alas kaki · Olahraga</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mt-5 pt-4 border-t border-line/70">
+              <div class="relative w-12 h-12 shrink-0">
+                <svg width="48" height="48" viewBox="0 0 56 56">
+                  <circle cx="28" cy="28" r="24" stroke="#edf0e2" stroke-width="5" fill="none"/>
+                  <circle id="confidenceRing" class="ring-progress" cx="28" cy="28" r="24" stroke="#0d9740" stroke-width="5" fill="none" stroke-linecap="round" transform="rotate(-90 28 28)" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+                </svg>
+                <span id="confidenceValue" class="absolute inset-0 flex items-center justify-center font-ui text-[11px] font-medium text-ink">–</span>
+              </div>
+              <p class="font-body text-xs text-ink/45">Tingkat keyakinan identifikasi AI</p>
+            </div>
+          </div>
+
+          <!-- classification -->
+          <div id="classCard" class="md:col-span-3 rounded-2xl p-5 flex flex-col justify-between bg-deep text-paper">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-ui text-xs text-paper/50 mb-2">Klasifikasi</p>
+                <h3 id="classTitle" class="font-display font-semibold text-2xl leading-tight">Baik &amp; Bernilai</h3>
+              </div>
+              <div id="classIconWrap" class="w-11 h-11 rounded-xl bg-lime/20 flex items-center justify-center shrink-0">
+                <i id="classIcon" class='bx bx-badge-check text-2xl text-lime'></i>
+              </div>
+            </div>
+            <ul id="classList" class="grid sm:grid-cols-3 gap-2.5 mt-5 font-body text-sm"></ul>
+          </div>
+        </section>
+
+        <!-- Condition assessment -->
+        <section class="rounded-2xl border border-line bg-white/70 p-5 mb-4">
+          <h2 class="font-display font-medium text-lg text-ink mb-4">Penilaian kondisi</h2>
+          <div id="metricsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-8"></div>
+        </section>
+
+        <!-- Value + Impact -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+          <div class="rounded-2xl border border-line bg-white/70 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-display font-medium text-lg text-ink">Estimasi nilai</h2>
+              <i class='bx bx-tag text-xl text-primary'></i>
+            </div>
+            <p id="valueAmount" class="font-display font-semibold text-2xl text-ink">Rp120.000 – Rp165.000</p>
+            <p id="valueNote" class="font-body text-sm text-ink/50 mt-2 leading-relaxed">Estimasi berdasarkan kondisi dan tipe barang serupa di pasar bekas.</p>
+          </div>
+
+          <div class="rounded-2xl border border-line bg-white/70 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="font-display font-medium text-lg text-ink">Dampak lingkungan</h2>
+              <i class='bx bx-leaf text-xl text-primary'></i>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <p id="impactWaste" class="font-display font-semibold text-lg text-ink">0,6 kg</p>
+                <p class="font-body text-xs text-ink/45 mt-0.5">Sampah teralihkan</p>
+              </div>
+              <div>
+                <p id="impactCo2" class="font-display font-semibold text-lg text-ink">1,8 kg</p>
+                <p class="font-body text-xs text-ink/45 mt-0.5">CO₂e dihindari</p>
+              </div>
+              <div>
+                <p id="impactWater" class="font-display font-semibold text-lg text-ink">850 L</p>
+                <p class="font-body text-xs text-ink/45 mt-0.5">Air terhemat</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recommended path -->
+        <section class="rounded-2xl bg-primary/10 border border-primary/20 p-5 sm:p-6">
+          <p class="font-ui text-xs text-deep/70 mb-3">Jalur rekomendasi</p>
+
+          <!-- CHOICE MODE: tampil hanya jika klasifikasi "Baik & Bernilai" -->
+          <div id="recChoice" class="hidden mb-5">
+            <p class="font-body text-sm text-ink/60 mb-3">Barang ini masih dalam kondisi baik. Pilih tindakan yang ingin kamu lakukan:</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <button type="button" data-option="jual" class="rec-option-btn relative text-left rounded-xl border-2 p-4 transition-colors">
+                <i class='bx bx-check-circle rec-option-check absolute top-3 right-3 text-lg text-primary'></i>
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg shrink-0">
+                    <i class='bx bx-store'></i>
+                  </div>
+                  <p class="font-display font-semibold text-base text-ink">Jual</p>
+                </div>
+                <p class="font-body text-xs text-ink/50 leading-relaxed">Jual ke pasar barang bekas dan dapatkan nilai tambah dari barangmu.</p>
+              </button>
+              <button type="button" data-option="daurUlang" class="rec-option-btn relative text-left rounded-xl border-2 p-4 transition-colors">
+                <i class='bx bx-check-circle rec-option-check absolute top-3 right-3 text-lg text-primary'></i>
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white text-lg shrink-0">
+                    <i class='bx bx-recycle'></i>
+                  </div>
+                  <p class="font-display font-semibold text-base text-ink">Daur Ulang</p>
+                </div>
+                <p class="font-body text-xs text-ink/50 leading-relaxed">Salurkan ke fasilitas daur ulang meskipun masih memiliki nilai jual.</p>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white text-xl shrink-0">
+                <i id="recIcon" class='bx bx-store'></i>
+              </div>
+              <div>
+                <p id="recPrimary" class="font-display font-semibold text-xl text-ink">Jual</p>
+                <div id="recSecondary" class="flex items-center gap-1.5 mt-1"></div>
+              </div>
+            </div>
+            <p id="recReason" class="font-body text-sm text-ink/60 leading-relaxed sm:border-l sm:border-primary/20 sm:pl-5 flex-1">
+              Kondisi masih baik, fungsional penuh, dan memiliki nilai jual yang solid di pasar sepatu bekas.
+            </p>
+          </div>
+          <div class="flex items-center justify-between mt-5 pt-4 border-t border-primary/15">
+            <p class="font-body text-xs text-ink/40">Langkah berikutnya ada di halaman Detail Keputusan.</p>
+            <a id="recLanjutkanBtn" href="decision-detail.html" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-ink text-paper flex items-center gap-1.5 hover:bg-deep transition-colors">
+              Lanjutkan <i class='bx bx-right-arrow-alt'></i>
+            </a>
+          </div>
+        </section>
+
+      </div>
+      <!-- /resultsContent -->
+
+    </div>
+  </main>
+</div>
+
+<!-- ===================== MOBILE BOTTOM NAV ===================== -->
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line px-4 py-2 flex items-center justify-between">
+  <a href="dashboard.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-primary">
+    <i class='bx bx-grid-alt text-xl'></i>
+    <span class="font-ui text-[10px]">Dashboard</span>
+  </a>
+  <a href="https://greenwises.web.app/green-hub.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-leaf text-xl'></i>
+    <span class="font-ui text-[10px]">Green Hub</span>
+  </a>
+  <a href="my-impact.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-line-chart text-xl'></i>
+    <span class="font-ui text-[10px]">Dampak</span>
+  </a>
+  <a href="https://greenwises.web.app/leaderboard.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-trophy text-xl'></i>
+    <span class="font-ui text-[10px]">Peringkat</span>
+  </a>
+</nav>
+
+<script>
+  // ---------- greeting ----------
+  function setGreeting() {
+    const hour = new Date().getHours();
+    let text = 'Selamat malam,';
+    if (hour >= 4 && hour < 11) text = 'Selamat pagi,';
+    else if (hour >= 11 && hour < 15) text = 'Selamat siang,';
+    else if (hour >= 15 && hour < 18) text = 'Selamat sore,';
+    document.getElementById('greetingTime').textContent = text;
+  }
+  setGreeting();
+
+  // ---------- stats (dummy, bertambah seiring aktivitas) ----------
+  const stats = {
+    total: 42,
+    week: 5,
+    sold: 18,
+    recycled: 24
+  };
+  let lastCountedAction = null; // 'sold' | 'recycled' | null, aksi yang terakhir dihitung untuk analisis berjalan
+
+  function renderStat(key, elId) {
+    const el = document.getElementById(elId);
+    el.textContent = stats[key];
+    el.classList.remove('stat-bump');
+    void el.offsetWidth; // reflow agar animasi bisa retrigger
+    el.classList.add('stat-bump');
+  }
+
+  function bumpStatsOnAnalysisComplete() {
+    stats.total += 1;
+    stats.week += 1;
+    renderStat('total', 'statTotal');
+    renderStat('week', 'statWeek');
+  }
+
+  function countAction(action) {
+    // action: 'sold' | 'recycled'
+    if (lastCountedAction === action) return;
+    if (lastCountedAction === 'sold') stats.sold -= 1;
+    if (lastCountedAction === 'recycled') stats.recycled -= 1;
+
+    if (action === 'sold') stats.sold += 1;
+    if (action === 'recycled') stats.recycled += 1;
+
+    lastCountedAction = action;
+    renderStat('sold', 'statSold');
+    renderStat('recycled', 'statRecycled');
+  }
+
+  // ---------- data ----------
+  const METRICS = [
+    { key: 'physicalCondition', label: 'Kondisi Fisik', icon: 'bx-shield-quarter' },
+    { key: 'usability', label: 'Kegunaan', icon: 'bx-check-shield' },
+    { key: 'damage', label: 'Tingkat Kerusakan', icon: 'bx-error-circle', inverse: true },
+    { key: 'completeness', label: 'Kelengkapan', icon: 'bx-list-ul' },
+    { key: 'reusePotential', label: 'Potensi Pakai Ulang', icon: 'bx-repeat' },
+    { key: 'resalePotential', label: 'Potensi Jual Kembali', icon: 'bx-tag' },
+    { key: 'recyclingPotential', label: 'Potensi Daur Ulang', icon: 'bx-recycle' }
+  ];
+
+  const ITEMS = {
+    shoes: {
+      name: 'Sepatu Lari',
+      category: 'Alas kaki · Olahraga',
+      icon: 'bxs-run',
+      confidence: 96,
+      metrics: { physicalCondition: 82, usability: 90, damage: 15, completeness: 95, reusePotential: 88, resalePotential: 76, recyclingPotential: 60 },
+      classification: 'good',
+      reasons: ['Kondisi fisik masih baik', 'Masih berfungsi penuh', 'Memiliki potensi nilai jual'],
+      impact: { waste: '0,6 kg', co2: '1,8 kg', water: '850 L' },
+      options: {
+        jual: {
+          primary: 'Jual',
+          icon: 'bx-store',
+          secondary: ['Pakai Ulang', 'Donasi'],
+          reason: 'Kondisi masih baik, fungsional penuh, dan memiliki nilai jual yang solid di pasar sepatu bekas.',
+          value: { amount: 'Rp120.000 – Rp165.000', note: 'Estimasi berdasarkan kondisi dan tipe sepatu serupa di pasar bekas.' },
+          impact: { waste: '0,6 kg', co2: '1,8 kg', water: '850 L' }
+        },
+        daurUlang: {
+          primary: 'Daur Ulang',
+          icon: 'bx-recycle',
+          secondary: ['Bank Sampah', 'Program Daur Ulang Sepatu'],
+          reason: 'Kamu bisa menyalurkan sepatu ini ke program daur ulang alas kaki agar material sol dan kainnya diproses menjadi bahan baku baru, meski masih memiliki nilai jual.',
+          value: { amount: 'Rp15.000 – Rp25.000 / kg', note: 'Nilai berdasarkan harga material daur ulang alas kaki (karet & tekstil) di fasilitas mitra.' },
+          impact: { waste: '0,6 kg', co2: '1,1 kg', water: '500 L' }
+        }
+      }
+    },
+    keyboard: {
+      name: 'Keyboard Rusak',
+      category: 'Elektronik · Aksesori komputer',
+      icon: 'bx-keyboard',
+      confidence: 91,
+      metrics: { physicalCondition: 25, usability: 10, damage: 78, completeness: 40, reusePotential: 20, resalePotential: 0, recyclingPotential: 70 },
+      classification: 'low',
+      reasons: ['Kondisi fisik buruk, sejumlah tombol tidak berfungsi', 'Tidak dapat digunakan secara normal', 'Tidak memiliki potensi nilai jual'],
+      value: { amount: null, note: 'Tidak memiliki nilai jual karena kerusakan signifikan pada unit.' },
+      impact: { waste: '0,35 kg', co2: '0,4 kg', water: '120 L' },
+      recommended: { primary: 'Daur Ulang', secondary: ['Buang dengan Benar'], icon: 'bx-recycle', reason: 'Kerusakan signifikan membuat unit ini tidak layak jual, namun komponen elektroniknya masih bisa diproses melalui jalur daur ulang.' }
+    },
+    bottle: {
+      name: 'Botol Plastik Bekas',
+      category: 'Kemasan · Minuman',
+      icon: 'bx-drink',
+      confidence: 88,
+      metrics: { physicalCondition: 55, usability: 30, damage: 40, completeness: 70, reusePotential: 45, resalePotential: 10, recyclingPotential: 92 },
+      classification: 'low',
+      reasons: ['Material tunggal, mudah dipilah', 'Tidak layak dipakai ulang untuk konsumsi', 'Sangat cocok untuk daur ulang plastik'],
+      value: { amount: 'Rp500 – Rp1.500 / kg', note: 'Nilai jual mengikuti harga plastik daur ulang di bank sampah setempat.' },
+      impact: { waste: '0,05 kg', co2: '0,15 kg', water: '40 L' },
+      recommended: { primary: 'Daur Ulang', secondary: ['Setor ke Bank Sampah'], icon: 'bx-recycle', reason: 'Botol plastik ini paling optimal diproses melalui jalur daur ulang material demi mengurangi limbah plastik baru.' }
+    },
+    phone: {
+      name: 'Ponsel Rusak Ringan',
+      category: 'Elektronik · Gawai',
+      icon: 'bx-mobile-alt',
+      confidence: 93,
+      metrics: { physicalCondition: 60, usability: 45, damage: 50, completeness: 85, reusePotential: 55, resalePotential: 58, recyclingPotential: 65 },
+      classification: 'good',
+      reasons: ['Layar retak namun mesin masih menyala', 'Komponen internal masih bisa dipakai ulang', 'Memiliki nilai jual sebagai sparepart'],
+      options: {
+        jual: {
+          primary: 'Jual',
+          icon: 'bx-store',
+          secondary: ['Servis', 'Tukar Tambah'],
+          reason: 'Meski layar rusak, komponen inti masih berfungsi sehingga tetap memiliki nilai jual sebagai unit servis atau sparepart.',
+          value: { amount: 'Rp350.000 – Rp600.000', note: 'Estimasi nilai jual sebagai unit sparepart atau perbaikan ke penjual elektronik bekas.' },
+          impact: { waste: '0,2 kg', co2: '12 kg', water: '1.200 L' }
+        },
+        daurUlang: {
+          primary: 'Daur Ulang',
+          icon: 'bx-recycle',
+          secondary: ['E-Waste Center'],
+          reason: 'Kamu juga bisa menyalurkan ponsel ini ke pusat daur ulang elektronik (e-waste) agar komponen logam dan material berharga di dalamnya diproses dengan aman.',
+          value: { amount: 'Rp50.000 – Rp90.000', note: 'Estimasi nilai dari kandungan logam mulia & komponen yang dapat didaur ulang oleh fasilitas e-waste.' },
+          impact: { waste: '0,2 kg', co2: '8 kg', water: '700 L' }
+        }
+      }
+    }
+  };
+
+  const ITEM_KEYS = Object.keys(ITEMS);
+  function randomItemKey() {
+    return ITEM_KEYS[Math.floor(Math.random() * ITEM_KEYS.length)];
+  }
+
+  // ---------- build metric rows ----------
+  const metricsGrid = document.getElementById('metricsGrid');
+  METRICS.forEach(m => {
+    const row = document.createElement('div');
+    row.className = 'mb-4';
+    row.innerHTML = `
+      <div class="flex items-center justify-between text-sm font-ui mb-1.5">
+        <span class="flex items-center gap-2 text-ink/65"><i class="bx ${m.icon} text-base text-primary/80"></i>${m.label}</span>
+        <span class="metric-value font-medium text-ink" data-key="${m.key}">–</span>
+      </div>
+      <div class="h-1.5 rounded-full bg-paperalt overflow-hidden">
+        <div class="metric-bar h-full rounded-full" data-key="${m.key}" style="width:0%"></div>
+      </div>
+      ${m.inverse ? '<p class="font-body text-[11px] text-ink/35 mt-1">Semakin rendah semakin baik</p>' : ''}
+    `;
+    metricsGrid.appendChild(row);
+  });
+
+  function barColor(value, inverse) {
+    const v = inverse ? 100 - value : value;
+    if (v >= 70) return '#75de34';
+    if (v >= 40) return '#0d9740';
+    return '#057331';
+  }
+
+  // ---------- render ----------
+  const circumference = 2 * Math.PI * 24;
+  let uploadedImage = null;
+  let currentItemData = null;
+  let currentItemKey = null;
+  let currentRecOption = 'jual';
+
+  function render(id) {
+    const data = ITEMS[id];
+    currentItemData = data;
+    currentItemKey = id;
+    lastCountedAction = null;
+
+    const results = document.getElementById('results');
+    results.classList.add('fade-swap');
+    setTimeout(() => results.classList.remove('fade-swap'), 500);
+
+    // identification
+    document.getElementById('itemName').textContent = data.name;
+    document.getElementById('itemCategory').textContent = data.category;
+    const thumb = document.getElementById('itemThumb');
+    if (uploadedImage) {
+      thumb.innerHTML = `<img src="${uploadedImage}" class="w-full h-full object-cover" alt="Foto barang yang dianalisis">`;
+    } else {
+      thumb.innerHTML = `<i class='bx ${data.icon}'></i>`;
+    }
+
+    const offset = circumference * (1 - data.confidence / 100);
+    const ring = document.getElementById('confidenceRing');
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = offset;
+    document.getElementById('confidenceValue').textContent = data.confidence + '%';
+
+    // classification
+    const classCard = document.getElementById('classCard');
+    const classTitle = document.getElementById('classTitle');
+    const classIcon = document.getElementById('classIcon');
+    const classIconWrap = document.getElementById('classIconWrap');
+    const classList = document.getElementById('classList');
+    classList.innerHTML = '';
+    data.reasons.forEach(r => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-2';
+      li.innerHTML = `<i class="bx bx-check text-lg ${data.classification === 'good' ? 'text-lime' : 'text-primary'} shrink-0 mt-0.5"></i><span class="${data.classification === 'good' ? 'text-paper/85' : 'text-ink/70'}">${r}</span>`;
+      classList.appendChild(li);
+    });
+
+    if (data.classification === 'good') {
+      classCard.className = 'md:col-span-3 rounded-2xl p-5 flex flex-col justify-between bg-deep text-paper';
+      classTitle.textContent = 'Baik & Bernilai';
+      classTitle.className = 'font-display font-semibold text-2xl leading-tight text-paper';
+      classIconWrap.className = 'w-11 h-11 rounded-xl bg-lime/20 flex items-center justify-center shrink-0';
+      classIcon.className = 'bx bx-badge-check text-2xl text-lime';
+    } else {
+      classCard.className = 'md:col-span-3 rounded-2xl p-5 flex flex-col justify-between bg-paperalt border border-line text-ink';
+      classTitle.textContent = 'Kondisi Rendah / Bahan Baku';
+      classTitle.className = 'font-display font-semibold text-2xl leading-tight text-ink';
+      classIconWrap.className = 'w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0';
+      classIcon.className = 'bx bx-cube-alt text-2xl text-primary';
+    }
+
+    // metrics
+    METRICS.forEach(m => {
+      const val = data.metrics[m.key];
+      document.querySelector(`.metric-value[data-key="${m.key}"]`).textContent = val + '%';
+      const bar = document.querySelector(`.metric-bar[data-key="${m.key}"]`);
+      bar.style.width = val + '%';
+      bar.style.backgroundColor = barColor(val, m.inverse);
+    });
+
+    // recommendation (choice or single) — juga mengisi value & impact
+    renderRecommendation(data);
+  }
+
+  // ---------- value & impact helper ----------
+  function applyValueImpact(valueObj, impactObj) {
+    if (valueObj.amount) {
+      document.getElementById('valueAmount').textContent = valueObj.amount;
+      document.getElementById('valueAmount').classList.remove('text-ink/35');
+    } else {
+      document.getElementById('valueAmount').textContent = 'Nilai Jual: Tidak Tersedia';
+      document.getElementById('valueAmount').classList.add('text-ink/35');
+    }
+    document.getElementById('valueNote').textContent = valueObj.note;
+
+    document.getElementById('impactWaste').textContent = impactObj.waste;
+    document.getElementById('impactCo2').textContent = impactObj.co2;
+    document.getElementById('impactWater').textContent = impactObj.water;
+  }
+
+  // ---------- recommendation logic ----------
+  const recChoice = document.getElementById('recChoice');
+  const recOptionBtns = document.querySelectorAll('.rec-option-btn');
+
+  function renderRecommendation(data) {
+    if (data.classification === 'good' && data.options) {
+      recChoice.classList.remove('hidden');
+      selectRecOption('jual');
+    } else {
+      recChoice.classList.add('hidden');
+      recOptionBtns.forEach(btn => btn.removeAttribute('data-selected'));
+      applyRecData(data.recommended);
+      applyValueImpact(data.value, data.impact);
+      countAction(data.recommended.primary === 'Jual' ? 'sold' : 'recycled');
+      bumpStatsOnAnalysisComplete();
+    }
+  }
+
+  function selectRecOption(optionKey) {
+    if (!currentItemData || !currentItemData.options) return;
+    const isFirstSelection = lastCountedAction === null;
+    currentRecOption = optionKey;
+    const opt = currentItemData.options[optionKey];
+    applyRecData(opt);
+    applyValueImpact(opt.value, opt.impact);
+    countAction(optionKey === 'jual' ? 'sold' : 'recycled');
+    if (isFirstSelection) bumpStatsOnAnalysisComplete();
+
+    recOptionBtns.forEach(btn => {
+      if (btn.dataset.option === optionKey) {
+        btn.setAttribute('data-selected', 'true');
+      } else {
+        btn.removeAttribute('data-selected');
+      }
+    });
+  }
+
+  function applyRecData(opt) {
+    document.getElementById('recIcon').className = 'bx ' + opt.icon;
+    document.getElementById('recPrimary').textContent = opt.primary;
+    document.getElementById('recReason').textContent = opt.reason;
+
+    const secWrap = document.getElementById('recSecondary');
+    secWrap.innerHTML = '';
+    (opt.secondary || []).forEach(s => {
+      const chip = document.createElement('span');
+      chip.className = 'font-ui text-[11px] px-2 py-0.5 rounded-full bg-white text-ink/50 border border-line';
+      chip.textContent = s;
+      secWrap.appendChild(chip);
+    });
+
+    const lanjutkanBtn = document.getElementById('recLanjutkanBtn');
+    const actionSlug = opt.primary === 'Jual' ? 'jual' : 'daur-ulang';
+    lanjutkanBtn.href = `decision-detail.html?item=${encodeURIComponent(currentItemKey || '')}&action=${actionSlug}`;
+  }
+
+  recOptionBtns.forEach(btn => {
+    btn.addEventListener('click', () => selectRecOption(btn.dataset.option));
+  });
+
+  // ---------- loading / analysis flow ----------
+  const loadingState = document.getElementById('loadingState');
+  const resultsContent = document.getElementById('resultsContent');
+  let isAnalyzing = false;
+
+  function setControlsDisabled(disabled) {
+    document.querySelectorAll('#openCameraBtn, #captureBtn, #closeCameraBtn, #switchCameraBtn, #fileInput, #searchBtn, #searchInput, [data-demo], .tab-btn').forEach(el => {
+      el.disabled = disabled;
+      el.classList.toggle('opacity-50', disabled);
+      el.classList.toggle('pointer-events-none', disabled);
+    });
+  }
+
+  function showLoading() {
+    resultsContent.classList.add('hidden');
+    loadingState.classList.remove('hidden');
+    loadingState.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function hideLoading() {
+    loadingState.classList.add('hidden');
+    resultsContent.classList.remove('hidden');
+  }
+
+  function startAnalysis(key) {
+    if (isAnalyzing) return;
+    isAnalyzing = true;
+    setControlsDisabled(true);
+    showLoading();
+    const delay = 1300 + Math.random() * 1200; // simulasi durasi analisis AI
+    setTimeout(() => {
+      render(key || randomItemKey());
+      hideLoading();
+      isAnalyzing = false;
+      setControlsDisabled(false);
+      resultsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, delay);
+  }
+
+  // ---------- tabs ----------
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.method-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.removeAttribute('data-active'));
+      tab.setAttribute('data-active', 'true');
+      const method = tab.dataset.method;
+      panels.forEach(p => p.removeAttribute('data-visible'));
+      document.querySelector(`.method-panel[data-panel="${method}"]`).setAttribute('data-visible', 'true');
+
+      // matikan kamera saat pindah dari tab scan
+      if (method !== 'scan') stopCamera();
+    });
+  });
+
+  // ---------- demo chips ----------
+  document.querySelectorAll('[data-demo]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (isAnalyzing) return;
+      uploadedImage = null;
+      startAnalysis(btn.dataset.demo);
+    });
+  });
+
+  // ---------- search ----------
+  function runSearch() {
+    if (isAnalyzing) return;
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const hint = document.getElementById('searchHint');
+
+    if (!q) {
+      hint.textContent = 'Masukkan nama barang terlebih dahulu.';
+      return;
+    }
+
+    let key = null;
+    if (q.includes('shoe') || q.includes('sepatu')) key = 'shoes';
+    else if (q.includes('keyboard')) key = 'keyboard';
+    else if (q.includes('botol') || q.includes('bottle') || q.includes('plastik')) key = 'bottle';
+    else if (q.includes('ponsel') || q.includes('hp') || q.includes('phone') || q.includes('handphone')) key = 'phone';
+
+    if (!key) {
+      hint.textContent = 'Item tidak ditemukan pada demo. Coba "sepatu lari", "keyboard rusak", "botol plastik", atau "ponsel rusak".';
+      return;
+    }
+
+    hint.textContent = '';
+    uploadedImage = null;
+    startAnalysis(key);
+  }
+  document.getElementById('searchBtn').addEventListener('click', runSearch);
+  document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
+  document.getElementById('searchInput').addEventListener('input', () => {
+    document.getElementById('searchHint').textContent = '';
+  });
+
+  // ---------- upload ----------
+  document.getElementById('fileInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || isAnalyzing) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedImage = ev.target.result;
+      startAnalysis(randomItemKey());
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ---------- camera ----------
+  let mediaStream = null;
+  let facingMode = 'environment';
+
+  const cameraIdle = document.getElementById('cameraIdle');
+  const cameraActive = document.getElementById('cameraActive');
+  const cameraVideo = document.getElementById('cameraVideo');
+  const cameraError = document.getElementById('cameraError');
+  const cameraCanvas = document.getElementById('cameraCanvas');
+
+  async function startCamera() {
+    cameraError.classList.add('hidden');
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      cameraError.textContent = 'Browser ini tidak mendukung akses kamera.';
+      cameraError.classList.remove('hidden');
+      return;
+    }
+
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode },
+        audio: false
+      });
+      cameraVideo.srcObject = mediaStream;
+      cameraIdle.classList.add('hidden');
+      cameraActive.classList.remove('hidden');
+    } catch (err) {
+      cameraError.textContent = 'Tidak dapat mengakses kamera. Pastikan izin kamera diizinkan pada browser/perangkat ini.';
+      cameraError.classList.remove('hidden');
+    }
+  }
+
+  function stopCamera() {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(t => t.stop());
+      mediaStream = null;
+    }
+    cameraActive.classList.add('hidden');
+    cameraIdle.classList.remove('hidden');
+  }
+
+  document.getElementById('openCameraBtn').addEventListener('click', () => { if (!isAnalyzing) startCamera(); });
+  document.getElementById('closeCameraBtn').addEventListener('click', stopCamera);
+
+  document.getElementById('switchCameraBtn').addEventListener('click', () => {
+    facingMode = facingMode === 'environment' ? 'user' : 'environment';
+    stopCamera();
+    startCamera();
+  });
+
+  document.getElementById('captureBtn').addEventListener('click', () => {
+    if (isAnalyzing) return;
+    const w = cameraVideo.videoWidth || 640;
+    const h = cameraVideo.videoHeight || 480;
+    cameraCanvas.width = w;
+    cameraCanvas.height = h;
+    const ctx = cameraCanvas.getContext('2d');
+    ctx.drawImage(cameraVideo, 0, 0, w, h);
+    const dataUrl = cameraCanvas.toDataURL('image/jpeg', 0.9);
+
+    uploadedImage = dataUrl;
+    stopCamera();
+    startAnalysis(randomItemKey());
+  });
+
+  // matikan kamera saat berpindah halaman
+  window.addEventListener('beforeunload', stopCamera);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopCamera();
+  });
+
+  // ---------- profile dropdown ----------
+  const profileBtn = document.getElementById('profileBtn');
+  const profileMenu = document.getElementById('profileMenu');
+  profileBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+  });
+  document.addEventListener('click', e => {
+    if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
+      profileMenu.classList.add('hidden');
+    }
+  });
+
+  // ---------- init ----------
+  render('shoes');
+</script>
+
+</body>
+</html>
