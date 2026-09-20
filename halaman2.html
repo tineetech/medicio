@@ -1,1 +1,827 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Hub — Edukasi Sampah & Barang Bekas | GreenWise</title>
+<meta name="description" content="Green Hub: kumpulan materi edukasi tentang pemilahan sampah, daur ulang, guna ulang, dan cara memakai GreenWise.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          deep:   '#012622',
+          ever:   '#003B36',
+          mist:   '#ECE5F0',
+          ever2:  '#0A4F48',
+          ever3:  '#12655C',
+          mist2:  '#DCD2E4',
+          mist3:  '#F6F2F8',
+        },
+        fontFamily: {
+          lexend: ['Lexend', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif'],
+          dmsans: ['"DM Sans"', 'sans-serif'],
+        },
+        boxShadow: {
+          card: '0 4px 20px -6px rgba(1,38,34,0.15)',
+          soft: '0 18px 36px -14px rgba(1,38,34,0.28)',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans', sans-serif; background:#FFFFFF; color:#012622;}
+  h1,h2,h3,h4,h5{font-family:'Lexend', sans-serif;}
+  ::selection{background:#ECE5F0; color:#012622;}
+  .scroll-mt-nav{scroll-margin-top:6rem;}
+
+  /* ===== Reveal on Scroll ===== */
+  .reveal{opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1);}
+  .reveal.active{opacity:1; transform:translateY(0);}
+
+  /* ===== NAVBAR ===== */
+  #navbar{background:transparent; border-bottom:1px solid transparent; backdrop-filter:none;}
+  #navbar.scrolled{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid #DCD2E4;
+    box-shadow:0 6px 24px -14px rgba(1,38,34,.4);
+  }
+  #navbar .nv-text{color:#ECE5F0;}
+  #navbar.scrolled .nv-text{color:#012622;}
+  #navbar .nv-sub{color:rgba(236,229,240,.65);}
+  #navbar.scrolled .nv-sub{color:#0A4F48;}
+  #navbar .nv-pill{background:rgba(236,229,240,.10);}
+  #navbar.scrolled .nv-pill{background:#ECE5F0;}
+  #navbar .nv-pill a{color:rgba(236,229,240,.75);}
+  #navbar.scrolled .nv-pill a{color:#0A4F48;}
+  #navbar .nv-pill a.is-active{background:#003B36; color:#ECE5F0;}
+  #navbar.scrolled .nv-pill a.is-active{background:#FFFFFF; color:#012622;}
+  #navbar .nv-border{border-color:rgba(236,229,240,.28);}
+  #navbar.scrolled .nv-border{border-color:#DCD2E4;}
+  #navbar .nv-logo-word{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-word{color:#012622;}
+  #navbar .nv-logo-accent{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-accent{color:#003B36;}
+
+  /* ===== Hero decor (lingkaran halus) ===== */
+  .hero-ring{position:absolute; border-radius:9999px; border:1px solid rgba(236,229,240,.10); pointer-events:none;}
+  .hero-glow{
+    position:absolute; pointer-events:none; border-radius:9999px; filter:blur(80px);
+    background:radial-gradient(circle, rgba(18,101,92,.55), transparent 70%);
+  }
+
+  /* ===== Search ===== */
+  .search-box{transition:box-shadow .3s ease, background-color .3s ease;}
+  .search-box:focus-within{box-shadow:0 0 0 4px rgba(236,229,240,.25);}
+  .search-box input:focus-visible{outline:none;}
+  .search-box input::-webkit-search-cancel-button{display:none;}
+
+  /* ===== Chips kategori ===== */
+  .chip{
+    white-space:nowrap; border:1px solid #DCD2E4; background:#fff; color:#0A4F48;
+    transition:background-color .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .chip:hover{background:#ECE5F0;}
+  .chip.is-active{background:#003B36; color:#ECE5F0; border-color:#003B36;}
+  .chip-scroll{scrollbar-width:none;}
+  .chip-scroll::-webkit-scrollbar{display:none;}
+
+  /* ===== Kartu artikel ===== */
+  .art-card{transition:transform .35s ease, box-shadow .35s ease;}
+  .art-card:hover{transform:translateY(-6px); box-shadow:0 18px 36px -14px rgba(1,38,34,.28);}
+  .art-card .art-img{transition:transform .6s ease;}
+  .art-card:hover .art-img{transform:scale(1.07);}
+  .art-card .art-arrow{transition:transform .3s ease;}
+  .art-card:hover .art-arrow{transform:translateX(4px);}
+  .art-thumb{background:linear-gradient(135deg,#0A4F48,#12655C);}
+  .line-clamp-2{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .line-clamp-3{display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
+
+  /* ===== Pagination ===== */
+  .pg-btn{
+    min-width:2.75rem; height:2.75rem; border:1px solid #DCD2E4; background:#fff; color:#0A4F48;
+    transition:background-color .25s ease, color .25s ease, border-color .25s ease, opacity .25s ease;
+  }
+  .pg-btn:hover:not(:disabled):not(.is-active){background:#ECE5F0;}
+  .pg-btn.is-active{background:#003B36; color:#ECE5F0; border-color:#003B36;}
+  .pg-btn:disabled{opacity:.35; cursor:not-allowed;}
+
+  /* ===== Accordion FAQ ===== */
+  .faq-item .faq-body{display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease;}
+  .faq-item.open .faq-body{grid-template-rows:1fr;}
+  .faq-item .faq-body > div{overflow:hidden;}
+  .faq-item .faq-icon{transition:transform .3s ease;}
+  .faq-item.open .faq-icon{transform:rotate(45deg);}
+
+  /* ===== Parallax background (CTA) ===== */
+  .parallax-wrap{position:relative; overflow:hidden;}
+  .parallax-bg{
+    position:absolute; top:-10%; left:0; width:100%; height:120%;
+    background-size:cover; background-position:center;
+    will-change:transform;
+  }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:#ECE5F0;}
+  ::-webkit-scrollbar-thumb{background:#003B36; border-radius:4px;}
+
+  @keyframes fadeInUp{from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);}}
+  .animate-fade-in{animation:fadeInUp .4s ease;}
+  @keyframes bounceSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+  .animate-bounce-slow{animation:bounceSlow 2s infinite;}
+
+  :focus-visible{outline:2px solid #12655C; outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .reveal{opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ==================== NAVBAR ==================== -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+        <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
+      </svg>
+      <span class="font-lexend font-bold text-xl tracking-tight nv-logo-word">Green<span class="nv-logo-accent">Wise</span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-1 nv-pill rounded-full px-2 py-1.5 transition-colors duration-300">
+      <a href="index.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Beranda</a>
+      <a href="halaman2.html" class="is-active px-5 py-2 rounded-full text-sm font-semibold transition-colors">Green Hub</a>
+      <a href="halaman7.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Marketplace</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <button id="profileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border nv-border transition-colors duration-300">
+          <span class="w-9 h-9 rounded-full bg-ever flex items-center justify-center text-mist font-lexend font-bold text-sm">DA</span>
+          <span class="hidden sm:flex flex-col items-start leading-tight">
+            <span class="text-sm font-semibold nv-text">Dwi Anugrah</span>
+            <span class="text-[11px] nv-sub flex items-center gap-1"><i class='bx bxs-star text-[10px]'></i> 1.240 poin</span>
+          </span>
+          <i class='bx bx-chevron-down text-lg nv-sub'></i>
+        </button>
+
+        <div id="profileMenu" class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-soft border border-mist2 p-2 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50">
+          <div class="px-3 py-3 border-b border-mist2 mb-1">
+            <p class="font-lexend font-semibold text-deep text-sm">Dwi Anugrah</p>
+            <p class="text-xs text-ever2/70">dwi.anugrah@email.com</p>
+          </div>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-grid-alt text-lg text-ever'></i> Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-line-chart text-lg text-ever'></i> Dampak saya
+          </a>
+          <div class="h-px bg-mist2 my-1"></div>
+          <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-ever2 transition">
+            <i class='bx bx-log-out text-lg'></i> Keluar
+          </a>
+        </div>
+      </div>
+
+      <button id="burgerBtn" aria-label="Buka menu" class="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border nv-border nv-text">
+        <i class='bx bx-menu text-2xl'></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="lg:hidden hidden flex-col gap-1 px-5 pb-5 bg-white border-t border-mist2">
+    <a href="index.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm mt-3">Beranda</a>
+    <a href="halaman2.html" class="px-4 py-3 rounded-xl bg-mist text-deep font-semibold text-sm">Green Hub</a>
+    <a href="halaman7.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Marketplace</a>
+  </div>
+</header>
+
+<div id="overlayBg" class="fixed inset-0 bg-deep/25 z-40 hidden"></div>
+
+<!-- ============ A. HERO (70vh + search edukasi) ============ -->
+<section id="hero" class="relative min-h-[70vh] flex items-center overflow-hidden bg-deep">
+  <div class="hero-glow w-[420px] h-[420px] -top-24 -left-24" aria-hidden="true"></div>
+  <div class="hero-glow w-[380px] h-[380px] -bottom-32 -right-16" aria-hidden="true"></div>
+  <div class="hero-ring w-[520px] h-[520px] -top-40 -right-40 hidden sm:block" aria-hidden="true"></div>
+  <div class="hero-ring w-[340px] h-[340px] -bottom-44 left-10 hidden sm:block" aria-hidden="true"></div>
+
+  <div class="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-8 pt-32 pb-20 text-center">
+    <h1 class="font-lexend font-bold text-3xl sm:text-5xl leading-[1.15] text-white mb-5">
+      Belajar kelola sampah &amp; barang bekas dari <span class="text-yellow-400">Green Hub</span>
+    </h1>
+    <p class="text-base sm:text-lg text-mist/70 font-dmsans leading-relaxed mb-9 max-w-xl mx-auto">
+      Panduan memilah, mendaur ulang, dan memakai GreenWise, ditulis singkat supaya bisa langsung kamu praktikkan.
+    </p>
+
+    <form id="searchForm" role="search" class="search-box flex items-center gap-2 bg-white rounded-full pl-5 pr-2 py-2 shadow-soft max-w-2xl mx-auto">
+      <i class='bx bx-search text-2xl text-ever2/60 shrink-0'></i>
+      <label for="searchInput" class="sr-only">Cari materi edukasi</label>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="Cari materi, mis. cara memilah sampah plastik"
+        class="flex-1 min-w-0 bg-transparent text-deep placeholder:text-ever2/50 font-dmsans text-sm sm:text-base py-2.5">
+      <button type="submit" class="shrink-0 inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-5 sm:px-7 py-3 rounded-full transition-colors duration-300">
+        Cari
+      </button>
+    </form>
+
+    <div class="flex flex-wrap justify-center items-center gap-2 mt-6">
+      <span class="text-mist/50 text-sm font-dmsans mr-1">Populer:</span>
+      <button type="button" data-suggest="plastik" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">plastik</button>
+      <button type="button" data-suggest="elektronik" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">elektronik</button>
+      <button type="button" data-suggest="pakaian" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">pakaian</button>
+      <button type="button" data-suggest="green coins" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">green coins</button>
+    </div>
+  </div>
+
+  <a href="#materi" aria-label="Ke daftar materi" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-mist/40 animate-bounce-slow">
+    <i class='bx bx-chevron-down text-2xl'></i>
+  </a>
+</section>
+
+<!-- ============ B. DAFTAR MATERI ============ -->
+<section id="materi" class="py-20 sm:py-24 bg-white scroll-mt-nav">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal">
+      <div class="max-w-xl">
+        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep">Semua materi edukasi</h2>
+        <p id="resultInfo" class="text-ever2/80 font-dmsans mt-3" aria-live="polite">Menampilkan semua materi.</p>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <label for="sortSelect" class="text-sm font-dmsans text-ever2/70">Urutkan</label>
+        <div class="relative">
+          <select id="sortSelect" class="appearance-none bg-white border border-mist2 rounded-full pl-4 pr-10 py-2.5 text-sm font-dmsans font-medium text-deep cursor-pointer">
+            <option value="new">Terbaru</option>
+            <option value="short">Bacaan tersingkat</option>
+            <option value="az">Judul A–Z</option>
+          </select>
+          <i class='bx bx-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-ever2/70 pointer-events-none'></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter kategori -->
+    <div id="chipRow" class="chip-scroll flex gap-2 overflow-x-auto -mx-5 px-5 lg:mx-0 lg:px-0 lg:flex-wrap pb-2 mb-10" role="tablist" aria-label="Kategori materi"></div>
+
+    <!-- Grid kartu -->
+    <div id="cardGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    <!-- Empty state -->
+    <div id="emptyState" class="hidden text-center py-16 max-w-md mx-auto">
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-mist text-ever flex items-center justify-center text-3xl mb-5"><i class='bx bx-search-alt'></i></div>
+      <h3 class="font-lexend font-semibold text-xl text-deep mb-2">Materi tidak ditemukan</h3>
+      <p class="text-ever2/75 font-dmsans text-sm mb-6">Coba kata kunci lain atau ganti kategori. Kamu juga bisa menghapus filter untuk melihat semua materi.</p>
+      <button id="resetBtn" class="inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-6 py-3 rounded-full transition-colors">Hapus filter</button>
+    </div>
+
+    <!-- Pagination -->
+    <nav id="pagination" class="flex flex-wrap items-center justify-center gap-2 mt-14" aria-label="Halaman materi"></nav>
+  </div>
+</section>
+
+<!-- ============ C. PANDUAN CEPAT GREENWISE ============ -->
+<section id="panduan" class="py-24 sm:py-28 bg-mist3 scroll-mt-nav">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="grid lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-start">
+      <div class="reveal lg:sticky lg:top-28">
+        <span class="text-ever font-semibold font-dmsans text-sm uppercase tracking-widest">Baru di GreenWise?</span>
+        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep mt-3 mb-5">Mulai dalam tiga menit</h2>
+        <p class="text-ever2/80 font-dmsans leading-relaxed mb-8">Kamu tidak perlu paham istilah daur ulang untuk mulai. Ikuti urutan singkat ini, lalu baca materi di atas kapan pun kamu butuh detailnya.</p>
+        <a href="index.html#tindakan" class="inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
+          <i class='bx bx-scan text-base'></i> Cek barangku
+        </a>
+      </div>
+
+      <ol class="space-y-4">
+        <li class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold">1</div>
+          <div>
+            <h3 class="font-lexend font-semibold text-lg text-deep">Foto barang bekasmu</h3>
+            <p class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed">Ambil foto dari beberapa sisi dengan cahaya cukup. Semakin jelas, semakin akurat pembacaan kondisinya.</p>
+          </div>
+        </li>
+        <li class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold">2</div>
+          <div>
+            <h3 class="font-lexend font-semibold text-lg text-deep">Baca rekomendasinya</h3>
+            <p class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed">GreenWise menyarankan satu dari tiga jalan: jual di marketplace, daur ulang, atau buang dengan benar.</p>
+          </div>
+        </li>
+        <li class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold">3</div>
+          <div>
+            <h3 class="font-lexend font-semibold text-lg text-deep">Jalankan dan kumpulkan poin</h3>
+            <p class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed">Setiap aksi yang selesai menambah poin dan Green Coins, lalu masuk ke catatan dampakmu.</p>
+          </div>
+        </li>
+        <li class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold">4</div>
+          <div>
+            <h3 class="font-lexend font-semibold text-lg text-deep">Belajar lebih dalam</h3>
+            <p class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed">Buka materi di Green Hub yang sesuai jenis barangmu untuk tahu cara menyiapkannya sebelum diserahkan.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ D. TOPIK PILIHAN (chip cepat) + FAQ ============ -->
+<section id="faq" class="py-24 sm:py-28 bg-white scroll-mt-nav">
+  <div class="max-w-4xl mx-auto px-5 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep">Pertanyaan yang sering muncul</h2>
+      <p class="text-ever2/80 font-dmsans mt-4">Jawaban singkat sebelum kamu membaca materi lengkapnya.</p>
+    </div>
+
+    <div class="reveal border-t border-mist2">
+      <div class="faq-item border-b border-mist2">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5" aria-expanded="false">
+          <span class="font-lexend font-semibold text-deep text-base sm:text-lg">Apakah sampah harus dicuci sebelum didaur ulang?</span>
+          <i class='bx bx-plus text-2xl text-ever faq-icon shrink-0'></i>
+        </button>
+        <div class="faq-body"><div><p class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed">Cukup dibilas agar sisa makanan atau cairan tidak tertinggal. Kemasan yang kotor bisa membuat satu batch material gagal diproses.</p></div></div>
+      </div>
+      <div class="faq-item border-b border-mist2">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5" aria-expanded="false">
+          <span class="font-lexend font-semibold text-deep text-base sm:text-lg">Bagaimana cara GreenWise menilai kondisi barang?</span>
+          <i class='bx bx-plus text-2xl text-ever faq-icon shrink-0'></i>
+        </button>
+        <div class="faq-body"><div><p class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed">Sistem membaca foto yang kamu unggah untuk mengenali jenis, kelengkapan, dan tanda kerusakan, lalu mencocokkannya dengan pilihan tindakan yang paling masuk akal.</p></div></div>
+      </div>
+      <div class="faq-item border-b border-mist2">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5" aria-expanded="false">
+          <span class="font-lexend font-semibold text-deep text-base sm:text-lg">Apa itu Green Coins dan untuk apa?</span>
+          <i class='bx bx-plus text-2xl text-ever faq-icon shrink-0'></i>
+        </button>
+        <div class="faq-body"><div><p class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed">Green Coins adalah poin yang kamu dapat dari setiap aksi yang selesai, misalnya menjual atau menyerahkan barang ke mitra daur ulang. Poin ini ikut menentukan posisimu di Leaderboard.</p></div></div>
+      </div>
+      <div class="faq-item border-b border-mist2">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5" aria-expanded="false">
+          <span class="font-lexend font-semibold text-deep text-base sm:text-lg">Barang elektronik rusak boleh dibuang ke tempat sampah biasa?</span>
+          <i class='bx bx-plus text-2xl text-ever faq-icon shrink-0'></i>
+        </button>
+        <div class="faq-body"><div><p class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed">Sebaiknya tidak. Baterai dan komponen elektronik mengandung bahan berbahaya. Serahkan ke titik pengumpulan e-waste yang direkomendasikan GreenWise.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ E. USULKAN TOPIK / NEWSLETTER ============ -->
+<section id="langganan" class="py-20 sm:py-24 bg-ever scroll-mt-nav">
+  <div class="max-w-5xl mx-auto px-5 lg:px-8">
+    <div class="reveal grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
+      <div>
+        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-white">Dapat materi baru tiap minggu</h2>
+        <p class="text-mist/70 font-dmsans mt-4 leading-relaxed max-w-md">Satu artikel pilihan dan satu tantangan kecil dikirim ke emailmu. Berhenti kapan saja.</p>
+      </div>
+      <form id="newsForm" class="flex flex-col gap-3">
+        <label for="newsEmail" class="sr-only">Alamat email</label>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input id="newsEmail" type="email" required placeholder="nama@email.com"
+            class="flex-1 min-w-0 rounded-full px-6 py-3.5 bg-white/10 border border-mist/25 text-white placeholder:text-mist/45 font-dmsans text-sm focus:border-mist focus:outline-none">
+          <button type="submit" class="inline-flex justify-center items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">Berlangganan</button>
+        </div>
+        <p class="text-xs text-mist/50 font-dmsans">Kami hanya mengirim materi Green Hub, tanpa iklan.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA — background image + parallax ============ -->
+<section class="parallax-wrap py-28 sm:py-36">
+  <div class="parallax-bg" data-speed="0.35" style="background-image:url('https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1600&q=80');"></div>
+  <div class="absolute inset-0 bg-deep" style="opacity:.78;"></div>
+  <div class="relative z-10 max-w-3xl mx-auto px-5 lg:px-8 text-center">
+    <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-white mb-4">Sudah paham? Saatnya praktik dengan barangmu.</h3>
+    <p class="text-mist/75 font-dmsans mb-8 max-w-xl mx-auto">Cukup satu foto, GreenWise bantu kamu memilih langkah paling bijak untuk barangmu dan bumi.</p>
+    <a href="index.html#tindakan" class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold px-8 py-4 rounded-full transition-colors duration-300">
+      <i class='bx bx-scan text-lg'></i> Mulai sekarang, gratis
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative bg-deep text-mist overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10 pt-20">
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 pb-12 border-b border-mist/10">
+      <div>
+        <a href="index.html" class="flex items-center gap-3 font-lexend font-bold text-xl mb-4 w-fit text-mist">
+          <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+            <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+            <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
+          </svg>
+          <span class="tracking-tight">GreenWise</span>
+        </a>
+        <p class="text-mist/60 text-sm font-dmsans leading-relaxed max-w-xs mb-6">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-instagram text-lg'></i></a>
+          <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-facebook text-lg'></i></a>
+          <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-twitter text-lg'></i></a>
+          <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-tiktok text-lg'></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Navigasi</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li><a href="index.html" class="hover:text-mist transition-colors">Beranda</a></li>
+          <li><a href="halaman2.html" class="hover:text-mist transition-colors">Green Hub</a></li>
+          <li><a href="leaderboard.html" class="hover:text-mist transition-colors">Leaderboard</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Sumber daya</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li><a href="#materi" class="hover:text-mist transition-colors">Panduan daur ulang</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Blog lingkungan</a></li>
+          <li><a href="#faq" class="hover:text-mist transition-colors">FAQ</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Pusat bantuan</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Hubungi kami</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li class="flex items-center gap-2.5"><i class='bx bx-envelope'></i> halo@greenwise.id</li>
+          <li class="flex items-center gap-2.5"><i class='bx bx-phone'></i> +62 812 3456 7890</li>
+          <li class="flex items-center gap-2.5"><i class='bx bx-map'></i> Bandung, Indonesia</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-mist/40 text-xs font-dmsans">
+      <p>© 2026 GreenWise. Semua hak dilindungi.</p>
+      <p>Dibuat untuk bumi yang lebih hijau.</p>
+    </div>
+  </div>
+
+  <div class="relative z-10 w-full select-none pointer-events-none flex justify-center">
+    <h2 class="font-lexend font-extrabold text-center leading-none whitespace-nowrap" style="font-size:clamp(3.5rem, 15vw, 11rem); color:rgba(236,229,240,0.07);">GreenWise</h2>
+  </div>
+
+  <button id="backToTopBtn" aria-label="Kembali ke atas"
+    class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-ever text-mist flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 hover:bg-deep">
+    <i class='bx bx-up-arrow-alt text-xl'></i>
+  </button>
+</footer>
+
+<script>
+  /* ================= NAVBAR, PROFIL, MENU ================= */
+  const navbar = document.getElementById('navbar');
+  const hero = document.getElementById('hero');
+
+  function updateNavbar(){
+    var limit = hero ? Math.min(hero.offsetHeight - 100, window.innerHeight - 100) : 60;
+    navbar.classList.toggle('scrolled', window.scrollY > Math.max(limit, 40));
+  }
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  window.addEventListener('resize', updateNavbar);
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+      if (isHidden) navbar.classList.add('scrolled'); else updateNavbar();
+      const icon = burgerBtn.querySelector('i');
+      if (icon) icon.className = isHidden ? 'bx bx-x text-2xl' : 'bx bx-menu text-2xl';
+    });
+  }
+
+  const profileBtn = document.getElementById('profileBtn');
+  const profileMenu = document.getElementById('profileMenu');
+  const overlayBg = document.getElementById('overlayBg');
+
+  function openProfile(){
+    profileMenu.classList.remove('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.add('opacity-100','scale-100');
+    overlayBg.classList.remove('hidden');
+  }
+  function closeProfile(){
+    profileMenu.classList.add('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.remove('opacity-100','scale-100');
+    overlayBg.classList.add('hidden');
+  }
+  if(profileBtn && profileMenu){
+    profileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileMenu.classList.contains('opacity-100') ? closeProfile() : openProfile();
+    });
+  }
+  if(overlayBg) overlayBg.addEventListener('click', closeProfile);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProfile(); });
+
+  function showToast(msg, icon){
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-6 left-6 right-6 sm:right-auto z-[9999] bg-deep text-mist pl-4 pr-5 py-4 rounded-xl shadow-soft flex items-center gap-3 font-dmsans text-sm animate-fade-in sm:max-w-xs';
+    toast.innerHTML = "<i class='bx " + (icon || 'bx-check-circle') + " text-xl shrink-0'></i><span>" + msg + "</span>";
+    document.body.appendChild(toast);
+    setTimeout(function(){
+      toast.style.transition = 'opacity .5s ease, transform .5s ease';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      setTimeout(function(){ toast.remove(); }, 500);
+    }, 2600);
+  }
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeProfile();
+      showToast('Kamu keluar dari GreenWise (demo).', 'bx-log-out');
+    });
+  }
+
+  /* ================= DATA MATERI ================= */
+  const U = (id, w) => 'https://images.unsplash.com/photo-' + id + '?auto=format&fit=crop&w=' + (w || 700) + '&q=80';
+  const IMG = {
+    pilah:  U('1532996122724-e3c354a0b15b'),
+    ulang:  U('1610701596007-11502861dcfa'),
+    elek:   U('1550009158-9ebf69173e03'),
+    tekstil:U('1523381210434-271e8be1f52b'),
+    besar:  U('1586023492125-27b2c045efd7'),
+    hidup:  U('1542601906990-b4d3fb778b09'),
+    jual:   U('1607083206968-13611e3d76db'),
+    sepatu: U('1542291026-7eec264c27ff'),
+    donasi: U('1584992236310-6edddc08acff'),
+    kriya:  U('1532995297011-09d169e17b6c')
+  };
+
+  const CATEGORIES = ['Semua','Pemilahan','Daur ulang','Guna ulang','Elektronik','Tekstil','Panduan GreenWise','Gaya hidup'];
+
+  // date: YYYY-MM-DD, mins: menit baca
+  const ARTICLES = [
+    {t:'Organik, anorganik, B3: cara memilah dari dapur', c:'Pemilahan', m:5, d:'2026-09-14', i:IMG.pilah, x:'Tiga wadah sederhana di rumah sudah cukup untuk memisahkan sampah sejak awal, lengkap dengan contoh benda yang sering salah tempat.'},
+    {t:'Cara memakai GreenWise: dari foto sampai rekomendasi', c:'Panduan GreenWise', m:4, d:'2026-09-13', i:IMG.jual, x:'Panduan langkah demi langkah mengunggah foto, membaca hasil analisis, dan memilih tindakan yang disarankan.'},
+    {t:'Plastik nomor 1 sampai 7: mana yang laku didaur ulang', c:'Daur ulang', m:6, d:'2026-09-11', i:IMG.ulang, x:'Kode segitiga di dasar kemasan menunjukkan jenis plastik. Kenali yang mudah diterima mitra daur ulang dan yang tidak.'},
+    {t:'Laptop dan ponsel lama: hapus data dulu, baru serahkan', c:'Elektronik', m:5, d:'2026-09-09', i:IMG.elek, x:'Urutan aman menyiapkan perangkat lama, dari cadangan data, reset pabrik, sampai melepas baterai.'},
+    {t:'Pakaian tidak terpakai: jual, donasi, atau jadikan lap?', c:'Tekstil', m:4, d:'2026-09-07', i:IMG.tekstil, x:'Panduan memutuskan nasib pakaian berdasarkan kondisi kain, jahitan, dan kelayakan pakainya.'},
+    {t:'Lima ide guna ulang botol kaca untuk rumah', c:'Guna ulang', m:3, d:'2026-09-05', i:IMG.kriya, x:'Dari wadah bumbu sampai vas, ide praktis yang tidak butuh peralatan khusus.'},
+    {t:'Apa itu Green Coins dan cara mengumpulkannya', c:'Panduan GreenWise', m:3, d:'2026-09-03', i:IMG.sepatu, x:'Penjelasan sistem poin, aksi yang memberi Green Coins, dan cara poin memengaruhi Leaderboard.'},
+    {t:'Baterai bekas: kenapa tidak boleh masuk tong sampah', c:'Elektronik', m:4, d:'2026-09-01', i:IMG.elek, x:'Bahan kimia dalam baterai bisa mencemari tanah dan air. Ini cara menyimpan dan menyerahkannya dengan aman.'},
+    {t:'Kompos sederhana di rumah tanpa bau', c:'Pemilahan', m:6, d:'2026-08-29', i:IMG.hidup, x:'Perbandingan bahan hijau dan cokelat, wadah yang cocok untuk rumah kecil, dan tanda kompos yang gagal.'},
+    {t:'Kardus dan kertas: kapan masih bernilai, kapan tidak', c:'Daur ulang', m:4, d:'2026-08-27', i:IMG.pilah, x:'Kertas basah atau berminyak sulit diproses. Pelajari cara menyimpannya agar tetap layak setor.'},
+    {t:'Foto barang yang bagus supaya cepat laku di marketplace', c:'Panduan GreenWise', m:5, d:'2026-08-25', i:IMG.jual, x:'Tips pencahayaan, sudut, dan latar sederhana agar kondisi barang terbaca jelas oleh pembeli dan sistem.'},
+    {t:'Furnitur lama tidak muat di tempat sampah: harus bagaimana?', c:'Guna ulang', m:5, d:'2026-08-23', i:IMG.besar, x:'Opsi perbaikan, jual, hibah, dan penjemputan barang besar sebelum memilih membuangnya.'},
+    {t:'Fast fashion dan limbah tekstil: dampak yang jarang dibahas', c:'Tekstil', m:7, d:'2026-08-21', i:IMG.tekstil, x:'Mengapa satu potong pakaian murah bisa berdampak besar, dan kebiasaan belanja yang bisa mengurangi limbah.'},
+    {t:'Kabel dan charger lama: dibuang, disimpan, atau diserahkan?', c:'Elektronik', m:3, d:'2026-08-19', i:IMG.elek, x:'Kabel tembaga masih punya nilai. Cara memilah kabel yang layak pakai dan yang harus didaur ulang.'},
+    {t:'Belanja tanpa kemasan sekali pakai: mulai dari mana', c:'Gaya hidup', m:5, d:'2026-08-17', i:IMG.hidup, x:'Langkah kecil yang realistis: tas belanja, wadah sendiri, dan memilih produk isi ulang.'},
+    {t:'Botol PET jadi apa setelah didaur ulang?', c:'Daur ulang', m:4, d:'2026-08-15', i:IMG.ulang, x:'Ikuti perjalanan satu botol dari tempat pengumpulan sampai menjadi serat kain dan kemasan baru.'},
+    {t:'Sepatu bekas: cek kelayakan sebelum dijual', c:'Guna ulang', m:3, d:'2026-08-13', i:IMG.sepatu, x:'Daftar periksa sol, bagian dalam, dan bau agar sepatu bekasmu tetap layak dan dipercaya pembeli.'},
+    {t:'Membaca Leaderboard: cara poin dihitung', c:'Panduan GreenWise', m:3, d:'2026-08-11', i:IMG.jual, x:'Bobot poin tiap jenis aksi dan cara naik peringkat tanpa harus membuang barang berlebihan.'},
+    {t:'Sedotan, kantong, dan kemasan saset: sampah kecil, masalah besar', c:'Pemilahan', m:5, d:'2026-08-09', i:IMG.pilah, x:'Sampah kecil sering lolos dari pemilahan. Ini cara mengumpulkan dan menyetorkannya.'},
+    {t:'Rutinitas hemat energi yang bisa dimulai hari ini', c:'Gaya hidup', m:4, d:'2026-08-07', i:IMG.hidup, x:'Kebiasaan sederhana di rumah yang mengurangi jejak karbon sekaligus tagihan listrik.'},
+    {t:'Kerajinan dari kain perca untuk pemula', c:'Guna ulang', m:6, d:'2026-08-05', i:IMG.kriya, x:'Tiga proyek jahit tangan yang bisa selesai dalam satu sore memakai sisa kain di rumah.'},
+    {t:'Mengapa kaleng dan aluminium sangat dicari pengepul', c:'Daur ulang', m:4, d:'2026-08-03', i:IMG.ulang, x:'Aluminium bisa didaur ulang berulang kali tanpa kehilangan mutu, dan hemat energi dibanding produksi baru.'},
+    {t:'Donasi barang bekas: cara memastikan tepat sasaran', c:'Gaya hidup', m:4, d:'2026-08-01', i:IMG.donasi, x:'Menyiapkan, memilah, dan memilih penerima donasi supaya barangmu benar-benar terpakai.'},
+    {t:'Televisi dan monitor tabung: penanganan khusus', c:'Elektronik', m:5, d:'2026-07-30', i:IMG.elek, x:'Layar lama memuat komponen yang perlu penanganan khusus. Kenali risikonya dan titik serah yang tepat.'},
+    {t:'Kasur, sofa, lemari: menyiapkan barang besar untuk dijemput', c:'Pemilahan', m:4, d:'2026-07-28', i:IMG.besar, x:'Ukur, foto, dan bongkar bila perlu agar penjemputan barang besar berjalan lancar.'},
+    {t:'Kain katun, poliester, dan campuran: cara mengenalinya', c:'Tekstil', m:5, d:'2026-07-26', i:IMG.tekstil, x:'Label perawatan membantu menentukan apakah pakaianmu bisa didaur ulang menjadi serat baru.'},
+    {t:'Kebiasaan hijau 30 hari: tantangan kecil untuk pemula', c:'Gaya hidup', m:6, d:'2026-07-24', i:IMG.hidup, x:'Satu tantangan per hari selama sebulan, dari membawa botol minum sampai memilah sampah tepat waktu.'}
+  ];
+
+  /* ================= STATE ================= */
+  const PER_PAGE = 9;
+  const state = { q:'', cat:'Semua', sort:'new', page:1 };
+
+  const grid = document.getElementById('cardGrid');
+  const pager = document.getElementById('pagination');
+  const chipRow = document.getElementById('chipRow');
+  const info = document.getElementById('resultInfo');
+  const empty = document.getElementById('emptyState');
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+
+  const fmtDate = (s) => new Date(s + 'T00:00:00').toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+  const esc = (s) => s.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+
+  function getFiltered(){
+    const q = state.q.trim().toLowerCase();
+    let list = ARTICLES.filter(a => {
+      const okCat = state.cat === 'Semua' || a.c === state.cat;
+      const okQ = !q || (a.t + ' ' + a.x + ' ' + a.c).toLowerCase().includes(q);
+      return okCat && okQ;
+    });
+    if(state.sort === 'new') list.sort((a,b) => b.d.localeCompare(a.d));
+    if(state.sort === 'short') list.sort((a,b) => a.m - b.m || b.d.localeCompare(a.d));
+    if(state.sort === 'az') list.sort((a,b) => a.t.localeCompare(b.t, 'id'));
+    return list;
+  }
+
+  function renderChips(){
+    chipRow.innerHTML = CATEGORIES.map(c => {
+      const active = c === state.cat;
+      return "<button type='button' role='tab' aria-selected='" + active + "' data-cat='" + c + "' class='chip " + (active ? 'is-active ' : '') + "rounded-full px-5 py-2.5 text-sm font-dmsans font-medium'>" + c + "</button>";
+    }).join('');
+  }
+
+  function cardHTML(a){
+    return "" +
+    "<a href='#' data-title='" + esc(a.t) + "' class='art-card animate-fade-in group flex flex-col bg-white rounded-2xl border border-mist2 overflow-hidden shadow-card'>" +
+      "<div class='relative h-48 overflow-hidden art-thumb'>" +
+        "<img class='art-img w-full h-full object-cover' src='" + a.i + "' alt='' loading='lazy' onerror=\"this.style.display='none'\">" +
+        "<div class='absolute inset-0 bg-deep/20'></div>" +
+        "<span class='absolute top-4 left-4 bg-white/90 text-deep text-xs font-dmsans font-semibold px-3 py-1.5 rounded-full'>" + a.c + "</span>" +
+      "</div>" +
+      "<div class='flex flex-col flex-1 p-6'>" +
+        "<div class='flex items-center gap-3 text-xs text-ever2/60 font-dmsans mb-3'>" +
+          "<span class='inline-flex items-center gap-1'><i class='bx bx-time-five'></i> " + a.m + " menit baca</span>" +
+          "<span class='w-1 h-1 rounded-full bg-mist2'></span>" +
+          "<span>" + fmtDate(a.d) + "</span>" +
+        "</div>" +
+        "<h3 class='font-lexend font-semibold text-deep text-lg leading-snug line-clamp-2 mb-2'>" + esc(a.t) + "</h3>" +
+        "<p class='text-sm text-ever2/75 font-dmsans leading-relaxed line-clamp-3 mb-5'>" + esc(a.x) + "</p>" +
+        "<span class='mt-auto inline-flex items-center gap-1 text-sm font-dmsans font-semibold text-ever'>Baca materi <i class='bx bx-right-arrow-alt text-xl art-arrow'></i></span>" +
+      "</div>" +
+    "</a>";
+  }
+
+  function pageList(cur, total){
+    if(total <= 7) return Array.from({length:total}, (_,i) => i+1);
+    const out = [1];
+    if(cur > 3) out.push('…');
+    for(let p = Math.max(2, cur-1); p <= Math.min(total-1, cur+1); p++) out.push(p);
+    if(cur < total - 2) out.push('…');
+    out.push(total);
+    return out;
+  }
+
+  function renderPager(total){
+    if(total <= 1){ pager.innerHTML = ''; return; }
+    let html = "<button type='button' class='pg-btn rounded-full px-3 inline-flex items-center justify-center' data-go='" + (state.page-1) + "' aria-label='Halaman sebelumnya'" + (state.page === 1 ? ' disabled' : '') + "><i class='bx bx-chevron-left text-xl'></i></button>";
+    pageList(state.page, total).forEach(p => {
+      if(p === '…') html += "<span class='px-1 text-ever2/50 font-dmsans'>…</span>";
+      else html += "<button type='button' class='pg-btn rounded-full px-3 font-dmsans font-semibold text-sm " + (p === state.page ? 'is-active' : '') + "' data-go='" + p + "'" + (p === state.page ? " aria-current='page'" : '') + ">" + p + "</button>";
+    });
+    html += "<button type='button' class='pg-btn rounded-full px-3 inline-flex items-center justify-center' data-go='" + (state.page+1) + "' aria-label='Halaman berikutnya'" + (state.page === total ? ' disabled' : '') + "><i class='bx bx-chevron-right text-xl'></i></button>";
+    pager.innerHTML = html;
+  }
+
+  function render(){
+    const list = getFiltered();
+    const total = Math.max(1, Math.ceil(list.length / PER_PAGE));
+    if(state.page > total) state.page = total;
+
+    renderChips();
+
+    if(list.length === 0){
+      grid.innerHTML = '';
+      empty.classList.remove('hidden');
+      pager.innerHTML = '';
+      info.textContent = 'Tidak ada materi yang cocok.';
+      return;
+    }
+    empty.classList.add('hidden');
+
+    const start = (state.page - 1) * PER_PAGE;
+    const slice = list.slice(start, start + PER_PAGE);
+    grid.innerHTML = slice.map(cardHTML).join('');
+
+    const from = start + 1, to = start + slice.length;
+    let txt = 'Menampilkan ' + from + '–' + to + ' dari ' + list.length + ' materi';
+    if(state.cat !== 'Semua') txt += ' di kategori ' + state.cat;
+    if(state.q.trim()) txt += ' untuk “' + state.q.trim() + '”';
+    info.textContent = txt + '.';
+
+    renderPager(total);
+  }
+
+  function scrollToList(){
+    const el = document.getElementById('materi');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  /* ================= EVENTS ================= */
+  chipRow.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cat]');
+    if(!b) return;
+    state.cat = b.dataset.cat; state.page = 1; render();
+  });
+
+  pager.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-go]');
+    if(!b || b.disabled) return;
+    state.page = parseInt(b.dataset.go, 10);
+    render();
+    scrollToList();
+  });
+
+  searchInput.addEventListener('input', () => { state.q = searchInput.value; state.page = 1; render(); });
+
+  document.getElementById('searchForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    state.q = searchInput.value; state.page = 1; render(); scrollToList();
+  });
+
+  document.querySelectorAll('.suggest').forEach(btn => {
+    btn.addEventListener('click', () => {
+      searchInput.value = btn.dataset.suggest;
+      state.q = btn.dataset.suggest; state.cat = 'Semua'; state.page = 1;
+      render(); scrollToList();
+    });
+  });
+
+  sortSelect.addEventListener('change', () => { state.sort = sortSelect.value; state.page = 1; render(); });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    state.q = ''; state.cat = 'Semua'; state.sort = 'new'; state.page = 1;
+    searchInput.value = ''; sortSelect.value = 'new';
+    render();
+  });
+
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('a[data-title]');
+    if(!card) return;
+    e.preventDefault();
+    showToast('Membuka materi: ' + card.dataset.title + ' (demo).', 'bx-book-open');
+  });
+
+  /* FAQ */
+  document.querySelectorAll('.faq-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+  });
+
+  /* Newsletter */
+  document.getElementById('newsForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.target.reset();
+    showToast('Terima kasih! Kamu terdaftar (demo).', 'bx-check-circle');
+  });
+
+  /* Reveal on scroll */
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('active');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* Back to top */
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', function(){
+    const show = window.scrollY > 600;
+    backToTopBtn.classList.toggle('opacity-0', !show);
+    backToTopBtn.classList.toggle('pointer-events-none', !show);
+    backToTopBtn.classList.toggle('translate-y-4', !show);
+  }, {passive:true});
+  backToTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  /* Parallax CTA */
+  const parallaxBgs = document.querySelectorAll('.parallax-bg');
+  function updateParallaxBg(){
+    parallaxBgs.forEach(function(el){
+      const wrap = el.closest('.parallax-wrap');
+      const rect = wrap.getBoundingClientRect();
+      if(rect.bottom > 0 && rect.top < window.innerHeight){
+        const speed = parseFloat(el.dataset.speed) || 0.3;
+        el.style.transform = 'translateY(' + (rect.top * speed) + 'px)';
+      }
+    });
+  }
+  window.addEventListener('scroll', updateParallaxBg, {passive:true});
+  window.addEventListener('resize', updateParallaxBg);
+  updateParallaxBg();
+
+  /* Init (dukung ?q=kata dari halaman lain) */
+  const params = new URLSearchParams(location.search);
+  if(params.get('q')){ state.q = params.get('q'); searchInput.value = state.q; }
+  render();
+</script>
+</body>
+</html>

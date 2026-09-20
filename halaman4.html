@@ -1,1 +1,1470 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · GreenWise</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght=0,400;0,500;0,700;1,400&family=Lexend:wght=400;500;600;700&family=Poppins:wght=400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#012622',
+          deep: '#012622',
+          evergreen: '#003B36',
+          primary: '#003B36',
+          secondary: '#003B36',
+          mid: '#045248',
+          bright: '#0b6a5c',
+          light: '#12897a',
+          lime: '#ECE5F0',
+          paper: '#ECE5F0',
+          paperalt: '#e0d7e7',
+          line: '#d3c7dc',
+          accent: '#facc15',
+          danger: '#c0392b'
+        },
+        fontFamily: {
+          display: ['Lexend', 'sans-serif'],
+          body: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #ECE5F0; }
+  ::selection { background: #facc15; color: #012622; }
+  .leaf-mark {
+    background: linear-gradient(135deg, #12897a 0%, #045248 50%, #012622 100%);
+  }
+  .welcome-glow {
+    background: radial-gradient(circle at 85% 15%, rgba(250,204,21,0.16), transparent 55%),
+                linear-gradient(120deg, #012622 0%, #003B36 55%, #045248 100%);
+  }
+  .metric-bar { transition: width .8s cubic-bezier(.22,.9,.3,1); }
+  .fade-swap { animation: fadeSwap .5s ease; }
+  .stat-bump { animation: statBump .5s ease; }
+  @keyframes fadeSwap {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes statBump {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.18); color: #facc15; }
+    100% { transform: scale(1); }
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(.95) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .ring-progress { transition: stroke-dashoffset 1s cubic-bezier(.22,.9,.3,1); }
+  .tab-btn[data-active="true"] {
+    background: #003B36;
+    color: #ffffff;
+  }
+  .tab-btn[data-active="true"] i { color: #facc15; }
+  .method-panel { display: none; }
+  .method-panel[data-visible="true"] { display: block; }
+  .alt-route-btn[data-active="true"] {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.35);
+  }
+  #toggleAltIcon { transition: transform .25s ease; }
+  #toggleAltIcon.rotate-180 { transform: rotate(180deg); }
+  input:focus, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid #facc15;
+    outline-offset: 2px;
+  }
+
+  /* ===================== RESPONSIVE FIX ===================== */
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  img { max-width: 100%; }
+  #resultsContent, #results, #metricsGrid {
+    min-width: 0;
+    width: 100%;
+  }
+  #resultsContent .grid { min-width: 0; }
+  .metric-row {
+    min-width: 0;
+    width: 100%;
+  }
+  .metric-label {
+    min-width: 0;
+    flex: 1;
+  }
+  .metric-label-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #itemThumb {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    overflow: hidden;
+  }
+  #itemThumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .demo-buttons {
+    width: 100%;
+    min-width: 0;
+  }
+  .demo-buttons button {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  @media (max-width: 639px) {
+    #resultsContent .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    #metricsGrid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .metric-row { margin-bottom: 16px; }
+    #itemThumb {
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
+    }
+    #itemName { font-size: 1.125rem; }
+    #itemCategory { font-size: 0.8rem; line-height: 1.4; }
+  }
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #metricsGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    #metricsGrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
+</head>
+
+<body class="font-body text-ink antialiased">
+
+<!-- ===================== TOP NAVBAR ===================== -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-line">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
+    <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 shrink-0">
+      <div class="relative w-7 h-7 shrink-0">
+        <span class="absolute left-0 top-0 w-[18px] h-[18px] rounded-md leaf-mark"></span>
+        <span class="absolute right-0 bottom-0 w-[18px] h-[18px] rounded-md leaf-mark opacity-90"></span>
+      </div>
+      <span class="font-display font-semibold text-lg tracking-tight text-ink">GreenWise</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 font-ui text-sm text-ink/60">
+      <a href="https://greenwises.web.app/halaman1.html#beranda" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Beranda</a>
+      <a href="https://greenwises.web.app/green-hub.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Green Hub</a>
+      <a href="https://greenwises.web.app/leaderboard.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Leaderboard</a>
+      <a href="dashboard.html" class="nav-active px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium">Dashboard</a>
+    </nav>
+
+    <div class="relative">
+      <button id="profileBtn" type="button" class="flex items-center gap-2.5 pl-2 pr-1 py-1 rounded-full hover:bg-paperalt transition-colors">
+        <div class="w-9 h-9 rounded-full bg-deep text-accent font-ui text-xs font-semibold flex items-center justify-center shrink-0">DA</div>
+        <span class="hidden sm:flex flex-col items-start leading-tight">
+          <span class="font-ui text-sm text-ink">Dwi Anugrah</span>
+        </span>
+        <i class='bx bx-chevron-down text-lg text-ink/40'></i>
+      </button>
+
+      <div id="profileMenu" class="hidden absolute right-0 top-[calc(100%+8px)] w-56 rounded-2xl border border-line bg-white shadow-lg shadow-ink/5 py-2 font-ui text-sm">
+        <div class="px-4 py-2.5 border-b border-line/70">
+          <p class="text-ink font-medium">Dwi Anugrah</p>
+          <p class="text-ink/40 text-xs font-body mt-0.5">dwi.anugrah@email.com</p>
+        </div>
+        <a href="dashboard.html" class="flex items-center gap-2.5 px-4 py-2.5 text-primary bg-primary/5">
+          <i class='bx bx-grid-alt text-base text-accent'></i> Dashboard
+        </a>
+        <a href="my-impact.html" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/70 hover:bg-paperalt transition-colors">
+          <i class='bx bx-line-chart text-base text-accent'></i> My Impact
+        </a>
+        <div class="border-t border-line/70 mt-1 pt-1">
+          <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/50 hover:bg-paperalt transition-colors">
+            <i class='bx bx-log-out text-base text-accent'></i> Keluar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== MAIN ===================== -->
+<div class="pb-20 lg:pb-10">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8 lg:py-10">
+
+    <!-- Page badge -->
+    <div class="mb-4">
+      <span id="pageBadge" class="font-ui text-[11px] font-semibold tracking-wide uppercase text-primary bg-primary/10 px-2.5 py-1 rounded-full inline-flex items-center gap-1.5">
+        <i class='bx bx-grid-alt text-accent'></i> <span id="pageBadgeText">Greenwise-Dashboard</span>
+      </span>
+    </div>
+
+    <!-- ===================== GREETING + STREAK ===================== -->
+    <div class="mb-4 relative w-full min-w-0">
+      <div class="w-full min-w-0">
+        <div class="flex items-center gap-2 min-w-0">
+          <i class="bx bx-sun text-lg text-accent shrink-0"></i>
+          <p id="greetingTime" class="font-ui text-sm text-ink/50 truncate">Selamat datang kembali,</p>
+        </div>
+        <h1 class="font-display font-semibold text-2xl sm:text-3xl text-ink leading-tight truncate">Dwi Anugrah</h1>
+      </div>
+
+      <!-- STREAK -->
+      <div class="mt-3 w-full sm:absolute sm:right-0 sm:bottom-0 sm:mt-0 sm:w-[260px] flex items-center gap-3 rounded-xl bg-white border border-line px-3 sm:px-4 py-3 shadow-sm box-border min-w-0">
+        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
+          <i class="bx bxs-flame text-xl text-accent"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-baseline gap-1.5 min-w-0">
+            <p id="streakCount" class="font-display font-semibold text-xl text-ink leading-none shrink-0">7</p>
+            <p class="font-ui text-[10px] sm:text-[11px] text-ink/60 truncate">Hari beruntun</p>
+          </div>
+          <div class="h-1.5 w-full rounded-full bg-line overflow-hidden mt-1.5">
+            <div class="h-full bg-accent rounded-full" style="width:70%"></div>
+          </div>
+          <p class="font-body text-[9px] sm:text-[10px] text-ink/50 mt-1 truncate">3 hari lagi menuju target 10 hari</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== WELCOME CARD ===================== -->
+    <section class="mb-8">
+      <div class="welcome-glow rounded-2xl text-paper relative overflow-hidden p-6 sm:p-7">
+        <i class='bx bxs-leaf absolute -right-8 -top-10 text-[160px] text-white/[0.04] pointer-events-none'></i>
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                <i class='bx bx-git-branch text-base text-accent'></i>
+              </span>
+              <span class="font-ui text-[11px] font-semibold tracking-wide uppercase text-paper/60">Fitur Utama</span>
+            </div>
+            <h3 class="font-display font-semibold text-xl sm:text-[22px] text-paper leading-snug mb-1.5">Keputusan Sampah</h3>
+            <p class="font-body text-sm text-paper/70 leading-relaxed max-w-md">Sistem menganalisis barangmu dan menyajikan <span class="text-paper font-medium">1 rute rekomendasi terbaik</span> dari 3 pilihan berikut.</p>
+            <div class="flex items-center gap-2 flex-wrap mt-3">
+              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-store text-accent'></i> Jual</span>
+              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-recycle text-accent'></i> Daur Ulang</span>
+              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-trash text-accent'></i> Buang</span>
+            </div>
+            <a href="#inputSection" class="inline-flex items-center gap-1.5 font-ui text-xs font-semibold px-3.5 py-2 rounded-lg bg-accent text-ink mt-4 hover:bg-yellow-400 transition-colors w-fit">
+              Mulai analisis barang <i class='bx bx-right-arrow-alt'></i>
+            </a>
+          </div>
+
+          <div class="hidden md:block absolute left-1/2 top-6 bottom-6 w-px bg-white/10"></div>
+
+          <div class="flex flex-col md:pl-2">
+            <p class="font-body text-sm text-paper/70 leading-relaxed max-w-md">Yuk lanjutkan kebiasaan baikmu memilah barang sebelum dibuang. Setiap keputusan kecil punya dampak besar bagi lingkungan.</p>
+            <div class="flex items-center gap-2 flex-wrap mt-4">
+              <div class="flex items-center gap-1.5 font-ui text-xs text-paper/80 bg-white/5 rounded-full px-3 py-1.5">
+                <i class='bx bxs-tree text-accent'></i> 2,4 kg CO₂e/bulan
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+        <div class="rounded-2xl bg-white border border-line p-4">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
+            <i class='bx bx-scan text-lg text-accent'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statTotal">42</p>
+          <p class="font-body text-xs text-ink/50 mt-0.5">Total barang dianalisis</p>
+        </div>
+        <div class="rounded-2xl bg-white border border-line p-4">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
+            <i class='bx bx-calendar-week text-lg text-accent'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statWeek">5</p>
+          <p class="font-body text-xs text-ink/50 mt-0.5">Analisis minggu ini</p>
+        </div>
+        <div class="rounded-2xl bg-white border border-line p-4">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
+            <i class='bx bx-store text-lg text-accent'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statSold">18</p>
+          <p class="font-body text-xs text-ink/50 mt-0.5">Barang dijual</p>
+        </div>
+        <div class="rounded-2xl bg-white border border-line p-4">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
+            <i class='bx bx-recycle text-lg text-accent'></i>
+          </div>
+          <p class="font-display font-semibold text-xl text-ink" id="statRecycled">24</p>
+          <p class="font-body text-xs text-ink/50 mt-0.5">Barang didaur ulang</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INPUT ITEM ===================== -->
+    <section id="inputSection" class="mb-8 scroll-mt-20">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-medium text-lg text-ink">Masukkan barang</h2>
+      </div>
+
+      <div class="rounded-2xl bg-white border border-line p-2 sm:p-3">
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <button type="button" data-method="scan" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/50 flex items-center justify-center gap-2 transition-colors" data-active="true">
+            <i class='bx bx-camera text-base'></i><span class="hidden sm:inline">Pindai Foto</span>
+          </button>
+          <button type="button" data-method="upload" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/50 flex items-center justify-center gap-2 transition-colors">
+            <i class='bx bx-upload text-base'></i><span class="hidden sm:inline">Unggah Gambar</span>
+          </button>
+          <button type="button" data-method="search" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/50 flex items-center justify-center gap-2 transition-colors">
+            <i class='bx bx-search text-base'></i><span class="hidden sm:inline">Cari Manual</span>
+          </button>
+        </div>
+
+        <div class="px-1 sm:px-2 pb-2">
+          <!-- SCAN PANEL -->
+          <div class="method-panel" data-panel="scan" data-visible="true">
+            <div id="cameraIdle" class="rounded-xl border border-dashed border-line px-4 sm:px-5 py-8 text-center">
+              <i class='bx bx-camera text-3xl text-accent mb-2'></i>
+              <p class="font-ui text-sm text-ink/70">Ambil foto langsung menggunakan kamera perangkatmu.</p>
+              <p class="font-body text-xs text-ink/40 mt-1 mb-4">Foto digunakan sebagai media utama identifikasi barang oleh AI.</p>
+              <button id="openCameraBtn" type="button" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-primary text-white hover:bg-ink transition-colors inline-flex items-center gap-2">
+                <i class='bx bx-camera text-accent'></i> Buka Kamera
+              </button>
+              <p id="cameraError" class="font-body text-xs text-danger mt-3 hidden"></p>
+            </div>
+
+            <div id="cameraActive" class="hidden rounded-xl overflow-hidden border border-line bg-black relative">
+              <video id="cameraVideo" autoplay playsinline muted class="w-full max-h-[380px] object-cover bg-black"></video>
+              <div class="absolute inset-x-0 bottom-0 p-4 flex items-center justify-center gap-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                <button id="closeCameraBtn" type="button" title="Tutup kamera" class="w-10 h-10 rounded-full bg-white/15 text-accent flex items-center justify-center hover:bg-white/25 transition-colors">
+                  <i class='bx bx-x text-xl'></i>
+                </button>
+                <button id="captureBtn" type="button" title="Ambil foto" class="w-16 h-16 rounded-full bg-white border-4 border-white/40 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+                  <span class="w-11 h-11 rounded-full bg-primary"></span>
+                </button>
+                <button id="switchCameraBtn" type="button" title="Ganti kamera" class="w-10 h-10 rounded-full bg-white/15 text-accent flex items-center justify-center hover:bg-white/25 transition-colors">
+                  <i class='bx bx-refresh text-xl'></i>
+                </button>
+              </div>
+            </div>
+            <canvas id="cameraCanvas" class="hidden"></canvas>
+          </div>
+
+          <!-- UPLOAD PANEL -->
+          <div class="method-panel" data-panel="upload">
+            <label for="fileInput" class="cursor-pointer block rounded-xl border border-dashed border-line px-4 sm:px-5 py-8 text-center hover:border-primary/50 hover:bg-paperalt transition-colors">
+              <i class='bx bx-image-add text-3xl text-accent mb-2'></i>
+              <p class="font-ui text-sm text-ink/70">Klik untuk memilih foto barang</p>
+              <p class="font-body text-xs text-ink/40 mt-1">JPG atau PNG, maksimal 10MB · Foto sebagai media identifikasi</p>
+            </label>
+            <input id="fileInput" type="file" accept="image/*" class="hidden">
+          </div>
+
+          <!-- SEARCH PANEL -->
+          <div class="method-panel" data-panel="search">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <div class="relative flex-1">
+                <i class='bx bx-search absolute left-3.5 top-1/2 -translate-y-1/2 text-accent'></i>
+                <input id="searchInput" type="text" placeholder="Contoh: sepatu lari, keyboard rusak, tas kulit"
+                  class="w-full font-body text-sm bg-paperalt rounded-xl pl-10 pr-3 py-3 text-ink placeholder:text-ink/40 border border-line focus:border-primary focus:bg-white transition-colors">
+              </div>
+              <button id="searchBtn" type="button" class="font-ui text-sm font-medium px-5 py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors shrink-0">
+                Analisis
+              </button>
+            </div>
+            <p id="searchHint" class="font-body text-xs text-ink/50 mt-2 min-h-[1rem]"></p>
+          </div>
+        </div>
+
+        <!-- Quick Demo -->
+        <div class="flex items-center gap-2 flex-wrap px-2 pb-2 pt-1 border-t border-line mt-1">
+          <span class="font-ui text-xs text-ink/40">Coba contoh</span>
+          <button data-demo="shoes" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-ink transition-colors">Sepatu Lari</button>
+          <button data-demo="keyboard" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/60 hover:bg-line transition-colors">Keyboard Rusak</button>
+          <button data-demo="bottle" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/60 hover:bg-line transition-colors">Botol Plastik</button>
+          <button data-demo="phone" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-paperalt text-ink/60 hover:bg-line transition-colors">Ponsel Rusak Ringan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RESULTS ===================== -->
+    <div id="results" class="transition-opacity duration-300">
+      <!-- LOADING STATE -->
+      <div id="loadingState" class="hidden rounded-2xl bg-white border border-line p-8 sm:p-14 flex flex-col items-center justify-center text-center gap-3 mb-4">
+        <div class="w-12 h-12 border-4 border-line border-t-primary rounded-full animate-spin"></div>
+        <p class="font-ui text-sm font-medium text-ink">Menganalisis barang dengan AI...</p>
+        <p class="font-body text-xs text-ink/50">Mendeteksi kategori & kondisi, lalu menghitung rute terbaik (Jual / Daur Ulang / Buang)</p>
+      </div>
+
+      <!-- RESULTS CONTENT -->
+      <div id="resultsContent">
+        <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+          <!-- IDENTIFICATION -->
+          <div class="md:col-span-2 rounded-2xl bg-white border border-line p-4 sm:p-5 flex flex-col min-w-0">
+            <p class="font-ui text-xs text-ink/40 mb-3">Identifikasi barang (berbasis foto)</p>
+            <div class="flex items-start gap-3 sm:gap-4 min-w-0">
+              <div id="itemThumb" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-line">
+                <img id="itemImage" src="" alt="Foto barang" class="w-full h-full object-cover">
+              </div>
+              <div class="identification-content min-w-0 flex-1">
+                <h3 id="itemName" class="font-display font-semibold text-xl text-ink leading-snug truncate">Sepatu Lari</h3>
+                <p id="itemCategory" class="font-body text-sm text-ink/50 mt-0.5">Alas kaki · Olahraga</p>
+                <p id="itemPhotoTag" class="font-ui text-[11px] text-ink/40 mt-1.5 flex items-center gap-1">
+                  <i class="bx bx-image text-accent shrink-0"></i>
+                  <span id="itemPhotoTagText">Berdasarkan foto barang</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mt-5 pt-4 border-t border-line">
+              <div class="relative w-12 h-12 shrink-0">
+                <svg width="48" height="48" viewBox="0 0 56 56">
+                  <circle cx="28" cy="28" r="24" stroke="#e0d7e7" stroke-width="5" fill="none"/>
+                  <circle id="confidenceRing" class="ring-progress" cx="28" cy="28" r="24" stroke="#003B36" stroke-width="5" fill="none" stroke-linecap="round" transform="rotate(-90 28 28)" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+                </svg>
+                <span id="confidenceValue" class="absolute inset-0 flex items-center justify-center font-ui text-[11px] font-medium text-ink">–</span>
+              </div>
+              <p class="font-body text-sm text-ink/50 min-w-0">Tingkat keyakinan identifikasi AI dari foto</p>
+            </div>
+          </div>
+
+          <!-- CLASSIFICATION -->
+          <div id="classCard" class="md:col-span-3 rounded-2xl p-5 flex flex-col justify-between bg-white border border-line text-ink">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-ui text-xs text-ink/50 mb-2">Klasifikasi</p>
+                <h3 id="classTitle" class="font-display font-semibold text-xl sm:text-2xl leading-tight text-ink">Baik &amp; Bernilai</h3>
+                <span id="hierarchyChip" class="inline-flex items-center gap-1.5 font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary text-white mt-2">
+                  <i class='bx bx-git-branch text-accent'></i> Prioritas: Jual (Reuse)
+                </span>
+              </div>
+              <div id="classIconWrap" class="w-11 h-11 rounded-xl bg-gradient-to-br from-secondary to-ink flex items-center justify-center shrink-0">
+                <i id="classIcon" class='bx bx-badge-check text-2xl text-accent'></i>
+              </div>
+            </div>
+            <ul id="classList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mt-5 font-body text-sm"></ul>
+          </div>
+        </section>
+
+        <!-- CONDITION ASSESSMENT -->
+        <section class="rounded-2xl bg-secondary p-4 sm:p-5 lg:p-6 mb-4 overflow-hidden">
+          <h2 class="font-display font-medium text-lg sm:text-xl text-white mb-5">Penilaian kondisi</h2>
+          <div id="metricsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-1 w-full min-w-0"></div>
+        </section>
+
+        <!-- VALUE + IMPACT -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="rounded-2xl bg-white border border-line p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-display font-medium text-lg text-ink">Estimasi nilai</h2>
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center">
+                <i class='bx bx-tag text-lg text-accent'></i>
+              </div>
+            </div>
+            <p id="valueCaption" class="font-ui text-[11px] font-semibold uppercase tracking-wide text-primary/60 mb-1.5">Estimasi harga jual</p>
+            <div id="valueAmountWrap" class="flex items-center gap-3 rounded-xl border px-4 py-3.5 bg-accent/10 border-accent/40">
+              <i id="valueIcon" class='bx bxs-coin-stack text-2xl text-accent shrink-0'></i>
+              <p id="valueAmount" class="font-display font-extrabold text-xl sm:text-2xl text-ink leading-snug">Rp120.000 – Rp165.000</p>
+            </div>
+            <p id="valueNote" class="font-body text-sm text-ink/60 mt-3 leading-relaxed">Estimasi berdasarkan kondisi dan tipe barang serupa di pasar bekas.</p>
+            <p class="font-body text-[11px] text-ink/35 mt-3">*Nilai mengikuti rute yang sedang aktif di bawah.</p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-line p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="font-display font-medium text-lg text-ink">Dampak lingkungan</h2>
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center">
+                <i class='bx bx-leaf text-lg text-accent'></i>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <p id="impactWaste" class="font-display font-semibold text-base sm:text-lg text-ink">0,6 kg</p>
+                <p class="font-body text-xs text-ink/50 mt-0.5">Sampah teralihkan</p>
+              </div>
+              <div>
+                <p id="impactCo2" class="font-display font-semibold text-base sm:text-lg text-ink">1,8 kg</p>
+                <p class="font-body text-xs text-ink/50 mt-0.5">CO₂e dihindari</p>
+              </div>
+              <div>
+                <p id="impactWater" class="font-display font-semibold text-base sm:text-lg text-ink">850 L</p>
+                <p class="font-body text-xs text-ink/50 mt-0.5">Air terhemat</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- JALUR REKOMENDASI -->
+        <section class="rounded-2xl bg-secondary p-4 sm:p-5 lg:p-6 mb-4 overflow-hidden w-full min-w-0">
+          <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <p class="font-ui text-xs text-white/50">Jalur rekomendasi · Unified Decision Engine</p>
+            <span class="font-ui text-[10px] px-2.5 py-1 rounded-full bg-white/10 text-white/60 flex items-center gap-1.5">
+              <i class='bx bx-git-branch text-accent'></i> Jual → Daur Ulang → Buang
+            </span>
+          </div>
+
+          <div class="rounded-xl bg-white/10 p-4 sm:p-5">
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
+              <span id="mainRouteTag" class="font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white text-ink flex items-center gap-1">
+                <i class='bx bx-map-pin text-accent'></i> Rute Utama
+              </span>
+              <span id="mainStatusBadge" class="font-ui text-[11px] font-medium px-2.5 py-1 rounded-full bg-lime text-ink">Sangat Disarankan</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-accent text-xl shrink-0">
+                  <i id="recIcon" class='bx bx-store'></i>
+                </div>
+                <div>
+                  <p id="recPrimary" class="font-display font-semibold text-xl text-white">Jual</p>
+                  <div id="recSecondary" class="flex items-center gap-1.5 mt-1 flex-wrap"></div>
+                </div>
+              </div>
+              <p id="recReason" class="font-body text-sm text-white/70 leading-relaxed sm:border-l sm:border-white/15 sm:pl-5 flex-1">
+                Kondisi masih baik, fungsional penuh, dan memiliki nilai jual yang solid di pasar sepatu bekas.
+              </p>
+            </div>
+
+            <div id="altActiveBanner" class="hidden mt-4 rounded-lg border p-3 flex items-start gap-2.5">
+              <i id="altActiveIcon" class='bx bx-error-circle text-lg shrink-0 mt-0.5'></i>
+              <div class="flex-1 min-w-0">
+                <p id="altActiveText" class="font-body text-xs leading-relaxed"></p>
+                <button id="revertMainBtn" type="button" class="font-ui text-[11px] font-semibold underline mt-1.5 inline-flex items-center gap-1 text-accent">
+                  <i class='bx bx-undo'></i> Kembali ke rute utama
+                </button>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-5 pt-4 border-t border-white/10 gap-3">
+              <p class="font-body text-xs text-white/40">Langkah berikutnya ada di halaman Detail Keputusan.</p>
+              <a id="recLanjutkanBtn" href="decision-detail.html" class="font-ui text-sm font-medium px-5 py-2.5 rounded-xl bg-primary text-white flex items-center justify-center gap-1.5 hover:bg-ink transition-colors">
+                Lanjutkan <i class='bx bx-right-arrow-alt text-accent'></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- ALTERNATIVE ROUTES -->
+          <div class="mt-4">
+            <button id="toggleAltBtn" type="button" class="w-full flex items-center justify-between gap-2 font-ui text-xs text-white/70 hover:text-white transition-colors py-2">
+              <span id="toggleAltLabel" class="flex items-center gap-1.5"><i class='bx bx-list-ul text-accent'></i> Lihat rute alternatif lain</span>
+              <i id="toggleAltIcon" class='bx bx-chevron-down text-base text-accent'></i>
+            </button>
+            <div id="altList" class="space-y-2 hidden mt-2"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ECO-WARNING MODAL -->
+<div id="ecoWarningModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div id="ecoModalBackdrop" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl" style="animation: modalPop .25s ease">
+    <div class="w-12 h-12 rounded-xl bg-danger/10 flex items-center justify-center mb-4">
+      <i class='bx bx-error text-2xl text-danger'></i>
+    </div>
+    <p class="font-ui text-[11px] font-semibold uppercase tracking-wide text-danger mb-1">Eco-Warning</p>
+    <h3 class="font-display font-semibold text-lg text-ink mb-2">Yakin ingin mengabaikan rekomendasi utama?</h3>
+    <p id="ecoModalText" class="font-body text-sm text-ink/60 leading-relaxed mb-5">
+      Barang ini masih dalam kondisi layak pakai. Melanjutkan opsi ini dapat menambah beban lingkungan yang sebenarnya bisa dihindari.
+    </p>
+    <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+      <button id="ecoModalCancel" type="button" class="font-ui text-sm font-medium px-4 py-2.5 rounded-xl bg-paperalt text-ink hover:bg-line transition-colors">
+        Batal, ikuti rekomendasi
+      </button>
+      <button id="ecoModalConfirm" type="button" class="font-ui text-sm font-medium px-4 py-2.5 rounded-xl bg-danger text-white hover:opacity-90 transition-colors">
+        Ya, tetap lanjutkan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MOBILE BOTTOM NAV ===================== -->
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line px-4 py-2 flex items-center justify-between">
+  <a href="dashboard.html" class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl bg-primary/5 text-primary">
+    <i class='bx bx-grid-alt text-xl text-accent'></i>
+    <span class="font-ui text-[10px] font-medium">Dashboard</span>
+  </a>
+  <a href="https://greenwises.web.app/green-hub.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-leaf text-xl'></i>
+    <span class="font-ui text-[10px]">Green Hub</span>
+  </a>
+  <a href="my-impact.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-line-chart text-xl'></i>
+    <span class="font-ui text-[10px]">Dampak</span>
+  </a>
+  <a href="https://greenwises.web.app/leaderboard.html" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-ink/40">
+    <i class='bx bx-trophy text-xl'></i>
+    <span class="font-ui text-[10px]">Peringkat</span>
+  </a>
+</nav>
+
+<script>
+  function updatePageBadge() {
+    const activeLink = document.querySelector('.nav-active');
+    const label = activeLink ? activeLink.textContent.trim() : 'Dashboard';
+    const el = document.getElementById('pageBadgeText');
+    if (el) el.textContent = 'Greenwise-' + label;
+  }
+  updatePageBadge();
+
+  function setGreeting() {
+    const hour = new Date().getHours();
+    let text = 'Selamat malam,';
+    if (hour >= 4 && hour < 11) text = 'Selamat pagi,';
+    else if (hour >= 11 && hour < 15) text = 'Selamat siang,';
+    else if (hour >= 15 && hour < 18) text = 'Selamat sore,';
+    document.getElementById('greetingTime').textContent = text;
+  }
+  setGreeting();
+
+  const stats = { total: 42, week: 5, sold: 18, recycled: 24 };
+  let lastCountedAction = null;
+
+  function renderStat(key, elId) {
+    const el = document.getElementById(elId);
+    el.textContent = stats[key];
+    el.classList.remove('stat-bump');
+    void el.offsetWidth;
+    el.classList.add('stat-bump');
+  }
+
+  function bumpStatsOnAnalysisComplete() {
+    stats.total += 1;
+    stats.week += 1;
+    renderStat('total', 'statTotal');
+    renderStat('week', 'statWeek');
+  }
+
+  function countAction(action) {
+    if (lastCountedAction === action) return;
+    if (lastCountedAction === 'sold') stats.sold -= 1;
+    if (lastCountedAction === 'recycled') stats.recycled -= 1;
+    if (action === 'sold') stats.sold += 1;
+    if (action === 'recycled') stats.recycled += 1;
+    lastCountedAction = action;
+    renderStat('sold', 'statSold');
+    renderStat('recycled', 'statRecycled');
+  }
+
+  // Helper untuk merender ikon dengan tepat (menyelesaikan bug ikon Halaman 4)
+  function getMetricIcon(icon) {
+    if (icon === 'damage-svg') {
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
+          <path d="M12 3 2.5 20h19L12 3z"></path>
+          <path d="M12 9v5"></path>
+          <circle cx="12" cy="17" r="0.8" fill="currentColor"></circle>
+        </svg>
+      `;
+    }
+    if (icon === 'reuse-svg') {
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
+          <path d="M20 11a8.1 8.1 0 0 0-15.5-2"></path>
+          <path d="M4 5v4h4"></path>
+          <path d="M4 13a8.1 8.1 0 0 0 15.5 2"></path>
+          <path d="M20 19v-4h-4"></path>
+        </svg>
+      `;
+    }
+    return `<i class="bx ${icon} text-lg text-accent"></i>`;
+  }
+
+  const METRICS = [
+    { key: 'physicalCondition', label: 'Kondisi Fisik', icon: 'bx-shield' },
+    { key: 'usability', label: 'Kegunaan', icon: 'bx-cog' },
+    { key: 'damage', label: 'Tingkat Kerusakan', icon: 'damage-svg', inverse: true },
+    { key: 'completeness', label: 'Kelengkapan', icon: 'bx-check-circle' },
+    { key: 'reusePotential', label: 'Potensi Pakai Ulang', icon: 'reuse-svg' },
+    { key: 'resalePotential', label: 'Potensi Jual Kembali', icon: 'bx-dollar-circle' },
+    { key: 'recyclingPotential', label: 'Potensi Daur Ulang', icon: 'bx-recycle' }
+  ];
+
+  const ROUTE_ICONS = { jual: 'bx-store', daurUlang: 'bx-recycle', buang: 'bx-trash' };
+  const ROUTE_ACTION_MAP = { jual: 'sold', daurUlang: 'recycled', buang: null };
+
+  const ITEMS = {
+    shoes: {
+      name: 'Sepatu Lari',
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+      category: 'Alas kaki · Olahraga',
+      icon: 'bxs-run',
+      confidence: 96,
+      metrics: { physicalCondition: 82, usability: 90, damage: 15, completeness: 95, reusePotential: 88, resalePotential: 76, recyclingPotential: 60 },
+      classification: 'good',
+      reasons: ['Kondisi fisik masih baik', 'Masih berfungsi penuh', 'Memiliki potensi nilai jual'],
+      routes: {
+        mainKey: 'jual',
+        jual: {
+          label: 'Jual', secondary: ['Marketplace'],
+          message: 'Kondisi fisik masih baik dan fungsional penuh — menjualnya dapat memperpanjang usia pakai (Reuse) secara maksimal.',
+          value: { amount: 'Rp120.000 – Rp165.000', note: 'Estimasi berdasarkan kondisi dan tipe sepatu serupa di pasar bekas.' },
+          impact: { waste: '0,6 kg', co2: '1,8 kg', water: '850 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        daurUlang: {
+          label: 'Panduan Daur Ulang', secondary: ['Bank Sampah'],
+          message: 'Sayang untuk didaur ulang karena fungsi sepatu ini masih 100% normal dan berpotensi menghasilkan nilai jual lebih tinggi.',
+          value: { amount: 'Rp15.000 – Rp25.000 / kg', note: 'Nilai material daur ulang alas kaki (karet & tekstil) di fasilitas mitra.' },
+          impact: { waste: '0,6 kg', co2: '1,1 kg', water: '500 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        buang: {
+          label: 'Buang ke Sampah Umum', secondary: ['Drop-off Umum'],
+          message: 'Membuang sepatu yang masih bernilai tinggi ini menambah beban TPA secara tidak perlu.',
+          warningText: 'Sepatu ini masih dalam kondisi layak pakai (Kondisi Fisik: 82/100). Membuangnya langsung ke TPA akan menambah emisi gas rumah kaca dan menyia-nyiakan nilai jual yang sebenarnya masih bisa dimanfaatkan. Apakah kamu yakin ingin mengabaikan opsi jual/daur ulang?',
+          value: { amount: null, note: 'Barang langsung dibuang ke TPA tanpa melalui proses jual atau daur ulang.', noValueLabel: 'Berisiko Cemari Lingkungan' },
+          impact: { waste: '0,6 kg (ke TPA)', co2: '2,4 kg (tambahan)', water: '0 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        }
+      }
+    },
+    keyboard: {
+      name: 'Keyboard Rusak',
+      image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Aksesori komputer',
+      icon: 'bx-keyboard',
+      confidence: 91,
+      metrics: { physicalCondition: 25, usability: 10, damage: 78, completeness: 40, reusePotential: 20, resalePotential: 0, recyclingPotential: 70 },
+      classification: 'low',
+      reasons: ['Kondisi fisik buruk, sejumlah tombol tidak berfungsi', 'Tidak dapat digunakan secara normal', 'Tidak memiliki potensi nilai jual'],
+      routes: {
+        mainKey: 'daurUlang',
+        jual: {
+          label: 'Jual di Marketplace', secondary: ['Marketplace'],
+          message: 'Barang rusak ini tidak memenuhi kriteria kualitas pasar barang bekas dan berisiko mengecewakan pembeli.',
+          warningText: 'Keyboard ini memiliki tingkat kerusakan tinggi (78/100) dan sejumlah tombol tidak berfungsi. Menjualnya berisiko mengecewakan pembeli. Apakah kamu yakin ingin tetap mencoba menjualnya?',
+          value: { amount: 'Rp0 – Rp5.000 (jika laku)', note: 'Nilai sangat rendah dan sulit terjual karena kondisi rusak berat.' },
+          impact: { waste: '0,35 kg', co2: '0,1 kg', water: '20 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        },
+        daurUlang: {
+          label: 'Daur Ulang / Drop-off E-Waste', secondary: ['E-Waste Center', 'Buang dengan Benar'],
+          message: 'Kerusakan signifikan membuat unit ini tidak layak jual, namun komponen elektroniknya tetap bisa diproses dengan aman melalui jalur daur ulang resmi (Recycle).',
+          value: { amount: null, note: 'Tidak memiliki nilai jual, namun komponennya tetap bernilai bagi fasilitas daur ulang e-waste.', noValueLabel: 'Kontribusi Daur Ulang Elektronik' },
+          impact: { waste: '0,35 kg', co2: '0,4 kg', water: '120 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        buang: {
+          label: 'Buang ke Sampah Umum', secondary: ['Drop-off Umum'],
+          message: 'Komponen elektronik mengandung logam berat yang berbahaya bila dibuang sembarangan bersama sampah umum.',
+          warningText: 'Keyboard ini termasuk limbah elektronik (e-waste) yang mengandung logam berat & komponen berbahaya. Membuangnya ke sampah umum berisiko mencemari tanah dan air. Apakah kamu yakin ingin tetap membuangnya ke sampah umum?',
+          value: { amount: null, note: 'Berisiko mencemari lingkungan karena mengandung logam berat.', noValueLabel: 'Berisiko Cemari Lingkungan' },
+          impact: { waste: '0,35 kg (berbahaya)', co2: '0,6 kg (tambahan)', water: '0 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        }
+      }
+    },
+    bottle: {
+      name: 'Botol Plastik Bekas',
+      image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
+      category: 'Kemasan · Minuman',
+      icon: 'bx-drink',
+      confidence: 88,
+      metrics: { physicalCondition: 55, usability: 30, damage: 40, completeness: 70, reusePotential: 45, resalePotential: 10, recyclingPotential: 92 },
+      classification: 'low',
+      reasons: ['Material tunggal, mudah dipilah', 'Tidak layak dipakai ulang untuk konsumsi', 'Sangat cocok untuk daur ulang plastik'],
+      routes: {
+        mainKey: 'daurUlang',
+        jual: {
+          label: 'Jual sebagai Barang Bekas', secondary: ['Marketplace'],
+          message: 'Botol plastik bekas minuman tidak layak dijual kembali untuk konsumsi dan tidak memiliki pasar barang bekas yang wajar.',
+          warningText: 'Botol plastik ini bukan barang yang lazim dijual kembali untuk digunakan ulang secara langsung. Menjualnya sebagai "barang bekas" berisiko disalahgunakan untuk konsumsi. Apakah kamu yakin ingin tetap mencoba menjualnya?',
+          value: { amount: null, note: 'Tidak direkomendasikan untuk dijual sebagai barang pakai ulang.', noValueLabel: 'Tidak Layak Dijual Kembali' },
+          impact: { waste: '0,05 kg', co2: '0,05 kg', water: '10 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        },
+        daurUlang: {
+          label: 'Setor ke Bank Sampah', secondary: ['Bank Sampah'],
+          message: 'Material tunggal pada botol plastik ini sangat cocok diproses melalui jalur daur ulang plastik (Recycle) demi mengurangi limbah baru.',
+          value: { amount: 'Rp500 – Rp1.500 / kg', note: 'Nilai jual mengikuti harga plastik daur ulang di bank sampah setempat.' },
+          impact: { waste: '0,05 kg', co2: '0,15 kg', water: '40 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        buang: {
+          label: 'Buang ke Sampah Umum', secondary: ['Drop-off Umum'],
+          message: 'Membuang botol plastik yang sebenarnya sangat mudah didaur ulang akan menambah volume sampah di TPA yang sulit terurai.',
+          warningText: 'Plastik jenis ini sangat mudah didaur ulang (Potensi Daur Ulang: 92/100). Membuangnya ke sampah umum menyia-nyiakan material yang bernilai dan menambah beban TPA. Apakah kamu yakin ingin tetap membuangnya ke sampah umum?',
+          value: { amount: null, note: 'Menyia-nyiakan material yang sebenarnya sangat mudah didaur ulang.', noValueLabel: 'Menambah Beban TPA' },
+          impact: { waste: '0,05 kg (ke TPA)', co2: '0,2 kg (tambahan)', water: '0 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        }
+      }
+    },
+    phone: {
+      name: 'Ponsel Rusak Ringan',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Gawai',
+      icon: 'bx-mobile-alt',
+      confidence: 93,
+      metrics: { physicalCondition: 60, usability: 45, damage: 50, completeness: 85, reusePotential: 55, resalePotential: 58, recyclingPotential: 65 },
+      classification: 'good',
+      reasons: ['Layar retak namun mesin masih menyala', 'Komponen internal masih bisa dipakai ulang', 'Memiliki nilai jual sebagai sparepart'],
+      routes: {
+        mainKey: 'jual',
+        jual: {
+          label: 'Jual / Servis Sparepart', secondary: ['Servis', 'Tukar Tambah'],
+          message: 'Meski layar rusak, komponen inti masih berfungsi sehingga tetap memiliki nilai jual sebagai unit servis/sparepart — bentuk Reuse yang optimal.',
+          value: { amount: 'Rp350.000 – Rp600.000', note: 'Estimasi nilai jual sebagai unit sparepart atau perbaikan ke penjual elektronik bekas.' },
+          impact: { waste: '0,2 kg', co2: '12 kg', water: '1.200 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        daurUlang: {
+          label: 'E-Waste Recycling Center', secondary: ['E-Waste Center'],
+          message: 'Komponen inti ponsel ini masih berfungsi, sehingga mendaur ulang langsung berarti kehilangan potensi nilai jual sebagai sparepart.',
+          value: { amount: 'Rp50.000 – Rp90.000', note: 'Estimasi nilai dari kandungan logam & komponen yang dapat didaur ulang fasilitas e-waste.' },
+          impact: { waste: '0,2 kg', co2: '8 kg', water: '700 L' },
+          status: 'caution', statusLabel: 'Kurang Optimal'
+        },
+        buang: {
+          label: 'Buang ke Sampah Umum', secondary: ['Drop-off Umum'],
+          message: 'Ponsel mengandung logam berat & baterai berbahaya bila dibuang sembarangan, serta menyia-nyiakan nilai jualnya.',
+          warningText: 'Ponsel ini masih memiliki nilai jual sebagai unit servis (tetap berfungsi meski layar retak). Membuangnya ke tempat sampah biasa berisiko mencemari tanah dengan logam berat & baterai. Apakah kamu yakin ingin mengabaikan opsi jual/daur ulang resmi?',
+          value: { amount: null, note: 'Berisiko mencemari tanah dengan logam berat & baterai.', noValueLabel: 'Berisiko Cemari Lingkungan' },
+          impact: { waste: '0,2 kg (berbahaya)', co2: '15 kg (tambahan)', water: '0 L' },
+          status: 'danger', statusLabel: 'Tidak Disarankan'
+        }
+      }
+    }
+  };
+
+  const ITEM_KEYS = Object.keys(ITEMS);
+  function randomItemKey() {
+    return ITEM_KEYS[Math.floor(Math.random() * ITEM_KEYS.length)];
+  }
+
+  function hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash) || 1;
+  }
+  function seededRandom(seed) {
+    let s = seed;
+    return function () {
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    };
+  }
+  function titleCase(str) {
+    return str.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
+  }
+  function slugify(str) {
+    return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'item';
+  }
+  function rupiah(n) { return 'Rp' + Math.round(n).toLocaleString('id-ID'); }
+  function guessIcon(query) {
+    const q = query.toLowerCase();
+    if (/(sepatu|sandal|shoe)/.test(q)) return 'bx-run';
+    if (/(baju|kaos|jaket|kemeja|celana|pakaian)/.test(q)) return 'bxs-t-shirt';
+    if (/(botol|gelas|kemasan|plastik)/.test(q)) return 'bx-drink';
+    if (/(hp|ponsel|handphone|phone|laptop|komputer|keyboard|mouse|elektronik|charger|kabel|gadget)/.test(q)) return 'bx-devices';
+    if (/(kertas|buku|kardus|koran|majalah)/.test(q)) return 'bx-book-open';
+    if (/(kaleng|logam|besi|metal)/.test(q)) return 'bx-cube';
+    return 'bx-package';
+  }
+
+  function buildGenericItem(query) {
+    const seed = hashString(query.toLowerCase());
+    const rnd = seededRandom(seed);
+    const pick = (min, max) => Math.round(min + rnd() * (max - min));
+
+    const metrics = {
+      physicalCondition: pick(30, 92),
+      usability: pick(25, 92),
+      damage: pick(8, 70),
+      completeness: pick(40, 100),
+      reusePotential: pick(20, 88),
+      resalePotential: pick(0, 80),
+      recyclingPotential: pick(35, 92)
+    };
+
+    const score = (metrics.physicalCondition + metrics.usability + (100 - metrics.damage) + metrics.resalePotential) / 4;
+    const classification = score >= 55 ? 'good' : 'low';
+    const mainKey = classification === 'good' ? 'jual' : 'daurUlang';
+    const name = titleCase(query);
+    const icon = guessIcon(query);
+    const confidence = pick(72, 96);
+    const sellLow = pick(15, 60) * 1000;
+    const sellHigh = sellLow + pick(20, 80) * 1000;
+
+    const reasons = classification === 'good'
+      ? ['Kondisi fisik tergolong masih baik', 'Masih dapat difungsikan dengan wajar', 'Berpotensi memiliki nilai jual kembali']
+      : ['Kondisi fisik sudah cukup menurun', 'Fungsi utama mulai berkurang', 'Lebih optimal diproses sebagai material daur ulang'];
+
+    const routes = {
+      mainKey,
+      jual: classification === 'good' ? {
+        label: 'Jual', secondary: ['Marketplace'],
+        message: name + ' masih dalam kondisi cukup baik sehingga berpotensi memiliki nilai jual di pasar barang bekas.',
+        value: { amount: rupiah(sellLow) + ' – ' + rupiah(sellHigh), note: 'Estimasi otomatis berdasarkan kondisi & kategori barang serupa.' },
+        impact: { waste: (pick(2, 9) / 10).toFixed(1).replace('.', ',') + ' kg', co2: (pick(5, 25) / 10).toFixed(1).replace('.', ',') + ' kg', water: pick(100, 900) + ' L' },
+        status: 'caution', statusLabel: 'Kurang Optimal'
+      } : {
+        label: 'Jual', secondary: ['Marketplace'],
+        message: 'Kondisi ' + name.toLowerCase() + ' kurang meyakinkan untuk dijual kembali dan berisiko mengecewakan pembeli.',
+        warningText: name + ' memiliki tingkat kerusakan yang cukup tinggi. Menjualnya berisiko mengecewakan pembeli. Apakah kamu yakin ingin tetap mencoba menjualnya?',
+        value: { amount: null, note: 'Nilai jual sangat rendah karena kondisi barang kurang optimal.', noValueLabel: 'Kurang Layak Dijual' },
+        impact: { waste: '0,3 kg', co2: '0,1 kg', water: '20 L' },
+        status: 'danger', statusLabel: 'Tidak Disarankan'
+      },
+      daurUlang: classification === 'good' ? {
+        label: 'Panduan Daur Ulang', secondary: ['Bank Sampah'],
+        message: 'Mendaur ulang ' + name.toLowerCase() + ' yang masih berfungsi baik akan menghilangkan potensi nilai jualnya.',
+        value: { amount: 'Rp5.000 – Rp15.000 / kg', note: 'Estimasi nilai material daur ulang di fasilitas mitra.' },
+        impact: { waste: '0,4 kg', co2: '0,3 kg', water: '150 L' },
+        status: 'caution', statusLabel: 'Kurang Optimal'
+      } : {
+        label: 'Daur Ulang', secondary: ['Bank Sampah', 'E-Waste Center'],
+        message: 'Material pada ' + name.toLowerCase() + ' ini masih bisa diproses melalui jalur daur ulang demi mengurangi limbah baru.',
+        value: { amount: 'Rp5.000 – Rp20.000 / kg', note: 'Estimasi nilai material daur ulang di fasilitas mitra.' },
+        impact: { waste: '0,4 kg', co2: '0,4 kg', water: '150 L' },
+        status: 'caution', statusLabel: 'Kurang Optimal'
+      },
+      buang: {
+        label: 'Buang ke Sampah Umum', secondary: ['Drop-off Umum'],
+        message: 'Membuang ' + name.toLowerCase() + ' langsung ke sampah umum berisiko menambah beban TPA yang sebenarnya bisa dihindari.',
+        warningText: name + ' ini masih memiliki nilai guna/jual atau berpotensi didaur ulang. Membuangnya ke sampah umum menambah beban TPA secara tidak perlu. Apakah kamu yakin ingin tetap membuangnya?',
+        value: { amount: null, note: 'Tidak ada nilai kembali karena barang langsung dibuang.', noValueLabel: 'Berisiko Cemari Lingkungan' },
+        impact: { waste: '0,4 kg (ke TPA)', co2: '0,8 kg (tambahan)', water: '0 L' },
+        status: 'danger', statusLabel: 'Tidak Disarankan'
+      }
+    };
+
+    return {
+      name, category: 'Hasil Pencarian · Analisis Otomatis', icon, confidence, metrics, classification, reasons, routes, generic: true
+    };
+  }
+
+  // ---------- Memperbaiki Render Ikon Pada Penilaian Kondisi Halaman 4 ----------
+  const metricsGrid = document.getElementById('metricsGrid');
+  METRICS.forEach(m => {
+    const row = document.createElement('div');
+    row.className = `metric-row mb-4 min-w-0 w-full`;
+    row.innerHTML = `
+      <div class="flex items-center justify-between gap-3 mb-2 min-w-0">
+        <div class="metric-label flex items-center gap-2 min-w-0 flex-1">
+          <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+            ${getMetricIcon(m.icon)}
+          </span>
+          <span class="metric-label-text font-ui text-sm sm:text-base text-white/70 truncate">
+            ${m.label}
+          </span>
+        </div>
+        <span class="metric-value font-ui font-semibold text-white shrink-0" data-key="${m.key}">–</span>
+      </div>
+      <div class="h-2 w-full rounded-full bg-white/15 overflow-hidden">
+        <div class="metric-bar h-full rounded-full" data-key="${m.key}" style="width:0%"></div>
+      </div>
+      ${m.inverse ? `<p class="font-body text-[10px] sm:text-[11px] text-white/50 mt-1">Semakin rendah semakin baik</p>` : ''}
+    `;
+    metricsGrid.appendChild(row);
+  });
+
+  const circumference = 2 * Math.PI * 24;
+  let uploadedImage = null;
+  let currentItemData = null;
+  let currentItemKey = null;
+  let activeRouteKey = null;
+
+  function render(data, key) {
+    currentItemData = data;
+    currentItemKey = key;
+    lastCountedAction = null;
+
+    const results = document.getElementById('results');
+    results.classList.add('fade-swap');
+    setTimeout(() => results.classList.remove('fade-swap'), 500);
+
+    // identification
+    document.getElementById('itemName').textContent = data.name;
+    document.getElementById('itemCategory').textContent = data.category;
+    const itemImage = document.getElementById('itemImage');
+    const photoTagText = document.getElementById('itemPhotoTagText');
+
+    if (uploadedImage) {
+      itemImage.src = uploadedImage;
+      itemImage.alt = `Foto ${data.name}`;
+      photoTagText.textContent = 'Diidentifikasi dari foto yang diambil/diunggah';
+    } else if (data.image) {
+      itemImage.src = data.image;
+      itemImage.alt = `Foto ${data.name}`;
+      photoTagText.textContent = 'Foto contoh barang untuk identifikasi';
+    } else {
+      itemImage.removeAttribute('src');
+      itemImage.alt = 'Foto barang';
+      photoTagText.textContent = 'Foto barang tidak tersedia';
+    }
+
+    const offset = circumference * (1 - data.confidence / 100);
+    const ring = document.getElementById('confidenceRing');
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = offset;
+    document.getElementById('confidenceValue').textContent = data.confidence + '%';
+
+    // classification
+    const classTitle = document.getElementById('classTitle');
+    const classIcon = document.getElementById('classIcon');
+    const classIconWrap = document.getElementById('classIconWrap');
+    const classList = document.getElementById('classList');
+    const hierarchyChip = document.getElementById('hierarchyChip');
+    classList.innerHTML = '';
+    data.reasons.forEach(r => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-2';
+      li.innerHTML = `<i class="bx bx-check text-lg text-accent shrink-0 mt-0.5"></i><span class="text-ink/70">${r}</span>`;
+      classList.appendChild(li);
+    });
+
+    classIconWrap.className = 'w-11 h-11 rounded-xl bg-gradient-to-br from-secondary to-ink flex items-center justify-center shrink-0';
+
+    if (data.classification === 'good') {
+      classTitle.textContent = 'Baik & Bernilai';
+      classTitle.className = 'font-display font-semibold text-xl sm:text-2xl leading-tight text-ink';
+      classIcon.className = 'bx bx-badge-check text-2xl text-accent';
+      hierarchyChip.innerHTML = `<i class='bx bx-git-branch text-accent'></i> Prioritas: Jual (Reuse)`;
+      hierarchyChip.className = 'inline-flex items-center gap-1.5 font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary text-white mt-2';
+    } else {
+      classTitle.textContent = 'Kondisi Rendah / Bahan Baku';
+      classTitle.className = 'font-display font-semibold text-xl sm:text-2xl leading-tight text-ink';
+      classIcon.className = 'bx bx-cube-alt text-2xl text-accent';
+      hierarchyChip.innerHTML = `<i class='bx bx-git-branch text-accent'></i> Prioritas: Daur Ulang`;
+      hierarchyChip.className = 'inline-flex items-center gap-1.5 font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary text-white mt-2';
+    }
+
+    // metrics
+    METRICS.forEach(m => {
+      const val = data.metrics[m.key];
+      const isResale = m.key === 'resalePotential';
+      const valueEl = document.querySelector(`.metric-value[data-key="${m.key}"]`);
+      valueEl.textContent = val + '%';
+      valueEl.classList.toggle('text-accent', isResale);
+      valueEl.classList.toggle('text-white', !isResale);
+      const bar = document.querySelector(`.metric-bar[data-key="${m.key}"]`);
+      bar.style.width = val + '%';
+      bar.style.backgroundColor = isResale ? '#facc15' : '#ffffff';
+    });
+
+    renderRecommendation(data);
+  }
+
+  function applyValueImpact(valueObj, impactObj) {
+    const caption = document.getElementById('valueCaption');
+    const wrap = document.getElementById('valueAmountWrap');
+    const icon = document.getElementById('valueIcon');
+    const amountEl = document.getElementById('valueAmount');
+
+    if (valueObj.amount) {
+      caption.textContent = 'Estimasi harga jual';
+      wrap.className = 'flex items-center gap-3 rounded-xl border px-4 py-3.5 bg-accent/10 border-accent/40';
+      icon.className = 'bx bxs-coin-stack text-2xl text-accent shrink-0';
+      amountEl.className = 'font-display font-extrabold text-xl sm:text-2xl text-ink leading-snug';
+      amountEl.textContent = valueObj.amount;
+    } else {
+      caption.textContent = 'Status nilai barang';
+      wrap.className = 'flex items-center gap-3 rounded-xl border px-4 py-3.5 bg-primary/5 border-line';
+      icon.className = 'bx bxs-leaf text-2xl text-accent shrink-0';
+      amountEl.className = 'font-display font-bold text-lg sm:text-xl text-ink leading-snug';
+      amountEl.textContent = valueObj.noValueLabel || 'Fokus pada Dampak Lingkungan';
+    }
+
+    document.getElementById('valueNote').textContent = valueObj.note;
+    document.getElementById('impactWaste').textContent = impactObj.waste;
+    document.getElementById('impactCo2').textContent = impactObj.co2;
+    document.getElementById('impactWater').textContent = impactObj.water;
+  }
+
+  function renderSecondaryChips(list) {
+    const secWrap = document.getElementById('recSecondary');
+    secWrap.innerHTML = '';
+    (list || []).forEach(s => {
+      const chip = document.createElement('span');
+      chip.className = 'font-ui text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-white/70 border border-white/10';
+      chip.textContent = s;
+      secWrap.appendChild(chip);
+    });
+  }
+
+  function resetAltToggle() {
+    const altList = document.getElementById('altList');
+    const icon = document.getElementById('toggleAltIcon');
+    const label = document.getElementById('toggleAltLabel');
+    altList.classList.add('hidden');
+    icon.classList.remove('rotate-180');
+    label.innerHTML = `<i class='bx bx-list-ul text-accent'></i> Lihat rute alternatif lain`;
+  }
+
+  document.getElementById('toggleAltBtn').addEventListener('click', () => {
+    const altList = document.getElementById('altList');
+    const icon = document.getElementById('toggleAltIcon');
+    const label = document.getElementById('toggleAltLabel');
+    const isHidden = altList.classList.contains('hidden');
+    if (isHidden) {
+      altList.classList.remove('hidden');
+      icon.classList.add('rotate-180');
+      label.innerHTML = `<i class='bx bx-list-ul text-accent'></i> Sembunyikan rute alternatif`;
+    } else {
+      altList.classList.add('hidden');
+      icon.classList.remove('rotate-180');
+      label.innerHTML = `<i class='bx bx-list-ul text-accent'></i> Lihat rute alternatif lain`;
+    }
+  });
+
+  function renderRecommendation(data) {
+    activeRouteKey = null;
+    const mainKey = data.routes.mainKey;
+    applyActiveRoute(data, data.routes[mainKey], 'main', mainKey);
+    renderAltList(data);
+    resetAltToggle();
+    bumpStatsOnAnalysisComplete();
+  }
+
+  function renderAltList(data) {
+    const wrap = document.getElementById('altList');
+    wrap.innerHTML = '';
+    const order = ['jual', 'daurUlang', 'buang'];
+    order.filter(k => k !== data.routes.mainKey).forEach(key => {
+      const alt = data.routes[key];
+      const isDanger = alt.status === 'danger';
+      const badgeClass = isDanger ? 'bg-danger text-white' : 'bg-accent text-ink';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.altKey = key;
+      btn.className = 'alt-route-btn w-full text-left rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors p-3.5 flex items-center gap-3';
+      btn.innerHTML = `
+        <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-accent text-base shrink-0">
+          <i class='bx ${ROUTE_ICONS[key]}'></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <p class="font-ui text-sm font-medium text-white">${alt.label}</p>
+            <span class="font-ui text-[10px] font-semibold px-2 py-0.5 rounded-full ${badgeClass}">${alt.statusLabel}</span>
+          </div>
+          <p class="font-body text-xs text-white/50 mt-0.5 leading-relaxed">${alt.message}</p>
+        </div>
+        <i class='bx bx-chevron-right text-accent/70 text-lg shrink-0'></i>
+      `;
+      btn.addEventListener('click', () => {
+        if (isDanger) {
+          openEcoWarning(alt, key);
+        } else {
+          applyActiveRoute(data, alt, 'alt', key);
+          markAltActiveButton(key);
+        }
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function markAltActiveButton(key) {
+    document.querySelectorAll('.alt-route-btn').forEach(b => {
+      b.setAttribute('data-active', b.dataset.altKey === key ? 'true' : 'false');
+    });
+  }
+
+  function applyActiveRoute(data, route, mode, routeKey) {
+    activeRouteKey = mode === 'main' ? null : routeKey;
+
+    document.getElementById('recIcon').className = 'bx ' + ROUTE_ICONS[routeKey];
+    document.getElementById('recPrimary').textContent = route.label;
+    document.getElementById('recReason').textContent = route.message;
+    renderSecondaryChips(route.secondary);
+
+    const routeTag = document.getElementById('mainRouteTag');
+    const statusBadge = document.getElementById('mainStatusBadge');
+    const banner = document.getElementById('altActiveBanner');
+    const bannerIcon = document.getElementById('altActiveIcon');
+    const bannerText = document.getElementById('altActiveText');
+
+    if (mode === 'main') {
+      routeTag.innerHTML = `<i class='bx bx-map-pin text-accent'></i> Rute Utama`;
+      routeTag.className = 'font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white text-ink flex items-center gap-1';
+      statusBadge.textContent = 'Sangat Disarankan';
+      statusBadge.className = 'font-ui text-[11px] font-medium px-2.5 py-1 rounded-full bg-lime text-ink';
+      banner.classList.add('hidden');
+      markAltActiveButton(null);
+    } else {
+      const isDanger = route.status === 'danger';
+      routeTag.innerHTML = `<i class='bx bx-corner-down-right text-accent'></i> Opsi Dipilih`;
+      routeTag.className = 'font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/15 text-white flex items-center gap-1';
+      statusBadge.textContent = route.statusLabel;
+      statusBadge.className = 'font-ui text-[11px] font-medium px-2.5 py-1 rounded-full ' + (isDanger ? 'bg-danger text-white' : 'bg-accent text-ink');
+
+      banner.classList.remove('hidden');
+      banner.className = 'mt-4 rounded-lg border p-3 flex items-start gap-2.5 ' + (isDanger ? 'border-danger/40 bg-danger/10' : 'border-accent/40 bg-accent/10');
+      bannerIcon.className = 'bx bx-error-circle text-lg shrink-0 mt-0.5 ' + (isDanger ? 'text-danger' : 'text-accent');
+      bannerText.className = 'font-body text-xs leading-relaxed text-white';
+      bannerText.innerHTML = `<span class="font-semibold">Diingatkan:</span> ${route.message}`;
+
+      document.getElementById('altList').classList.remove('hidden');
+      document.getElementById('toggleAltIcon').classList.add('rotate-180');
+      document.getElementById('toggleAltLabel').innerHTML = `<i class='bx bx-list-ul text-accent'></i> Sembunyikan rute alternatif`;
+    }
+
+    applyValueImpact(route.value, route.impact);
+
+    // Kirim item ID asli/custom & action agar Halaman 5 dinamis
+    const isCustom = data.generic ? 'true' : 'false';
+    const finalItemKey = isCustom === 'true' ? data.name : currentItemKey;
+    const lanjutkanBtn = document.getElementById('recLanjutkanBtn');
+    lanjutkanBtn.href = `decision-detail.html?item=${encodeURIComponent(finalItemKey || '')}&action=${routeKey}&custom=${isCustom}`;
+
+    countAction(ROUTE_ACTION_MAP[routeKey]);
+  }
+
+  document.getElementById('revertMainBtn').addEventListener('click', () => {
+    if (!currentItemData) return;
+    const mainKey = currentItemData.routes.mainKey;
+    applyActiveRoute(currentItemData, currentItemData.routes[mainKey], 'main', mainKey);
+  });
+
+  const ecoWarningModal = document.getElementById('ecoWarningModal');
+  const ecoModalText = document.getElementById('ecoModalText');
+  let pendingAlt = null;
+  let pendingKey = null;
+
+  function openEcoWarning(alt, key) {
+    pendingAlt = alt;
+    pendingKey = key;
+    ecoModalText.textContent = alt.warningText || alt.message;
+    ecoWarningModal.classList.remove('hidden');
+  }
+  function closeEcoWarning() {
+    ecoWarningModal.classList.add('hidden');
+    pendingAlt = null;
+    pendingKey = null;
+  }
+  document.getElementById('ecoModalCancel').addEventListener('click', closeEcoWarning);
+  document.getElementById('ecoModalBackdrop').addEventListener('click', closeEcoWarning);
+  document.getElementById('ecoModalConfirm').addEventListener('click', () => {
+    if (pendingAlt && currentItemData) {
+      applyActiveRoute(currentItemData, pendingAlt, 'alt', pendingKey);
+      markAltActiveButton(pendingKey);
+    }
+    closeEcoWarning();
+  });
+
+  const loadingState = document.getElementById('loadingState');
+  const resultsContent = document.getElementById('resultsContent');
+  let isAnalyzing = false;
+
+  function setControlsDisabled(disabled) {
+    document.querySelectorAll('#openCameraBtn, #captureBtn, #closeCameraBtn, #switchCameraBtn, #fileInput, #searchBtn, #searchInput, [data-demo], .tab-btn').forEach(el => {
+      el.disabled = disabled;
+      el.classList.toggle('opacity-50', disabled);
+      el.classList.toggle('pointer-events-none', disabled);
+    });
+  }
+
+  function showLoading() {
+    resultsContent.classList.add('hidden');
+    loadingState.classList.remove('hidden');
+    loadingState.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function hideLoading() {
+    loadingState.classList.add('hidden');
+    resultsContent.classList.remove('hidden');
+  }
+
+  function startAnalysis(source) {
+    if (isAnalyzing) return;
+    isAnalyzing = true;
+    setControlsDisabled(true);
+    showLoading();
+    const delay = 1300 + Math.random() * 1200;
+    setTimeout(() => {
+      let data, key;
+      if (typeof source === 'string' && ITEMS[source]) {
+        key = source;
+        data = ITEMS[key];
+      } else if (source && typeof source === 'object') {
+        data = source;
+        key = slugify(data.name);
+      } else {
+        key = randomItemKey();
+        data = ITEMS[key];
+      }
+      render(data, key);
+      hideLoading();
+      isAnalyzing = false;
+      setControlsDisabled(false);
+      resultsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, delay);
+  }
+
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.method-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.removeAttribute('data-active'));
+      tab.setAttribute('data-active', 'true');
+      const method = tab.dataset.method;
+      panels.forEach(p => p.removeAttribute('data-visible'));
+      document.querySelector(`.method-panel[data-panel="${method}"]`).setAttribute('data-visible', 'true');
+      if (method !== 'scan') stopCamera();
+    });
+  });
+
+  document.querySelectorAll('[data-demo]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (isAnalyzing) return;
+      uploadedImage = null;
+      startAnalysis(btn.dataset.demo);
+    });
+  });
+
+  function runSearch() {
+    if (isAnalyzing) return;
+    const raw = document.getElementById('searchInput').value.trim();
+    const hint = document.getElementById('searchHint');
+
+    if (!raw) {
+      hint.textContent = 'Masukkan nama barang terlebih dahulu.';
+      return;
+    }
+
+    const q = raw.toLowerCase();
+    let key = null;
+    if (/(sepatu|shoe)/.test(q)) key = 'shoes';
+    else if (/keyboard/.test(q)) key = 'keyboard';
+    else if (/(botol|bottle|plastik)/.test(q)) key = 'bottle';
+    else if (/(ponsel|hp|phone|handphone)/.test(q)) key = 'phone';
+
+    hint.textContent = '';
+    uploadedImage = null;
+
+    if (key) {
+      startAnalysis(key);
+    } else {
+      startAnalysis(buildGenericItem(raw));
+    }
+  }
+  document.getElementById('searchBtn').addEventListener('click', runSearch);
+  document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
+  document.getElementById('searchInput').addEventListener('input', () => {
+    document.getElementById('searchHint').textContent = '';
+  });
+
+  document.getElementById('fileInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || isAnalyzing) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedImage = ev.target.result;
+      startAnalysis(randomItemKey());
+    };
+    reader.readAsDataURL(file);
+  });
+
+  let mediaStream = null;
+  let facingMode = 'environment';
+
+  const cameraIdle = document.getElementById('cameraIdle');
+  const cameraActive = document.getElementById('cameraActive');
+  const cameraVideo = document.getElementById('cameraVideo');
+  const cameraError = document.getElementById('cameraError');
+  const cameraCanvas = document.getElementById('cameraCanvas');
+
+  async function startCamera() {
+    cameraError.classList.add('hidden');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      cameraError.textContent = 'Browser ini tidak mendukung akses kamera.';
+      cameraError.classList.remove('hidden');
+      return;
+    }
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode }, audio: false });
+      cameraVideo.srcObject = mediaStream;
+      cameraIdle.classList.add('hidden');
+      cameraActive.classList.remove('hidden');
+    } catch (err) {
+      cameraError.textContent = 'Tidak dapat mengakses kamera. Pastikan izin kamera diizinkan pada browser/perangkat ini.';
+      cameraError.classList.remove('hidden');
+    }
+  }
+
+  function stopCamera() {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(t => t.stop());
+      mediaStream = null;
+    }
+    cameraActive.classList.add('hidden');
+    cameraIdle.classList.remove('hidden');
+  }
+
+  document.getElementById('openCameraBtn').addEventListener('click', () => { if (!isAnalyzing) startCamera(); });
+  document.getElementById('closeCameraBtn').addEventListener('click', stopCamera);
+
+  document.getElementById('switchCameraBtn').addEventListener('click', () => {
+    facingMode = facingMode === 'environment' ? 'user' : 'environment';
+    stopCamera();
+    startCamera();
+  });
+
+  document.getElementById('captureBtn').addEventListener('click', () => {
+    if (isAnalyzing) return;
+    const w = cameraVideo.videoWidth || 640;
+    const h = cameraVideo.videoHeight || 480;
+    cameraCanvas.width = w;
+    cameraCanvas.height = h;
+    const ctx = cameraCanvas.getContext('2d');
+    ctx.drawImage(cameraVideo, 0, 0, w, h);
+    const dataUrl = cameraCanvas.toDataURL('image/jpeg', 0.9);
+    uploadedImage = dataUrl;
+    stopCamera();
+    startAnalysis(randomItemKey());
+  });
+
+  window.addEventListener('beforeunload', stopCamera);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopCamera(); });
+
+  const profileBtn = document.getElementById('profileBtn');
+  const profileMenu = document.getElementById('profileMenu');
+  profileBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+  });
+  document.addEventListener('click', e => {
+    if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
+      profileMenu.classList.add('hidden');
+    }
+  });
+
+  render(ITEMS.shoes, 'shoes');
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@
 <!-- Boxicons -->
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
-<!-- Google Fonts: Lexend, Poppins, DM Sans -->
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -21,31 +21,22 @@
     theme: {
       extend: {
         colors: {
-          primary: {
-            DEFAULT: '#0d9740',
-            50:'#e9f9ee', 100:'#c9f0d5', 200:'#9de3b5', 300:'#6fd493',
-            400:'#3fc16d', 500:'#0d9740', 600:'#0a7f37', 700:'#057331',
-            800:'#05602a', 900:'#034d21'
-          },
-          dark: '#057331',
-          lime: { DEFAULT:'#aef339', soft:'#75de34' },
-          light: '#75de34',
-          medium: '#44c536',
-          accent: '#26b33e',
-          leaf: '#44c536'
+          deep:   '#012622',
+          ever:   '#003B36',
+          mist:   '#ECE5F0',
+          ever2:  '#0A4F48',
+          ever3:  '#12655C',
+          mist2:  '#DCD2E4',
+          mist3:  '#F6F2F8',
         },
         fontFamily: {
-          heading: ['Poppins','sans-serif'],
-          body: ['"DM Sans"','sans-serif'],
-          display: ['Lexend','sans-serif'],
           lexend: ['Lexend', 'sans-serif'],
           poppins: ['Poppins', 'sans-serif'],
-          dmsans: ['DM Sans', 'sans-serif'],
+          dmsans: ['"DM Sans"', 'sans-serif'],
         },
         boxShadow: {
-          soft: '0 20px 40px -12px rgba(5,115,49,0.25)',
-          glow: '0 15px 40px -10px rgba(13,151,64,0.45)',
-          card: '0 4px 20px -4px rgba(5,96,42,0.12)'
+          card: '0 4px 20px -6px rgba(1,38,34,0.15)',
+          soft: '0 18px 36px -14px rgba(1,38,34,0.28)',
         }
       }
     }
@@ -54,645 +45,627 @@
 
 <style>
   html{scroll-behavior:smooth;}
-  body{font-family:'DM Sans', sans-serif; background:#fafdf9; color:#0f2e1a;}
-  h1,h2,h3,h4,.font-heading{font-family:'Lexend', sans-serif;}
-  ::selection{background:#aef339; color:#057331;}
+  body{font-family:'DM Sans', sans-serif; background:#FFFFFF; color:#012622;}
+  h1,h2,h3,h4,h5{font-family:'Lexend', sans-serif;}
+  ::selection{background:#ECE5F0; color:#012622;}
+  .scroll-mt-nav{scroll-margin-top:5rem;}
 
   /* ===== Reveal on Scroll ===== */
-  .reveal{opacity:0; transform:translateY(60px); transition:opacity .9s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1);}
+  .reveal{opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1);}
   .reveal.active{opacity:1; transform:translateY(0);}
-  .reveal-left{opacity:0; transform:translateX(-60px); transition:opacity .9s ease, transform .9s ease;}
-  .reveal-left.active{opacity:1; transform:translateX(0);}
-  .reveal-right{opacity:0; transform:translateX(60px); transition:opacity .9s ease, transform .9s ease;}
-  .reveal-right.active{opacity:1; transform:translateX(0);}
-  .reveal-scale{opacity:0; transform:scale(.85); transition:opacity .8s ease, transform .8s ease;}
-  .reveal-scale.active{opacity:1; transform:scale(1);}
 
-  /* ===== Floating Decorations ===== */
-  @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-18px) rotate(3deg);}}
-  .animate-float{animation:float 6s ease-in-out infinite;}
-  @keyframes floatSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(-25px);}}
-  .animate-float-slow{animation:floatSlow 9s ease-in-out infinite;}
-  @keyframes blob{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.1);}66%{transform:translate(-20px,20px) scale(.9);}}
-  .animate-blob{animation:blob 14s infinite ease-in-out;}
-  @keyframes bounceSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(10px);}}
-  .animate-bounce-slow{animation:bounceSlow 2s infinite;}
+  /* ===== NAVBAR ===== */
+  #navbar{background:transparent; border-bottom:1px solid transparent; backdrop-filter:none;}
+  #navbar.scrolled{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid #DCD2E4;
+    box-shadow:0 6px 24px -14px rgba(1,38,34,.4);
+  }
+  #navbar .nv-text{color:#ECE5F0;}
+  #navbar.scrolled .nv-text{color:#012622;}
+  #navbar .nv-sub{color:rgba(236,229,240,.65);}
+  #navbar.scrolled .nv-sub{color:#0A4F48;}
+  #navbar .nv-pill{background:rgba(236,229,240,.10);}
+  #navbar.scrolled .nv-pill{background:#ECE5F0;}
+  #navbar .nv-pill a{color:rgba(236,229,240,.75);}
+  #navbar.scrolled .nv-pill a{color:#0A4F48;}
+  #navbar .nv-pill a.is-active{background:#003B36; color:#ECE5F0;}
+  #navbar.scrolled .nv-pill a.is-active{background:#FFFFFF; color:#012622;}
+  #navbar .nv-border{border-color:rgba(236,229,240,.28);}
+  #navbar.scrolled .nv-border{border-color:#DCD2E4;}
+  #navbar .nv-logo-word{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-word{color:#012622;}
+  #navbar .nv-logo-accent{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-accent{color:#003B36;}
 
-  /* ===== Button Shine Hover ===== */
-  .btn-shine{position:relative; overflow:hidden; isolation:isolate;}
-  .btn-shine::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);transform:skewX(-20deg);transition:left .7s ease; z-index:1;}
-  .btn-shine:hover::before{left:130%;}
+  /* ===== Kartu foto 3D di hero ===== */
+  .hero-3d{perspective:1400px;}
+  .hero-card{
+    position:absolute;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid rgba(236,229,240,.16);
+    background:#003B36;
+    box-shadow:0 30px 60px -22px rgba(0,0,0,.65);
+    transform-style:preserve-3d;
+    transition:transform .5s ease, box-shadow .5s ease;
+    opacity:.4;
+    will-change:transform;
+  }
+  .hero-card img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:grayscale(1);
+    transition:filter .5s ease, opacity .5s ease;
+  }
+  .hero-card:hover img{filter:grayscale(0); opacity:1;}
+  .hero-card .hc-label{opacity:.6; transition:opacity .5s ease;}
+  .hero-card:hover .hc-label{opacity:1;}
+  .hero-card .hc-label{
+    position:absolute; left:0; right:0; bottom:0;
+    background:#012622;
+    color:#ECE5F0;
+    font-family:'DM Sans',sans-serif; font-size:11px;
+    padding:8px 12px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .hc-l1{top:26%;  left:2%;   width:172px; height:215px; transform:rotateY(16deg) rotateZ(-5deg);}
+  .hc-l2{top:67%;  left:8%;   width:148px; height:180px; transform:rotateY(14deg) rotateZ(4deg);}
+  .hc-l3{top:34%;  left:17%;  width:112px; height:132px; transform:rotateY(12deg) rotateZ(-9deg);}
+  .hc-r1{top:24%;  right:2%;  width:172px; height:215px; transform:rotateY(-16deg) rotateZ(5deg);}
+  .hc-r2{top:63%;  right:8%;  width:148px; height:180px; transform:rotateY(-14deg) rotateZ(-4deg);}
+  .hc-r3{top:32%;  right:17%; width:112px; height:132px; transform:rotateY(-12deg) rotateZ(8deg);}
+  .hero-card:hover{box-shadow:0 36px 70px -20px rgba(0,0,0,.75);}
+  .hc-l1:hover,.hc-l2:hover,.hc-l3:hover{transform:rotateY(6deg) rotateZ(0deg) translateZ(40px);}
+  .hc-r1:hover,.hc-r2:hover,.hc-r3:hover{transform:rotateY(-6deg) rotateZ(0deg) translateZ(40px);}
 
-  /* ===== Nav Link Underline ===== */
-  .nav-link{position:relative; padding-bottom:4px;}
-  .nav-link::after{content:'';position:absolute; left:0; bottom:0; width:0; height:2px; background:#0d9740; transition:width .3s ease;}
-  .nav-link:hover::after{width:100%;}
+  @keyframes floatCard{0%,100%{translate:0 0;}50%{translate:0 -14px;}}
+  .hero-card{animation:floatCard 7s ease-in-out infinite;}
+  .hc-l2,.hc-r1{animation-duration:9s; animation-delay:-2s;}
+  .hc-l3,.hc-r3{animation-duration:11s; animation-delay:-4s;}
 
-  /* ===== Card Hover ===== */
-  .card-hover{transition:transform .4s ease, box-shadow .4s ease;}
-  .card-hover:hover{transform:translateY(-10px);}
+  @media (max-width:1535px){ .hc-l3,.hc-r3{display:none;} }
+  @media (max-width:1279px){ .hero-3d{display:none;} }
+
+  /* ===== Card hover umum ===== */
+  .card-hover{transition:transform .35s ease, box-shadow .35s ease, background-color .3s ease, color .3s ease;}
+  .card-hover:hover{transform:translateY(-6px);}
+
+  /* ===== Edu card: hover jadi full image ===== */
+  .edu-card{position:relative; overflow:hidden; isolation:isolate;}
+  .edu-card .edu-img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transform:scale(1.15);
+    transition:opacity .5s ease, transform .6s ease;
+    z-index:0;
+  }
+  .edu-card:hover .edu-img{opacity:1; transform:scale(1);}
+  .edu-card .edu-overlay{
+    position:absolute; inset:0; background:#012622; opacity:0;
+    transition:opacity .5s ease; z-index:1;
+  }
+  .edu-card:hover .edu-overlay{opacity:.55;}
+  .edu-card .edu-content{position:relative; z-index:2;}
+  .edu-card .edu-icon-wrap, .edu-card h4, .edu-card p{transition:color .4s ease, opacity .4s ease, transform .4s ease;}
+  .edu-card:hover h4{color:#fff;}
+  .edu-card:hover p{color:rgba(255,255,255,.85);}
+  .edu-card:hover .edu-icon-wrap{opacity:0; transform:translateY(-6px);}
+
+  /* ===== Event card image ===== */
+  .event-media{position:relative; height:9rem; overflow:hidden;}
+  .event-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .event-card:hover .event-media img{transform:scale(1.08);}
+  .event-media::after{
+    content:''; position:absolute; inset:0;
+    background:#012622; opacity:.30;
+  }
+
+  /* ===== Parallax background (CTA) ===== */
+  .parallax-wrap{position:relative; overflow:hidden;}
+  .parallax-bg{
+    position:absolute; top:-10%; left:0; width:100%; height:120%;
+    background-size:cover; background-position:center;
+    will-change:transform;
+  }
+
+  /* ===== Section "jalan terbaik" - list rows ===== */
+  .path-row{
+    border-top:1px solid #DCD2E4;
+    transition:background-color .3s ease;
+  }
+  .path-row:last-child{border-bottom:1px solid #DCD2E4;}
+  .path-row:hover{background:#F6F2F8;}
+  .path-row .path-arrow{
+    transform:translateX(-8px); opacity:0;
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .path-row:hover .path-arrow{transform:translateX(0); opacity:1;}
+  .path-row .path-num{
+    transition:color .3s ease;
+  }
+  .path-row:hover .path-num{color:#003B36;}
 
   /* ===== Scrollbar ===== */
   ::-webkit-scrollbar{width:8px;}
-  ::-webkit-scrollbar-track{background:#f1f5f9;}
-  ::-webkit-scrollbar-thumb{background:#0d9740; border-radius:4px;}
+  ::-webkit-scrollbar-track{background:#ECE5F0;}
+  ::-webkit-scrollbar-thumb{background:#003B36; border-radius:4px;}
 
   @keyframes fadeInUp{from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);}}
   .animate-fade-in{animation:fadeInUp .4s ease;}
+  @keyframes bounceSlow{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+  .animate-bounce-slow{animation:bounceSlow 2s infinite;}
+
+  :focus-visible{outline:2px solid #12655C; outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .reveal{opacity:1; transform:none;}
+  }
 </style>
 </head>
 <body class="antialiased">
 
 <!-- ==================== NAVBAR ==================== -->
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-primary-50">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
-
-    <!-- Logo -->
-    <a href="#beranda" class="flex items-center gap-3 group">
-      <svg width="42" height="42" viewBox="0 0 100 100" class="drop-shadow-sm">
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#aef339"/>
-            <stop offset="100%" stop-color="#057331"/>
-          </linearGradient>
-          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#75de34"/>
-            <stop offset="100%" stop-color="#0d9740"/>
-          </linearGradient>
-        </defs>
-        <rect x="4" y="4" width="58" height="58" rx="18" fill="url(#g1)"/>
-        <path d="M8 55 Q30 15 60 10 Q45 40 8 55Z" fill="#057331" opacity="0.35"/>
-        <rect x="38" y="38" width="58" height="58" rx="18" fill="url(#g2)"/>
-        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#034d21" opacity="0.3"/>
+    <a href="#beranda" class="flex items-center gap-3">
+      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+        <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
       </svg>
-      <span class="font-heading font-bold text-xl text-primary-800 tracking-tight">Green<span class="text-primary-500">Wise</span></span>
+      <span class="font-lexend font-bold text-xl tracking-tight nv-logo-word">Green<span class="nv-logo-accent">Wise</span></span>
     </a>
 
-    <!-- Menu Desktop -->
-    <nav class="hidden lg:flex items-center gap-1 bg-primary-50/60 rounded-full px-2 py-1.5">
-      <a href="#beranda" class="px-5 py-2 rounded-full text-sm font-semibold text-primary-800 bg-white shadow-sm">Beranda</a>
-      <a href="green-hub.html" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-primary-700 hover:bg-white/70 transition">Green Hub</a>
-      <a href="leaderboard.html" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-primary-700 hover:bg-white/70 transition">Leaderboard</a>
+    <nav class="hidden lg:flex items-center gap-1 nv-pill rounded-full px-2 py-1.5 transition-colors duration-300">
+      <a href="#beranda" class="is-active px-5 py-2 rounded-full text-sm font-semibold transition-colors">Beranda</a>
+      <a href="halaman2.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Green Hub</a>
+      <a href="halaman7.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Marketplace</a>
     </nav>
 
-    <!-- Right: Profile + mobile burger -->
     <div class="flex items-center gap-3">
-
-      <!-- User Profile -->
       <div class="relative">
-        <button id="profileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border border-primary-100 hover:border-primary-300 hover:shadow-card transition group">
-          <span class="w-9 h-9 rounded-full bg-gradient-to-br from-lime to-primary-600 flex items-center justify-center text-white font-heading font-bold text-sm">DA</span>
+        <button id="profileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border nv-border transition-colors duration-300">
+          <span class="w-9 h-9 rounded-full bg-ever flex items-center justify-center text-mist font-lexend font-bold text-sm">DA</span>
           <span class="hidden sm:flex flex-col items-start leading-tight">
-            <span class="text-sm font-semibold text-slate-700">Dwi Anugrah</span>
-            <span class="text-[11px] text-primary-600 flex items-center gap-1"><i class='bx bxs-star text-[10px]'></i> 1.240 poin</span>
+            <span class="text-sm font-semibold nv-text">Dwi Anugrah</span>
+            <span class="text-[11px] nv-sub flex items-center gap-1"><i class='bx bxs-star text-[10px]'></i> 1.240 poin</span>
           </span>
-          <i class='bx bx-chevron-down text-lg text-slate-400 group-hover:translate-y-0.5 transition'></i>
+          <i class='bx bx-chevron-down text-lg nv-sub'></i>
         </button>
 
-        <!-- Dropdown -->
-        <div id="profileMenu" class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-glow border border-primary-50 p-2 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50">
-          <div class="px-3 py-3 border-b border-primary-50 mb-1">
-            <p class="font-heading font-semibold text-slate-800 text-sm">Dwi Anugrah</p>
-            <p class="text-xs text-slate-400">dwi.anugrah@email.com</p>
+        <div id="profileMenu" class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-soft border border-mist2 p-2 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50">
+          <div class="px-3 py-3 border-b border-mist2 mb-1">
+            <p class="font-lexend font-semibold text-deep text-sm">Dwi Anugrah</p>
+            <p class="text-xs text-ever2/70">dwi.anugrah@email.com</p>
           </div>
-          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary-50 text-sm font-medium text-slate-600 hover:text-primary-700 transition">
-            <i class='bx bx-grid-alt text-lg text-primary-500'></i> Dashboard
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-grid-alt text-lg text-ever'></i> Dashboard
           </a>
-          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary-50 text-sm font-medium text-slate-600 hover:text-primary-700 transition">
-            <i class='bx bx-line-chart text-lg text-primary-500'></i> My Impact
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-line-chart text-lg text-ever'></i> Dampak saya
           </a>
-          <div class="h-px bg-primary-50 my-1"></div>
-          <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-red-50 text-sm font-medium text-red-500 transition">
+          <div class="h-px bg-mist2 my-1"></div>
+          <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-ever2 transition">
             <i class='bx bx-log-out text-lg'></i> Keluar
           </a>
         </div>
       </div>
 
-      <!-- Mobile burger -->
-      <button id="burgerBtn" class="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border border-primary-100 text-primary-700">
+      <button id="burgerBtn" aria-label="Buka menu" class="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border nv-border nv-text">
         <i class='bx bx-menu text-2xl'></i>
       </button>
     </div>
   </div>
 
-  <!-- Mobile menu panel -->
-  <div id="mobileMenu" class="lg:hidden hidden flex-col gap-1 px-5 pb-5 bg-white border-t border-primary-50">
-    <a href="#beranda" class="px-4 py-3 rounded-xl bg-primary-50 text-primary-800 font-semibold text-sm mt-3">Beranda</a>
-    <a href="green-hub.html" class="px-4 py-3 rounded-xl text-slate-600 font-medium text-sm">Green Hub</a>
-    <a href="leaderboard.html" class="px-4 py-3 rounded-xl text-slate-600 font-medium text-sm">Leaderboard</a>
+  <div id="mobileMenu" class="lg:hidden hidden flex-col gap-1 px-5 pb-5 bg-white border-t border-mist2">
+    <a href="#beranda" class="px-4 py-3 rounded-xl bg-mist text-deep font-semibold text-sm mt-3">Beranda</a>
+    <a href="halaman2.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Green Hub</a>
+    <a href="halaman7.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Marketplace</a>
   </div>
 </header>
 
-<!-- Backdrop overlay untuk profile dropdown -->
-<div id="overlayBg" class="fixed inset-0 bg-slate-900/20 backdrop-blur-[2px] z-40 hidden"></div>
+<div id="overlayBg" class="fixed inset-0 bg-deep/25 z-40 hidden"></div>
 
-<!-- ============ A. HERO SECTION ============ -->
-<section id="beranda" class="relative min-h-screen flex flex-col justify-center pt-24 pb-16 overflow-hidden bg-gradient-to-b from-green-50/60 via-white to-white scroll-mt-nav">
+<!-- ============ A. HERO ============ -->
+<section id="beranda" class="relative min-h-screen flex items-center overflow-hidden bg-deep scroll-mt-nav">
+  <div class="relative z-10 max-w-4xl mx-auto px-5 lg:px-8 py-32 text-center">
+    <h1 class="font-lexend font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.12] text-white mb-6">
+      Tukar Barang <span class="text-yellow-400">Bekas-mu</span> Jadi Sesuatu Yang Lebih <span class="border-b border-yellow-400">Berarti<span class="text-yellow-400">.</span></span>
+    </h1>
 
-  <!-- Decorative Blobs -->
-  <div class="absolute -top-20 -left-20 w-60 h-60 sm:w-72 sm:h-72 bg-primary/10 rounded-full blur-3xl animate-blob"></div>
-  <div class="absolute top-40 -right-24 w-60 h-60 sm:w-72 sm:h-72 bg-lime/20 rounded-full blur-3xl animate-blob" style="animation-delay:3s"></div>
-  <div class="absolute bottom-0 left-1/3 w-48 h-48 bg-medium/10 rounded-full blur-3xl animate-blob" style="animation-delay:6s"></div>
+    <p class="text-base sm:text-lg text-mist/70 font-dmsans leading-relaxed mb-10 max-w-xl mx-auto">
+      Foto barangmu, GreenWise membaca kondisinya lalu menyarankan langkah paling bijak: jual, daur ulang, atau buang dengan benar.
+    </p>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-    <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
-
-      <!-- Text Content -->
-      <div class="reveal-left">
-        <span class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-medium font-dmsans px-3.5 py-1 rounded-full mb-4">
-          <i class='bx bxs-leaf text-sm'></i> Sistem Cerdas Pengelolaan Barang Bekas
-        </span>
-        <h1 class="font-lexend font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-dark mb-4">
-          Ayo Tukar Barang <span class="text-primary">Bekasmu</span> Jadi Sesuatu yang <span class="relative inline-block">Lebih Berarti<svg class="absolute left-0 -bottom-1.5 w-full" height="8" viewBox="0 0 200 8"><path d="M0 6 Q 50 0, 100 5 T 200 3" stroke="#aef339" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span>
-        </h1>
-        <p class="text-sm sm:text-base text-dark/60 font-dmsans leading-relaxed mb-6 max-w-lg">
-          GreenWise membantumu memahami kondisi & nilai barang bekas, lalu memberi rekomendasi tindakan terbaik — jual, donasi, daur ulang, atau guna ulang — sebelum semuanya berakhir jadi sampah.
-        </p>
-
-        <div class="flex flex-wrap gap-3 mb-8">
-          <a href="#tindakan" class="btn-shine group inline-flex items-center gap-2 bg-primary hover:bg-dark text-white font-dmsans font-semibold text-sm px-6 py-3 rounded-full shadow-md shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-            <i class='bx bx-scan text-base'></i> Cek Barangku Sekarang
-            <i class='bx bx-right-arrow-alt text-base group-hover:translate-x-1 transition-transform'></i>
-          </a>
-          <a href="#edukasi" class="btn-shine inline-flex items-center gap-2 bg-white border border-primary/30 hover:border-primary text-dark font-dmsans font-semibold text-sm px-6 py-3 rounded-full transition-all duration-300 hover:-translate-y-0.5">
-            <i class='bx bx-compass text-base text-primary'></i> Jelajahi Green Hub
-          </a>
-        </div>
-
-        <!-- Mini stats -->
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-dmsans text-dark/60">
-          <div class="flex items-center gap-1.5"><i class='bx bxs-box text-primary text-base'></i> 12.500+ Barang Dikelola</div>
-          <div class="flex items-center gap-1.5"><i class='bx bxs-group text-primary text-base'></i> 3.200+ Pengguna Aktif</div>
-        </div>
-      </div>
-
-      <!-- Visual Mockup Card -->
-      <div class="reveal-right relative flex justify-center">
-        <div class="relative w-full max-w-xs sm:max-w-sm">
-          <div class="absolute -inset-3 bg-gradient-to-br from-primary/20 to-lime/30 rounded-[1.8rem] blur-xl"></div>
-          <div class="relative bg-white rounded-[1.8rem] shadow-xl overflow-hidden border border-green-900/5 h-[260px] sm:h-[350px]">
-            <div id="heroSlideshow" class="relative w-full h-full">
-              <!-- Slide 1 -->
-              <img src="https://images.unsplash.com/photo-1532995297011-09d169e17b6c?auto=format&fit=crop&w=800&q=80" alt="Green Wise 1" class="hero-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" />
-              <!-- Slide 2 -->
-              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80" alt="Green Wise 2" class="hero-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
-              <!-- Slide 3 -->
-              <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80" alt="Green Wise 3" class="hero-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
-              <!-- Slide 4 -->
-              <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80" alt="Green Wise 4" class="hero-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
-
-              <!-- Overlay gradient for contrast -->
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-black/20 to-transparent"></div>
-
-              <!-- Caption badge -->
-              <div class="absolute bottom-4 left-4 right-4 text-white z-10">
-                <span class="inline-flex items-center gap-1 bg-emerald-500/90 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-1.5 shadow-sm">
-                  <i class='bx bxs-check-circle text-xs'></i> Terverifikasi AI
-                </span>
-                <p id="heroSlideCaption" class="font-lexend font-semibold text-sm drop-shadow-md text-white/95 leading-tight">Daur Ulang Pakaian &amp; Tekstil</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Floating badges -->
-          <div class="absolute -top-4 -right-4 z-20 bg-white rounded-xl shadow-lg px-3 py-2 flex items-center gap-1.5 animate-float">
-            <i class='bx bxs-coin text-xl text-lime'></i>
-            <div><p class="text-[10px] text-dark/50 font-dmsans leading-none">Reward</p><p class="font-lexend font-bold text-dark text-xs leading-tight">+50 Poin</p></div>
-          </div>
-          <div class="absolute -bottom-4 -left-4 z-20 bg-white rounded-xl shadow-lg px-3 py-2 flex items-center gap-1.5 animate-float-slow">
-            <i class='bx bxs-leaf text-xl text-primary'></i>
-            <div><p class="text-[10px] text-dark/50 font-dmsans leading-none">Dampak</p><p class="font-lexend font-bold text-dark text-xs leading-tight">-0.3kg CO₂e</p></div>
-          </div>
-        </div>
-      </div>
-
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="#tindakan" class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
+        <i class='bx bx-scan text-base'></i> Cek barangku
+      </a>
+      <a href="#edukasi" class="inline-flex items-center gap-2 border border-mist/30 hover:border-mist text-mist font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
+        Jelajahi Green Hub
+      </a>
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <a href="#cara-kerja" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-dark/40 animate-bounce-slow">
-    <span class="text-xs font-dmsans">Scroll</span>
+  <div class="hero-3d absolute inset-0 pointer-events-none" aria-hidden="true">
+    <figure class="hero-card hc-l1 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=600&q=80" alt="Tumpukan pakaian bekas">
+      <figcaption class="hc-label"><i class='bx bxs-shirt'></i> Pakaian &amp; tekstil</figcaption>
+    </figure>
+    <figure class="hero-card hc-l2 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt="Sepatu bekas">
+      <figcaption class="hc-label"><i class='bx bx-store-alt'></i> Layak dijual</figcaption>
+    </figure>
+    <figure class="hero-card hc-l3 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=600&q=80" alt="Perangkat elektronik bekas">
+      <figcaption class="hc-label"><i class='bx bx-chip'></i> Elektronik</figcaption>
+    </figure>
+
+    <figure class="hero-card hc-r1 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Botol kaca untuk didaur ulang">
+      <figcaption class="hc-label"><i class='bx bx-recycle'></i> Daur ulang</figcaption>
+    </figure>
+    <figure class="hero-card hc-r2 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" alt="Barang bekas untuk didonasikan">
+      <figcaption class="hc-label"><i class='bx bx-refresh'></i> Guna ulang</figcaption>
+    </figure>
+    <figure class="hero-card hc-r3 pointer-events-auto">
+      <img src="https://images.unsplash.com/photo-1532995297011-09d169e17b6c?auto=format&fit=crop&w=600&q=80" alt="Kerajinan hasil guna ulang">
+      <figcaption class="hc-label"><i class='bx bx-refresh'></i> Guna ulang</figcaption>
+    </figure>
+  </div>
+
+  <a href="#cara-kerja" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-mist/40 animate-bounce-slow">
     <i class='bx bx-chevron-down text-2xl'></i>
   </a>
 </section>
 
-<!-- ==================== SECTION B: HOW IT WORKS ==================== -->
-<section id="cara-kerja" class="py-24 bg-primary-50/40 scroll-mt-nav">
+<!-- ============ A2. TENTANG KAMI ============ -->
+<section id="tentang" class="py-24 sm:py-28 bg-white scroll-mt-nav">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto reveal">
-      <span class="text-primary-600 font-semibold text-sm tracking-wide uppercase">Cara Kerja</span>
-      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-900 mt-3">4 Langkah Sederhana Menuju Aksi Hijau</h2>
-      <p class="text-slate-500 mt-4">Dari sekadar barang tak terpakai menjadi keputusan yang tepat & terukur dampaknya.</p>
-    </div>
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-    <div class="grid md:grid-cols-4 gap-6 mt-16 relative">
-      <div class="hidden md:block absolute top-10 left-[12%] right-[12%] h-0.5 border-t-2 border-dashed border-primary-200"></div>
+      <!-- Kolom foto: bento grid -->
+      <div class="reveal grid grid-cols-2 gap-4 h-[420px] sm:h-[480px]">
+        <div class="relative rounded-3xl overflow-hidden row-span-2">
+          <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=700&q=80" alt="Barang bekas siap diproses" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-deep/25"></div>
+          <span class="absolute bottom-4 left-4 bg-white/90 text-deep text-xs font-dmsans font-semibold px-3 py-1.5 rounded-full">Analisis kondisi</span>
+        </div>
+        <div class="relative rounded-3xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=500&q=80" alt="Marketplace barang bekas" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-deep/25"></div>
+          <span class="absolute bottom-3 left-3 bg-white/90 text-deep text-[11px] font-dmsans font-semibold px-2.5 py-1 rounded-full">Marketplace</span>
+        </div>
+        <div class="relative rounded-3xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=500&q=80" alt="Proses daur ulang" class="w-full h-full object-cover" style="object-position:60% 30%;">
+          <div class="absolute inset-0 bg-deep/25"></div>
+          <span class="absolute bottom-3 left-3 bg-white/90 text-deep text-[11px] font-dmsans font-semibold px-2.5 py-1 rounded-full">Daur ulang</span>
+        </div>
+      </div>
 
-      <!-- step 1 -->
-      <div class="reveal relative bg-white rounded-2xl p-7 shadow-card border border-primary-50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300">
-        <div class="w-16 h-16 rounded-2xl bg-primary-600 text-white flex items-center justify-center text-2xl font-heading font-bold mb-5 relative z-10 shadow-lg">1</div>
-        <i class='bx bx-scan text-3xl text-primary-500 mb-3'></i>
-        <h3 class="font-heading font-semibold text-lg text-slate-800">Identify</h3>
-        <p class="text-sm text-slate-500 mt-2">Foto, unggah, atau cari manual barang bekasmu — sistem langsung mengenali jenisnya.</p>
-      </div>
-      <!-- step 2 -->
-      <div class="reveal reveal-delay-1 relative bg-white rounded-2xl p-7 shadow-card border border-primary-50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300">
-        <div class="w-16 h-16 rounded-2xl bg-primary-600 text-white flex items-center justify-center text-2xl font-heading font-bold mb-5 relative z-10 shadow-lg">2</div>
-        <i class='bx bx-search-alt text-3xl text-primary-500 mb-3'></i>
-        <h3 class="font-heading font-semibold text-lg text-slate-800">Analyze</h3>
-        <p class="text-sm text-slate-500 mt-2">Kondisi, kelengkapan, dan potensi nilai jual barang dinilai secara menyeluruh.</p>
-      </div>
-      <!-- step 3 -->
-      <div class="reveal reveal-delay-2 relative bg-white rounded-2xl p-7 shadow-card border border-primary-50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300">
-        <div class="w-16 h-16 rounded-2xl bg-primary-600 text-white flex items-center justify-center text-2xl font-heading font-bold mb-5 relative z-10 shadow-lg">3</div>
-        <i class='bx bx-git-branch text-3xl text-primary-500 mb-3'></i>
-        <h3 class="font-heading font-semibold text-lg text-slate-800">Decide</h3>
-        <p class="text-sm text-slate-500 mt-2">Dapatkan rekomendasi tindakan terbaik: jual, donasi, daur ulang, atau upcycle.</p>
-      </div>
-      <!-- step 4 -->
-      <div class="reveal reveal-delay-3 relative bg-white rounded-2xl p-7 shadow-card border border-primary-50 hover:-translate-y-2 hover:shadow-glow transition-all duration-300">
-        <div class="w-16 h-16 rounded-2xl bg-primary-600 text-white flex items-center justify-center text-2xl font-heading font-bold mb-5 relative z-10 shadow-lg">4</div>
-        <i class='bx bxs-leaf text-3xl text-primary-500 mb-3'></i>
-        <h3 class="font-heading font-semibold text-lg text-slate-800">Impact</h3>
-        <p class="text-sm text-slate-500 mt-2">Setiap aksi tercatat menjadi poin, reward, dan dampak lingkungan yang nyata.</p>
-      </div>
-    </div>
-  </div>
-</section>
+      <!-- Kolom teks -->
+      <div class="reveal">
+        <span class="text-ever font-semibold font-dmsans text-sm uppercase tracking-widest">Tentang GreenWise</span>
+        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep mt-3 mb-5">Satu sistem, tiga arah keputusan yang tepat</h2>
+        <p class="text-ever2/80 font-dmsans leading-relaxed mb-8">
+          GreenWise membaca kondisi, kelengkapan, dan potensi barang bekasmu, lalu memberi rekomendasi tindakan yang paling masuk akal — bukan sekadar menyuruhmu membuang. Setiap keputusan diarahkan ke salah satu dari tiga jalur berikut.
+        </p>
 
-<!-- ============ C. 5 PILIHAN TINDAKAN ============ -->
-<section id="tindakan" class="py-24 sm:py-28 bg-gradient-to-b from-white to-green-50/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
-      <span class="text-primary font-semibold font-dmsans text-sm uppercase tracking-widest">5 Pilihan Tindakan</span>
-      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-dark mt-3 mb-4">Setiap Barang Punya Jalan Terbaiknya</h2>
-      <p class="text-dark/60 font-dmsans">GreenWise tidak langsung menyuruhmu membuang. Sistem memberi opsi paling bijak sesuai kondisi barang.</p>
-    </div>
-
-    <div class="grid grid-cols-2 lg:grid-cols-5 gap-5">
-      <div class="reveal-scale card-hover bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-soft border border-transparent hover:border-primary/10" style="transition-delay:0ms">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mb-4"><i class='bx bx-recycle'></i></div>
-        <h3 class="font-lexend font-semibold text-dark mb-1.5">Daur Ulang</h3>
-        <p class="text-xs text-dark/55 font-dmsans leading-relaxed">Ubah material jadi sumber daya baru yang bermanfaat.</p>
-      </div>
-      <div class="reveal-scale card-hover bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-soft border border-transparent hover:border-primary/10" style="transition-delay:100ms">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-medium/10 text-medium flex items-center justify-center text-2xl mb-4"><i class='bx bx-refresh'></i></div>
-        <h3 class="font-lexend font-semibold text-dark mb-1.5">Guna Ulang</h3>
-        <p class="text-xs text-dark/55 font-dmsans leading-relaxed">Kreasikan ulang barang lama jadi sesuatu yang berguna.</p>
-      </div>
-      <div class="reveal-scale card-hover bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-soft border border-transparent hover:border-primary/10" style="transition-delay:200ms">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-accent/10 text-accent flex items-center justify-center text-2xl mb-4"><i class='bx bx-store-alt'></i></div>
-        <h3 class="font-lexend font-semibold text-dark mb-1.5">Jual</h3>
-        <p class="text-xs text-dark/55 font-dmsans leading-relaxed">Jual barang layak pakai, dapatkan Green Coins / tunai.</p>
-      </div>
-      <div class="reveal-scale card-hover bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-soft border border-transparent hover:border-primary/10" style="transition-delay:300ms">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-light/20 text-medium flex items-center justify-center text-2xl mb-4"><i class='bx bx-gift'></i></div>
-        <h3 class="font-lexend font-semibold text-dark mb-1.5">Donasikan</h3>
-        <p class="text-xs text-dark/55 font-dmsans leading-relaxed">Salurkan barang bermanfaat pada yang membutuhkan.</p>
-      </div>
-      <div class="reveal-scale card-hover bg-white rounded-3xl p-6 text-center shadow-sm hover:shadow-soft border border-transparent hover:border-primary/10" style="transition-delay:400ms">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-dark/10 text-dark flex items-center justify-center text-2xl mb-4"><i class='bx bxs-trash'></i></div>
-        <h3 class="font-lexend font-semibold text-dark mb-1.5">Buang dengan Benar</h3>
-        <p class="text-xs text-dark/55 font-dmsans leading-relaxed">Arahkan ke titik pembuangan/collection point yang tepat.</p>
+        <div class="space-y-5">
+          <div class="flex gap-4">
+            <div class="w-11 h-11 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-xl"><i class='bx bx-store-alt'></i></div>
+            <div>
+              <h4 class="font-lexend font-semibold text-deep">Jual di Marketplace GreenWise</h4>
+              <p class="text-sm text-ever2/75 font-dmsans mt-1">Barang yang masih layak pakai dipasarkan ke pembeli yang tepat, kamu dapat Green Coins atau tunai.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-11 h-11 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-xl"><i class='bx bx-recycle'></i></div>
+            <div>
+              <h4 class="font-lexend font-semibold text-deep">Daur ulang terarah</h4>
+              <p class="text-sm text-ever2/75 font-dmsans mt-1">Untuk barang yang sudah tidak layak pakai, sistem menyalurkannya ke mitra daur ulang sesuai jenis materialnya.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-11 h-11 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-xl"><i class='bx bx-map-pin'></i></div>
+            <div>
+              <h4 class="font-lexend font-semibold text-deep">Rekomendasi pembuangan tepat</h4>
+              <p class="text-sm text-ever2/75 font-dmsans mt-1">Jika tak bisa dijual atau didaur ulang, kamu diarahkan ke titik pembuangan resmi yang sesuai kategori sampahnya.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ D. GREEN EDUCATION PREVIEW ============ -->
-<section id="edukasi" class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- ==================== B. CARA KERJA ==================== -->
+<section id="cara-kerja" class="py-24 bg-mist3 scroll-mt-nav">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-2xl reveal">
+      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep">Empat langkah menuju aksi hijau</h2>
+      <p class="text-ever2/80 mt-4 font-dmsans">Dari barang tak terpakai menjadi keputusan yang tepat dan terukur dampaknya.</p>
+    </div>
+
+    <ol class="grid md:grid-cols-4 gap-6 mt-14">
+      <li class="reveal bg-white rounded-2xl p-7 border border-mist2">
+        <div class="w-12 h-12 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold mb-5">1</div>
+        <h3 class="font-lexend font-semibold text-lg text-deep">Identifikasi</h3>
+        <p class="text-sm text-ever2/80 mt-2 font-dmsans">Foto, unggah, atau cari manual barang bekasmu — sistem mengenali jenisnya.</p>
+      </li>
+      <li class="reveal bg-white rounded-2xl p-7 border border-mist2">
+        <div class="w-12 h-12 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold mb-5">2</div>
+        <h3 class="font-lexend font-semibold text-lg text-deep">Analisis</h3>
+        <p class="text-sm text-ever2/80 mt-2 font-dmsans">Kondisi, kelengkapan, dan potensi nilai jual dinilai secara menyeluruh.</p>
+      </li>
+      <li class="reveal bg-white rounded-2xl p-7 border border-mist2">
+        <div class="w-12 h-12 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold mb-5">3</div>
+        <h3 class="font-lexend font-semibold text-lg text-deep">Keputusan</h3>
+        <p class="text-sm text-ever2/80 mt-2 font-dmsans">Dapat rekomendasi tindakan terbaik: jual, daur ulang, atau buang dengan benar.</p>
+      </li>
+      <li class="reveal bg-white rounded-2xl p-7 border border-mist2">
+        <div class="w-12 h-12 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold mb-5">4</div>
+        <h3 class="font-lexend font-semibold text-lg text-deep">Dampak</h3>
+        <p class="text-sm text-ever2/80 mt-2 font-dmsans">Setiap aksi tercatat jadi poin, reward, dan dampak lingkungan yang nyata.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ C. SETIAP BARANG PUNYA JALAN TERBAIKNYA (list, bukan card) ============ -->
+<section id="tindakan" class="py-24 sm:py-28 bg-white scroll-mt-nav">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-2xl mb-12 reveal">
+      <span class="text-ever font-semibold font-dmsans text-sm uppercase tracking-widest">3 Pilihan tindakan</span>
+      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep mt-3">Setiap barang punya jalan terbaiknya</h2>
+      <p class="text-ever2/80 font-dmsans mt-4">GreenWise tidak langsung menyuruhmu membuang. Sistem memberi opsi paling bijak sesuai kondisi barang — hanya tiga jalan yang jelas.</p>
+    </div>
+
+    <div class="reveal w-full">
+      <div class="path-row group grid grid-cols-[2.75rem_3rem_1fr_auto] sm:grid-cols-[3.5rem_3.5rem_1fr_2rem] items-center gap-4 sm:gap-6 py-6 sm:py-7 px-2 sm:px-4">
+        <span class="path-num font-lexend font-bold text-3xl sm:text-4xl text-mist2 leading-none">01</span>
+        <div class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-2xl"><i class='bx bx-recycle'></i></div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-lexend font-semibold text-deep text-lg leading-snug">Daur ulang</h3>
+          <p class="text-sm text-ever2/70 font-dmsans mt-1 leading-relaxed">Barang yang sudah tidak layak pakai disalurkan ke mitra daur ulang sesuai jenis materialnya.</p>
+        </div>
+        <i class='bx bx-right-arrow-alt path-arrow text-2xl text-ever justify-self-end'></i>
+      </div>
+
+      <div class="path-row group grid grid-cols-[2.75rem_3rem_1fr_auto] sm:grid-cols-[3.5rem_3.5rem_1fr_2rem] items-center gap-4 sm:gap-6 py-6 sm:py-7 px-2 sm:px-4">
+        <span class="path-num font-lexend font-bold text-3xl sm:text-4xl text-mist2 leading-none">02</span>
+        <div class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-2xl"><i class='bx bx-store-alt'></i></div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-lexend font-semibold text-deep text-lg leading-snug">Jual di Marketplace GreenWise</h3>
+          <p class="text-sm text-ever2/70 font-dmsans mt-1 leading-relaxed">Barang yang masih layak pakai dipasarkan ke pembeli yang tepat — dapatkan Green Coins atau tunai.</p>
+        </div>
+        <i class='bx bx-right-arrow-alt path-arrow text-2xl text-ever justify-self-end'></i>
+      </div>
+
+      <div class="path-row group grid grid-cols-[2.75rem_3rem_1fr_auto] sm:grid-cols-[3.5rem_3.5rem_1fr_2rem] items-center gap-4 sm:gap-6 py-6 sm:py-7 px-2 sm:px-4">
+        <span class="path-num font-lexend font-bold text-3xl sm:text-4xl text-mist2 leading-none">03</span>
+        <div class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-mist text-ever flex items-center justify-center text-2xl"><i class='bx bxs-trash'></i></div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-lexend font-semibold text-deep text-lg leading-snug">Buang dengan benar</h3>
+          <p class="text-sm text-ever2/70 font-dmsans mt-1 leading-relaxed">Jika tak bisa dijual atau didaur ulang, kamu diarahkan ke titik pembuangan resmi terdekat sesuai kategorinya.</p>
+        </div>
+        <i class='bx bx-right-arrow-alt path-arrow text-2xl text-ever justify-self-end'></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ D. GREEN HUB ============ -->
+<section id="edukasi" class="py-24 sm:py-28 bg-mist3 scroll-mt-nav">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
-      <div class="max-w-xl">
-        <span class="text-primary font-semibold font-dmsans text-sm uppercase tracking-widest">Green Hub · Edukasi</span>
-        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-dark mt-3">Belajar Kelola Sampah Sesuai Jenisnya</h2>
-      </div>
-      <a href="#" class="btn-shine group inline-flex w-fit items-center gap-2 text-primary font-dmsans font-semibold border-b-2 border-primary pb-1 hover:gap-3 transition-all">
-        Jelajahi Semua Materi <i class='bx bx-right-arrow-alt text-lg'></i>
+      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep max-w-xl">Belajar kelola sampah sesuai jenisnya</h2>
+      <a href="halaman2.html" class="inline-flex w-fit items-center gap-2 text-ever font-dmsans font-semibold border-b-2 border-ever pb-1 hover:text-ever2 hover:border-ever2 transition-colors">
+        Lihat semua materi
       </a>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:0ms">
-        <i class='bx bx-sort-alt-2 text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Pemilahan Sampah</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Dasar memilah sampah organik & anorganik.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:60ms">
-        <i class='bx bx-repost text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Guna Ulang</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Ide kreatif memanfaatkan barang lama.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:120ms">
-        <i class='bx bx-recycle text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Daur Ulang</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Proses material jadi produk baru.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:180ms">
-        <i class='bx bx-chip text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Sampah Elektronik</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Penanganan aman perangkat elektronik.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:240ms">
-        <i class='bx bxs-shirt text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Sampah Tekstil</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Kelola pakaian & kain bekas dengan bijak.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:300ms">
-        <i class='bx bx-package text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Sampah Besar</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Penanganan furnitur & barang berukuran besar.</p>
-      </div>
-      <div class="reveal card-hover bg-green-50/60 hover:bg-primary hover:text-white rounded-2xl p-6 group transition-colors duration-300" style="transition-delay:360ms">
-        <i class='bx bxs-leaf text-3xl text-primary group-hover:text-white mb-4 block'></i>
-        <h4 class="font-lexend font-semibold text-dark group-hover:text-white text-sm mb-1">Gaya Hidup Berkelanjutan</h4>
-        <p class="text-xs text-dark/50 group-hover:text-white/80 font-dmsans">Kebiasaan kecil untuk bumi yang lebih baik.</p>
-      </div>
-      <div class="reveal card-hover bg-gradient-to-br from-primary to-accent text-white rounded-2xl p-6 flex flex-col justify-between" style="transition-delay:420ms">
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bx-sort-alt-2 text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Pemilahan sampah</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Dasar memilah sampah organik dan anorganik.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bx-repost text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Guna ulang</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Ide kreatif memanfaatkan barang lama.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bx-recycle text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Daur ulang</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Proses material jadi produk baru.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bx-chip text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Sampah elektronik</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Penanganan aman perangkat elektronik.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bxs-shirt text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Sampah tekstil</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Kelola pakaian dan kain bekas dengan bijak.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bx-package text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Barang besar</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Penanganan furnitur dan barang berukuran besar.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal edu-card card-hover bg-white rounded-2xl p-6 border border-mist2">
+        <img class="edu-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=500&q=80" alt="">
+        <div class="edu-overlay"></div>
+        <div class="edu-content">
+          <div class="edu-icon-wrap"><i class='bx bxs-leaf text-3xl text-ever mb-4 block'></i></div>
+          <h4 class="font-lexend font-semibold text-deep text-sm mb-1">Gaya hidup berkelanjutan</h4>
+          <p class="text-xs text-ever2/70 font-dmsans">Kebiasaan kecil untuk bumi yang lebih baik.</p>
+        </div>
+      </a>
+      <a href="#" class="reveal card-hover bg-deep rounded-2xl p-6 flex flex-col justify-between">
         <div>
-          <i class='bx bx-plus-circle text-3xl mb-4 block'></i>
-          <h4 class="font-lexend font-semibold text-sm mb-1">+7 Topik Lainnya</h4>
-          <p class="text-xs text-white/80 font-dmsans">Masih banyak materi menarik menantimu.</p>
+          <i class='bx bx-plus-circle text-3xl text-mist mb-4 block'></i>
+          <h4 class="font-lexend font-semibold text-mist text-sm mb-1">7 topik lainnya</h4>
+          <p class="text-xs text-mist/65 font-dmsans">Masih banyak materi menarik menantimu.</p>
         </div>
-        <a href="#" class="mt-4 inline-flex items-center gap-1 text-xs font-semibold underline underline-offset-2">Lihat semua <i class='bx bx-right-arrow-alt'></i></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ E. COMMUNITY / EVENT PREVIEW ============ -->
-<section id="komunitas" class="py-24 sm:py-28 bg-green-50/50 relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
-      <span class="text-primary font-semibold font-dmsans text-sm uppercase tracking-widest">Komunitas & Event</span>
-      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-dark mt-3 mb-4">Bergerak Bersama, Berdampak Bersama</h2>
-      <p class="text-dark/60 font-dmsans">Ikuti event, tantangan, dan aktivitas komunitas yang membuat aksi hijau jadi lebih seru.</p>
-    </div>
-
-    <!-- community stats -->
-    <div class="grid grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto mb-16 reveal">
-      <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
-        <p class="font-lexend font-bold text-2xl sm:text-3xl text-primary">3.200+</p>
-        <p class="text-xs sm:text-sm text-dark/50 font-dmsans mt-1">Anggota Komunitas</p>
-      </div>
-      <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
-        <p class="font-lexend font-bold text-2xl sm:text-3xl text-primary">45</p>
-        <p class="text-xs sm:text-sm text-dark/50 font-dmsans mt-1">Tantangan Aktif</p>
-      </div>
-      <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
-        <p class="font-lexend font-bold text-2xl sm:text-3xl text-primary">128</p>
-        <p class="text-xs sm:text-sm text-dark/50 font-dmsans mt-1">Diskusi Minggu Ini</p>
-      </div>
-    </div>
-
-    <!-- Event Cards -->
-    <div class="grid md:grid-cols-3 gap-6 mb-14">
-      <div class="reveal card-hover bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-soft" style="transition-delay:0ms">
-        <div class="h-36 bg-gradient-to-br from-primary to-medium flex items-center justify-center relative">
-          <i class='bx bxs-videos text-5xl text-white/90'></i>
-          <span class="absolute top-3 left-3 bg-white/90 text-primary text-xs font-semibold font-dmsans px-3 py-1 rounded-full">Online</span>
-        </div>
-        <div class="p-6">
-          <p class="text-xs text-dark/40 font-dmsans mb-2 flex items-center gap-1.5"><i class='bx bx-calendar'></i> 12 Juni 2025 · Zoom Meeting</p>
-          <h4 class="font-lexend font-semibold text-dark mb-2">Webinar: Mengenal Sampah Elektronik</h4>
-          <p class="text-xs text-dark/50 font-dmsans mb-4">Diselenggarakan oleh Tim GreenWise</p>
-          <a href="#" class="btn-shine inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-full hover:bg-dark transition-colors">Gabung Sekarang <i class='bx bx-right-arrow-alt'></i></a>
-        </div>
-      </div>
-
-      <div class="reveal card-hover bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-soft" style="transition-delay:120ms">
-        <div class="h-36 bg-gradient-to-br from-accent to-light flex items-center justify-center relative">
-          <i class='bx bxs-hand text-5xl text-white/90'></i>
-          <span class="absolute top-3 left-3 bg-white/90 text-primary text-xs font-semibold font-dmsans px-3 py-1 rounded-full">Offline</span>
-        </div>
-        <div class="p-6">
-          <p class="text-xs text-dark/40 font-dmsans mb-2 flex items-center gap-1.5"><i class='bx bx-calendar'></i> 20 Juni 2025 · Taman Kota Bandung</p>
-          <h4 class="font-lexend font-semibold text-dark mb-2">Workshop Upcycle Kain Perca</h4>
-          <p class="text-xs text-dark/50 font-dmsans mb-4">Diselenggarakan oleh Komunitas Hijau Lestari</p>
-          <a href="#" class="btn-shine inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-full hover:bg-dark transition-colors">Gabung Sekarang <i class='bx bx-right-arrow-alt'></i></a>
-        </div>
-      </div>
-
-      <div class="reveal card-hover bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-soft" style="transition-delay:240ms">
-        <div class="h-36 bg-gradient-to-br from-medium to-primary flex items-center justify-center relative">
-          <i class='bx bxs-map text-5xl text-white/90'></i>
-          <span class="absolute top-3 left-3 bg-white/90 text-primary text-xs font-semibold font-dmsans px-3 py-1 rounded-full">Offline</span>
-        </div>
-        <div class="p-6">
-          <p class="text-xs text-dark/40 font-dmsans mb-2 flex items-center gap-1.5"><i class='bx bx-calendar'></i> 28 Juni 2025 · Pantai Ancol</p>
-          <h4 class="font-lexend font-semibold text-dark mb-2">Aksi Bersih Pantai & Collection Drive</h4>
-          <p class="text-xs text-dark/50 font-dmsans mb-4">Diselenggarakan oleh GreenWise Community</p>
-          <a href="#" class="btn-shine inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary px-5 py-2.5 rounded-full hover:bg-dark transition-colors">Gabung Sekarang <i class='bx bx-right-arrow-alt'></i></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Challenge Highlight -->
-    <div class="reveal bg-dark rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-      <i class='bx bxs-trophy text-[10rem] text-white/5 absolute -right-6 -bottom-8'></i>
-      <div class="w-20 h-20 rounded-2xl bg-lime/20 flex items-center justify-center text-3xl text-lime shrink-0 relative z-10">
-        <i class='bx bxs-trophy'></i>
-      </div>
-      <div class="flex-1 relative z-10 text-center md:text-left">
-        <span class="text-lime text-xs font-semibold font-dmsans uppercase tracking-widest">Tantangan Bulan Ini</span>
-        <h4 class="font-lexend font-bold text-white text-xl mt-1 mb-3">Kurangi 100 kg Sampah Tekstil Bersama</h4>
-        <div class="w-full bg-white/10 rounded-full h-2.5 overflow-hidden mb-2">
-          <div class="h-full bg-lime rounded-full" style="width:68%"></div>
-        </div>
-        <p class="text-white/60 text-xs font-dmsans">68 kg dari target 100 kg tercapai — ayo bantu selesaikan!</p>
-      </div>
-      <a href="#" class="btn-shine relative z-10 shrink-0 inline-flex items-center gap-2 bg-lime text-dark font-dmsans font-semibold px-6 py-3 rounded-full hover:-translate-y-1 transition-transform">
-        Ikut Tantangan <i class='bx bx-right-arrow-alt'></i>
+        <span class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-mist underline underline-offset-2">Lihat semua</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ============ F. IMPACT STATISTICS ============ -->
-<section id="dampak" class="py-24 sm:py-28 bg-gradient-to-br from-dark via-primary to-accent relative overflow-hidden">
-  <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle, #ffffff 1px, transparent 1px); background-size:24px 24px;"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
-      <span class="text-lime font-semibold font-dmsans text-sm uppercase tracking-widest">Dampak Kolektif</span>
-      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-white mt-3">Angka di Balik Gerakan GreenWise</h2>
+
+<!-- ============ F. DAMPAK (center content) ============ -->
+<section id="dampak" class="py-24 sm:py-28 bg-ever scroll-mt-nav">
+  <div class="max-w-5xl mx-auto px-5 lg:px-8 text-center">
+    <div class="mb-14 reveal">
+      <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-white">Angka di balik gerakan GreenWise</h2>
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-      <div class="reveal-scale text-center" style="transition-delay:0ms">
-        <i class='bx bxs-box text-3xl text-lime mb-3'></i>
-        <p class="font-lexend font-bold text-3xl sm:text-4xl text-white"><span class="counter" data-target="12500">0</span>+</p>
-        <p class="text-white/70 text-sm font-dmsans mt-1">Barang Dikelola</p>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-mist/15 pt-10 place-items-center">
+      <div class="reveal text-center">
+        <p class="font-lexend font-bold text-3xl sm:text-4xl text-mist"><span class="counter" data-target="12500">0</span>+</p>
+        <p class="text-mist/65 text-sm font-dmsans mt-1">Barang dikelola</p>
       </div>
-      <div class="reveal-scale text-center" style="transition-delay:120ms">
-        <i class='bx bxs-globe text-3xl text-lime mb-3'></i>
-        <p class="font-lexend font-bold text-3xl sm:text-4xl text-white"><span class="counter" data-target="8400">0</span> Kg</p>
-        <p class="text-white/70 text-sm font-dmsans mt-1">Sampah Dialihkan dari TPA</p>
+      <div class="reveal text-center">
+        <p class="font-lexend font-bold text-3xl sm:text-4xl text-mist"><span class="counter" data-target="8400">0</span> kg</p>
+        <p class="text-mist/65 text-sm font-dmsans mt-1">Sampah dialihkan dari TPA</p>
       </div>
-      <div class="reveal-scale text-center" style="transition-delay:240ms">
-        <i class='bx bxs-group text-3xl text-lime mb-3'></i>
-        <p class="font-lexend font-bold text-3xl sm:text-4xl text-white"><span class="counter" data-target="3200">0</span>+</p>
-        <p class="text-white/70 text-sm font-dmsans mt-1">Pengguna Berpartisipasi</p>
+      <div class="reveal text-center">
+        <p class="font-lexend font-bold text-3xl sm:text-4xl text-mist"><span class="counter" data-target="3200">0</span>+</p>
+        <p class="text-mist/65 text-sm font-dmsans mt-1">Pengguna berpartisipasi</p>
       </div>
-      <div class="reveal-scale text-center" style="transition-delay:360ms">
-        <i class='bx bxs-star text-3xl text-lime mb-3'></i>
-        <p class="font-lexend font-bold text-3xl sm:text-4xl text-white"><span class="counter" data-target="96">0</span>%</p>
-        <p class="text-white/70 text-sm font-dmsans mt-1">Tingkat Kepuasan Pengguna</p>
+      <div class="reveal text-center">
+        <p class="font-lexend font-bold text-3xl sm:text-4xl text-mist"><span class="counter" data-target="96">0</span>%</p>
+        <p class="text-mist/65 text-sm font-dmsans mt-1">Tingkat kepuasan pengguna</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ CTA STRIP ============ -->
-<section class="py-16 bg-white">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
-    <div class="bg-green-50/70 rounded-[2rem] p-10 sm:p-14 text-center relative overflow-hidden">
-      <i class='bx bxs-leaf text-8xl text-primary/10 absolute -left-6 -top-6'></i>
-      <i class='bx bxs-recycle text-8xl text-primary/10 absolute -right-6 -bottom-6'></i>
-      <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-dark mb-4 relative z-10">Sudah siap ubah barang bekasmu jadi cerita baru?</h3>
-      <p class="text-dark/60 font-dmsans mb-8 relative z-10 max-w-xl mx-auto">Cukup satu foto, GreenWise bantu kamu ambil keputusan paling bijak untuk barangmu dan bumi.</p>
-      <a href="#beranda" class="btn-shine relative z-10 inline-flex items-center gap-2 bg-primary hover:bg-dark text-white font-dmsans font-semibold px-8 py-4 rounded-full shadow-lg shadow-primary/30 transition-all duration-300 hover:-translate-y-1">
-        <i class='bx bx-scan text-lg'></i> Mulai Sekarang, Gratis
-      </a>
-    </div>
+<!-- ============ CTA — background image + parallax ============ -->
+<section class="parallax-wrap py-32 sm:py-40">
+  <div class="parallax-bg" data-speed="0.35" style="background-image:url('https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1600&q=80');"></div>
+  <div class="absolute inset-0 bg-deep" style="opacity:.78;"></div>
+  <div class="relative z-10 max-w-3xl mx-auto px-5 lg:px-8 text-center">
+    <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-white mb-4">Siap ubah barang bekasmu jadi cerita baru?</h3>
+    <p class="text-mist/75 font-dmsans mb-8 max-w-xl mx-auto">Cukup satu foto, GreenWise bantu kamu ambil keputusan paling bijak untuk barangmu dan bumi.</p>
+    <a href="#beranda" class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold px-8 py-4 rounded-full transition-colors duration-300">
+      <i class='bx bx-scan text-lg'></i> Mulai sekarang, gratis
+    </a>
   </div>
 </section>
 
-<!-- ============ FOOTER (MODERN + PARALLAX) ============ -->
-<footer class="relative bg-dark text-white overflow-hidden">
+<!-- ============ FOOTER ============ -->
+<footer class="relative bg-deep text-mist overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10 pt-20">
 
-  <!-- ===== Gradient Fade Transition dari section sebelumnya ke footer ===== -->
-  <!-- <div class="absolute top-0 left-0 right-0 h-40 sm:h-56 z-0 pointer-events-none"
-       style="background:linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.6) 25%, rgba(5,115,49,0.4) 60%, #057331 100%);"></div> -->
-
-  <!-- decorative wave svg -->
-  <svg class="absolute top-0 left-0 w-full text-white/0" style="height:0;"></svg>
-
-  <!-- parallax gradient layer -->
-  <div class="absolute inset-0 pointer-events-none z-0" style="background-image:radial-gradient(circle at 15% 20%, rgba(174,243,57,0.18), transparent 40%), radial-gradient(circle at 85% 75%, rgba(13,151,64,0.35), transparent 45%); background-attachment:fixed;"></div>
-
-  <!-- floating decorative icons (parallax via JS) -->
-  <i class='bx bxs-leaf parallax-el text-6xl text-white/5 absolute top-10 left-[8%] z-0' data-speed="0.04"></i>
-  <i class='bx bx-recycle parallax-el text-7xl text-white/5 absolute top-32 right-[10%] z-0' data-speed="0.07"></i>
-  <!-- <i class='bx bxs-leaf parallax-el text-5xl text-white/5 absolute bottom-[110px] left-[20%] z-0' data-speed="0.05"></i> -->
-  <!-- <i class='bx bxs-droplet parallax-el text-6xl text-white/5 absolute bottom-10 right-[25%] z-0' data-speed="0.03"></i> -->
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-28 sm:pt-32">
-
-    <!-- ===== Newsletter Interaktif ===== -->
-    <!-- <div class="reveal bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-3xl p-7 sm:p-9 flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 backdrop-blur-sm">
-      <div class="text-center lg:text-left">
-        <span class="inline-flex items-center gap-1.5 bg-lime/15 text-lime text-xs font-semibold font-dmsans px-3 py-1 rounded-full mb-3">
-          <i class='bx bxs-envelope'></i> Newsletter Hijau
-        </span>
-        <h4 class="font-lexend font-bold text-white text-lg sm:text-xl">Dapatkan tips & update aksi hijau tiap minggu</h4>
-        <p class="text-white/50 text-sm font-dmsans mt-1">Tanpa spam, cukup insight bermanfaat untuk bumi.</p>
-      </div>
-      <form id="newsletterForm" class="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
-        <div class="relative">
-          <i class='bx bx-envelope absolute left-4 top-1/2 -translate-y-1/2 text-white/40 text-lg'></i>
-          <input type="email" required placeholder="Alamat email kamu"
-                 class="w-full sm:w-72 pl-11 pr-4 py-3.5 rounded-full bg-white/10 border border-white/15 text-white placeholder:text-white/40 text-sm font-dmsans focus:outline-none focus:border-lime focus:bg-white/15 transition-all" />
+    <div class="grid md:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 pb-12 border-b border-mist/10">
+      <div class="reveal">
+        <a href="#beranda" class="flex items-center gap-3 font-lexend font-bold text-xl mb-4 w-fit text-mist">
+          <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+            <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+            <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
+          </svg>
+          <span class="tracking-tight">GreenWise</span>
+        </a>
+        <p class="text-mist/60 text-sm font-dmsans leading-relaxed max-w-xs mb-6">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-instagram text-lg'></i></a>
+          <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-facebook text-lg'></i></a>
+          <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-twitter text-lg'></i></a>
+          <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full bg-mist/10 hover:bg-mist hover:text-deep flex items-center justify-center transition-colors"><i class='bx bxl-tiktok text-lg'></i></a>
         </div>
-        <button type="submit" class="btn-shine inline-flex items-center justify-center gap-2 bg-lime text-dark font-dmsans font-semibold text-sm px-6 py-3.5 rounded-full hover:-translate-y-0.5 hover:shadow-lg hover:shadow-lime/30 transition-all duration-300 whitespace-nowrap">
-          Berlangganan <i class='bx bx-paper-plane'></i>
-        </button>
-      </form>
-    </div> -->
-
-    <!-- ===== Grid Konten ===== -->
-    <div class="grid md:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 pb-14 border-b border-white/10">
+      </div>
 
       <div class="reveal">
-        <a href="#beranda" class="flex items-center gap-3 font-heading font-bold text-xl mb-4 group w-fit text-white">
-          <svg width="40" height="40" viewBox="0 0 100 100" class="drop-shadow-sm group-hover:rotate-6 transition-transform duration-300">
-            <defs>
-              <linearGradient id="fg1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#aef339"/>
-                <stop offset="100%" stop-color="#057331"/>
-              </linearGradient>
-              <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#75de34"/>
-                <stop offset="100%" stop-color="#0d9740"/>
-              </linearGradient>
-            </defs>
-            <rect x="4" y="4" width="58" height="58" rx="18" fill="url(#fg1)"/>
-            <path d="M8 55 Q30 15 60 10 Q45 40 8 55Z" fill="#057331" opacity="0.35"/>
-            <rect x="38" y="38" width="58" height="58" rx="18" fill="url(#fg2)"/>
-            <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#034d21" opacity="0.3"/>
-          </svg>
-          <span class="tracking-tight text-white font-bold text-xl">Green<span class="text-lime">Wise</span></span>
-        </a>
-        <p class="text-white/60 text-sm font-dmsans leading-relaxed max-w-xs mb-6">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas — demi masa depan bumi yang lebih hijau.</p>
-        <div class="flex items-center gap-3">
-          <a href="#" aria-label="Instagram" class="group relative w-10 h-10 rounded-full bg-white/10 hover:bg-lime hover:text-dark flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-lime/30"><i class='bx bxl-instagram text-lg text-white group-hover:text-dark transition-colors'></i></a>
-          <a href="#" aria-label="Facebook" class="group relative w-10 h-10 rounded-full bg-white/10 hover:bg-lime hover:text-dark flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-lime/30"><i class='bx bxl-facebook text-lg text-white group-hover:text-dark transition-colors'></i></a>
-          <a href="#" aria-label="Twitter" class="group relative w-10 h-10 rounded-full bg-white/10 hover:bg-lime hover:text-dark flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-lime/30"><i class='bx bxl-twitter text-lg text-white group-hover:text-dark transition-colors'></i></a>
-          <a href="#" aria-label="TikTok" class="group relative w-10 h-10 rounded-full bg-white/10 hover:bg-lime hover:text-dark flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-lime/30"><i class='bx bxl-tiktok text-lg text-white group-hover:text-dark transition-colors'></i></a>
-        </div>
-      </div>
-
-      <div class="reveal" style="transition-delay:80ms">
-        <h5 class="font-lexend font-semibold mb-4 text-sm uppercase tracking-wide text-white/80">Navigasi</h5>
-        <ul class="space-y-3 text-sm font-dmsans text-white/60">
-          <li><a href="#beranda" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Beranda</a></li>
-          <li><a href="#edukasi" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Green Hub</a></li>
-          <li><a href="#komunitas" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Leaderboard</a></li>
-          <li><a href="#" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Dashboard</a></li>
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Navigasi</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li><a href="#beranda" class="hover:text-mist transition-colors">Beranda</a></li>
+          <li><a href="#edukasi" class="hover:text-mist transition-colors">Green Hub</a></li>
+          <li><a href="#komunitas" class="hover:text-mist transition-colors">Leaderboard</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Dashboard</a></li>
         </ul>
       </div>
 
-      <div class="reveal" style="transition-delay:160ms">
-        <h5 class="font-lexend font-semibold mb-4 text-sm uppercase tracking-wide text-white/80">Sumber Daya</h5>
-        <ul class="space-y-3 text-sm font-dmsans text-white/60">
-          <li><a href="#" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Panduan Daur Ulang</a></li>
-          <li><a href="#" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Blog Lingkungan</a></li>
-          <li><a href="#" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>FAQ</a></li>
-          <li><a href="#" class="group inline-flex items-center gap-1.5 hover:text-lime transition-colors"><i class='bx bx-chevron-right text-xs opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300'></i>Pusat Bantuan</a></li>
+      <div class="reveal">
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Sumber daya</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li><a href="#" class="hover:text-mist transition-colors">Panduan daur ulang</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Blog lingkungan</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">FAQ</a></li>
+          <li><a href="#" class="hover:text-mist transition-colors">Pusat bantuan</a></li>
         </ul>
       </div>
 
-      <div class="reveal" style="transition-delay:240ms">
-        <h5 class="font-lexend font-semibold mb-4 text-sm uppercase tracking-wide text-white/80">Hubungi Kami</h5>
-        <ul class="space-y-3 text-sm font-dmsans text-white/60">
-          <li class="flex items-center gap-2.5 hover:text-lime transition-colors cursor-pointer"><i class='bx bx-envelope text-lime'></i> halo@greenwise.id</li>
-          <li class="flex items-center gap-2.5 hover:text-lime transition-colors cursor-pointer"><i class='bx bx-phone text-lime'></i> +62 812 3456 7890</li>
-          <li class="flex items-center gap-2.5 hover:text-lime transition-colors cursor-pointer"><i class='bx bx-map text-lime'></i> Bandung, Indonesia</li>
+      <div class="reveal">
+        <h5 class="font-lexend font-semibold mb-4 text-sm text-mist">Hubungi kami</h5>
+        <ul class="space-y-3 text-sm font-dmsans text-mist/60">
+          <li class="flex items-center gap-2.5"><i class='bx bx-envelope'></i> halo@greenwise.id</li>
+          <li class="flex items-center gap-2.5"><i class='bx bx-phone'></i> +62 812 3456 7890</li>
+          <li class="flex items-center gap-2.5"><i class='bx bx-map'></i> Bandung, Indonesia</li>
         </ul>
       </div>
     </div>
 
-    <!-- ===== Bottom bar ===== -->
-    <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/40 text-xs font-dmsans">
-      <p>© 2025 GreenWise. Semua hak dilindungi.</p>
-      <p class="flex items-center gap-1">Dibuat dengan <i class='bx bxs-heart text-lime'></i> untuk bumi yang lebih hijau.</p>
+    <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-mist/40 text-xs font-dmsans">
+      <p>© 2026 GreenWise. Semua hak dilindungi.</p>
+      <p>Dibuat untuk bumi yang lebih hijau.</p>
     </div>
   </div>
 
-  <!-- ===== Big Watermark Text "GreenWise" dengan Leaf Icon Terkunci di Huruf G ===== -->
-  <div class="relative z-10 w-full  select-none pointer-events-none mt-8 flex justify-center">
-    <div class="relative inline-block" style="font-size:clamp(3.5rem, 15vw, 11rem);">
-      <i class='bx bxs-leaf parallax-el text-white/20 absolute sm:top-[0] top-[45px] sm:left-[100px] left-[35px] z-10' style="font-size:0.3em;" data-speed="0.05"></i>
-      <h2 class="font-lexend font-extrabold text-center leading-none whitespace-nowrap bg-gradient-to-b from-white/10 to-white/0 bg-clip-text text-transparent">
-        GreenWise
-      </h2>
-    </div>
+  <div class="relative z-10 w-full select-none pointer-events-none flex justify-center">
+    <h2 class="font-lexend font-extrabold text-center leading-none whitespace-nowrap" style="font-size:clamp(3.5rem, 15vw, 11rem); color:rgba(236,229,240,0.07);">GreenWise</h2>
   </div>
 
-  <!-- ===== Back to top button ===== -->
   <button id="backToTopBtn" aria-label="Kembali ke atas"
-    class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-lime text-dark shadow-lg shadow-lime/30 flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-ever text-mist flex items-center justify-center opacity-0 pointer-events-none translate-y-4 transition-all duration-300 hover:bg-deep">
     <i class='bx bx-up-arrow-alt text-xl'></i>
   </button>
 </footer>
 
 <script>
-  /* ===== Navbar shadow on scroll ===== */
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (navbar) navbar.classList.toggle('shadow-lg', window.scrollY > 10);
-  });
+  const hero = document.getElementById('beranda');
 
-  /* ===== Mobile menu ===== */
+  function updateNavbar(){
+    var limit = hero ? Math.min(hero.offsetHeight - 100, window.innerHeight - 100) : 60;
+    navbar.classList.toggle('scrolled', window.scrollY > limit);
+  }
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  window.addEventListener('resize', updateNavbar);
+
   const burgerBtn = document.getElementById('burgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   if (burgerBtn && mobileMenu) {
@@ -700,29 +673,25 @@
       const isHidden = mobileMenu.classList.contains('hidden');
       mobileMenu.classList.toggle('hidden');
       mobileMenu.classList.toggle('flex');
+      if (isHidden) navbar.classList.add('scrolled'); else updateNavbar();
       const icon = burgerBtn.querySelector('i');
       if (icon) icon.className = isHidden ? 'bx bx-x text-2xl' : 'bx bx-menu text-2xl';
     });
   }
 
-  /* ===== Profile dropdown overlay ===== */
   const profileBtn = document.getElementById('profileBtn');
   const profileMenu = document.getElementById('profileMenu');
   const overlayBg = document.getElementById('overlayBg');
 
   function openProfile(){
-    if(profileMenu && overlayBg){
-      profileMenu.classList.remove('opacity-0','scale-95','pointer-events-none');
-      profileMenu.classList.add('opacity-100','scale-100');
-      overlayBg.classList.remove('hidden');
-    }
+    profileMenu.classList.remove('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.add('opacity-100','scale-100');
+    overlayBg.classList.remove('hidden');
   }
   function closeProfile(){
-    if(profileMenu && overlayBg){
-      profileMenu.classList.add('opacity-0','scale-95','pointer-events-none');
-      profileMenu.classList.remove('opacity-100','scale-100');
-      overlayBg.classList.add('hidden');
-    }
+    profileMenu.classList.add('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.remove('opacity-100','scale-100');
+    overlayBg.classList.add('hidden');
   }
   if(profileBtn && profileMenu){
     profileBtn.addEventListener('click', (e) => {
@@ -730,21 +699,19 @@
       profileMenu.classList.contains('opacity-100') ? closeProfile() : openProfile();
     });
   }
-  if(overlayBg){
-    overlayBg.addEventListener('click', closeProfile);
-  }
+  if(overlayBg) overlayBg.addEventListener('click', closeProfile);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProfile(); });
 
-  // ===== Toast (dummy feedback) =====
-  function showToast(msg, icon='bx-check-circle'){
+  function showToast(msg, icon){
     const toast = document.createElement('div');
-    toast.className = 'fixed bottom-6 right-6 z-[9999] bg-dark text-white pl-4 pr-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 font-dmsans text-sm animate-fade-in max-w-xs';
-    toast.innerHTML = `<i class='bx ${icon} text-lime text-xl shrink-0'></i><span>${msg}</span>`;
+    toast.className = 'fixed bottom-6 left-6 z-[9999] bg-deep text-mist pl-4 pr-5 py-4 rounded-xl shadow-soft flex items-center gap-3 font-dmsans text-sm animate-fade-in max-w-xs';
+    toast.innerHTML = "<i class='bx " + (icon || 'bx-check-circle') + " text-xl shrink-0'></i><span>" + msg + "</span>";
     document.body.appendChild(toast);
-    setTimeout(()=>{
+    setTimeout(function(){
       toast.style.transition = 'opacity .5s ease, transform .5s ease';
       toast.style.opacity = '0';
       toast.style.transform = 'translateY(20px)';
-      setTimeout(()=> toast.remove(), 500);
+      setTimeout(function(){ toast.remove(); }, 500);
     }, 2600);
   }
 
@@ -753,13 +720,10 @@
     logoutBtn.addEventListener('click', (e) => {
       e.preventDefault();
       closeProfile();
-      showToast('Kamu berhasil keluar dari GreenWise (demo).', 'bx-log-out');
+      showToast('Kamu keluar dari GreenWise (demo).', 'bx-log-out');
     });
   }
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProfile(); });
 
-  // ===== Reveal on Scroll =====
-  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
   const revealObserver = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
@@ -768,12 +732,11 @@
       }
     });
   }, { threshold: 0.15 });
-  revealEls.forEach(el => revealObserver.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // ===== Counter Animation =====
   function animateCounter(el){
     const target = parseInt(el.dataset.target, 10);
-    const duration = 1800;
+    const duration = 1600;
     const start = performance.now();
     function step(now){
       const progress = Math.min((now - start) / duration, 1);
@@ -784,7 +747,6 @@
     }
     requestAnimationFrame(step);
   }
-  const counterEls = document.querySelectorAll('.counter');
   const counterObserver = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
@@ -793,50 +755,33 @@
       }
     });
   }, { threshold: 0.5 });
-  counterEls.forEach(el => counterObserver.observe(el));
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
-  // ===== Footer Parallax (decorative icons) =====
-  const parallaxEls = document.querySelectorAll('.parallax-el');
-  window.addEventListener('scroll', ()=>{
-    const footer = document.querySelector('footer');
-    if(footer){
-      const rect = footer.getBoundingClientRect();
-      if(rect.top < window.innerHeight && rect.bottom > 0){
-        const offset = window.innerHeight - rect.top;
-        parallaxEls.forEach(el=>{
-          const speed = parseFloat(el.dataset.speed);
-          el.style.transform = `translateY(${offset * speed * -1}px)`;
-        });
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', function(){
+    const show = window.scrollY > 600;
+    backToTopBtn.classList.toggle('opacity-0', !show);
+    backToTopBtn.classList.toggle('pointer-events-none', !show);
+    backToTopBtn.classList.toggle('translate-y-4', !show);
+  }, {passive:true});
+  backToTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  /* ===== Parallax background (CTA foto) ===== */
+  const parallaxBgs = document.querySelectorAll('.parallax-bg');
+  function updateParallaxBg(){
+    parallaxBgs.forEach(function(el){
+      const wrap = el.closest('.parallax-wrap');
+      const rect = wrap.getBoundingClientRect();
+      if(rect.bottom > 0 && rect.top < window.innerHeight){
+        const speed = parseFloat(el.dataset.speed) || 0.3;
+        const offset = (rect.top) * speed;
+        el.style.transform = 'translateY(' + offset + 'px)';
       }
-    }
-  });
-
-  // ===== Hero Image Slideshow (3s interval with smooth fade) =====
-  const slides = document.querySelectorAll('.hero-slide');
-  const captions = [
-    'Daur Ulang Pakaian & Tekstil',
-    'Sepatu & Aksesoris Terawat',
-    'Pengelolaan Sampah Terkurasi',
-    'Aksi Hijau Berdampak Nyata'
-  ];
-  const slideCaption = document.getElementById('heroSlideCaption');
-  let currentSlide = 0;
-
-  if (slides.length > 0) {
-    setInterval(() => {
-      slides[currentSlide].classList.remove('opacity-100');
-      slides[currentSlide].classList.add('opacity-0');
-
-      currentSlide = (currentSlide + 1) % slides.length;
-
-      slides[currentSlide].classList.remove('opacity-0');
-      slides[currentSlide].classList.add('opacity-100');
-
-      if (slideCaption && captions[currentSlide]) {
-        slideCaption.textContent = captions[currentSlide];
-      }
-    }, 3000);
+    });
   }
+  window.addEventListener('scroll', updateParallaxBg, {passive:true});
+  window.addEventListener('resize', updateParallaxBg);
+  updateParallaxBg();
 </script>
 </body>
 </html>
