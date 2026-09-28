@@ -166,7 +166,7 @@
   .parallax-bg{
     position:absolute; top:-10%; left:0; width:100%; height:120%;
     background-size:cover; background-position:center;
-    will-change:transform;
+    background-attachment: fixed;
   }
 
   /* ===== Section "jalan terbaik" - list rows ===== */
@@ -201,6 +201,200 @@
     *{animation:none !important; transition:none !important;}
     .reveal{opacity:1; transform:none;}
   }
+
+  /* =========================================================
+   GLOBAL BUTTON & LINK HOVER ANIMATION
+   Inspired by Uiverse.io BHARGAVPATEL1244
+   ========================================================= */
+
+.gw-hover {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color .4s ease,
+    background-color .4s ease,
+    border-color .4s ease,
+    transform .3s ease,
+    box-shadow .4s ease;
+}
+
+/* Semua isi harus berada di atas layer animasi */
+.gw-hover > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Layer hitam yang bergerak */
+.gw-hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -15%;
+  width: 120%;
+  height: 100%;
+  background: #000;
+  transform: skew(30deg) translateX(-100%);
+  transform-origin: left center;
+  transition: transform .45s cubic-bezier(.3,1,.8,1);
+  z-index: 1;
+}
+
+/* Saat hover, layer hitam menyapu */
+.gw-hover:hover::before {
+  transform: skew(30deg) translateX(0);
+}
+
+/* Teks/icon ikut berubah */
+.gw-hover:hover {
+  color: #fff !important;
+}
+
+/* Sedikit efek naik */
+.gw-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   KHUSUS BUTTON / CTA
+   ========================================================= */
+
+.gw-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color .4s ease,
+    background-color .4s ease,
+    border-color .4s ease,
+    transform .3s ease,
+    box-shadow .4s ease;
+}
+
+.gw-btn > * {
+  position: relative;
+  z-index: 2;
+}
+
+.gw-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -15%;
+  width: 120%;
+  height: 100%;
+  background: #003b36;
+  color: white !important;
+  transform: skew(30deg) translateX(-100%);
+  transition: transform .45s cubic-bezier(.3,1,.8,1);
+  z-index: 1;
+}
+
+.gw-btn:hover::before {
+  transform: skew(30deg) translateX(0);
+}
+
+.gw-btn:hover {
+  color: #fff !important;
+  box-shadow: 0 10px 25px -12px rgba(0,0,0,.5);
+}
+
+/* Icon ikut berada di atas animasi */
+.gw-btn i, .gw-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.nv-pill a.gw-hover {
+  transform: none;
+}
+
+.nv-pill a.gw-hover:hover {
+  color: #fff !important;
+}
+
+#navbar.scrolled .nv-pill a.gw-hover:hover {
+  color: #fff !important;
+}
+
+/* =========================================================
+   SOCIAL BUTTON
+   ========================================================= */
+
+.social-hover {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.social-hover i {
+  position: relative;
+  z-index: 2;
+}
+
+.social-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #003b36;
+  color: white !important;
+  transform: translateX(-110%) skew(25deg);
+  transition: transform .45s cubic-bezier(.3,1,.8,1);
+}
+
+.social-hover:hover::before {
+  transform: translateX(0) skew(25deg);
+}
+
+.social-hover:hover {
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   LINK BIASA
+   ========================================================= */
+
+.gw-link {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color .4s ease,
+    background-color .4s ease,
+    transform .3s ease;
+}
+
+.gw-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -15%;
+  width: 120%;
+  height: 100%;
+  background: #003b36;
+  color: white !important;
+  transform: skew(30deg) translateX(-110%);
+  transition: transform .45s cubic-bezier(.3,1,.8,1);
+  z-index: 0;
+}
+
+.gw-link > * {
+  position: relative;
+  z-index: 2;
+}
+
+.gw-link:hover::before {
+  transform: skew(30deg) translateX(0);
+}
+
+.gw-link:hover {
+  color: #fff !important;
+}
 </style>
 </head>
 <body class="antialiased">
@@ -279,8 +473,8 @@
     </p>
 
     <div class="flex flex-wrap justify-center gap-3">
-      <a href="#tindakan" class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
-        <i class='bx bx-scan text-base'></i> Cek barangku
+      <a href="#tindakan" class="gw-btn items-center gap-2 flex bg-mist hover:bg-white text-deep font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
+        <i class='bx bx-scan text-base'></i> <span class="">Cek barangku</span>
       </a>
       <a href="#edukasi" class="inline-flex items-center gap-2 border border-mist/30 hover:border-mist text-mist font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">
         Jelajahi Green Hub
@@ -772,11 +966,11 @@
     parallaxBgs.forEach(function(el){
       const wrap = el.closest('.parallax-wrap');
       const rect = wrap.getBoundingClientRect();
-      if(rect.bottom > 0 && rect.top < window.innerHeight){
+      /* if(rect.bottom > 0 && rect.top < window.innerHeight){
         const speed = parseFloat(el.dataset.speed) || 0.3;
         const offset = (rect.top) * speed;
         el.style.transform = 'translateY(' + offset + 'px)';
-      }
+      } */
     });
   }
   window.addEventListener('scroll', updateParallaxBg, {passive:true});

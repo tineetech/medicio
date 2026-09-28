@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght=0,400;0,500;0,700;1,400&family=Lexend:wght=400;500;600;700&family=Poppins:wght=400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -19,23 +19,36 @@
         colors: {
           ink: '#012622',
           deep: '#012622',
+          ever: '#003B36',
           evergreen: '#003B36',
           primary: '#003B36',
           secondary: '#003B36',
           mid: '#045248',
+          ever2: '#0A4F48',
+          ever3: '#12655C',
           bright: '#0b6a5c',
           light: '#12897a',
           lime: '#ECE5F0',
+          mist: '#ECE5F0',
           paper: '#ECE5F0',
           paperalt: '#e0d7e7',
+          mist2: '#DCD2E4',
+          mist3: '#F6F2F8',
           line: '#d3c7dc',
           accent: '#facc15',
           danger: '#c0392b'
         },
         fontFamily: {
           display: ['Lexend', 'sans-serif'],
+          lexend: ['Lexend', 'sans-serif'],
           body: ['"DM Sans"', 'sans-serif'],
-          ui: ['Poppins', 'sans-serif']
+          dmsans: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif']
+        },
+        boxShadow: {
+          card: '0 4px 20px -6px rgba(1,38,34,0.15)',
+          soft: '0 18px 36px -14px rgba(1,38,34,0.28)'
         }
       }
     }
@@ -44,14 +57,42 @@
 
 <style>
   html { scroll-behavior: smooth; }
-  body { background: #ECE5F0; }
-  ::selection { background: #facc15; color: #012622; }
+  body { font-family:'DM Sans', sans-serif; background: #ECE5F0; color:#012622; }
+  h1,h2,h3,h4,h5{font-family:'Lexend', sans-serif;}
+  ::selection { background: #ECE5F0; color: #012622; }
+  .scroll-mt-nav{scroll-margin-top:6rem;}
+  /* ===== Reveal on Scroll ===== */
+  .reveal{opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1);}
+  .reveal.active{opacity:1; transform:translateY(0);}
+  /* ===== NAVBAR (samakan dengan halaman2) ===== */
+  #navbar{background:transparent; border-bottom:1px solid transparent; backdrop-filter:none;}
+  #navbar.scrolled{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid #DCD2E4;
+    box-shadow:0 6px 24px -14px rgba(1,38,34,.4);
+  }
+  #navbar .nv-text{color:#ECE5F0;}
+  #navbar.scrolled .nv-text{color:#012622;}
+  #navbar .nv-sub{color:rgba(236,229,240,.65);}
+  #navbar.scrolled .nv-sub{color:#0A4F48;}
+  #navbar .nv-pill{background:rgba(236,229,240,.10);}
+  #navbar.scrolled .nv-pill{background:#ECE5F0;}
+  #navbar .nv-pill a{color:rgba(236,229,240,.75);}
+  #navbar.scrolled .nv-pill a{color:#0A4F48;}
+  #navbar .nv-pill a.is-active{background:#003B36; color:#ECE5F0;}
+  #navbar.scrolled .nv-pill a.is-active{background:#FFFFFF; color:#012622;}
+  #navbar .nv-border{border-color:rgba(236,229,240,.28);}
+  #navbar.scrolled .nv-border{border-color:#DCD2E4;}
+  #navbar .nv-logo-word{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-word{color:#012622;}
+  #navbar .nv-logo-accent{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-accent{color:#003B36;}
+  @keyframes fadeInUp{from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);}}
+  .animate-fade-in{animation:fadeInUp .4s ease;}
   .leaf-mark {
     background: linear-gradient(135deg, #12897a 0%, #045248 50%, #012622 100%);
-  }
-  .welcome-glow {
-    background: radial-gradient(circle at 85% 15%, rgba(250,204,21,0.16), transparent 55%),
-                linear-gradient(120deg, #012622 0%, #003B36 55%, #045248 100%);
   }
   .metric-bar { transition: width .8s cubic-bezier(.22,.9,.3,1); }
   .fade-swap { animation: fadeSwap .5s ease; }
@@ -87,160 +128,403 @@
     outline: 2px solid #facc15;
     outline-offset: 2px;
   }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
 
   /* ===================== RESPONSIVE FIX ===================== */
-  html, body {
+
+  html,
+  body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
   }
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
-  img { max-width: 100%; }
-  #resultsContent, #results, #metricsGrid {
+
+  /* Semua gambar tidak boleh membuat layout melebar */
+  img {
+    max-width: 100%;
+  }
+
+  /* Card analisis */
+  #resultsContent,
+  #results,
+  #metricsGrid {
     min-width: 0;
     width: 100%;
   }
-  #resultsContent .grid { min-width: 0; }
+
+  /* Grid hasil identifikasi */
+  #resultsContent .grid {
+    min-width: 0;
+  }
+
+  /* Baris metric */
   .metric-row {
     min-width: 0;
     width: 100%;
   }
+
   .metric-label {
     min-width: 0;
     flex: 1;
   }
+
   .metric-label-text {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* Foto identifikasi */
   #itemThumb {
     width: 80px;
     height: 80px;
     min-width: 80px;
     overflow: hidden;
   }
+
   #itemThumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
+
+  /* Tombol contoh */
   .demo-buttons {
     width: 100%;
     min-width: 0;
   }
+
   .demo-buttons button {
     max-width: 100%;
     white-space: normal;
   }
 
+  /* HP */
   @media (max-width: 639px) {
+
     #resultsContent .grid {
       grid-template-columns: minmax(0, 1fr);
     }
+
     #metricsGrid {
       grid-template-columns: minmax(0, 1fr);
       gap: 0;
     }
-    .metric-row { margin-bottom: 16px; }
+
+    .metric-row {
+      margin-bottom: 16px;
+    }
+
     #itemThumb {
       width: 72px;
       height: 72px;
       min-width: 72px;
     }
-    #itemName { font-size: 1.125rem; }
-    #itemCategory { font-size: 0.8rem; line-height: 1.4; }
+
+    .identification-content {
+      min-width: 0;
+    }
+
+    #itemName {
+      font-size: 1.125rem;
+    }
+
+    #itemCategory {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    /* Coba contoh */
+    .demo-buttons {
+      align-items: flex-start;
+    }
+
+    .demo-buttons button {
+      flex: 0 1 auto;
+    }
   }
+
+  /* Tablet */
   @media (min-width: 640px) and (max-width: 1023px) {
+
     #metricsGrid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+
+  /* Desktop */
   @media (min-width: 1024px) {
+
     #metricsGrid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+
+#activitySummary {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+/* Bagian background berwarna */
+#activitySummary .activity-background {
+    position: relative;
+    isolation: isolate;
+    background: transparent !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+
+
+    /* hilangkan bentuk card */
+    border-radius: 0 !important;
+
+    /* hijau tetap di belakang */
+    background: transparent !important;
+
+    /* pertahankan tinggi/posisi bawah - tambah offset untuk fixed navbar */
+    min-height: 190px;
+    padding-top: 88px !important;
+    padding-bottom: 80px !important;
+
+    overflow: visible !important;
+    #activitySummary .activity-background h2,
+#activitySummary .activity-background h3,
+#activitySummary .activity-background p,
+#activitySummary .activity-background span {
+    color: #FFFFFF;
+  }
+}
+
+#activitySummary .activity-background::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+    width: 100vw;
+
+    transform: translateX(-50%);
+
+    background: #003B36;
+}
+
+
+/* 4 card */
+#activitySummary .activity-cards {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+
+    bottom: -55px;
+
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+/* Card */
+#activitySummary .activity-cards > div {
+  min-height: 138px;
+}
+
+#activitySummary .activity-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(211, 199, 220, 0.75);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 8px 25px rgba(1, 38, 34, 0.10);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+#activitySummary .activity-card::after {
+  content: "";
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  right: -24px;
+  bottom: -30px;
+  border-radius: 50%;
+  background: rgba(250, 204, 21, 0.12);
+  pointer-events: none;
+}
+
+#activitySummary .activity-card-icon {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #045248, #012622);
+}
+
+#activitySummary .activity-card-value {
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+#activitySummary .activity-card-label {
+  max-width: 12rem;
+  margin-top: 7px;
+  color: rgba(1, 38, 34, 0.55);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+#activitySummary .activity-cards > div:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 30px rgba(1, 38, 34, 0.14);
+  border-color: rgba(18, 137, 122, 0.35);
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+
+    #activitySummary .activity-cards {
+        grid-template-columns: repeat(2, 1fr);
+        bottom: -80px;
+    }
+
+    #activitySummary {
+        margin-bottom: 100px;
+    }
+}
+
+/* HP */
+@media (max-width: 640px) {
+
+    #activitySummary .activity-background {
+        min-height: 220px;
+    }
+
+    #activitySummary .activity-cards {
+        grid-template-columns: repeat(2, 1fr);
+        left: 15px;
+        right: 15px;
+        gap: 10px;
+        bottom: -70px;
+    }
+
+    #activitySummary {
+        margin-bottom: 90px;
+    }
+}
 </style>
+
 </head>
 
 <body class="font-body text-ink antialiased">
 
-<!-- ===================== TOP NAVBAR ===================== -->
-<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-line">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
-    <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 shrink-0">
-      <div class="relative w-7 h-7 shrink-0">
-        <span class="absolute left-0 top-0 w-[18px] h-[18px] rounded-md leaf-mark"></span>
-        <span class="absolute right-0 bottom-0 w-[18px] h-[18px] rounded-md leaf-mark opacity-90"></span>
-      </div>
-      <span class="font-display font-semibold text-lg tracking-tight text-ink">GreenWise</span>
+<!-- ==================== NAVBAR (disamakan dengan halaman2) ==================== -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+    <a href="halaman1.html" class="flex items-center gap-3">
+      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+        <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
+      </svg>
+      <span class="font-lexend font-bold text-xl tracking-tight nv-logo-word">Green<span class="nv-logo-accent">Wise</span></span>
     </a>
 
-    <nav class="hidden md:flex items-center gap-1 font-ui text-sm text-ink/60">
-      <a href="https://greenwises.web.app/halaman1.html#beranda" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Beranda</a>
-      <a href="https://greenwises.web.app/green-hub.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Green Hub</a>
-      <a href="https://greenwises.web.app/leaderboard.html" class="px-3 py-2 rounded-lg hover:bg-paperalt hover:text-ink transition-colors">Leaderboard</a>
-      <a href="dashboard.html" class="nav-active px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium">Dashboard</a>
+    <nav class="hidden lg:flex items-center gap-1 nv-pill rounded-full px-2 py-1.5 transition-colors duration-300">
+      <a href="halaman1.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Beranda</a>
+      <a href="halaman2.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Green Hub</a>
+      <a href="halaman7.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Marketplace</a>
     </nav>
 
-    <div class="relative">
-      <button id="profileBtn" type="button" class="flex items-center gap-2.5 pl-2 pr-1 py-1 rounded-full hover:bg-paperalt transition-colors">
-        <div class="w-9 h-9 rounded-full bg-deep text-accent font-ui text-xs font-semibold flex items-center justify-center shrink-0">DA</div>
-        <span class="hidden sm:flex flex-col items-start leading-tight">
-          <span class="font-ui text-sm text-ink">Dwi Anugrah</span>
-        </span>
-        <i class='bx bx-chevron-down text-lg text-ink/40'></i>
-      </button>
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <button id="profileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border nv-border transition-colors duration-300">
+          <span class="w-9 h-9 rounded-full bg-ever flex items-center justify-center text-mist font-lexend font-bold text-sm">DA</span>
+          <span class="hidden sm:flex flex-col items-start leading-tight">
+            <span class="text-sm font-semibold nv-text">Dwi Anugrah</span>
+            <span class="text-[11px] nv-sub flex items-center gap-1"><i class='bx bxs-star text-[10px]'></i> 1.240 poin</span>
+          </span>
+          <i class='bx bx-chevron-down text-lg nv-sub'></i>
+        </button>
 
-      <div id="profileMenu" class="hidden absolute right-0 top-[calc(100%+8px)] w-56 rounded-2xl border border-line bg-white shadow-lg shadow-ink/5 py-2 font-ui text-sm">
-        <div class="px-4 py-2.5 border-b border-line/70">
-          <p class="text-ink font-medium">Dwi Anugrah</p>
-          <p class="text-ink/40 text-xs font-body mt-0.5">dwi.anugrah@email.com</p>
-        </div>
-        <a href="dashboard.html" class="flex items-center gap-2.5 px-4 py-2.5 text-primary bg-primary/5">
-          <i class='bx bx-grid-alt text-base text-accent'></i> Dashboard
-        </a>
-        <a href="my-impact.html" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/70 hover:bg-paperalt transition-colors">
-          <i class='bx bx-line-chart text-base text-accent'></i> My Impact
-        </a>
-        <div class="border-t border-line/70 mt-1 pt-1">
-          <a href="https://greenwises.web.app/halaman1.html#beranda" class="flex items-center gap-2.5 px-4 py-2.5 text-ink/50 hover:bg-paperalt transition-colors">
-            <i class='bx bx-log-out text-base text-accent'></i> Keluar
+        <div id="profileMenu" class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-soft border border-mist2 p-2 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50">
+          <div class="px-3 py-3 border-b border-mist2 mb-1">
+            <p class="font-lexend font-semibold text-deep text-sm">Dwi Anugrah</p>
+            <p class="text-xs text-ever2/70">dwi.anugrah@email.com</p>
+          </div>
+          <a href="halaman4.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-grid-alt text-lg text-ever'></i> Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-line-chart text-lg text-ever'></i> Dampak saya
+          </a>
+          <div class="h-px bg-mist2 my-1"></div>
+          <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-ever2 transition">
+            <i class='bx bx-log-out text-lg'></i> Keluar
           </a>
         </div>
       </div>
+
+      <button id="burgerBtn" aria-label="Buka menu" class="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border nv-border nv-text">
+        <i class='bx bx-menu text-2xl'></i>
+      </button>
     </div>
+  </div>
+
+  <div id="mobileMenu" class="lg:hidden hidden flex-col gap-1 px-5 pb-5 bg-white border-t border-mist2">
+    <a href="halaman1.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm mt-3">Beranda</a>
+    <a href="halaman2.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Green Hub</a>
+    <a href="halaman7.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Marketplace</a>
   </div>
 </header>
 
+<div id="overlayBg" class="fixed inset-0 bg-deep/25 z-40 hidden"></div>
+
 <!-- ===================== MAIN ===================== -->
 <div class="pb-20 lg:pb-10">
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8 lg:py-10">
+  <main class="max-w-7xl mx-auto px-5 lg:px-8 pb-6 sm:pb-8 lg:pb-10">
 
-    <!-- Page badge -->
-    <div class="mb-4">
-      <span id="pageBadge" class="font-ui text-[11px] font-semibold tracking-wide uppercase text-primary bg-primary/10 px-2.5 py-1 rounded-full inline-flex items-center gap-1.5">
-        <i class='bx bx-grid-alt text-accent'></i> <span id="pageBadgeText">Greenwise-Dashboard</span>
-      </span>
-    </div>
 
-    <!-- ===================== GREETING + STREAK ===================== -->
-    <div class="mb-4 relative w-full min-w-0">
-      <div class="w-full min-w-0">
+<!-- ===================== GREETING + STREAK (di luar/atas kartu) ===================== -->
+    
+
+    <!-- ===================== RINGKASAN AKTIVITAS (kartu dominan, lebih besar & lega) ===================== -->
+    <section id="activitySummary" class="mb-8">
+
+
+      
+      <div class="activity-background rounded-2xl bg-deep p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+        <!-- dekorasi -->
+        <i class='bx bxs-leaf absolute -right-8 -top-10 text-[160px] text-white/[0.04] pointer-events-none'></i>
+        <div class="mb-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div class="min-w-0">
         <div class="flex items-center gap-2 min-w-0">
           <i class="bx bx-sun text-lg text-accent shrink-0"></i>
-          <p id="greetingTime" class="font-ui text-sm text-ink/50 truncate">Selamat datang kembali,</p>
+          <p id="greetingTime" class="font-ui text-sm text-white/50 truncate">Selamat datang kembali,</p>
         </div>
-        <h1 class="font-display font-semibold text-2xl sm:text-3xl text-ink leading-tight truncate">Dwi Anugrah</h1>
+        <h1 class="font-display text-white font-semibold text-2xl sm:text-3xl text-ink leading-tight truncate">Dwi Anugrah</h1>
       </div>
 
       <!-- STREAK -->
-      <div class="mt-3 w-full sm:absolute sm:right-0 sm:bottom-0 sm:mt-0 sm:w-[260px] flex items-center gap-3 rounded-xl bg-white border border-line px-3 sm:px-4 py-3 shadow-sm box-border min-w-0">
+      <!-- <div class="w-full sm:w-[260px] shrink-0 flex items-center gap-3 rounded-xl bg-white border border-line px-3 sm:px-4 py-3 shadow-sm box-border min-w-0">
         <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
           <i class="bx bxs-flame text-xl text-accent"></i>
         </div>
@@ -254,77 +538,56 @@
           </div>
           <p class="font-body text-[9px] sm:text-[10px] text-ink/50 mt-1 truncate">3 hari lagi menuju target 10 hari</p>
         </div>
-      </div>
+      </div> -->
     </div>
 
-    <!-- ===================== WELCOME CARD ===================== -->
-    <section class="mb-8">
-      <div class="welcome-glow rounded-2xl text-paper relative overflow-hidden p-6 sm:p-7">
-        <i class='bx bxs-leaf absolute -right-8 -top-10 text-[160px] text-white/[0.04] pointer-events-none'></i>
-        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          
-          <div class="flex flex-col">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-                <i class='bx bx-git-branch text-base text-accent'></i>
-              </span>
-              <span class="font-ui text-[11px] font-semibold tracking-wide uppercase text-paper/60">Fitur Utama</span>
-            </div>
-            <h3 class="font-display font-semibold text-xl sm:text-[22px] text-paper leading-snug mb-1.5">Keputusan Sampah</h3>
-            <p class="font-body text-sm text-paper/70 leading-relaxed max-w-md">Sistem menganalisis barangmu dan menyajikan <span class="text-paper font-medium">1 rute rekomendasi terbaik</span> dari 3 pilihan berikut.</p>
-            <div class="flex items-center gap-2 flex-wrap mt-3">
-              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-store text-accent'></i> Jual</span>
-              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-recycle text-accent'></i> Daur Ulang</span>
-              <span class="font-ui text-[10px] font-medium px-2.5 py-1 rounded-full bg-white/10 text-paper/80 flex items-center gap-1"><i class='bx bx-trash text-accent'></i> Buang</span>
-            </div>
-            <a href="#inputSection" class="inline-flex items-center gap-1.5 font-ui text-xs font-semibold px-3.5 py-2 rounded-lg bg-accent text-ink mt-4 hover:bg-yellow-400 transition-colors w-fit">
-              Mulai analisis barang <i class='bx bx-right-arrow-alt'></i>
-            </a>
+        <div class="relative z-10 flex items-center justify-between flex-wrap gap-2 mb-6">
+          <p class="font-ui text-xs text-white/50">Ringkasan aktivitasmu</p>
+          <div class="flex items-center gap-1.5 font-ui text-xs text-white/70 bg-white/10 rounded-full px-3 py-1.5">
+            <i class='bx bxs-tree text-accent'></i> 2,4 kg CO₂e/bulan
           </div>
+        </div>
 
-          <div class="hidden md:block absolute left-1/2 top-6 bottom-6 w-px bg-white/10"></div>
-
-          <div class="flex flex-col md:pl-2">
-            <p class="font-body text-sm text-paper/70 leading-relaxed max-w-md">Yuk lanjutkan kebiasaan baikmu memilah barang sebelum dibuang. Setiap keputusan kecil punya dampak besar bagi lingkungan.</p>
-            <div class="flex items-center gap-2 flex-wrap mt-4">
-              <div class="flex items-center gap-1.5 font-ui text-xs text-paper/80 bg-white/5 rounded-full px-3 py-1.5">
-                <i class='bx bxs-tree text-accent'></i> 2,4 kg CO₂e/bulan
+        <div class="activity-cards relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="activity-card">
+            <div>
+              <div class="activity-card-icon">
+                <i class='bx bx-scan text-xl text-accent' aria-hidden="true"></i>
               </div>
+              <p class="activity-card-value font-display font-semibold text-3xl text-ink" id="statTotal">42</p>
+              <p class="activity-card-label font-body">Total barang dianalisis</p>
             </div>
           </div>
 
-        </div>
-      </div>
+          <div class="activity-card">
+            <div>
+              <div class="activity-card-icon">
+                <i class='bx bx-calendar-week text-xl text-accent' aria-hidden="true"></i>
+              </div>
+              <p class="activity-card-value font-display font-semibold text-3xl text-ink" id="statWeek">5</p>
+              <p class="activity-card-label font-body">Analisis minggu ini</p>
+            </div>
+          </div>
 
-      <!-- Stats Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        <div class="rounded-2xl bg-white border border-line p-4">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
-            <i class='bx bx-scan text-lg text-accent'></i>
+          <div class="activity-card">
+            <div>
+              <div class="activity-card-icon">
+                <i class='bx bx-store text-xl text-accent' aria-hidden="true"></i>
+              </div>
+              <p class="activity-card-value font-display font-semibold text-3xl text-ink" id="statSold">18</p>
+              <p class="activity-card-label font-body">Barang dijual</p>
+            </div>
           </div>
-          <p class="font-display font-semibold text-xl text-ink" id="statTotal">42</p>
-          <p class="font-body text-xs text-ink/50 mt-0.5">Total barang dianalisis</p>
-        </div>
-        <div class="rounded-2xl bg-white border border-line p-4">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
-            <i class='bx bx-calendar-week text-lg text-accent'></i>
+
+          <div class="activity-card">
+            <div>
+              <div class="activity-card-icon">
+                <i class='bx bx-recycle text-xl text-accent' aria-hidden="true"></i>
+              </div>
+              <p class="activity-card-value font-display font-semibold text-3xl text-ink" id="statRecycled">24</p>
+              <p class="activity-card-label font-body">Barang didaur ulang</p>
+            </div>
           </div>
-          <p class="font-display font-semibold text-xl text-ink" id="statWeek">5</p>
-          <p class="font-body text-xs text-ink/50 mt-0.5">Analisis minggu ini</p>
-        </div>
-        <div class="rounded-2xl bg-white border border-line p-4">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
-            <i class='bx bx-store text-lg text-accent'></i>
-          </div>
-          <p class="font-display font-semibold text-xl text-ink" id="statSold">18</p>
-          <p class="font-body text-xs text-ink/50 mt-0.5">Barang dijual</p>
-        </div>
-        <div class="rounded-2xl bg-white border border-line p-4">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-2.5">
-            <i class='bx bx-recycle text-lg text-accent'></i>
-          </div>
-          <p class="font-display font-semibold text-xl text-ink" id="statRecycled">24</p>
-          <p class="font-body text-xs text-ink/50 mt-0.5">Barang didaur ulang</p>
         </div>
       </div>
     </section>
@@ -336,6 +599,7 @@
       </div>
 
       <div class="rounded-2xl bg-white border border-line p-2 sm:p-3">
+        <!-- tabs -->
         <div class="grid grid-cols-3 gap-2 mb-3">
           <button type="button" data-method="scan" class="tab-btn font-ui text-sm px-3 py-2.5 rounded-xl bg-paperalt text-ink/50 flex items-center justify-center gap-2 transition-colors" data-active="true">
             <i class='bx bx-camera text-base'></i><span class="hidden sm:inline">Pindai Foto</span>
@@ -348,9 +612,12 @@
           </button>
         </div>
 
+        <!-- panels -->
         <div class="px-1 sm:px-2 pb-2">
-          <!-- SCAN PANEL -->
+
+          <!-- SCAN / CAMERA PANEL -->
           <div class="method-panel" data-panel="scan" data-visible="true">
+
             <div id="cameraIdle" class="rounded-xl border border-dashed border-line px-4 sm:px-5 py-8 text-center">
               <i class='bx bx-camera text-3xl text-accent mb-2'></i>
               <p class="font-ui text-sm text-ink/70">Ambil foto langsung menggunakan kamera perangkatmu.</p>
@@ -375,6 +642,7 @@
                 </button>
               </div>
             </div>
+
             <canvas id="cameraCanvas" class="hidden"></canvas>
           </div>
 
@@ -402,9 +670,10 @@
             </div>
             <p id="searchHint" class="font-body text-xs text-ink/50 mt-2 min-h-[1rem]"></p>
           </div>
+
         </div>
 
-        <!-- Quick Demo -->
+        <!-- quick demo -->
         <div class="flex items-center gap-2 flex-wrap px-2 pb-2 pt-1 border-t border-line mt-1">
           <span class="font-ui text-xs text-ink/40">Coba contoh</span>
           <button data-demo="shoes" type="button" class="font-ui text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-ink transition-colors">Sepatu Lari</button>
@@ -417,6 +686,7 @@
 
     <!-- ===================== RESULTS ===================== -->
     <div id="results" class="transition-opacity duration-300">
+
       <!-- LOADING STATE -->
       <div id="loadingState" class="hidden rounded-2xl bg-white border border-line p-8 sm:p-14 flex flex-col items-center justify-center text-center gap-3 mb-4">
         <div class="w-12 h-12 border-4 border-line border-t-primary rounded-full animate-spin"></div>
@@ -426,37 +696,114 @@
 
       <!-- RESULTS CONTENT -->
       <div id="resultsContent">
+
+        <!-- Identification + Classification -->
         <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
-          <!-- IDENTIFICATION -->
-          <div class="md:col-span-2 rounded-2xl bg-white border border-line p-4 sm:p-5 flex flex-col min-w-0">
-            <p class="font-ui text-xs text-ink/40 mb-3">Identifikasi barang (berbasis foto)</p>
-            <div class="flex items-start gap-3 sm:gap-4 min-w-0">
-              <div id="itemThumb" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-line">
-                <img id="itemImage" src="" alt="Foto barang" class="w-full h-full object-cover">
-              </div>
-              <div class="identification-content min-w-0 flex-1">
-                <h3 id="itemName" class="font-display font-semibold text-xl text-ink leading-snug truncate">Sepatu Lari</h3>
-                <p id="itemCategory" class="font-body text-sm text-ink/50 mt-0.5">Alas kaki · Olahraga</p>
-                <p id="itemPhotoTag" class="font-ui text-[11px] text-ink/40 mt-1.5 flex items-center gap-1">
-                  <i class="bx bx-image text-accent shrink-0"></i>
-                  <span id="itemPhotoTagText">Berdasarkan foto barang</span>
-                </p>
-              </div>
-            </div>
 
-            <div class="flex items-center gap-3 mt-5 pt-4 border-t border-line">
-              <div class="relative w-12 h-12 shrink-0">
-                <svg width="48" height="48" viewBox="0 0 56 56">
-                  <circle cx="28" cy="28" r="24" stroke="#e0d7e7" stroke-width="5" fill="none"/>
-                  <circle id="confidenceRing" class="ring-progress" cx="28" cy="28" r="24" stroke="#003B36" stroke-width="5" fill="none" stroke-linecap="round" transform="rotate(-90 28 28)" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
-                </svg>
-                <span id="confidenceValue" class="absolute inset-0 flex items-center justify-center font-ui text-[11px] font-medium text-ink">–</span>
-              </div>
-              <p class="font-body text-sm text-ink/50 min-w-0">Tingkat keyakinan identifikasi AI dari foto</p>
-            </div>
-          </div>
+<!-- IDENTIFICATION -->
+<div class="md:col-span-2 rounded-2xl bg-white border border-line p-4 sm:p-5 flex flex-col min-w-0">
 
-          <!-- CLASSIFICATION -->
+  <p class="font-ui text-xs text-ink/40 mb-3">
+    Identifikasi barang (berbasis foto)
+  </p>
+
+  <div class="flex items-start gap-3 sm:gap-4 min-w-0">
+
+    <!-- FOTO -->
+    <div
+      id="itemThumb"
+      class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-line"
+    >
+      <img
+        id="itemImage"
+        src=""
+        alt="Foto barang yang dianalisis"
+        class="w-full h-full object-cover"
+      >
+    </div>
+
+    <!-- INFO -->
+    <div class="identification-content min-w-0 flex-1">
+
+      <h3
+        id="itemName"
+        class="font-display font-semibold text-xl text-ink leading-snug truncate"
+      >
+        Sepatu Lari
+      </h3>
+
+      <p
+        id="itemCategory"
+        class="font-body text-sm text-ink/50 mt-0.5"
+      >
+        Alas kaki · Olahraga
+      </p>
+
+      <p
+        id="itemPhotoTag"
+        class="font-ui text-[11px] text-ink/40 mt-1.5 flex items-center gap-1"
+      >
+        <i class="bx bx-image text-accent shrink-0"></i>
+
+        <span id="itemPhotoTagText">
+          Berdasarkan foto barang
+        </span>
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- CONFIDENCE -->
+  <div class="flex items-center gap-3 mt-5 pt-4 border-t border-line">
+
+    <div class="relative w-12 h-12 shrink-0">
+      <svg width="48" height="48" viewBox="0 0 56 56">
+
+        <circle
+          cx="28"
+          cy="28"
+          r="24"
+          stroke="#e0d7e7"
+          stroke-width="5"
+          fill="none"
+        />
+
+        <circle
+          id="confidenceRing"
+          class="ring-progress"
+          cx="28"
+          cy="28"
+          r="24"
+          stroke="#003B36"
+          stroke-width="5"
+          fill="none"
+          stroke-linecap="round"
+          transform="rotate(-90 28 28)"
+          stroke-dasharray="150.8"
+          stroke-dashoffset="150.8"
+        />
+
+      </svg>
+
+      <span
+        id="confidenceValue"
+        class="absolute inset-0 flex items-center justify-center font-ui text-[11px] font-medium text-ink"
+      >
+        –
+      </span>
+
+    </div>
+
+    <p class="font-body text-sm text-ink/50 min-w-0">
+      Tingkat keyakinan identifikasi AI dari foto
+    </p>
+
+  </div>
+
+</div>
+
+          <!-- classification -->
           <div id="classCard" class="md:col-span-3 rounded-2xl p-5 flex flex-col justify-between bg-white border border-line text-ink">
             <div class="flex items-start justify-between gap-3">
               <div>
@@ -474,15 +821,36 @@
           </div>
         </section>
 
-        <!-- CONDITION ASSESSMENT -->
-        <section class="rounded-2xl bg-secondary p-4 sm:p-5 lg:p-6 mb-4 overflow-hidden">
-          <h2 class="font-display font-medium text-lg sm:text-xl text-white mb-5">Penilaian kondisi</h2>
-          <div id="metricsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-1 w-full min-w-0"></div>
-        </section>
+        <!-- Condition assessment -->
+<section
+  class="rounded-2xl bg-secondary p-4 sm:p-5 lg:p-6 mb-4 overflow-hidden"
+>
 
-        <!-- VALUE + IMPACT -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div class="rounded-2xl bg-white border border-line p-5">
+  <h2
+    class="font-display font-medium text-lg sm:text-xl text-white mb-5"
+  >
+    Penilaian kondisi
+  </h2>
+
+<div
+  id="metricsGrid"
+  class="
+    grid
+    grid-cols-1
+    sm:grid-cols-2
+    lg:grid-cols-3
+    gap-x-6
+    lg:gap-x-8
+    gap-y-1
+    w-full
+    min-w-0
+  "
+></div>
+</section>
+        <!-- Value + Impact -->
+        <section class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+
+          <div class="md:col-span-2 rounded-2xl bg-white border border-line p-5">
             <div class="flex items-center justify-between mb-3">
               <h2 class="font-display font-medium text-lg text-ink">Estimasi nilai</h2>
               <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center">
@@ -498,7 +866,7 @@
             <p class="font-body text-[11px] text-ink/35 mt-3">*Nilai mengikuti rute yang sedang aktif di bawah.</p>
           </div>
 
-          <div class="rounded-2xl bg-white border border-line p-5">
+          <div class="md:col-span-3 rounded-2xl bg-white border border-line p-5">
             <div class="flex items-center justify-between mb-4">
               <h2 class="font-display font-medium text-lg text-ink">Dampak lingkungan</h2>
               <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-secondary to-ink flex items-center justify-center">
@@ -522,8 +890,20 @@
           </div>
         </section>
 
-        <!-- JALUR REKOMENDASI -->
-        <section class="rounded-2xl bg-secondary p-4 sm:p-5 lg:p-6 mb-4 overflow-hidden w-full min-w-0">
+        <!-- ===================== JALUR REKOMENDASI ===================== -->
+                              <section
+                        class="
+                          rounded-2xl
+                          bg-secondary
+                          p-4
+                          sm:p-5
+                          lg:p-6
+                          mb-4
+                          overflow-hidden
+                          w-full
+                          min-w-0
+                        "
+                      >
           <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
             <p class="font-ui text-xs text-white/50">Jalur rekomendasi · Unified Decision Engine</p>
             <span class="font-ui text-[10px] px-2.5 py-1 rounded-full bg-white/10 text-white/60 flex items-center gap-1.5">
@@ -531,6 +911,7 @@
             </span>
           </div>
 
+          <!-- MAIN ROUTE CARD -->
           <div class="rounded-xl bg-white/10 p-4 sm:p-5">
             <div class="flex items-center gap-2 mb-4 flex-wrap">
               <span id="mainRouteTag" class="font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white text-ink flex items-center gap-1">
@@ -581,12 +962,15 @@
             <div id="altList" class="space-y-2 hidden mt-2"></div>
           </div>
         </section>
+
       </div>
+      <!-- /resultsContent -->
+
     </div>
   </main>
 </div>
 
-<!-- ECO-WARNING MODAL -->
+<!-- ===================== ECO-WARNING MODAL ===================== -->
 <div id="ecoWarningModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
   <div id="ecoModalBackdrop" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
   <div class="relative bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl" style="animation: modalPop .25s ease">
@@ -630,6 +1014,7 @@
 </nav>
 
 <script>
+  // ---------- page badge dinamis (mengikuti menu navigasi aktif) ----------
   function updatePageBadge() {
     const activeLink = document.querySelector('.nav-active');
     const label = activeLink ? activeLink.textContent.trim() : 'Dashboard';
@@ -638,6 +1023,7 @@
   }
   updatePageBadge();
 
+  // ---------- greeting ----------
   function setGreeting() {
     const hour = new Date().getHours();
     let text = 'Selamat malam,';
@@ -648,8 +1034,9 @@
   }
   setGreeting();
 
+  // ---------- stats (dummy) ----------
   const stats = { total: 42, week: 5, sold: 18, recycled: 24 };
-  let lastCountedAction = null;
+  let lastCountedAction = null; // 'sold' | 'recycled' | null
 
   function renderStat(key, elId) {
     const el = document.getElementById(elId);
@@ -677,47 +1064,130 @@
     renderStat('recycled', 'statRecycled');
   }
 
-  // Helper untuk merender ikon dengan tepat (menyelesaikan bug ikon Halaman 4)
+  // ---------- metrics config (ikon konsisten, semua outline "bx-") ----------
   function getMetricIcon(icon) {
-    if (icon === 'damage-svg') {
-      return `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
-          <path d="M12 3 2.5 20h19L12 3z"></path>
-          <path d="M12 9v5"></path>
-          <circle cx="12" cy="17" r="0.8" fill="currentColor"></circle>
-        </svg>
-      `;
-    }
-    if (icon === 'reuse-svg') {
-      return `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
-          <path d="M20 11a8.1 8.1 0 0 0-15.5-2"></path>
-          <path d="M4 5v4h4"></path>
-          <path d="M4 13a8.1 8.1 0 0 0 15.5 2"></path>
-          <path d="M20 19v-4h-4"></path>
-        </svg>
-      `;
-    }
-    return `<i class="bx ${icon} text-lg text-accent"></i>`;
+
+  if (icon === 'damage-svg') {
+    return `
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="21"
+        height="21"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-accent"
+      >
+        <path d="M12 3 2.5 20h19L12 3z"></path>
+        <path d="M12 9v5"></path>
+        <circle cx="12" cy="17" r="0.8" fill="currentColor"></circle>
+      </svg>
+    `;
+  }
+
+  if (icon === 'reuse-svg') {
+    return `
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="21"
+        height="21"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-accent"
+      >
+        <path d="M20 11a8.1 8.1 0 0 0-15.5-2"></path>
+        <path d="M4 5v4h4"></path>
+        <path d="M4 13a8.1 8.1 0 0 0 15.5 2"></path>
+        <path d="M20 19v-4h-4"></path>
+      </svg>
+    `;
+  }
+
+  if (icon === 'usability-svg') {
+    return `
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="21"
+        height="21"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="text-accent"
+      >
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    `;
+  }
+
+  return `
+    <i class="bx ${icon} text-lg text-accent"></i>
+  `;
   }
 
   const METRICS = [
-    { key: 'physicalCondition', label: 'Kondisi Fisik', icon: 'bx-shield' },
-    { key: 'usability', label: 'Kegunaan', icon: 'bx-cog' },
-    { key: 'damage', label: 'Tingkat Kerusakan', icon: 'damage-svg', inverse: true },
-    { key: 'completeness', label: 'Kelengkapan', icon: 'bx-check-circle' },
-    { key: 'reusePotential', label: 'Potensi Pakai Ulang', icon: 'reuse-svg' },
-    { key: 'resalePotential', label: 'Potensi Jual Kembali', icon: 'bx-dollar-circle' },
-    { key: 'recyclingPotential', label: 'Potensi Daur Ulang', icon: 'bx-recycle' }
-  ];
+  {
+    key: 'physicalCondition',
+    label: 'Kondisi Fisik',
+    icon: 'bx-shield'
+  },
+
+  {
+    key: 'usability',
+    label: 'Kegunaan',
+    icon: 'usability-svg'
+  },
+
+  {
+    key: 'damage',
+    label: 'Tingkat Kerusakan',
+    icon: 'damage-svg',
+    inverse: true
+  },
+
+  {
+    key: 'completeness',
+    label: 'Kelengkapan',
+    icon: 'bx-check-circle'
+  },
+
+  {
+    key: 'reusePotential',
+    label: 'Potensi Pakai Ulang',
+    icon: 'reuse-svg'
+  },
+
+  {
+    key: 'resalePotential',
+    label: 'Potensi Jual Kembali',
+    icon: 'bx-dollar-circle'
+  },
+
+  {
+    key: 'recyclingPotential',
+    label: 'Potensi Daur Ulang',
+    icon: 'bx-recycle'
+  }
+];
 
   const ROUTE_ICONS = { jual: 'bx-store', daurUlang: 'bx-recycle', buang: 'bx-trash' };
   const ROUTE_ACTION_MAP = { jual: 'sold', daurUlang: 'recycled', buang: null };
 
+  // ---------- ITEM DATA: 3 pilihan tetap (jual / daurUlang / buang) ----------
   const ITEMS = {
     shoes: {
       name: 'Sepatu Lari',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
       category: 'Alas kaki · Olahraga',
       icon: 'bxs-run',
       confidence: 96,
@@ -752,7 +1222,7 @@
     },
     keyboard: {
       name: 'Keyboard Rusak',
-      image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
       category: 'Elektronik · Aksesori komputer',
       icon: 'bx-keyboard',
       confidence: 91,
@@ -764,7 +1234,7 @@
         jual: {
           label: 'Jual di Marketplace', secondary: ['Marketplace'],
           message: 'Barang rusak ini tidak memenuhi kriteria kualitas pasar barang bekas dan berisiko mengecewakan pembeli.',
-          warningText: 'Keyboard ini memiliki tingkat kerusakan tinggi (78/100) dan sejumlah tombol tidak berfungsi. Menjualnya berisiko mengecewakan pembeli. Apakah kamu yakin ingin tetap mencoba menjualnya?',
+          warningText: 'Keyboard ini memiliki tingkat kerusakan tinggi (78/100) dan sejumlah tombol tidak berfungsi. Menjualnya berisiko mengecewakan pembeli dan tidak sesuai standar pasar barang bekas. Apakah kamu yakin ingin tetap mencoba menjualnya?',
           value: { amount: 'Rp0 – Rp5.000 (jika laku)', note: 'Nilai sangat rendah dan sulit terjual karena kondisi rusak berat.' },
           impact: { waste: '0,35 kg', co2: '0,1 kg', water: '20 L' },
           status: 'danger', statusLabel: 'Tidak Disarankan'
@@ -788,7 +1258,7 @@
     },
     bottle: {
       name: 'Botol Plastik Bekas',
-      image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
       category: 'Kemasan · Minuman',
       icon: 'bx-drink',
       confidence: 88,
@@ -824,7 +1294,7 @@
     },
     phone: {
       name: 'Ponsel Rusak Ringan',
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
       category: 'Elektronik · Gawai',
       icon: 'bx-mobile-alt',
       confidence: 93,
@@ -864,6 +1334,7 @@
     return ITEM_KEYS[Math.floor(Math.random() * ITEM_KEYS.length)];
   }
 
+  // ---------- generator hasil pencarian dinamis (untuk kata kunci di luar contoh) ----------
   function hashString(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -969,37 +1440,88 @@
     };
   }
 
-  // ---------- Memperbaiki Render Ikon Pada Penilaian Kondisi Halaman 4 ----------
+  // ---------- build metric rows (ikon dibungkus badge konsisten) ----------
   const metricsGrid = document.getElementById('metricsGrid');
-  METRICS.forEach(m => {
-    const row = document.createElement('div');
-    row.className = `metric-row mb-4 min-w-0 w-full`;
-    row.innerHTML = `
-      <div class="flex items-center justify-between gap-3 mb-2 min-w-0">
-        <div class="metric-label flex items-center gap-2 min-w-0 flex-1">
-          <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-            ${getMetricIcon(m.icon)}
-          </span>
-          <span class="metric-label-text font-ui text-sm sm:text-base text-white/70 truncate">
-            ${m.label}
-          </span>
-        </div>
-        <span class="metric-value font-ui font-semibold text-white shrink-0" data-key="${m.key}">–</span>
-      </div>
-      <div class="h-2 w-full rounded-full bg-white/15 overflow-hidden">
-        <div class="metric-bar h-full rounded-full" data-key="${m.key}" style="width:0%"></div>
-      </div>
-      ${m.inverse ? `<p class="font-body text-[10px] sm:text-[11px] text-white/50 mt-1">Semakin rendah semakin baik</p>` : ''}
-    `;
-    metricsGrid.appendChild(row);
-  });
+METRICS.forEach(m => {
 
+  const row = document.createElement('div');
+
+  row.className = `
+    metric-row
+    mb-4
+    min-w-0
+    w-full
+  `;
+
+  row.innerHTML = `
+    
+    <!-- LABEL -->
+    <div class="flex items-center justify-between gap-3 mb-2 min-w-0">
+
+      <div class="metric-label flex items-center gap-2 min-w-0 flex-1">
+
+        <!-- ICON -->
+        <span
+          class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0"
+        >
+          ${getMetricIcon(m.icon)}
+        </span>
+
+        <!-- LABEL TEXT -->
+        <span
+          class="metric-label-text font-ui text-sm sm:text-base text-white/70 truncate"
+        >
+          ${m.label}
+        </span>
+
+      </div>
+
+      <!-- VALUE -->
+      <span
+        class="metric-value font-ui font-semibold text-white shrink-0"
+        data-key="${m.key}"
+      >
+        –
+      </span>
+
+    </div>
+
+
+    <!-- PROGRESS BAR -->
+    <div
+      class="h-2 w-full rounded-full bg-white/15 overflow-hidden"
+    >
+      <div
+        class="metric-bar h-full rounded-full"
+        data-key="${m.key}"
+        style="width:0%"
+      ></div>
+    </div>
+
+
+    ${
+      m.inverse
+        ? `
+          <p class="font-body text-[10px] sm:text-[11px] text-white/50 mt-1">
+            Semakin rendah semakin baik
+          </p>
+        `
+        : ''
+    }
+
+  `;
+
+  metricsGrid.appendChild(row);
+
+});
+  // ---------- state ----------
   const circumference = 2 * Math.PI * 24;
   let uploadedImage = null;
   let currentItemData = null;
   let currentItemKey = null;
   let activeRouteKey = null;
 
+  // ---------- render utama ----------
   function render(data, key) {
     currentItemData = data;
     currentItemKey = key;
@@ -1012,22 +1534,34 @@
     // identification
     document.getElementById('itemName').textContent = data.name;
     document.getElementById('itemCategory').textContent = data.category;
-    const itemImage = document.getElementById('itemImage');
-    const photoTagText = document.getElementById('itemPhotoTagText');
+    const thumb = document.getElementById('itemThumb');
+const itemImage = document.getElementById('itemImage');
+const photoTagText = document.getElementById('itemPhotoTagText');
 
-    if (uploadedImage) {
-      itemImage.src = uploadedImage;
-      itemImage.alt = `Foto ${data.name}`;
-      photoTagText.textContent = 'Diidentifikasi dari foto yang diambil/diunggah';
-    } else if (data.image) {
-      itemImage.src = data.image;
-      itemImage.alt = `Foto ${data.name}`;
-      photoTagText.textContent = 'Foto contoh barang untuk identifikasi';
-    } else {
-      itemImage.removeAttribute('src');
-      itemImage.alt = 'Foto barang';
-      photoTagText.textContent = 'Foto barang tidak tersedia';
-    }
+if (uploadedImage) {
+
+  itemImage.src = uploadedImage;
+  itemImage.alt = `Foto ${data.name}`;
+
+  photoTagText.textContent =
+    'Diidentifikasi dari foto yang diambil/diunggah';
+
+} else if (data.image) {
+
+  itemImage.src = data.image;
+  itemImage.alt = `Foto ${data.name}`;
+
+  photoTagText.textContent =
+    'Foto contoh barang untuk identifikasi';
+
+} else {
+
+  itemImage.removeAttribute('src');
+  itemImage.alt = 'Foto barang';
+
+  photoTagText.textContent =
+    'Foto barang tidak tersedia';
+}
 
     const offset = circumference * (1 - data.confidence / 100);
     const ring = document.getElementById('confidenceRing');
@@ -1078,9 +1612,11 @@
       bar.style.backgroundColor = isResale ? '#facc15' : '#ffffff';
     });
 
+    // rekomendasi rute
     renderRecommendation(data);
   }
 
+  // ---------- value & impact helper (tampilan menarik + label kontekstual utk barang tanpa nilai jual) ----------
   function applyValueImpact(valueObj, impactObj) {
     const caption = document.getElementById('valueCaption');
     const wrap = document.getElementById('valueAmountWrap');
@@ -1118,6 +1654,7 @@
     });
   }
 
+  // ---------- toggle rute alternatif ----------
   function resetAltToggle() {
     const altList = document.getElementById('altList');
     const icon = document.getElementById('toggleAltIcon');
@@ -1143,6 +1680,7 @@
     }
   });
 
+  // ---------- render rekomendasi (3 pilihan: jual / daurUlang / buang) ----------
   function renderRecommendation(data) {
     activeRouteKey = null;
     const mainKey = data.routes.mainKey;
@@ -1236,10 +1774,10 @@
 
     applyValueImpact(route.value, route.impact);
 
+    const lanjutkanBtn = document.getElementById('recLanjutkanBtn');
     // Kirim item ID asli/custom & action agar Halaman 5 dinamis
     const isCustom = data.generic ? 'true' : 'false';
     const finalItemKey = isCustom === 'true' ? data.name : currentItemKey;
-    const lanjutkanBtn = document.getElementById('recLanjutkanBtn');
     lanjutkanBtn.href = `decision-detail.html?item=${encodeURIComponent(finalItemKey || '')}&action=${routeKey}&custom=${isCustom}`;
 
     countAction(ROUTE_ACTION_MAP[routeKey]);
@@ -1251,6 +1789,7 @@
     applyActiveRoute(currentItemData, currentItemData.routes[mainKey], 'main', mainKey);
   });
 
+  // ---------- ECO-WARNING MODAL ----------
   const ecoWarningModal = document.getElementById('ecoWarningModal');
   const ecoModalText = document.getElementById('ecoModalText');
   let pendingAlt = null;
@@ -1277,6 +1816,7 @@
     closeEcoWarning();
   });
 
+  // ---------- loading / analysis flow ----------
   const loadingState = document.getElementById('loadingState');
   const resultsContent = document.getElementById('resultsContent');
   let isAnalyzing = false;
@@ -1300,6 +1840,7 @@
     resultsContent.classList.remove('hidden');
   }
 
+  // source: string key (ITEMS) | object data | undefined (random)
   function startAnalysis(source) {
     if (isAnalyzing) return;
     isAnalyzing = true;
@@ -1326,6 +1867,7 @@
     }, delay);
   }
 
+  // ---------- tabs ----------
   const tabs = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.method-panel');
   tabs.forEach(tab => {
@@ -1339,6 +1881,7 @@
     });
   });
 
+  // ---------- demo chips ----------
   document.querySelectorAll('[data-demo]').forEach(btn => {
     btn.addEventListener('click', () => {
       if (isAnalyzing) return;
@@ -1347,6 +1890,7 @@
     });
   });
 
+  // ---------- search (selalu menghasilkan sesuai input) ----------
   function runSearch() {
     if (isAnalyzing) return;
     const raw = document.getElementById('searchInput').value.trim();
@@ -1379,6 +1923,7 @@
     document.getElementById('searchHint').textContent = '';
   });
 
+  // ---------- upload ----------
   document.getElementById('fileInput').addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file || isAnalyzing) return;
@@ -1390,6 +1935,7 @@
     reader.readAsDataURL(file);
   });
 
+  // ---------- camera ----------
   let mediaStream = null;
   let facingMode = 'environment';
 
@@ -1452,19 +1998,79 @@
   window.addEventListener('beforeunload', stopCamera);
   document.addEventListener('visibilitychange', () => { if (document.hidden) stopCamera(); });
 
+  // ================= NAVBAR, PROFIL, MENU (disamakan dengan halaman2) =================
+  const navbar = document.getElementById('navbar');
+  const hero = document.getElementById('activitySummary');
+
+  function updateNavbar(){
+    var limit = hero ? Math.min(hero.offsetHeight - 100, window.innerHeight - 100) : 60;
+    navbar.classList.toggle('scrolled', window.scrollY > Math.max(limit, 40));
+  }
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  window.addEventListener('resize', updateNavbar);
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+      if (isHidden) navbar.classList.add('scrolled'); else updateNavbar();
+      const icon = burgerBtn.querySelector('i');
+      if (icon) icon.className = isHidden ? 'bx bx-x text-2xl' : 'bx bx-menu text-2xl';
+    });
+  }
+
   const profileBtn = document.getElementById('profileBtn');
   const profileMenu = document.getElementById('profileMenu');
-  profileBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    profileMenu.classList.toggle('hidden');
-  });
-  document.addEventListener('click', e => {
-    if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
-      profileMenu.classList.add('hidden');
-    }
-  });
+  const overlayBg = document.getElementById('overlayBg');
 
+  function openProfile(){
+    profileMenu.classList.remove('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.add('opacity-100','scale-100');
+    overlayBg.classList.remove('hidden');
+  }
+  function closeProfile(){
+    profileMenu.classList.add('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.remove('opacity-100','scale-100');
+    overlayBg.classList.add('hidden');
+  }
+  if(profileBtn && profileMenu){
+    profileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileMenu.classList.contains('opacity-100') ? closeProfile() : openProfile();
+    });
+  }
+  if(overlayBg) overlayBg.addEventListener('click', closeProfile);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProfile(); });
+
+  function showToast(msg, icon){
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-6 left-6 right-6 sm:right-auto z-[9999] bg-deep text-mist pl-4 pr-5 py-4 rounded-xl shadow-soft flex items-center gap-3 font-dmsans text-sm animate-fade-in sm:max-w-xs';
+    toast.innerHTML = "<i class='bx " + (icon || 'bx-check-circle') + " text-xl shrink-0'></i><span>" + msg + "</span>";
+    document.body.appendChild(toast);
+    setTimeout(function(){
+      toast.style.transition = 'opacity .5s ease, transform .5s ease';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      setTimeout(function(){ toast.remove(); }, 500);
+    }, 2600);
+  }
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeProfile();
+      showToast('Kamu keluar dari GreenWise (demo).', 'bx-log-out');
+    });
+  }
+
+  // ---------- init ----------
   render(ITEMS.shoes, 'shoes');
 </script>
+
 </body>
 </html>

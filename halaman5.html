@@ -1,1 +1,745 @@
-tes
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Keputusan · GreenWise</title>
+<meta name="description" content="Detail Keputusan GreenWise: tinjau ulang barang dan konfirmasi aksi penyaluran untuk mendapatkan Green Coins.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#012622',
+          deep: '#012622',
+          ever: '#003B36',
+          evergreen: '#003B36',
+          primary: '#003B36',
+          secondary: '#003B36',
+          mid: '#045248',
+          ever2: '#0A4F48',
+          ever3: '#12655C',
+          bright: '#0b6a5c',
+          light: '#12897a',
+          lime: '#ECE5F0',
+          mist: '#ECE5F0',
+          paper: '#ECE5F0',
+          paperalt: '#e0d7e7',
+          mist2: '#DCD2E4',
+          mist3: '#F6F2F8',
+          line: '#d3c7dc',
+          accent: '#facc15',
+          danger: '#c0392b'
+        },
+        fontFamily: {
+          display: ['Lexend', 'sans-serif'],
+          lexend: ['Lexend', 'sans-serif'],
+          body: ['"DM Sans"', 'sans-serif'],
+          dmsans: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif']
+        },
+        boxShadow: {
+          card: '0 4px 20px -6px rgba(1,38,34,0.15)',
+          soft: '0 18px 36px -14px rgba(1,38,34,0.28)'
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #ECE5F0; }
+  h1,h2,h3,h4,h5{font-family:'Lexend', sans-serif;}
+  ::selection { background: #facc15; color: #012622; }
+  .scroll-mt-nav{scroll-margin-top:6rem;}
+
+  /* ===== NAVBAR (sama seperti halaman2) ===== */
+  #navbar{background:transparent; border-bottom:1px solid transparent; backdrop-filter:none;}
+  #navbar.scrolled{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid #DCD2E4;
+    box-shadow:0 6px 24px -14px rgba(1,38,34,.4);
+  }
+  #navbar .nv-text{color:#ECE5F0;}
+  #navbar.scrolled .nv-text{color:#012622;}
+  #navbar .nv-sub{color:rgba(236,229,240,.65);}
+  #navbar.scrolled .nv-sub{color:#0A4F48;}
+  #navbar .nv-pill{background:rgba(236,229,240,.10);}
+  #navbar.scrolled .nv-pill{background:#ECE5F0;}
+  #navbar .nv-pill a{color:rgba(236,229,240,.75);}
+  #navbar.scrolled .nv-pill a{color:#0A4F48;}
+  #navbar .nv-pill a.is-active{background:#003B36; color:#ECE5F0;}
+  #navbar.scrolled .nv-pill a.is-active{background:#FFFFFF; color:#012622;}
+  #navbar .nv-border{border-color:rgba(236,229,240,.28);}
+  #navbar.scrolled .nv-border{border-color:#DCD2E4;}
+  #navbar .nv-logo-word{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-word{color:#012622;}
+  #navbar .nv-logo-accent{color:#ECE5F0;}
+  #navbar.scrolled .nv-logo-accent{color:#003B36;}
+
+  @keyframes fadeInUp{from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);}}
+  .animate-fade-in{animation:fadeInUp .4s ease;}
+
+  /* ===== Scrollbar (sama seperti halaman2) ===== */
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:#ECE5F0;}
+  ::-webkit-scrollbar-thumb{background:#003B36; border-radius:4px;}
+
+  /* ===== Hero decor (sama seperti halaman2) ===== */
+  .hero-ring{position:absolute; border-radius:9999px; border:1px solid rgba(236,229,240,.10); pointer-events:none;}
+  .hero-glow{
+    position:absolute; pointer-events:none; border-radius:9999px; filter:blur(80px);
+    background:radial-gradient(circle, rgba(18,101,92,.55), transparent 70%);
+  }
+
+  .leaf-mark {
+    background: linear-gradient(135deg, #12897a 0%, #045248 50%, #012622 100%);
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(.95) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  input:focus, select:focus, textarea:focus, button:focus-visible {
+    outline: 2px solid #045248;
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body class="font-body text-ink antialiased">
+
+<!-- ==================== NAVBAR (disamakan dengan halaman2) ==================== -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
+        <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
+        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
+      </svg>
+      <span class="font-lexend font-bold text-xl tracking-tight nv-logo-word">Green<span class="nv-logo-accent">Wise</span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-1 nv-pill rounded-full px-2 py-1.5 transition-colors duration-300">
+      <a href="index.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Beranda</a>
+      <a href="halaman2.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Green Hub</a>
+      <a href="halaman7.html" class="px-5 py-2 rounded-full text-sm font-medium transition-colors">Marketplace</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <button id="profileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border nv-border transition-colors duration-300">
+          <span class="w-9 h-9 rounded-full bg-ever flex items-center justify-center text-mist font-lexend font-bold text-sm">DA</span>
+          <span class="hidden sm:flex flex-col items-start leading-tight">
+            <span class="text-sm font-semibold nv-text">Dwi Anugrah</span>
+            <span class="text-[11px] nv-sub flex items-center gap-1"><i class='bx bxs-star text-[10px]'></i> 1.240 poin</span>
+          </span>
+          <i class='bx bx-chevron-down text-lg nv-sub'></i>
+        </button>
+
+        <div id="profileMenu" class="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-soft border border-mist2 p-2 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50">
+          <div class="px-3 py-3 border-b border-mist2 mb-1">
+            <p class="font-lexend font-semibold text-deep text-sm">Dwi Anugrah</p>
+            <p class="text-xs text-ever2/70">dwi.anugrah@email.com</p>
+          </div>
+          <a href="halaman4.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-grid-alt text-lg text-ever'></i> Dashboard
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-deep transition">
+            <i class='bx bx-line-chart text-lg text-ever'></i> Dampak saya
+          </a>
+          <div class="h-px bg-mist2 my-1"></div>
+          <a href="#" id="logoutBtn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-mist text-sm font-medium text-ever2 transition">
+            <i class='bx bx-log-out text-lg'></i> Keluar
+          </a>
+        </div>
+      </div>
+
+      <button id="burgerBtn" aria-label="Buka menu" class="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border nv-border nv-text">
+        <i class='bx bx-menu text-2xl'></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="lg:hidden hidden flex-col gap-1 px-5 pb-5 bg-white border-t border-mist2">
+    <a href="index.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm mt-3">Beranda</a>
+    <a href="halaman2.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Green Hub</a>
+    <a href="halaman7.html" class="px-4 py-3 rounded-xl text-ever2 font-medium text-sm">Marketplace</a>
+  </div>
+</header>
+
+<div id="overlayBg" class="fixed inset-0 bg-deep/25 z-40 hidden"></div>
+
+<!-- ============ HERO (pola halaman2/halaman7) ============ -->
+<section id="hero" class="relative overflow-hidden bg-deep">
+  <div class="hero-glow w-[360px] h-[360px] -top-20 -left-20" aria-hidden="true"></div>
+  <div class="hero-glow w-[300px] h-[300px] top-10 -right-16" aria-hidden="true"></div>
+  <div class="hero-ring w-[440px] h-[440px] -top-32 -right-32 hidden sm:block" aria-hidden="true"></div>
+
+  <div class="relative z-10 w-full max-w-2xl mx-auto px-5 lg:px-8 pt-28 pb-12 text-center">
+    <span class="inline-flex items-center gap-2 text-xs font-dmsans font-semibold text-yellow-400/80 uppercase tracking-widest mb-4">
+      <i class='bx bx-leaf'></i> Detail Keputusan
+    </span>
+    <h1 class="font-lexend font-bold text-3xl sm:text-4xl leading-[1.2] text-white mb-4">
+      Konfirmasi Tindakan <span class="text-yellow-400">Anda.</span>
+    </h1>
+    <p class="text-sm sm:text-base text-mist/65 font-dmsans leading-relaxed max-w-lg mx-auto">
+      Tinjau ulang detail barang dan konfirmasi aksi penyaluran untuk mendapatkan Green Coins.
+    </p>
+  </div>
+</section>
+
+<div class="pb-20 lg:pb-10">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8 lg:py-10">
+    
+    <!-- ===================== MAIN GRID ===================== -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- KOLOM KIRI (Review Data Barang) - span 5 -->
+      <div class="lg:col-span-5 space-y-4">
+        
+        <!-- CARD RINGKASAN BARANG -->
+        <div class="rounded-2xl bg-white border border-line p-5">
+          <h2 class="font-display font-medium text-base text-ink/50 mb-4">Ringkasan Barang</h2>
+          
+          <div class="flex items-start gap-4 mb-4">
+            <div id="summaryThumb" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-primary flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-line">
+              <img id="summaryImg" src="" alt="Thumbnail barang" class="w-full h-full object-cover">
+            </div>
+            <div class="min-w-0 flex-1">
+              <h3 id="summaryName" class="font-display font-semibold text-lg text-ink truncate">-</h3>
+              <p id="summaryCategory" class="font-body text-sm text-ink/50 mt-0.5">-</p>
+              <div class="inline-flex items-center gap-1 mt-2 font-ui text-[11px] px-2 py-0.5 rounded-full bg-primary/5 border border-line text-ink/70">
+                <i class="bx bx-check-double text-accent"></i> Keandalan AI: <span id="summaryConfidence" class="font-semibold">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Impact Badge -->
+          <div class="border-t border-line mt-4 pt-4">
+            <p class="font-ui text-xs text-ink/40 mb-3">Kontribusi Dampak Lingkungan Anda</p>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-paperalt/50 rounded-xl p-2.5">
+                <p id="impactWaste" class="font-display font-semibold text-sm text-primary">-</p>
+                <p class="font-body text-[10px] text-ink/50 mt-0.5">Limbah Dicegah</p>
+              </div>
+              <div class="bg-paperalt/50 rounded-xl p-2.5">
+                <p id="impactCo2" class="font-display font-semibold text-sm text-primary">-</p>
+                <p class="font-body text-[10px] text-ink/50 mt-0.5">CO₂e Dihindari</p>
+              </div>
+              <div class="bg-paperalt/50 rounded-xl p-2.5">
+                <p id="impactWater" class="font-display font-semibold text-sm text-primary">-</p>
+                <p class="font-body text-[10px] text-ink/50 mt-0.5">Air Terhemat</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REWARD CARD (Green Coins) -->
+        <div class="rounded-2xl bg-primary text-white p-5 relative overflow-hidden">
+          <i class='bx bxs-coin-stack absolute -right-4 -bottom-4 text-7xl text-white/10 pointer-events-none'></i>
+          <p class="font-ui text-xs text-white/60 uppercase tracking-wide">Prakiraan Reward Anda</p>
+          <div class="flex items-baseline gap-2 mt-2">
+            <span id="coinVal" class="font-display font-extrabold text-3xl sm:text-4xl text-accent">+0</span>
+            <span class="font-ui text-sm font-semibold text-accent">Green Coins</span>
+          </div>
+          <p class="font-body text-xs text-white/70 mt-3 leading-relaxed">
+            Koin ini akan segera ditambahkan ke akun Anda setelah proses konfirmasi disetujui. Gunakan koin ini untuk berbelanja di fitur <strong class="text-accent">Green Marketplace</strong> mendatang!
+          </p>
+        </div>
+
+      </div>
+
+      <!-- KOLOM KANAN (Aksi & Formulir Konfirmasi) - span 7 -->
+      <div class="lg:col-span-7">
+        <div class="rounded-2xl bg-white border border-line p-5 sm:p-6 space-y-6">
+          
+          <!-- Rute Terpilih Header -->
+          <div class="flex items-center gap-3 pb-4 border-b border-line">
+            <div id="routeIconBox" class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center shrink-0">
+              <i id="routeIcon" class="bx text-2xl text-accent"></i>
+            </div>
+            <div>
+              <p class="font-ui text-xs text-ink/40">Rute Penyaluran Terpilih</p>
+              <h2 id="routeLabel" class="font-display font-semibold text-xl text-ink">-</h2>
+            </div>
+          </div>
+
+          <!-- DYNAMIC CONTENT: JUAL -->
+          <div id="actionJualContent" class="hidden space-y-4">
+            <p class="font-body text-sm text-ink/60 leading-relaxed">
+              Barang Anda masih dalam kondisi baik dan layak jual. Kami akan langsung mengunggahnya ke <strong class="text-primary">Green Marketplace</strong> agar dapat digunakan ulang oleh pihak lain.
+            </p>
+            
+            <div class="bg-primary/5 rounded-xl border border-line p-4 space-y-3">
+              <div class="flex justify-between items-center text-sm">
+                <span class="font-body text-ink/50">Estimasi Rentang Harga:</span>
+                <span id="jualEstRange" class="font-display font-bold text-primary">-</span>
+              </div>
+              <div>
+                <label for="inputHarga" class="block font-ui text-xs font-semibold text-ink/70 mb-1">Tentukan Harga Jual Anda (Rp)</label>
+                <input id="inputHarga" type="number" placeholder="Contoh: 125000" class="w-full font-body text-sm bg-paperalt rounded-xl px-4 py-3 border border-line focus:bg-white focus:border-primary transition-all">
+                <p class="font-body text-[10px] text-ink/45 mt-1">Kami merekomendasikan harga di dalam rentang estimasi agar barang lebih cepat terjual.</p>
+              </div>
+            </div>
+
+            <!-- Metode Payout -->
+            <div class="space-y-3">
+              <h3 class="font-ui text-xs font-semibold text-ink/70">Metode Payout / Pengembalian Nilai</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="cursor-pointer relative rounded-xl border border-primary bg-primary/5 p-3.5 flex items-start gap-3">
+                  <input type="radio" name="payoutMethod" value="coins" checked class="mt-1 accent-accent">
+                  <div>
+                    <p class="font-ui text-xs font-bold text-ink">Hijau instant (Koin)</p>
+                    <p class="font-body text-[10px] text-ink/50 mt-0.5">Konversi otomatis ke Green Coins secara instan.</p>
+                  </div>
+                </label>
+                <label class="cursor-pointer relative rounded-xl border border-line hover:bg-paperalt/40 p-3.5 flex items-start gap-3 transition-colors">
+                  <input type="radio" name="payoutMethod" value="money" class="mt-1 accent-accent">
+                  <div>
+                    <p class="font-ui text-xs font-bold text-ink">E-Wallet</p>
+                    <p class="font-body text-[10px] text-ink/50 mt-0.5">GOPAY, DANA, OVO, SHOPEE PAY, .</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- DYNAMIC CONTENT: DAUR ULANG -->
+          <div id="actionRecycleContent" class="hidden space-y-4">
+            <p class="font-body text-sm text-ink/60 leading-relaxed">
+              Sistem telah mendeteksi material dominan dari barang Anda dan secara otomatis merekomendasikan fasilitas pengelolaan serta jenis tempat sampah yang sesuai.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="rounded-xl border border-line p-3.5 bg-paperalt/40">
+                <p class="font-ui text-[10px] uppercase tracking-wider text-ink/40">Fasilitas Penerima Terdekat</p>
+                <p id="recFacility" class="font-display font-semibold text-sm text-primary mt-1">-</p>
+                <p class="font-body text-[11px] text-ink/50 mt-0.5"><i class="bx bx-map"></i> Berjarak ±1.4 km dari lokasi Anda</p>
+              </div>
+              <div class="rounded-xl border border-line p-3.5 bg-paperalt/40">
+                <p class="font-ui text-[10px] uppercase tracking-wider text-ink/40">Jenis Kategori Wadah / Bin</p>
+                <p id="recBinType" class="font-display font-semibold text-sm text-primary mt-1">-</p>
+                <p class="font-body text-[11px] text-ink/50 mt-0.5"><i class="bx bx-purchase-tag"></i> Klasifikasi Material Resmi</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-primary/5 p-4 border border-line">
+              <h3 class="font-ui text-xs font-semibold text-ink flex items-center gap-1.5"><i class="bx bx-info-circle text-accent text-sm"></i> Panduan Praktis Daur Ulang</h3>
+              <ul id="recGuideList" class="font-body text-xs text-ink/75 space-y-2 mt-2.5 pl-4 list-disc"></ul>
+            </div>
+          </div>
+
+          <!-- DYNAMIC CONTENT: BUANG -->
+          <div id="actionBuangContent" class="hidden space-y-4">
+            <p class="font-body text-sm text-danger/80 bg-danger/5 rounded-xl border border-danger/20 p-3.5 leading-relaxed">
+              <strong>Peringatan Lingkungan:</strong> Barang ini disalurkan melalui jalur pembuangan akhir. Harap ikuti petunjuk jenis wadah resmi di bawah demi menekan laju emisi berbahaya di TPA.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="rounded-xl border border-line p-3.5 bg-paperalt/40">
+                <p class="font-ui text-[10px] uppercase tracking-wider text-ink/40">Lokasi Penampungan Umum</p>
+                <p id="buangFacility" class="font-display font-semibold text-sm text-primary mt-1">-</p>
+                <p class="font-body text-[11px] text-ink/50 mt-0.5"><i class="bx bx-map"></i> Drop-off Terdekat Komunitas</p>
+              </div>
+              <div class="rounded-xl border border-line p-3.5 bg-paperalt/40">
+                <p class="font-ui text-[10px] uppercase tracking-wider text-ink/40">Jenis Bin Pengurai</p>
+                <p id="buangBinType" class="font-display font-semibold text-sm text-primary mt-1">-</p>
+                <p class="font-body text-[11px] text-ink/50 mt-0.5"><i class="bx bx-trash"></i> Sesuai standar pemilahan</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-paperalt/30 p-4 border border-line">
+              <h3 class="font-ui text-xs font-semibold text-ink flex items-center gap-1.5"><i class="bx bx-help-circle text-accent text-sm"></i> Petunjuk Pembuangan Mandiri</h3>
+              <ul id="buangGuideList" class="font-body text-xs text-ink/70 space-y-2 mt-2.5 pl-4 list-disc"></ul>
+            </div>
+          </div>
+
+          <!-- PERSYARATAN & ACTIONS -->
+          <div class="border-t border-line pt-5 space-y-4">
+            <label class="cursor-pointer flex items-start gap-2.5">
+              <input id="agreeCheck" type="checkbox" class="mt-1 accent-primary">
+              <span class="font-body text-xs text-ink/65 leading-relaxed">
+                Saya menyatakan data kondisi barang yang diajukan sudah sesuai dengan kondisi riil saat ini dan menyetujui semua syarat &amp; ketentuan GreenWise.
+              </span>
+            </label>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <a href="dashboard.html" class="font-ui text-sm font-semibold px-4 py-3 rounded-xl bg-paperalt text-ink hover:bg-line transition-colors text-center">
+                Kembali &amp; Ubah
+              </a>
+              <button id="confirmBtn" type="button" disabled class="font-ui text-sm font-semibold px-4 py-3 rounded-xl bg-primary text-white hover:bg-ink disabled:opacity-40 disabled:cursor-not-allowed transition-all text-center flex items-center justify-center gap-1">
+                Konfirmasi <i class="bx bx-check-shield text-accent text-base"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl" style="animation: modalPop .25s ease">
+    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+      <i class="bx bx-badge-check text-4xl text-accent"></i>
+    </div>
+    <h3 class="font-display font-semibold text-xl text-ink mb-1">Aksi Berhasil Dikonfirmasi!</h3>
+    <p class="font-body text-xs text-ink/40 mb-4">Penyaluran Anda telah tercatat ke dalam sistem GreenWise.</p>
+    
+    <!-- Coin Add Notice -->
+    <div class="rounded-xl bg-primary text-white p-4 mb-5 flex items-center justify-center gap-3">
+      <i class="bx bxs-coin-stack text-3xl text-accent"></i>
+      <div class="text-left">
+        <p class="font-display font-extrabold text-lg text-accent leading-none" id="modalAddedCoins">+0 Coins</p>
+        <p class="font-body text-[10px] text-white/70 mt-0.5">Telah ditambahkan ke saldo Anda</p>
+      </div>
+    </div>
+
+    <a href="dashboard.html" class="block font-ui text-sm font-semibold w-full py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors text-center">
+      Kembali ke Dashboard
+    </a>
+  </div>
+</div>
+
+<script>
+  /* ================= NAVBAR, PROFIL, MENU (sama seperti halaman2) ================= */
+  const navbar = document.getElementById('navbar');
+  const hero = document.getElementById('hero');
+
+  function updateNavbar(){
+    var limit = hero ? Math.min(hero.offsetHeight - 100, window.innerHeight - 100) : 60;
+    navbar.classList.toggle('scrolled', window.scrollY > Math.max(limit, 40));
+  }
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  window.addEventListener('resize', updateNavbar);
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+      if (isHidden) navbar.classList.add('scrolled'); else updateNavbar();
+      const icon = burgerBtn.querySelector('i');
+      if (icon) icon.className = isHidden ? 'bx bx-x text-2xl' : 'bx bx-menu text-2xl';
+    });
+  }
+
+  const profileBtn = document.getElementById('profileBtn');
+  const profileMenu = document.getElementById('profileMenu');
+  const overlayBg = document.getElementById('overlayBg');
+
+  function openProfile(){
+    profileMenu.classList.remove('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.add('opacity-100','scale-100');
+    overlayBg.classList.remove('hidden');
+  }
+  function closeProfile(){
+    profileMenu.classList.add('opacity-0','scale-95','pointer-events-none');
+    profileMenu.classList.remove('opacity-100','scale-100');
+    overlayBg.classList.add('hidden');
+  }
+  if(profileBtn && profileMenu){
+    profileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileMenu.classList.contains('opacity-100') ? closeProfile() : openProfile();
+    });
+  }
+  if(overlayBg) overlayBg.addEventListener('click', closeProfile);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeProfile(); });
+
+  function showToast(msg, icon){
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-6 left-6 right-6 sm:right-auto z-[9999] bg-deep text-mist pl-4 pr-5 py-4 rounded-xl shadow-soft flex items-center gap-3 font-dmsans text-sm animate-fade-in sm:max-w-xs';
+    toast.innerHTML = "<i class='bx " + (icon || 'bx-check-circle') + " text-xl shrink-0'></i><span>" + msg + "</span>";
+    document.body.appendChild(toast);
+    setTimeout(function(){
+      toast.style.transition = 'opacity .5s ease, transform .5s ease';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      setTimeout(function(){ toast.remove(); }, 500);
+    }, 2600);
+  }
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeProfile();
+      showToast('Kamu keluar dari GreenWise (demo).', 'bx-log-out');
+    });
+  }
+
+  // ---------- DATABASE MOCKUP HALAMAN 5 (Sinkron dengan Halaman 4) ----------
+  const ITEMS = {
+    shoes: {
+      name: 'Sepatu Lari',
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+      category: 'Alas kaki · Olahraga',
+      confidence: '96%',
+      waste: '0,6 kg', co2: '1,8 kg', water: '850 L',
+      routes: {
+        jual: {
+          label: 'Jual di Marketplace',
+          coins: 60,
+          range: 'Rp120.000 – Rp165.000'
+        },
+        daurUlang: {
+          label: 'Daur Ulang Alas Kaki',
+          coins: 30,
+          facility: 'Mitra Karet & Tekstil Indonesia',
+          binType: 'Tempat Sampah Anorganik (Karet/Kain)',
+          guides: [
+            'Pastikan sol karet sepatu bersih dari lumpur atau tanah.',
+            'Keluarkan tali sepatu untuk mempermudah pemilahan serat.',
+            'Bawa sepatu ke lokasi pengumpulan terdekat agar dapat dihancurkan menjadi serat anyar.'
+          ]
+        },
+        buang: {
+          label: 'Buang dengan Aman',
+          coins: 10,
+          facility: 'TPA Terpadu Regional',
+          binType: 'Tempat Sampah Residu (Abu-abu)',
+          guides: [
+            'Bungkus sepatu lama dengan kantong ramah lingkungan terlebih dahulu.',
+            'Buang di wadah residu non-organik untuk diangkut ke pembuangan akhir.',
+            'Pahami bahwa membuang langsung barang bernilai tinggi menambah beban gas metana di TPA.'
+          ]
+        }
+      }
+    },
+    keyboard: {
+      name: 'Keyboard Rusak',
+      image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Aksesori komputer',
+      confidence: '91%',
+      waste: '0,35 kg', co2: '0,4 kg', water: '120 L',
+      routes: {
+        jual: {
+          label: 'Jual Rusak (Sparepart)',
+          coins: 50,
+          range: 'Rp0 – Rp5.000'
+        },
+        daurUlang: {
+          label: 'Daur Ulang E-Waste',
+          coins: 40,
+          facility: 'Pusat Pengolahan E-Waste Jabodetabek',
+          binType: 'Kotak Khusus Limbah Elektronik (Merah)',
+          guides: [
+            'Jangan mencoba memecahkan atau membongkar keyboard sendiri agar tidak melukai.',
+            'Pastikan kabel USB keyboard telah tergulung rapi.',
+            'Masukkan ke tempat sampah khusus e-waste berlabel merah agar komponen logam berat tersaring.'
+          ]
+        },
+        buang: {
+          label: 'Buang ke Sampah Umum',
+          coins: 10,
+          facility: 'Penampung Sampah Domestik Komunitas',
+          binType: 'Wadah Residu Keras',
+          guides: [
+            'Disarankan untuk membungkus komponen tajam jika ada tuts tombol yang copot.',
+            'Pahami bahwa sirkuit tembaga keyboard berbahaya bagi kualitas tanah pemukiman.',
+            'Sebaiknya gunakan dropbox daur ulang jika wadah domestik penuh.'
+          ]
+        }
+      }
+    },
+    bottle: {
+      name: 'Botol Plastik Bekas',
+      image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
+      category: 'Kemasan · Minuman',
+      confidence: '88%',
+      waste: '0,05 kg', co2: '0,15 kg', water: '40 L',
+      routes: {
+        jual: {
+          label: 'Jual Botol Grosir',
+          coins: 30,
+          range: 'Rp500 – Rp1.500 / kg'
+        },
+        daurUlang: {
+          label: 'Daur Ulang Plastik PET',
+          coins: 50,
+          facility: 'Bank Sampah Unit Sektor Utama',
+          binType: 'Wadah Plastik PET-1 (Kuning)',
+          guides: [
+            'Kosongkan cairan di dalam botol hingga benar-benar bersih.',
+            'Remas botol plastik guna memadatkan ukuran serta efisiensi logistik wadah.',
+            'Lepas label plastik di bodi botol jika memungkinkan demi optimasi daur ulang.'
+          ]
+        },
+        buang: {
+          label: 'Buang Botol Langsung',
+          coins: 10,
+          facility: 'Drop-off Sampah Anorganik Jalanan',
+          binType: 'Tempat Sampah Kuning Biasa',
+          guides: [
+            'Selalu tutup rapat botol untuk meminimalkan bau sisa minuman.',
+            'Pahami bahwa plastik PET membutuhkan waktu hingga 450 tahun untuk terurai di alam bebas.',
+            'Masukkan ke tempat sampah berlabel anorganik kuning.'
+          ]
+        }
+      }
+    },
+    phone: {
+      name: 'Ponsel Rusak Ringan',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Gawai',
+      confidence: '93%',
+      waste: '0,2 kg', co2: '12 kg', water: '1.200 L',
+      routes: {
+        jual: {
+          label: 'Jual Unit Sparepart',
+          coins: 60,
+          range: 'Rp350.000 – Rp600.000'
+        },
+        daurUlang: {
+          label: 'Daur Ulang Komponen Gawai',
+          coins: 40,
+          facility: 'E-Waste Smart Recycling Hub',
+          binType: 'Drop-off E-Waste Berlabel Khusus',
+          guides: [
+            'Matikan daya ponsel sepenuhnya untuk menghindari risiko panas baterai.',
+            'Lepaskan kartu SIM atau kartu memori pribadi dari dalam slot ponsel.',
+            'Masukkan unit ponsel ke bin merah khusus e-waste agar material litium didaur ulang.'
+          ]
+        },
+        buang: {
+          label: 'Buang Unit Gawai',
+          coins: 10,
+          facility: 'TPA Khusus Limbah Berbahaya B3',
+          binType: 'Wadah Residu B3 Industri',
+          guides: [
+            'Sangat dianjurkan melepas baterai tanam jika dirasa terjadi kembung.',
+            'Ponsel mengandung merkuri dan timbal yang sangat beracun jika bocor ke ekosistem air.',
+            'Bungkus tebal untuk mencegah layar retak melukai petugas kebersihan jalan.'
+          ]
+        }
+      }
+    }
+  };
+
+  // Generator Data Fallback jika user menginput barang custom di pencarian Halaman 4
+  function getCustomFallback(name) {
+    return {
+      name: name,
+      image: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80',
+      category: 'Hasil Analisis · Kustomisasi AI',
+      confidence: '85%',
+      waste: '0,4 kg', co2: '0,9 kg', water: '300 L',
+      routes: {
+        jual: { label: 'Jual Kembali', coins: 55, range: 'Rp25.000 – Rp75.000' },
+        daurUlang: {
+          label: 'Daur Ulang Material', coins: 35,
+          facility: 'Mitra Daur Ulang Mandiri', binType: 'Kategori Sampah Anorganik',
+          guides: ['Bersihkan barang dari kotoran sisa pakai.', 'Gunting bagian yang tidak bisa didaur ulang jika ada.', 'Serahkan ke depo pengumpul.']
+        },
+        buang: {
+          label: 'Buang Sesuai Prosedur', coins: 10,
+          facility: 'Depo Tempat Pembuangan Sementara', binType: 'Bin Residu',
+          guides: ['Usahakan memilah bagian berbahaya terlebih dahulu.', 'Ikat dalam wadah kedap air agar tidak berceceran.', 'Gunakan dropbox pembuangan umum setempat.']
+        }
+      }
+    };
+  }
+
+  // ---------- PARSING PARAMETER URL ----------
+  const params = new URLSearchParams(window.location.search);
+  const itemKey = params.get('item') || 'shoes';
+  const actionKey = params.get('action') || 'jual';
+  const isCustom = params.get('custom') === 'true';
+
+  let itemData = null;
+  if (isCustom) {
+    itemData = getCustomFallback(decodeURIComponent(itemKey));
+  } else {
+    itemData = ITEMS[itemKey] || ITEMS.shoes;
+  }
+  const routeData = itemData.routes[actionKey] || itemData.routes.jual;
+
+  // ---------- RENDER KE HALAMAN 5 ----------
+  document.getElementById('summaryName').textContent = itemData.name;
+  document.getElementById('summaryCategory').textContent = itemData.category;
+  document.getElementById('summaryConfidence').textContent = itemData.confidence;
+  document.getElementById('summaryImg').src = itemData.image;
+
+  document.getElementById('impactWaste').textContent = itemData.waste;
+  document.getElementById('impactCo2').textContent = itemData.co2;
+  document.getElementById('impactWater').textContent = itemData.water;
+
+  // Render Koin Reward
+  document.getElementById('coinVal').textContent = `+${routeData.coins}`;
+  document.getElementById('modalAddedCoins').textContent = `+${routeData.coins} Coins`;
+
+  // Render Rute Terpilih
+  document.getElementById('routeLabel').textContent = routeData.label;
+
+  // Icon Rute
+  const ruteIcons = { jual: 'bx-store', daurUlang: 'bx-recycle', buang: 'bx-trash' };
+  document.getElementById('routeIcon').className = `bx ${ruteIcons[actionKey] || 'bx-cube-alt'} text-2xl text-accent`;
+
+  // Toggle Tampilan Konten Dinamis
+  if (actionKey === 'jual') {
+    document.getElementById('actionJualContent').classList.remove('hidden');
+    document.getElementById('jualEstRange').textContent = routeData.range;
+  } else if (actionKey === 'daurUlang') {
+    document.getElementById('actionRecycleContent').classList.remove('hidden');
+    document.getElementById('recFacility').textContent = routeData.facility;
+    document.getElementById('recBinType').textContent = routeData.binType;
+
+    const listWrap = document.getElementById('recGuideList');
+    listWrap.innerHTML = '';
+    routeData.guides.forEach(g => {
+      const li = document.createElement('li');
+      li.textContent = g;
+      listWrap.appendChild(li);
+    });
+  } else if (actionKey === 'buang') {
+    document.getElementById('actionBuangContent').classList.remove('hidden');
+    document.getElementById('buangFacility').textContent = routeData.facility;
+    document.getElementById('buangBinType').textContent = routeData.binType;
+
+    const listWrap = document.getElementById('buangGuideList');
+    listWrap.innerHTML = '';
+    routeData.guides.forEach(g => {
+      const li = document.createElement('li');
+      li.textContent = g;
+      listWrap.appendChild(li);
+    });
+  }
+
+  // ---------- LOGIKA FORM VALIDASI ----------
+  const agreeCheck = document.getElementById('agreeCheck');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  agreeCheck.addEventListener('change', () => {
+    confirmBtn.disabled = !agreeCheck.checked;
+  });
+
+  // Modal Interaksi
+  const successModal = document.getElementById('successModal');
+  confirmBtn.addEventListener('click', () => {
+    successModal.classList.remove('hidden');
+  });
+</script>
+</body>
+</html>

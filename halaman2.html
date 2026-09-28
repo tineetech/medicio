@@ -135,7 +135,7 @@
   .parallax-bg{
     position:absolute; top:-10%; left:0; width:100%; height:120%;
     background-size:cover; background-position:center;
-    will-change:transform;
+    background-attachment: fixed;
   }
 
   /* ===== Scrollbar ===== */
@@ -219,47 +219,50 @@
 
 <div id="overlayBg" class="fixed inset-0 bg-deep/25 z-40 hidden"></div>
 
-<!-- ============ A. HERO (70vh + search edukasi) ============ -->
-<section id="hero" class="relative min-h-[70vh] flex items-center overflow-hidden bg-deep">
-  <div class="hero-glow w-[420px] h-[420px] -top-24 -left-24" aria-hidden="true"></div>
-  <div class="hero-glow w-[380px] h-[380px] -bottom-32 -right-16" aria-hidden="true"></div>
-  <div class="hero-ring w-[520px] h-[520px] -top-40 -right-40 hidden sm:block" aria-hidden="true"></div>
-  <div class="hero-ring w-[340px] h-[340px] -bottom-44 left-10 hidden sm:block" aria-hidden="true"></div>
+<!-- ============ A. HERO (compact + search di border) ============ -->
+<section id="hero" class="relative overflow-hidden bg-deep">
+  <div class="hero-glow w-[360px] h-[360px] -top-20 -left-20" aria-hidden="true"></div>
+  <div class="hero-glow w-[300px] h-[300px] top-10 -right-16" aria-hidden="true"></div>
+  <div class="hero-ring w-[440px] h-[440px] -top-32 -right-32 hidden sm:block" aria-hidden="true"></div>
 
-  <div class="relative z-10 w-full max-w-3xl mx-auto px-5 lg:px-8 pt-32 pb-20 text-center">
-    <h1 class="font-lexend font-bold text-3xl sm:text-5xl leading-[1.15] text-white mb-5">
-      Belajar kelola sampah &amp; barang bekas dari <span class="text-yellow-400">Green Hub</span>
+  <!-- Teks hero (lebih compact) -->
+  <div class="relative z-10 w-full max-w-2xl mx-auto px-5 lg:px-8 pt-28 pb-12 text-center">
+    <span class="inline-flex items-center gap-2 text-xs font-dmsans font-semibold text-yellow-400/80 uppercase tracking-widest mb-4">
+      <i class='bx bx-leaf'></i> Green Hub Edukasi
+    </span>
+    <h1 class="font-lexend font-bold text-3xl sm:text-4xl leading-[1.2] text-white mb-4">
+      Belajar kelola barang bekas <br class="hidden sm:block">dari <span class="text-yellow-400">Green Hub.</span>
     </h1>
-    <p class="text-base sm:text-lg text-mist/70 font-dmsans leading-relaxed mb-9 max-w-xl mx-auto">
-      Panduan memilah, mendaur ulang, dan memakai GreenWise, ditulis singkat supaya bisa langsung kamu praktikkan.
-    </p>
-
-    <form id="searchForm" role="search" class="search-box flex items-center gap-2 bg-white rounded-full pl-5 pr-2 py-2 shadow-soft max-w-2xl mx-auto">
-      <i class='bx bx-search text-2xl text-ever2/60 shrink-0'></i>
-      <label for="searchInput" class="sr-only">Cari materi edukasi</label>
-      <input id="searchInput" type="search" autocomplete="off" placeholder="Cari materi, mis. cara memilah sampah plastik"
-        class="flex-1 min-w-0 bg-transparent text-deep placeholder:text-ever2/50 font-dmsans text-sm sm:text-base py-2.5">
-      <button type="submit" class="shrink-0 inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-5 sm:px-7 py-3 rounded-full transition-colors duration-300">
-        Cari
-      </button>
-    </form>
-
-    <div class="flex flex-wrap justify-center items-center gap-2 mt-6">
-      <span class="text-mist/50 text-sm font-dmsans mr-1">Populer:</span>
-      <button type="button" data-suggest="plastik" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">plastik</button>
-      <button type="button" data-suggest="elektronik" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">elektronik</button>
-      <button type="button" data-suggest="pakaian" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">pakaian</button>
-      <button type="button" data-suggest="green coins" class="suggest text-xs sm:text-sm font-dmsans text-mist/80 border border-mist/25 hover:border-mist hover:text-white rounded-full px-4 py-1.5 transition-colors">green coins</button>
-    </div>
+    <!-- <p class="text-sm sm:text-base text-mist/65 font-dmsans leading-relaxed max-w-lg mx-auto">
+      Panduan memilah, mendaur ulang, dan memakai GreenWise — singkat dan langsung bisa dipraktikkan.
+    </p> -->
   </div>
-
-  <a href="#materi" aria-label="Ke daftar materi" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-mist/40 animate-bounce-slow">
-    <i class='bx bx-chevron-down text-2xl'></i>
-  </a>
 </section>
 
+<!-- Search box mengambang di tengah border hijau–putih -->
+<div class="relative z-20 -mt-7 px-5 lg:px-8 max-w-5xl mx-auto">
+  <form id="searchForm" role="search" class="search-box flex items-center gap-2 bg-white rounded-full pl-5 pr-2 py-2 shadow-soft">
+    <i class='bx bx-search text-2xl text-ever2/60 shrink-0'></i>
+    <label for="searchInput" class="sr-only">Cari materi edukasi</label>
+    <input id="searchInput" type="search" autocomplete="off" placeholder="Cari materi, mis. cara memilah sampah plastik"
+      class="flex-1 min-w-0 bg-transparent text-deep placeholder:text-ever2/50 font-dmsans text-sm sm:text-base py-2.5">
+    <button type="submit" class="shrink-0 inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-5 sm:px-7 py-3 rounded-full transition-colors duration-300">
+      Cari
+    </button>
+  </form>
+
+  <!-- Suggest chips -->
+  <div class="flex flex-wrap justify-center items-center gap-2 mt-4">
+    <!-- <span class="text-ever2/50 text-xs font-dmsans mr-1">Populer:</span> -->
+    <button type="button" data-suggest="plastik" class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white">plastik</button>
+    <button type="button" data-suggest="elektronik" class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white">elektronik</button>
+    <button type="button" data-suggest="pakaian" class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white">pakaian</button>
+    <button type="button" data-suggest="green coins" class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white">green coins</button>
+  </div>
+</div>
+
 <!-- ============ B. DAFTAR MATERI ============ -->
-<section id="materi" class="py-20 sm:py-24 bg-white scroll-mt-nav">
+<section id="materi" class="pt-16 pb-20 sm:pb-24 bg-white scroll-mt-nav">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
 
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal">
@@ -387,34 +390,13 @@
   </div>
 </section>
 
-<!-- ============ E. USULKAN TOPIK / NEWSLETTER ============ -->
-<section id="langganan" class="py-20 sm:py-24 bg-ever scroll-mt-nav">
-  <div class="max-w-5xl mx-auto px-5 lg:px-8">
-    <div class="reveal grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
-      <div>
-        <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-white">Dapat materi baru tiap minggu</h2>
-        <p class="text-mist/70 font-dmsans mt-4 leading-relaxed max-w-md">Satu artikel pilihan dan satu tantangan kecil dikirim ke emailmu. Berhenti kapan saja.</p>
-      </div>
-      <form id="newsForm" class="flex flex-col gap-3">
-        <label for="newsEmail" class="sr-only">Alamat email</label>
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input id="newsEmail" type="email" required placeholder="nama@email.com"
-            class="flex-1 min-w-0 rounded-full px-6 py-3.5 bg-white/10 border border-mist/25 text-white placeholder:text-mist/45 font-dmsans text-sm focus:border-mist focus:outline-none">
-          <button type="submit" class="inline-flex justify-center items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300">Berlangganan</button>
-        </div>
-        <p class="text-xs text-mist/50 font-dmsans">Kami hanya mengirim materi Green Hub, tanpa iklan.</p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CTA — background image + parallax ============ -->
-<section class="parallax-wrap py-28 sm:py-36">
+<!-- ============ CTA — background image + parallax (sama seperti halaman1) ============ -->
+<section class="parallax-wrap py-32 sm:py-40">
   <div class="parallax-bg" data-speed="0.35" style="background-image:url('https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1600&q=80');"></div>
   <div class="absolute inset-0 bg-deep" style="opacity:.78;"></div>
   <div class="relative z-10 max-w-3xl mx-auto px-5 lg:px-8 text-center">
-    <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-white mb-4">Sudah paham? Saatnya praktik dengan barangmu.</h3>
-    <p class="text-mist/75 font-dmsans mb-8 max-w-xl mx-auto">Cukup satu foto, GreenWise bantu kamu memilih langkah paling bijak untuk barangmu dan bumi.</p>
+    <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-white mb-4">Siap ubah barang bekasmu jadi cerita baru?</h3>
+    <p class="text-mist/75 font-dmsans mb-8 max-w-xl mx-auto">Cukup satu foto, GreenWise bantu kamu ambil keputusan paling bijak untuk barangmu dan bumi.</p>
     <a href="index.html#tindakan" class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold px-8 py-4 rounded-full transition-colors duration-300">
       <i class='bx bx-scan text-lg'></i> Mulai sekarang, gratis
     </a>
@@ -646,7 +628,7 @@
 
   function cardHTML(a){
     return "" +
-    "<a href='#' data-title='" + esc(a.t) + "' class='art-card animate-fade-in group flex flex-col bg-white rounded-2xl border border-mist2 overflow-hidden shadow-card'>" +
+    "<a href='halaman3.html?id=" + ARTICLES.indexOf(a) + "' class='art-card animate-fade-in group flex flex-col bg-white rounded-2xl border border-mist2 overflow-hidden shadow-card'>" +
       "<div class='relative h-48 overflow-hidden art-thumb'>" +
         "<img class='art-img w-full h-full object-cover' src='" + a.i + "' alt='' loading='lazy' onerror=\"this.style.display='none'\">" +
         "<div class='absolute inset-0 bg-deep/20'></div>" +
@@ -758,13 +740,6 @@
     render();
   });
 
-  grid.addEventListener('click', (e) => {
-    const card = e.target.closest('a[data-title]');
-    if(!card) return;
-    e.preventDefault();
-    showToast('Membuka materi: ' + card.dataset.title + ' (demo).', 'bx-book-open');
-  });
-
   /* FAQ */
   document.querySelectorAll('.faq-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -772,13 +747,6 @@
       const open = item.classList.toggle('open');
       btn.setAttribute('aria-expanded', open);
     });
-  });
-
-  /* Newsletter */
-  document.getElementById('newsForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    e.target.reset();
-    showToast('Terima kasih! Kamu terdaftar (demo).', 'bx-check-circle');
   });
 
   /* Reveal on scroll */
@@ -802,21 +770,6 @@
   }, {passive:true});
   backToTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
 
-  /* Parallax CTA */
-  const parallaxBgs = document.querySelectorAll('.parallax-bg');
-  function updateParallaxBg(){
-    parallaxBgs.forEach(function(el){
-      const wrap = el.closest('.parallax-wrap');
-      const rect = wrap.getBoundingClientRect();
-      if(rect.bottom > 0 && rect.top < window.innerHeight){
-        const speed = parseFloat(el.dataset.speed) || 0.3;
-        el.style.transform = 'translateY(' + (rect.top * speed) + 'px)';
-      }
-    });
-  }
-  window.addEventListener('scroll', updateParallaxBg, {passive:true});
-  window.addEventListener('resize', updateParallaxBg);
-  updateParallaxBg();
 
   /* Init (dukung ?q=kata dari halaman lain) */
   const params = new URLSearchParams(location.search);

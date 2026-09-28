@@ -7,6 +7,27 @@
 <meta name="description" content="Marketplace GreenWise: beli barang bekas layak pakai dengan kondisi yang sudah dinilai, harga terjangkau, dan dampak lingkungan yang terukur.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
 
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          lexend: ['Lexend', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif'],
+          dmsans: ['"DM Sans"', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
 <style>
 /* =====================================================
    GreenWise — Marketplace (tanpa CDN, tanpa library)
@@ -103,35 +124,44 @@ img,svg{display:block;max-width:100%;}
 .ov{position:fixed;inset:0;background:rgba(1,38,34,.25);z-index:40;display:none;}
 .ov.show{display:block;}
 
-/* ===== HERO 70vh ===== */
-.hero{position:relative;min-height:70vh;display:flex;align-items:center;overflow:hidden;background:var(--deep);}
+/* ===== HERO compact (pola halaman2) ===== */
+.hero{position:relative;overflow:hidden;background:var(--deep);}
 .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;background:radial-gradient(circle,rgba(18,101,92,.55),transparent 70%);}
-.hero::before{width:26rem;height:26rem;top:-6rem;left:-6rem;}
-.hero::after{width:24rem;height:24rem;bottom:-8rem;right:-4rem;}
+.hero::before{width:22rem;height:22rem;top:-5rem;left:-5rem;}
+.hero::after{width:19rem;height:19rem;top:2rem;right:-4rem;}
+
 .ring{position:absolute;border-radius:50%;border:1px solid rgba(236,229,240,.10);pointer-events:none;display:none;}
 @media(min-width:640px){.ring{display:block;}}
 .ring.r1{width:32rem;height:32rem;top:-10rem;right:-10rem;}
 .ring.r2{width:21rem;height:21rem;bottom:-11rem;left:2.5rem;}
-.hero-in{position:relative;z-index:2;width:100%;max-width:48rem;margin:0 auto;padding:8rem 1.25rem 5rem;text-align:center;}
-.hero h1{font-weight:700;font-size:1.9rem;line-height:1.15;color:#fff;margin-bottom:1.25rem;}
+
+/* hero-in compact */
+.hero-in{position:relative;z-index:2;width:100%;max-width:44rem;margin:0 auto;padding:7rem 1.25rem 3rem;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,204,21,.8);margin-bottom:1rem;}
+.hero h1{font-weight:700;font-size:1.75rem;line-height:1.2;color:#fff;margin-bottom:.85rem;}
 .hero h1 em{font-style:normal;color:var(--gold);}
-@media(min-width:640px){.hero h1{font-size:3rem;}}
-.hero p.lead{font-size:1rem;line-height:1.7;color:rgba(236,229,240,.7);max-width:36rem;margin:0 auto 2.25rem;}
-@media(min-width:640px){.hero p.lead{font-size:1.125rem;}}
-.search{display:flex;align-items:center;gap:.5rem;background:#fff;border-radius:999px;padding:.5rem .5rem .5rem 1.25rem;box-shadow:var(--sh-soft);max-width:42rem;margin:0 auto;transition:box-shadow .3s;}
+@media(min-width:640px){.hero h1{font-size:2.5rem;}}
+.hero p.lead{font-size:.9375rem;line-height:1.7;color:rgba(236,229,240,.65);max-width:34rem;margin:0 auto;}
+@media(min-width:640px){.hero p.lead{font-size:1rem;}}
+
+/* Search bar mengambang di border hijau–putih */
+.search-float{position:relative;z-index:20;margin-top:-1.75rem;max-width:64rem;margin-left:auto;margin-right:auto;padding:0 1.25rem;}
+.search{display:flex;align-items:center;gap:.5rem;background:#fff;border-radius:999px;padding:.5rem .5rem .5rem 1.25rem;box-shadow:var(--sh-soft);transition:box-shadow .3s;}
 .search:focus-within{box-shadow:0 0 0 4px rgba(236,229,240,.25),var(--sh-soft);}
-.search>.i{font-size:1.5rem;color:rgba(10,79,72,.6);}
+.search>.i{font-size:1.2rem;color:rgba(10,79,72,.6);}
 .search input{flex:1;min-width:0;border:0;background:transparent;padding:.65rem 0;font-size:.9375rem;color:var(--deep);}
 .search input::placeholder{color:rgba(10,79,72,.5);}
 .search input:focus-visible{outline:none;}
 .search input::-webkit-search-cancel-button{display:none;}
-.suggest-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem;margin-top:1.5rem;}
-.suggest-row>span{font-size:.875rem;color:rgba(236,229,240,.5);margin-right:.25rem;}
-.suggest{font-size:.8125rem;color:rgba(236,229,240,.8);border:1px solid rgba(236,229,240,.25);border-radius:999px;padding:.375rem 1rem;transition:all .3s;}
-.suggest:hover{border-color:var(--mist);color:#fff;}
-.hero-down{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:2;color:rgba(236,229,240,.4);animation:bounceSlow 2s infinite;}
-.hero-down .i{font-size:1.5rem;}
+
+/* Suggest chips — putih (di bawah search bar) */
+.suggest-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem;}
+.suggest-row>span{font-size:.75rem;color:rgba(10,79,72,.5);margin-right:.25rem;}
+.suggest{font-size:.75rem;background:#fff;color:rgba(10,79,72,.7);border:1px solid var(--mist2);border-radius:999px;padding:.375rem 1rem;transition:all .3s;}
+.suggest:hover{border-color:var(--ever2);background:var(--mist);}
+
 @keyframes bounceSlow{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
+
 
 /* ===== Section umum ===== */
 .section{padding:5rem 0;}
@@ -457,7 +487,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
         </button>
         <div id="profileMenu" class="pmenu" role="menu">
           <div class="pmenu-head"><b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span></div>
-          <a href="#" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg> Dashboard</a>
+          <a href="halaman4 .html" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg> Dashboard</a>
           <a href="#" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg> Dampak saya</a>
           <hr>
           <a href="#" id="logoutBtn" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-logout"/></svg> Keluar</a>
@@ -478,34 +508,37 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 </header>
 <div id="overlayBg" class="ov"></div>
 
-<!-- ============ A. HERO (70vh + search) ============ -->
+<!-- ============ A. HERO compact ============ -->
 <section id="hero" class="hero">
-  <span class="ring r1" aria-hidden="true"></span>
-  <span class="ring r2" aria-hidden="true"></span>
   <div class="hero-in">
-    <h1>Temukan barang bekas layak pakai di <em>Marketplace</em> GreenWise</h1>
-    <p class="lead">Setiap barang sudah dinilai kondisinya. Belanja lebih hemat, sekaligus mengurangi sampah yang berakhir di TPA.</p>
-
-    <form id="searchForm" role="search" class="search">
-      <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
-      <label for="searchInput" class="sr-only">Cari barang</label>
-      <input id="searchInput" type="search" autocomplete="off" placeholder="Cari barang, mis. laptop, jaket, sepeda">
-      <button type="submit" class="btn btn-ever">Cari</button>
-    </form>
-
-    <div class="suggest-row">
-      <span>Populer:</span>
-      <button type="button" class="suggest" data-suggest="laptop">laptop</button>
-      <button type="button" class="suggest" data-suggest="jaket">jaket</button>
-      <button type="button" class="suggest" data-suggest="sepeda">sepeda</button>
-      <button type="button" class="suggest" data-suggest="meja">meja</button>
-    </div>
+    <span class="inline-flex items-center gap-2 text-xs font-dmsans font-semibold text-yellow-400/80 uppercase tracking-widest mb-4">
+      <i class='bx bx-leaf'></i> Marketplace GreenWise
+    </span>
+    <h1 class="!text-4xl !sm:text-4xl !leading-[1.2]">Temukan barang <br class="hidden sm:block">kreatif di <em>Marketplace</em><span style="color:var(--gold)">.</span></h1>
+    <!-- <p class="lead">Setiap barang sudah dinilai kondisinya. Belanja lebih hemat, sekaligus mengurangi sampah yang berakhir di TPA.</p> -->
   </div>
-  <a href="#produk" class="hero-down" aria-label="Ke daftar barang"><svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg></a>
 </section>
 
+<!-- Search bar mengambang di tengah border hijau–putih -->
+<div class="search-float">
+  <form id="searchForm" role="search" class="search">
+    <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+    <label for="searchInput" class="sr-only">Cari barang</label>
+    <input id="searchInput" type="search" autocomplete="off" placeholder="Cari barang, mis. laptop, jaket, sepeda">
+    <button type="submit" class="btn btn-ever">Cari</button>
+  </form>
+
+  <div class="suggest-row">
+    <!-- <span>Populer:</span> -->
+    <button type="button" class="suggest" data-suggest="laptop">laptop</button>
+    <button type="button" class="suggest" data-suggest="jaket">jaket</button>
+    <button type="button" class="suggest" data-suggest="sepeda">sepeda</button>
+    <button type="button" class="suggest" data-suggest="meja">meja</button>
+  </div>
+</div>
+
 <!-- ============ B. DAFTAR BARANG ============ -->
-<section id="produk" class="section scroll-mt">
+<section id="produk" class="section scroll-mt" style="padding-top:4rem;">
   <div class="container">
     <div class="list-top reveal">
       <div class="sec-head" style="max-width:36rem">
@@ -616,7 +649,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 
 <!-- ============ F. CTA JUAL ============ -->
 <section class="cta">
-  <span class="ring r1" aria-hidden="true"></span>
+  <span class="" aria-hidden="true"></span>
   <div class="cta-in">
     <h3>Punya barang yang masih layak pakai?</h3>
     <p>Foto barangmu, GreenWise nilai kondisinya dan sarankan apakah pantas dijual di Marketplace.</p>
