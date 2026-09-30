@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengembangan Barang · GreenWise</title>
+<link rel="icon" type="image/svg+xml" href="assets/img/logo-greenwise.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#012622',
+          deep: '#012622',
+          evergreen: '#003B36',
+          primary: '#003B36',
+          secondary: '#003B36',
+          mid: '#045248',
+          bright: '#0b6a5c',
+          light: '#12897a',
+          lime: '#ECE5F0',
+          paper: '#ECE5F0',
+          paperalt: '#e0d7e7',
+          line: '#d3c7dc',
+          accent: '#facc15',
+          danger: '#c0392b'
+        },
+        fontFamily: {
+          display: ['Lexend', 'sans-serif'],
+          body: ['"DM Sans"', 'sans-serif'],
+          ui: ['Poppins', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Global CSS -->
+<link rel="stylesheet" href="assets/global.css">
+
+<style>
+  /* ===== Khusus halaman5 (aturan global di assets/global.css) ===== */
+  body { background: #ECE5F0; }
+  ::selection { background: #facc15; color: #012622; }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(.95) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp .4s ease; }
+  input:focus, select:focus, textarea:focus, button:focus-visible {
+    outline: 2px solid #045248;
+    outline-offset: 2px;
+  }
+
+  /* Idea card selection */
+  .idea-card {
+    cursor: pointer;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .idea-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(1,38,34,0.08);
+  }
+  .idea-card[data-selected="true"] {
+    border-color: #003B36;
+    background: rgba(0,59,54,0.04);
+  }
+  .idea-check-badge {
+    display: none;
+  }
+  .idea-card[data-selected="true"] .idea-check-badge {
+    display: flex;
+  }
+
+  /* Step item */
+  .step-item {
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  .step-item[data-done="true"] {
+    background: rgba(0,59,54,0.04);
+    border-color: rgba(0,59,54,0.25);
+  }
+  .step-checkbox {
+    transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .step-item[data-done="true"] .step-checkbox {
+    background: #003B36;
+    border-color: #003B36;
+    transform: scale(1.05);
+  }
+  .step-check-icon { display: none; }
+  .step-item[data-done="true"] .step-check-icon { display: inline-block; }
+  .step-item[data-done="true"] .step-title {
+    text-decoration: line-through;
+    color: rgba(1,38,34,0.4);
+  }
+
+  .step-item[data-locked="true"] {
+    cursor: not-allowed;
+    opacity: 0.55;
+    background: rgba(1,38,34,0.02);
+  }
+  .step-item[data-locked="true"] .step-checkbox {
+    background: #e0d7e7;
+    border-color: #d3c7dc;
+  }
+  .step-lock-icon { display: none; }
+  .step-item[data-locked="true"] .step-lock-icon { display: inline-block; }
+  .step-item[data-locked="true"] .step-check-icon { display: none; }
+
+  .progress-bar-fill {
+    transition: width .5s cubic-bezier(.22,.9,.3,1);
+  }
+
+  .difficulty-Mudah { background: #ecfdf5; color: #059669; }
+  .difficulty-Sedang { background: #fffbeb; color: #b45309; }
+  .difficulty-Sulit { background: #fef2f2; color: #dc2626; }
+
+  /* ===== NAVBAR: adaptasi Boxicons (aturan navbar di assets/global.css) ===== */
+  .pmenu a i.bx{color:#003B36;font-size:1.1rem;}
+  .burger .bx{font-size:1.5rem;}
+  .toast{position:fixed;bottom:1rem;left:1rem;right:1rem;z-index:300;background:#012622;color:#ECE5F0;padding:.85rem 1rem;border-radius:.75rem;box-shadow:0 18px 36px -14px rgba(1,38,34,.28);display:flex;align-items:center;gap:.65rem;font-size:.8125rem;animation:fadeUp .4s ease;transition:opacity .5s,transform .5s;}
+  @media(min-width:640px){.toast{bottom:1.5rem;left:1.5rem;right:auto;max-width:24rem;}}
+
+  /* ===== HERO (standar halaman7) ===== */
+  .hero{position:relative;overflow:hidden;background:#012622;}
+  .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;background:radial-gradient(circle,rgba(18,101,92,.55),transparent 70%);}
+  .hero::before{width:22rem;height:22rem;top:-5rem;left:-5rem;}
+  .hero::after{width:19rem;height:19rem;top:2rem;right:-4rem;}
+  .hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(236,229,240,.10);pointer-events:none;display:none;}
+  @media(min-width:640px){.hero-ring{display:block;}}
+  .hero-ring.r1{width:32rem;height:32rem;top:-10rem;right:-10rem;}
+  .hero-ring.r2{width:21rem;height:21rem;bottom:-11rem;left:2.5rem;}
+  .hero-in{position:relative;z-index:2;width:100%;max-width:44rem;margin:0 auto;padding:7rem 1.25rem 3rem;text-align:center;}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(250,204,21,.8);margin-bottom:1rem;}
+  .hero h1{font-weight:700;font-size:1.75rem;line-height:1.2;color:#fff;margin-bottom:.85rem;}
+  .hero h1 em{font-style:normal;color:#FACC15;}
+  @media(min-width:640px){.hero h1{font-size:2.5rem;}}
+  .hero p.lead{font-size:.9375rem;line-height:1.7;color:rgba(236,229,240,.65);max-width:34rem;margin:0 auto;}
+  @media(min-width:640px){.hero p.lead{font-size:1rem;}}
+  .shadow-soft{box-shadow:0 18px 36px -14px rgba(1,38,34,.28);}
+</style>
+</head>
+<body class="font-body text-ink antialiased">
+
+<!-- ===================== NAVBAR (standar halaman7) ===================== -->
+<header id="navbar">
+  <div class="container nav-inner" style="max-width:80rem;margin:0 auto;padding:0 1.25rem;">
+    <a href="beranda.html" class="brand" aria-label="GreenWise, ke beranda">
+      <img src="assets/img/logo-greenwise.svg" width="40" height="40" alt="">
+      <span class="brand-word">GreenWise</span>
+    </a>
+
+    <nav class="nav-pill" aria-label="Navigasi utama">
+      <a href="beranda.html">Beranda</a>
+      <a href="greenhub.html">Green Hub</a>
+      <a href="marketplace.html">Marketplace</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="profile-wrap">
+        <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false">
+          <img class="avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Foto profil Dwi Anugrah">
+          <span class="profile-txt">
+            <b>Dwi Anugrah</b>
+            <span><i class='bx bxs-star' style="font-size:.7rem"></i> 1.240 poin</span>
+          </span>
+          <i class='bx bx-chevron-down' style="opacity:.7"></i>
+        </button>
+        <div id="profileMenu" class="pmenu" role="menu">
+          <div class="pmenu-head"><b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span></div>
+          <a href="dashboard.html" role="menuitem"><i class='bx bx-grid-alt'></i> Dashboard</a>
+          <a href="riwayat.html" role="menuitem"><i class='bx bx-store'></i> Riwayat & Kelola Produk</a>
+          <hr>
+          <a href="#" id="logoutBtn" role="menuitem"><i class='bx bx-log-out'></i> Keluar</a>
+        </div>
+      </div>
+      <button id="burgerBtn" class="burger" aria-label="Buka menu" aria-expanded="false">
+        <i class='bx bx-menu'></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="beranda.html">Beranda</a>
+    <a href="greenhub.html">Green Hub</a>
+    <a href="marketplace.html">Marketplace</a>
+  </div>
+</header>
+<div id="overlayBg" class="ov"></div>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero" class="hero">
+  <div class="hero-in">
+    <span class="hero-eyebrow"><i class='bx bx-bulb'></i> Pengembangan Kreatif · Upcycling</span>
+    <h1 class="pb-10">Kembangkan <em>Barang Ini</em> Jadi Lebih Bernilai</h1>
+  </div>
+</section>
+
+<div class="pb-24 lg:pb-10">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pt-0 sm:pt-0 lg:pt-0">
+
+    <!-- ITEM SUMMARY (centered on green/white boundary) -->
+    <div class="relative z-10 -mt-10 sm:-mt-[60px] max-w-2xl mx-auto rounded-2xl bg-white border border-line shadow-soft p-4 sm:p-5 mb-8 flex items-center gap-4">
+      <div id="summaryThumb" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-line">
+        <img id="summaryImg" src="" alt="Foto barang" class="w-full h-full object-cover">
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 id="summaryName" class="font-display font-semibold text-lg text-ink truncate">-</h3>
+        <p id="summaryCategory" class="font-body text-sm text-ink/50 mt-0.5">-</p>
+        <span id="classificationChip" class="inline-flex items-center gap-1.5 font-ui text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary text-white mt-2">
+          <i class='bx bx-info-circle text-accent'></i> <span id="classificationChipText">-</span>
+        </span>
+      </div>
+    </div>
+
+
+    <!-- ===================== STEP 1: PILIH IDE ===================== -->
+    <section id="ideaSelectSection" class="mb-8">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="w-6 h-6 rounded-full bg-primary text-white font-ui text-xs font-semibold flex items-center justify-center shrink-0">1</span>
+        <h2 class="font-display font-medium text-lg text-ink">Pilih Ide Pengembangan</h2>
+      </div>
+      <p class="font-body text-sm text-ink/50 mb-4 ml-8">Klik salah satu kartu ide di bawah untuk mulai mengerjakan langkah-langkahnya.</p>
+
+      <div id="ideaGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- ===================== STEP 2: LANGKAH PENGERJAAN ===================== -->
+    <section id="stepsSection" class="hidden mb-8 fade-up">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="w-6 h-6 rounded-full bg-primary text-white font-ui text-xs font-semibold flex items-center justify-center shrink-0">2</span>
+        <h2 class="font-display font-medium text-lg text-ink">Ikuti Langkah Pengerjaan</h2>
+      </div>
+      <p class="font-body text-sm text-ink/50 mb-4 ml-8">Centang setiap langkah yang sudah kamu selesaikan.</p>
+
+      <div class="rounded-2xl bg-white border border-line p-5 sm:p-6">
+        <div class="flex items-start justify-between gap-3 mb-4">
+          <div class="flex items-center gap-3 min-w-0">
+            <div id="selectedIdeaIconWrap" class="w-11 h-11 rounded-xl bg-gradient-to-br from-secondary to-ink flex items-center justify-center shrink-0">
+              <i id="selectedIdeaIcon" class='bx text-2xl text-accent'></i>
+            </div>
+            <div class="min-w-0">
+              <p class="font-ui text-[11px] text-ink/40">Ide terpilih</p>
+              <h3 id="selectedIdeaTitle" class="font-display font-semibold text-base sm:text-lg text-ink truncate">-</h3>
+            </div>
+          </div>
+          <button id="changeIdeaBtn" type="button" class="font-ui text-xs font-medium text-primary hover:text-ink shrink-0 flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-paperalt transition-colors">
+            <i class='bx bx-shuffle'></i> <span class="hidden sm:inline">Ganti Ide</span>
+          </button>
+        </div>
+
+        <p id="selectedIdeaDesc" class="font-body text-sm text-ink/60 leading-relaxed mb-5">-</p>
+
+        <!-- Progress -->
+        <div class="mb-5">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-ui text-xs font-medium text-ink/60">Progres Pengerjaan</span>
+            <span id="progressText" class="font-ui text-xs font-semibold text-primary">0/0</span>
+          </div>
+          <div class="h-2 w-full rounded-full bg-paperalt overflow-hidden">
+            <div id="progressBar" class="progress-bar-fill h-full rounded-full bg-primary" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Steps list -->
+        <div id="stepsList" class="space-y-2.5"></div>
+      </div>
+    </section>
+
+    <!-- ===================== STEP 3: KEPUTUSAN AKHIR ===================== -->
+    <section id="finalDecisionSection" class="hidden mb-8 fade-up">
+      <div class="rounded-2xl bg-primary text-white p-6 sm:p-8 text-center relative overflow-hidden">
+        <i class='bx bxs-party absolute -right-6 -top-8 text-[140px] text-white/[0.06] pointer-events-none'></i>
+        <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+          <i class='bx bxs-badge-check text-3xl text-accent'></i>
+        </div>
+        <h2 class="font-display font-semibold text-xl sm:text-2xl mb-1.5">Selamat! Barang Berhasil Dikembangkan.</h2>
+        <p class="font-body text-sm text-white/70 max-w-md mx-auto leading-relaxed mb-2">
+          Kamu telah menyelesaikan semua langkah upcycling. Sekarang barang ini punya nilai & fungsi baru. Apa yang ingin kamu lakukan selanjutnya?
+        </p>
+        <div class="inline-flex items-center gap-1.5 font-ui text-xs bg-accent/15 text-accent rounded-full px-3 py-1.5 mb-6">
+          <i class='bx bxs-coin-stack'></i> +20 Green Coins bonus telah didapat
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3 max-w-lg mx-auto relative z-10">
+          <button id="chooseSellBtn" type="button" class="font-ui text-sm font-semibold px-5 py-3.5 rounded-xl bg-accent border border-white/20 text-primary hover:bg-yellow-300 ease-in-out transition-colors flex items-center justify-center gap-2">
+            <i class='bx bx-store text-lg text-primary'></i> Jual di Marketplace
+          </button>
+          <button id="choosePersonalBtn" type="button" class="font-ui text-sm font-semibold px-5 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors flex items-center justify-center gap-2">
+            <i class='bx bx-home-heart text-lg text-accent'></i> Gunakan Pribadi
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL: JUAL DI MARKETPLACE ===================== -->
+<div id="sellModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-ink/60 backdrop-blur-sm" data-close-sell></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden" style="animation: modalPop .25s ease">
+    <button id="sellModalClose" type="button" class="absolute right-4 top-4 w-8 h-8 rounded-full flex items-center justify-center text-ink/40 hover:text-ink hover:bg-paperalt transition-colors z-10 bg-white/90 shadow-sm">
+      <i class='bx bx-x text-xl'></i>
+    </button>
+    <div class="overflow-y-auto p-6">
+      <div class="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
+        <i class='bx bxs-store text-2xl text-accent'></i>
+      </div>
+      <p class="font-ui text-[11px] font-semibold uppercase tracking-wide text-ink/40 mb-1">Jual Hasil Upcycling</p>
+      <h3 class="font-display font-semibold text-lg text-ink mb-4">Lengkapi Detail Penjualan</h3>
+
+      <div class="space-y-4 mb-5">
+        <div>
+          <label class="font-ui text-xs font-medium text-ink/50 block mb-1.5">Nama Produk Baru</label>
+          <input id="sellModalName" type="text" class="w-full font-body text-sm bg-white rounded-xl px-3.5 py-2.5 text-ink border border-line focus:border-primary focus:bg-white transition-colors">
+        </div>
+        <div>
+          <label class="font-ui text-xs font-medium text-ink/50 block mb-1.5">Harga Jual (Rp)</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink/40 font-body text-sm">Rp</span>
+            <input id="sellModalPrice" type="text" inputmode="numeric" placeholder="Contoh: 45000" class="w-full font-body text-sm bg-white rounded-xl pl-10 pr-3.5 py-2.5 text-ink border border-line focus:border-primary focus:bg-white transition-colors">
+          </div>
+          <p class="font-body text-[11px] text-ink/40 mt-1.5">Barang hasil upcycling biasanya bernilai lebih tinggi dibanding kondisi aslinya.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 mb-5">
+        <i class='bx bxs-coin-stack text-2xl text-accent shrink-0'></i>
+        <div>
+          <p class="font-display font-bold text-ink leading-none">+35 Koin GreenWise</p>
+          <p class="font-body text-xs text-ink/50 mt-1">Bonus tambahan karena hasil karya upcycling</p>
+        </div>
+      </div>
+
+      <button id="confirmSellUpcycleBtn" type="button" class="w-full font-ui text-sm font-medium px-4 py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors flex items-center justify-center gap-1.5">
+        Pasang di Marketplace <i class='bx bx-right-arrow-alt text-accent'></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: SUKSES JUAL DI MARKETPLACE ===================== -->
+<div id="sellSuccessModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl" style="animation: modalPop .25s ease">
+    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+      <i class='bx bxs-badge-check text-4xl text-accent'></i>
+    </div>
+    <h3 class="font-display font-semibold text-xl text-ink mb-1">Barang Berhasil Ditambahkan!</h3>
+    <p id="sellSuccessDesc" class="font-body text-xs text-ink/50 mb-4 leading-relaxed">
+      Produk hasil upcycling kamu telah berhasil dipasang di GreenWise Marketplace dan siap dilihat pembeli.
+    </p>
+
+    <div class="rounded-xl bg-primary text-white p-4 mb-5 flex items-center justify-center gap-3">
+      <i class='bx bxs-coin-stack text-3xl text-accent'></i>
+      <div class="text-left">
+        <p class="font-display font-extrabold text-lg text-accent leading-none">+35 Coins</p>
+        <p class="font-body text-[10px] text-white/70 mt-0.5">Telah ditambahkan ke saldo Anda</p>
+      </div>
+    </div>
+
+    <a href="dashboard.html" class="block font-ui text-sm font-semibold w-full py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors text-center">
+      Kembali ke Dashboard
+    </a>
+  </div>
+</div>
+
+<!-- ===================== MODAL: PAKAI PRIBADI ===================== -->
+<div id="personalModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl" style="animation: modalPop .25s ease">
+    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+      <i class='bx bx-home-heart text-4xl text-accent'></i>
+    </div>
+    <h3 class="font-display font-semibold text-xl text-ink mb-1">Keputusan Tersimpan!</h3>
+    <p class="font-body text-xs text-ink/50 mb-4 leading-relaxed">
+      Kamu memilih untuk menggunakan hasil karya upcycling ini secara pribadi. Kontribusimu terhadap lingkungan tetap tercatat di GreenWise.
+    </p>
+
+    <div class="rounded-xl bg-primary text-white p-4 mb-5 flex items-center justify-center gap-3">
+      <i class='bx bxs-coin-stack text-3xl text-accent'></i>
+      <div class="text-left">
+        <p class="font-display font-extrabold text-lg text-accent leading-none">+20 Coins</p>
+        <p class="font-body text-[10px] text-white/70 mt-0.5">Telah ditambahkan ke saldo Anda</p>
+      </div>
+    </div>
+
+    <a href="dashboard.html" class="block font-ui text-sm font-semibold w-full py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors text-center">
+      Kembali ke Dashboard
+    </a>
+  </div>
+</div>
+
+<!-- ===================== MODAL: PAKAI PRIBADI ===================== -->
+<div id="personalModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl" style="animation: modalPop .25s ease">
+    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+      <i class='bx bx-home-heart text-4xl text-accent'></i>
+    </div>
+    <h3 class="font-display font-semibold text-xl text-ink mb-1">Keputusan Tersimpan!</h3>
+    <p class="font-body text-xs text-ink/50 mb-4 leading-relaxed">
+      Kamu memilih untuk menggunakan hasil karya upcycling ini secara pribadi. Kontribusimu terhadap lingkungan tetap tercatat di GreenWise.
+    </p>
+
+    <div class="rounded-xl bg-primary text-white p-4 mb-5 flex items-center justify-center gap-3">
+      <i class='bx bxs-coin-stack text-3xl text-accent'></i>
+      <div class="text-left">
+        <p class="font-display font-extrabold text-lg text-accent leading-none">+20 Coins</p>
+        <p class="font-body text-[10px] text-white/70 mt-0.5">Telah ditambahkan ke saldo Anda</p>
+      </div>
+    </div>
+
+    <a href="dashboard.html" class="block font-ui text-sm font-semibold w-full py-3 rounded-xl bg-primary text-white hover:bg-ink transition-colors text-center">
+      Kembali ke Dashboard
+    </a>
+  </div>
+</div>
+
+<script>
+  // ===================== Navbar, menu, profil (standar halaman7) =====================
+  var navbar = document.getElementById('navbar'), heroEl = document.getElementById('hero');
+  function updateNavbar(){
+    if(!heroEl){ navbar.classList.add('scrolled'); return; }
+    var limit = Math.min(heroEl.offsetHeight - 100, window.innerHeight - 100);
+    navbar.classList.toggle('scrolled', window.scrollY > Math.max(limit, 40));
+  }
+  updateNavbar();
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  window.addEventListener('resize', updateNavbar);
+
+  var burgerBtn = document.getElementById('burgerBtn'), mobileMenu = document.getElementById('mobileMenu');
+  if(burgerBtn && mobileMenu){
+    burgerBtn.addEventListener('click', function(){
+      var open = mobileMenu.classList.toggle('open');
+      burgerBtn.setAttribute('aria-expanded', open);
+      burgerBtn.querySelector('.bx').className = 'bx ' + (open ? 'bx-x' : 'bx-menu');
+      if(open) navbar.classList.add('scrolled'); else updateNavbar();
+    });
+  }
+
+  var profileBtn = document.getElementById('profileBtn'), profileMenu = document.getElementById('profileMenu'), overlayBg = document.getElementById('overlayBg');
+  function setProfile(open){
+    profileMenu.classList.toggle('open', open);
+    overlayBg.classList.toggle('show', open);
+    profileBtn.setAttribute('aria-expanded', open);
+  }
+  if(profileBtn && profileMenu && overlayBg){
+    profileBtn.addEventListener('click', function(e){ e.stopPropagation(); setProfile(!profileMenu.classList.contains('open')); });
+    overlayBg.addEventListener('click', function(){ setProfile(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setProfile(false); });
+  }
+
+  function showToast(msg, icon){
+    var t = document.createElement('div');
+    t.className = 'toast'; t.setAttribute('role', 'status');
+    t.innerHTML = '<i class="bx ' + (icon || 'bx-check-circle') + '" style="flex:none"></i><span>' + msg + '</span>';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; setTimeout(function(){ t.remove(); }, 500); }, 2600);
+  }
+  var logoutBtn = document.getElementById('logoutBtn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', function(e){ e.preventDefault(); setProfile(false); showToast('Kamu keluar dari GreenWise (demo).', 'bx-log-out'); });
+  }
+
+  // ---------- ITEM INFO (sinkron dengan dashboard) ----------
+  const ITEM_INFO = {
+    shoes: {
+      name: 'Sepatu Lari',
+      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+      category: 'Alas kaki · Olahraga'
+    },
+    keyboard: {
+      name: 'Keyboard Rusak',
+      image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Aksesori komputer'
+    },
+    bottle: {
+      name: 'Botol Plastik Bekas',
+      image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80',
+      category: 'Kemasan · Minuman'
+    },
+    phone: {
+      name: 'Ponsel Rusak Ringan',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80',
+      category: 'Elektronik · Gawai'
+    }
+  };
+
+  // ---------- DATABASE IDE UPCYCLING ----------
+  const IDEAS_DB = {
+    shoes: [
+      {
+        id: 'planter', title: 'Pot Tanaman Gantung Kreatif', icon: 'bx-leaf',
+        difficulty: 'Mudah', duration: '30-45 menit',
+        desc: 'Ubah sepatu lama menjadi pot tanaman gantung unik untuk mempercantik teras atau taman rumahmu.',
+        steps: [
+          'Bersihkan sepatu dari debu dan kotoran menggunakan sikat & air sabun.',
+          'Lubangi bagian bawah sol sepatu untuk saluran air agar tanaman tidak tergenang.',
+          'Isi bagian dalam sepatu dengan campuran tanah dan kompos secukupnya.',
+          'Tanam tanaman hias kecil (seperti sukulen atau kaktus mini) ke dalam sepatu.',
+          'Gantung sepatu menggunakan tali kuat di teras atau taman sebagai dekorasi hijau.'
+        ]
+      },
+      {
+        id: 'organizer', title: 'Organizer Meja & Alat Tulis', icon: 'bx-briefcase',
+        difficulty: 'Mudah', duration: '20-30 menit',
+        desc: 'Potong dan sulap bagian sepatu menjadi wadah pulpen dan alat tulis yang estetik di meja kerja.',
+        steps: [
+          'Potong bagian atas sepatu (dekat pergelangan) menggunakan gunting/cutter tajam.',
+          'Rapikan tepi potongan agar tidak melukai tangan saat digunakan.',
+          'Bersihkan bagian dalam sepatu dari sisa lem atau serat yang lepas.',
+          'Hias bagian luar dengan cat semprot atau kain flanel sesuai selera.',
+          'Gunakan sebagai wadah pulpen, penggaris, atau alat tulis lain di meja kerja.'
+        ]
+      },
+      {
+        id: 'keychain', title: 'Gantungan Kunci Custom', icon: 'bx-key',
+        difficulty: 'Sedang', duration: '45-60 menit',
+        desc: 'Manfaatkan sisa sol dan tali sepatu menjadi aksesori gantungan kunci yang personal.',
+        steps: [
+          'Potong kecil bagian sol karet dan tali sepatu sebagai bahan utama.',
+          'Bentuk potongan sol menjadi pola sederhana (bulat/kotak) menggunakan cutter.',
+          'Lubangi salah satu sisi pola untuk tempat ring gantungan kunci.',
+          'Pasang ring logam gantungan kunci pada lubang yang telah dibuat.',
+          'Tambahkan aksen tali atau manik-manik kecil sebagai sentuhan akhir.'
+        ]
+      },
+      {
+        id: 'wallart', title: 'Dekorasi Dinding Industrial', icon: 'bx-image',
+        difficulty: 'Sedang', duration: '1-2 jam',
+        desc: 'Cat ulang sepatu dan jadikan elemen dekor dinding bergaya industrial yang eye-catching.',
+        steps: [
+          'Bersihkan sepatu secara menyeluruh dan biarkan kering sepenuhnya.',
+          'Amplas permukaan sepatu agar cat baru menempel lebih merata.',
+          'Cat ulang sepatu dengan warna kontras atau tema industrial (emas, hitam, metalik).',
+          'Pasang bracket kecil di bagian belakang sepatu untuk digantung di dinding.',
+          'Tempatkan di dinding sebagai elemen dekorasi ruang bergaya unik.'
+        ]
+      }
+    ],
+    keyboard: [
+      {
+        id: 'photoframe', title: 'Bingkai Foto Retro dari Tuts Keyboard', icon: 'bx-image-alt',
+        difficulty: 'Sedang', duration: '1-1.5 jam',
+        desc: 'Susun tuts-tuts keyboard menjadi bingkai foto bergaya retro yang penuh karakter.',
+        steps: [
+          'Lepaskan seluruh tuts (keycap) dari keyboard menggunakan alat pencungkil kecil.',
+          'Bersihkan setiap tuts dari debu dengan kain lembap.',
+          'Susun tuts membentuk pola bingkai di sekeliling karton/kayu tipis berukuran foto.',
+          'Rekatkan tiap tuts menggunakan lem tembak (hot glue) secara rapi.',
+          'Selipkan foto favorit di bagian tengah bingkai yang telah jadi.'
+        ]
+      },
+      {
+        id: 'desklamp', title: 'Lampu Meja Artistik', icon: 'bx-bulb',
+        difficulty: 'Sulit', duration: '2-3 jam',
+        desc: 'Ubah casing keyboard menjadi dasar lampu meja unik bertema teknologi.',
+        steps: [
+          'Bongkar casing keyboard dan pisahkan dari rangkaian sirkuit dalam.',
+          'Bersihkan casing plastik hingga bebas debu dan sisa komponen.',
+          'Pasang fitting lampu LED kecil di salah satu sisi casing yang telah dilubangi.',
+          'Rangkai kabel & saklar sederhana mengikuti panduan instalasi lampu DIY.',
+          'Uji coba nyala lampu dan rapikan kabel agar aman digunakan.'
+        ]
+      },
+      {
+        id: 'keytag', title: 'Gantungan Kunci Tuts Custom', icon: 'bx-key',
+        difficulty: 'Mudah', duration: '20-30 menit',
+        desc: 'Bikin gantungan kunci custom dari tuts huruf favoritmu, cocok jadi kado unik.',
+        steps: [
+          'Pilih beberapa tuts keyboard dengan huruf/simbol favorit.',
+          'Bersihkan tuts dari kotoran menggunakan cotton bud dan alkohol.',
+          'Lubangi bagian sisi tuts dengan bor kecil secara hati-hati.',
+          'Pasang ring gantungan kunci melalui lubang yang telah dibuat.',
+          'Kombinasikan beberapa tuts untuk membentuk inisial nama.'
+        ]
+      },
+      {
+        id: 'cableorg', title: 'Organizer Kabel & Case Charger', icon: 'bx-plug',
+        difficulty: 'Mudah', duration: '15-20 menit',
+        desc: 'Gunakan casing keyboard sebagai wadah rapi untuk kabel dan charger.',
+        steps: [
+          'Lepaskan casing bawah keyboard yang masih utuh dari komponen dalam.',
+          'Bersihkan bagian dalam casing dari debu dan sisa sirkuit.',
+          'Tambahkan sekat kecil dari karton di dalam casing sebagai pembatas.',
+          'Gunakan casing sebagai wadah penyimpanan kabel, charger, atau flashdisk.',
+          'Beri label pada tiap sekat agar mudah menemukan barang yang dicari.'
+        ]
+      }
+    ],
+    bottle: [
+      {
+        id: 'vertplanter', title: 'Pot Tanaman Vertikal Hemat Tempat', icon: 'bx-leaf',
+        difficulty: 'Mudah', duration: '20-30 menit',
+        desc: 'Ciptakan kebun mini vertikal dari botol plastik bekas, cocok untuk lahan sempit.',
+        steps: [
+          'Cuci bersih botol plastik dan lepaskan label dari permukaannya.',
+          'Potong bagian samping botol membentuk jendela tanam menggunakan cutter.',
+          'Buat lubang kecil di bagian bawah botol sebagai saluran drainase air.',
+          'Isi botol dengan tanah subur dan tanam bibit tanaman herbal/sayur mini.',
+          'Gantung atau susun botol secara vertikal di dinding sebagai kebun mini.'
+        ]
+      },
+      {
+        id: 'pencilholder', title: 'Tempat Pensil & Alat Tulis Estetik', icon: 'bx-pencil',
+        difficulty: 'Mudah', duration: '15-20 menit',
+        desc: 'Sulap botol plastik menjadi wadah alat tulis yang cantik dan fungsional.',
+        steps: [
+          'Potong botol menjadi dua bagian dan gunakan bagian bawahnya saja.',
+          'Amplas tepi potongan agar tidak tajam dan aman digunakan.',
+          'Bungkus bagian luar botol dengan kain flanel, tali rami, atau cat akrilik.',
+          'Tambahkan hiasan seperti pita atau stiker sesuai tema yang diinginkan.',
+          'Gunakan sebagai wadah pensil, gunting, atau alat tulis lainnya.'
+        ]
+      },
+      {
+        id: 'piggybank', title: 'Celengan Unik Anti Bosan', icon: 'bx-coin-stack',
+        difficulty: 'Mudah', duration: '20-30 menit',
+        desc: 'Buat celengan lucu dari botol bekas untuk membiasakan diri menabung setiap hari.',
+        steps: [
+          'Bersihkan botol plastik dan pastikan benar-benar kering.',
+          'Buat celah tipis di bagian tengah botol sebagai slot memasukkan uang koin.',
+          'Hias botol dengan cat warna-warni atau gambar karakter favorit.',
+          'Tutup rapat bagian tutup botol agar uang tidak mudah keluar/hilang.',
+          'Letakkan di kamar sebagai celengan pengingat menabung harian.'
+        ]
+      },
+      {
+        id: 'birdfeeder', title: 'Tempat Pakan Burung Gantung', icon: 'bx-food-menu',
+        difficulty: 'Sedang', duration: '30-40 menit',
+        desc: 'Bantu burung liar di sekitar rumahmu dengan membuat tempat pakan dari botol bekas.',
+        steps: [
+          'Cuci botol hingga bersih dari sisa cairan dan label.',
+          'Buat 2-3 lubang kecil di sisi botol sebagai akses masuk burung.',
+          'Pasang tusuk sate/kayu kecil di bawah lubang sebagai tempat bertengger burung.',
+          'Isi bagian dalam botol dengan biji-bijian pakan burung.',
+          'Gantung botol di dahan pohon menggunakan tali yang kuat.'
+        ]
+      }
+    ],
+    phone: [
+      {
+        id: 'stemtool', title: 'Media Edukasi Bongkar Pasang (STEM)', icon: 'bx-brain',
+        difficulty: 'Sedang', duration: '1 jam',
+        desc: 'Bongkar ponsel jadi media belajar seru bagi anak untuk mengenal komponen teknologi.',
+        steps: [
+          'Pastikan ponsel benar-benar mati total dan baterai sudah dilepas jika memungkinkan.',
+          'Bongkar casing ponsel secara perlahan menggunakan obeng kecil khusus elektronik.',
+          'Pisahkan komponen seperti layar, kamera, dan papan sirkuit ke wadah terpisah.',
+          'Susun & tempel komponen di papan edukasi untuk mengenalkan bagian-bagian ponsel.',
+          'Gunakan sebagai media belajar interaktif tentang teknologi untuk anak-anak.'
+        ]
+      },
+      {
+        id: 'cctv', title: 'Kamera Pengawas / Webcam Alternatif', icon: 'bx-camera',
+        difficulty: 'Mudah', duration: '15-20 menit',
+        desc: 'Manfaatkan kamera ponsel yang masih berfungsi sebagai CCTV atau webcam tambahan.',
+        steps: [
+          'Pastikan ponsel masih menyala dan kamera berfungsi dengan baik.',
+          'Instal aplikasi kamera pengawas (CCTV/webcam) dari app store.',
+          'Sambungkan ponsel ke jaringan WiFi rumah secara stabil.',
+          'Posisikan ponsel di dudukan/tripod kecil pada sudut ruangan yang strategis.',
+          'Gunakan sebagai kamera pengawas tambahan atau webcam untuk video call.'
+        ]
+      },
+      {
+        id: 'btspeaker', title: 'Speaker Bluetooth Mini DIY', icon: 'bx-volume-full',
+        difficulty: 'Sulit', duration: '2 jam',
+        desc: 'Manfaatkan speaker internal ponsel menjadi speaker portable bluetooth buatan sendiri.',
+        steps: [
+          'Lepaskan komponen speaker internal ponsel dengan hati-hati menggunakan alat presisi.',
+          'Siapkan wadah kecil (bekas kaleng/kotak) sebagai casing baru speaker.',
+          'Sambungkan speaker internal dengan modul bluetooth kecil dari toko elektronik.',
+          'Rangkai baterai kecil sebagai sumber daya speaker portable.',
+          'Uji sambungan bluetooth ke ponsel lain dan nikmati hasil karya sendiri.'
+        ]
+      },
+      {
+        id: 'photoframe2', title: 'Photo Frame Digital Mini', icon: 'bx-image',
+        difficulty: 'Mudah', duration: '15 menit',
+        desc: 'Jadikan ponsel sebagai bingkai foto digital yang menampilkan slideshow kenangan.',
+        steps: [
+          'Pastikan layar ponsel masih menyala meski terdapat sedikit retak.',
+          'Reset ponsel ke pengaturan pabrik untuk menghapus data pribadi.',
+          'Instal aplikasi slideshow foto otomatis pada ponsel.',
+          'Masukkan foto-foto kenangan favorit ke galeri ponsel.',
+          'Letakkan ponsel di dudukan kecil sebagai bingkai foto digital berjalan.'
+        ]
+      }
+    ]
+  };
+
+  // ---------- FALLBACK GENERIK UNTUK BARANG CUSTOM ----------
+  function buildGenericIdeas(name) {
+    return [
+      {
+        id: 'repaint', title: 'Dekorasi Ulang (Repaint & Redesign)', icon: 'bx-palette',
+        difficulty: 'Mudah', duration: '30-45 menit',
+        desc: `Beri tampilan baru pada ${name} dengan cat atau dekorasi ulang agar terlihat lebih menarik.`,
+        steps: [
+          'Bersihkan barang secara menyeluruh dari debu dan kotoran.',
+          'Amplas permukaan (jika berbahan keras) agar cat/hiasan menempel sempurna.',
+          'Aplikasikan cat, stiker, atau bahan dekoratif sesuai tema yang diinginkan.',
+          'Biarkan mengering sempurna sebelum digunakan kembali.',
+          'Foto hasil akhir sebagai dokumentasi karya upcycling kamu.'
+        ]
+      },
+      {
+        id: 'newfunction', title: 'Fungsi Baru Sesuai Kebutuhan Harian', icon: 'bx-transfer-alt',
+        difficulty: 'Sedang', duration: '30-60 menit',
+        desc: `Ubah fungsi ${name} agar lebih sesuai dengan kebutuhan sehari-hari kamu.`,
+        steps: [
+          'Identifikasi bagian barang yang masih berfungsi dengan baik.',
+          'Sesuaikan bentuk/fungsi barang dengan kebutuhan sehari-hari kamu.',
+          'Modifikasi bagian yang diperlukan menggunakan alat sederhana di rumah.',
+          'Uji coba fungsi barunya untuk memastikan aman dan nyaman digunakan.',
+          'Gunakan secara rutin sebagai pengganti barang baru.'
+        ]
+      },
+      {
+        id: 'accessory', title: 'Aksesori atau Hiasan Kreatif', icon: 'bx-gift',
+        difficulty: 'Mudah', duration: '20-30 menit',
+        desc: `Manfaatkan bagian kecil dari ${name} menjadi aksesori atau hiasan unik.`,
+        steps: [
+          'Potong atau pisahkan bagian kecil dari barang yang unik/menarik.',
+          'Bentuk menjadi aksesori sederhana seperti gantungan atau hiasan.',
+          'Tambahkan sentuhan akhir seperti cat, tali, atau manik-manik.',
+          'Gunakan aksesori sebagai pelengkap gaya pribadi atau dekorasi rumah.',
+          'Bagikan hasil karya ke teman/media sosial untuk inspirasi orang lain.'
+        ]
+      }
+    ];
+  }
+
+  // ---------- PARSING PARAMETER URL ----------
+  const params = new URLSearchParams(window.location.search);
+  const itemParam = params.get('item') || 'shoes';
+  const isCustom = params.get('custom') === 'true';
+  const classification = params.get('classification') || 'good';
+
+  let itemInfo, ideas;
+  if (isCustom) {
+    const name = decodeURIComponent(itemParam);
+    itemInfo = {
+      name: name,
+      image: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?auto=format&fit=crop&w=800&q=80',
+      category: 'Hasil Analisis · Kustomisasi AI'
+    };
+    ideas = buildGenericIdeas(name);
+  } else {
+    itemInfo = ITEM_INFO[itemParam] || ITEM_INFO.shoes;
+    ideas = IDEAS_DB[itemParam] || buildGenericIdeas(itemInfo.name);
+  }
+
+  // ---------- RENDER SUMMARY ----------
+  document.getElementById('summaryName').textContent = itemInfo.name;
+  document.getElementById('summaryCategory').textContent = itemInfo.category;
+  document.getElementById('summaryImg').src = itemInfo.image;
+
+  const classChip = document.getElementById('classificationChip');
+  const classChipText = document.getElementById('classificationChipText');
+  if (classification === 'good') {
+    classChipText.textContent = 'Kondisi Baik';
+  } else {
+    classChipText.textContent = 'Kondisi Rendah';
+    classChip.classList.remove('bg-primary');
+    classChip.classList.add('bg-mid');
+  }
+
+  // ---------- RENDER IDEA CARDS ----------
+  const ideaGrid = document.getElementById('ideaGrid');
+  let selectedIdea = null;
+  const progressStore = {}; // { ideaId: [true,false,...] }
+
+  function renderIdeaCards() {
+    ideaGrid.innerHTML = '';
+    ideas.forEach(idea => {
+      const card = document.createElement('div');
+      card.className = 'idea-card rounded-2xl bg-white border border-line p-4 sm:p-5 relative';
+      card.dataset.ideaId = idea.id;
+      card.dataset.selected = selectedIdea === idea.id ? 'true' : 'false';
+
+      card.innerHTML = `
+        <div class="idea-check-badge absolute top-3 right-3 w-6 h-6 rounded-full bg-primary items-center justify-center">
+          <i class='bx bx-check text-white text-sm'></i>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-secondary to-ink flex items-center justify-center mb-3">
+          <i class="bx ${idea.icon} text-2xl text-accent"></i>
+        </div>
+        <h3 class="font-display font-semibold text-base text-ink mb-1.5 pr-6">${idea.title}</h3>
+        <p class="font-body text-xs text-ink/55 leading-relaxed mb-3">${idea.desc}</p>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-ui text-[10px] font-semibold px-2 py-1 rounded-full difficulty-${idea.difficulty}">${idea.difficulty}</span>
+          <span class="font-ui text-[10px] text-ink/40 flex items-center gap-1"><i class='bx bx-time-five'></i> ${idea.duration}</span>
+        </div>
+      `;
+
+      card.addEventListener('click', () => selectIdea(idea.id));
+      ideaGrid.appendChild(card);
+    });
+  }
+
+  function selectIdea(ideaId) {
+    selectedIdea = ideaId;
+    renderIdeaCards();
+    renderStepsSection();
+    document.getElementById('stepsSection').classList.remove('hidden');
+    document.getElementById('finalDecisionSection').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('stepsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
+
+  function renderStepsSection() {
+    const idea = ideas.find(i => i.id === selectedIdea);
+    if (!idea) return;
+
+    if (!progressStore[idea.id]) {
+      progressStore[idea.id] = idea.steps.map(() => false);
+    }
+
+    document.getElementById('selectedIdeaIcon').className = `bx ${idea.icon} text-2xl text-accent`;
+    document.getElementById('selectedIdeaTitle').textContent = idea.title;
+    document.getElementById('selectedIdeaDesc').textContent = idea.desc;
+
+    const stepsList = document.getElementById('stepsList');
+    stepsList.innerHTML = '';
+
+    const doneArr = progressStore[idea.id];
+
+    idea.steps.forEach((stepText, index) => {
+      const done = doneArr[index];
+      // Terkunci jika bukan langkah pertama DAN langkah sebelumnya belum selesai
+      const locked = index > 0 && !doneArr[index - 1];
+
+      const row = document.createElement('div');
+      row.className = 'step-item flex items-start gap-3 rounded-xl border border-line p-3.5';
+      row.dataset.done = done ? 'true' : 'false';
+      row.dataset.locked = locked ? 'true' : 'false';
+      row.dataset.stepIndex = index;
+      row.style.cursor = locked ? 'not-allowed' : 'pointer';
+
+      row.innerHTML = `
+        <div class="step-checkbox w-6 h-6 rounded-full border-2 border-line flex items-center justify-center shrink-0 mt-0.5">
+          <i class="bx bx-check text-white text-sm step-check-icon"></i>
+          <i class="bx bx-lock-alt text-ink/30 text-xs step-lock-icon"></i>
+        </div>
+        <p class="step-title font-body text-sm text-ink/80 leading-relaxed flex-1">
+          <span class="font-ui font-semibold text-ink/40 mr-1">${index + 1}.</span>${stepText}
+          ${locked ? '<span class="block font-ui text-[10px] text-ink/35 mt-1"><i class="bx bx-lock-alt"></i> Selesaikan langkah sebelumnya untuk membuka ini</span>' : ''}
+        </p>
+      `;
+
+      if (!locked) {
+        row.addEventListener('click', () => toggleStep(idea.id, index));
+      }
+      stepsList.appendChild(row);
+    });
+
+    updateProgress(idea);
+  }
+
+  function toggleStep(ideaId, index) {
+    const doneArr = progressStore[ideaId];
+    const locked = index > 0 && !doneArr[index - 1];
+    if (locked) return; // jaga-jaga, tidak bisa toggle step yang terkunci
+
+    doneArr[index] = !doneArr[index];
+
+    // Jika sebuah langkah dibatalkan (unchecked), otomatis kunci ulang & batalkan semua langkah setelahnya
+    if (!doneArr[index]) {
+      for (let i = index + 1; i < doneArr.length; i++) {
+        doneArr[i] = false;
+      }
+    }
+
+    renderStepsSection();
+  }
+
+  function updateProgress(idea) {
+    const doneArr = progressStore[idea.id];
+    const doneCount = doneArr.filter(Boolean).length;
+    const total = doneArr.length;
+    const pct = Math.round((doneCount / total) * 100);
+
+    document.getElementById('progressText').textContent = `${doneCount}/${total}`;
+    document.getElementById('progressBar').style.width = pct + '%';
+
+    const finalSection = document.getElementById('finalDecisionSection');
+    if (doneCount === total) {
+      finalSection.classList.remove('hidden');
+      setTimeout(() => {
+        finalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    } else {
+      finalSection.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('changeIdeaBtn').addEventListener('click', () => {
+    document.getElementById('stepsSection').classList.add('hidden');
+    document.getElementById('finalDecisionSection').classList.add('hidden');
+    selectedIdea = null;
+    renderIdeaCards();
+    document.getElementById('ideaSelectSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  renderIdeaCards();
+
+  // ---------- MODAL HANDLING (Jual / Sukses / Pribadi) ----------
+  const sellModal = document.getElementById('sellModal');
+  const sellSuccessModal = document.getElementById('sellSuccessModal');
+  const personalModal = document.getElementById('personalModal');
+
+  document.getElementById('chooseSellBtn').addEventListener('click', () => {
+    const idea = ideas.find(i => i.id === selectedIdea);
+    document.getElementById('sellModalName').value = idea ? `${idea.title} dari ${itemInfo.name}` : itemInfo.name;
+    sellModal.classList.remove('hidden');
+  });
+
+  document.getElementById('sellModalClose').addEventListener('click', () => {
+    sellModal.classList.add('hidden');
+  });
+
+  document.querySelector('#sellModal [data-close-sell]').addEventListener('click', () => {
+    sellModal.classList.add('hidden');
+  });
+
+  document.getElementById('confirmSellUpcycleBtn').addEventListener('click', () => {
+    const finalName = document.getElementById('sellModalName').value || itemInfo.name;
+    document.getElementById('sellSuccessDesc').textContent =
+      `"${finalName}" telah berhasil dipasang di GreenWise Marketplace dan siap dilihat pembeli.`;
+
+    sellModal.classList.add('hidden');
+    sellSuccessModal.classList.remove('hidden');
+  });
+
+  document.getElementById('choosePersonalBtn').addEventListener('click', () => {
+    personalModal.classList.remove('hidden');
+  });
+
+  var toTop = document.getElementById('backToTopBtn');
+  if(toTop){
+    window.addEventListener('scroll', function(){ toTop.classList.toggle('show', window.scrollY > 600); }, {passive:true});
+    toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+</script>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <a href="beranda.html" class="f-brand">
+          <img src="assets/img/logo-greenwise.svg" width="38" height="38" alt="">
+          GreenWise
+        </a>
+        <p class="f-about">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><i class="bx bxl-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Facebook"><i class="bx bxl-facebook" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bx bxl-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="TikTok"><i class="bx bxl-tiktok" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>Navigasi</h5>
+        <ul>
+          <li><a href="beranda.html">Beranda</a></li>
+          <li><a href="greenhub.html">Green Hub</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Sumber daya</h5>
+        <ul>
+          <li><a href="greenhub.html">Panduan daur ulang</a></li>
+          <li><a href="#">Blog lingkungan</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Pusat bantuan</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Hubungi kami</h5>
+        <ul>
+          <li class="ic"><i class="bx bx-envelope" aria-hidden="true"></i> halo@greenwises.web.app</li>
+          <li class="ic"><i class="bx bx-phone" aria-hidden="true"></i> +62 812 3456 7890</li>
+          <li class="ic"><i class="bx bx-map" aria-hidden="true"></i> Bogor, Indonesia</li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom"><p>© 2026 GreenWise. Semua hak dilindungi.</p><p>Dibuat untuk bumi yang lebih hijau.</p></div>
+  </div>
+  <div class="f-mark" aria-hidden="true">GreenWise</div>
+  <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas"><i class="bx bx-up-arrow-alt" aria-hidden="true"></i></button>
+</footer>
+</body>
+</html>

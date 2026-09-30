@@ -1,0 +1,1846 @@
+<!DOCTYPE html> 
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riwayat & Kelola Produk — Marketplace | GreenWise</title>
+<meta name="description" content="Dashboard Riwayat Transaksi GreenWise: kelola produk yang dijual, ubah harga dan stok, serta pantau status dan proses pengiriman pesanan yang dibeli.">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo-greenwise.svg">
+
+<!-- Boxicons -->
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          lexend: ['Lexend', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif'],
+          dmsans: ['"DM Sans"', 'sans-serif'],
+        },
+        colors: {
+          deep: '#012622',
+          ever: '#003B36',
+          ever2: '#0A4F48',
+          ever3: '#12655C',
+          mist: '#ECE5F0',
+          mist2: '#DCD2E4',
+          mist3: '#F6F2F8',
+          gold: '#FACC15',
+          danger: '#B42318'
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Global CSS -->
+<link rel="stylesheet" href="assets/global.css">
+
+<style>
+/* =====================================================
+   GreenWise — Dashboard Riwayat Produk & Transaksi
+   Khusus halaman6 (token, navbar, footer, scrollbar,
+   keyframes & reveal global di assets/global.css)
+   ===================================================== */
+
+/* Reset ringan & Responsive Safeguards (aturan umum di assets/global.css) */
+html{-webkit-text-size-adjust:100%;}
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden; /* tetap di sini, jangan global (merusak sticky) */
+  -webkit-overflow-scrolling:touch;
+}
+body{font-family:var(--f-body);background:#fff;color:var(--deep);}
+body.lock{overflow:hidden;}
+
+/* Ikon SVG inline */
+.pmenu a>.bx,.profile-btn>.bx,.burger>.bx,.icon-btn>.bx,.totop>.bx,.social a>.bx,.ic>.bx,.btn>.bx{font-size:1.25em;line-height:1;flex:none;}
+
+/* Tombol Responsif */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.875rem;border-radius:999px;padding:.75rem 1.5rem;transition:all .25s ease;white-space:nowrap;touch-action:manipulation;}
+.btn-mist{background:var(--mist);color:var(--deep);} .btn-mist:hover{background:#fff;}
+.btn-ever{background:var(--ever);color:var(--mist);} .btn-ever:hover{background:var(--deep);}
+.btn-line{border:1px solid var(--mist2);color:var(--ever);background:#fff;} .btn-line:hover{background:var(--mist);}
+.btn-gold{background:var(--gold);color:var(--deep);font-weight:700;} .btn-gold:hover{filter:brightness(1.05);}
+.btn-sm{padding:.5rem 1rem;font-size:.8125rem;}
+.btn-block{width:100%;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);}
+.reveal.active{opacity:1;transform:none;}
+
+/* ===== HERO COMPACT RESPONSIVE ===== */
+.hero{position:relative;overflow:hidden;background:var(--deep);}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;background:radial-gradient(circle,rgba(18,101,92,.55),transparent 70%);}
+.hero::before{width:20rem;height:20rem;top:-5rem;left:-5rem;}
+.hero::after{width:18rem;height:18rem;top:1rem;right:-4rem;}
+@media(min-width:640px){
+  .hero::before{width:24rem;height:24rem;top:-6rem;left:-6rem;}
+  .hero::after{width:22rem;height:22rem;top:1rem;right:-5rem;}
+}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(236,229,240,.10);pointer-events:none;display:none;}
+@media(min-width:640px){.ring{display:block;}}
+.ring.r1{width:32rem;height:32rem;top:-10rem;right:-10rem;}
+.ring.r2{width:21rem;height:21rem;bottom:-11rem;left:2.5rem;}
+.hero-in{position:relative;z-index:2;width:100%;max-width:52rem;margin:0 auto;padding:6rem 1rem 3rem;text-align:center;}
+@media(min-width:640px){.hero-in{padding:7.25rem 1.25rem 3.5rem;}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-size:.6875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.25);padding:.3rem .75rem;border-radius:999px;}
+@media(min-width:640px){.hero-eyebrow{font-size:.75rem;padding:.35rem .85rem;margin-bottom:.85rem;}}
+.hero h1{font-weight:700;font-size:clamp(1.65rem, 5.5vw, 2.65rem);line-height:1.2;color:#fff;margin-bottom:.75rem;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero p.lead{font-size:.875rem;line-height:1.65;color:rgba(236,229,240,.72);max-width:38rem;margin:0 auto;}
+@media(min-width:640px){.hero p.lead{font-size:.95rem;line-height:1.7;}}
+
+/* ===== SUMMARY STAT CARDS (Fluid Grid) ===== */
+.stats-float{position:relative;z-index:20;margin-top:-1.75rem;max-width:76rem;margin-left:auto;margin-right:auto;padding:0 1rem;}
+@media(min-width:640px){.stats-float{margin-top:-2.25rem;padding:0 1.25rem;}}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;}
+@media(min-width:640px){.stat-grid{gap:.85rem;}}
+@media(min-width:860px){.stat-grid{grid-template-columns:repeat(4,1fr);gap:1.15rem;}}
+.stat-card{background:#fff;border:1px solid var(--mist2);border-radius:.85rem;padding:.75rem .85rem;box-shadow:var(--sh-card);display:flex;align-items:center;gap:.65rem;transition:all .3s ease;min-width:0;}
+@media(min-width:640px){.stat-card{border-radius:1rem;padding:1.15rem 1.25rem;gap:1rem;}}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--sh-soft);border-color:var(--ever3);}
+.stat-ico{width:2.35rem;height:2.35rem;border-radius:.65rem;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex:none;}
+@media(min-width:640px){.stat-ico{width:3rem;height:3rem;border-radius:.85rem;font-size:1.35rem;}}
+.stat-ico.green{background:var(--mist);color:var(--ever);}
+.stat-ico.gold{background:#FEF9C3;color:#854D0E;}
+.stat-ico.blue{background:#E0F2FE;color:#0369A1;}
+.stat-ico.purple{background:#F3E8FF;color:#6B21A8;}
+.stat-val{font-family:var(--f-head);font-weight:700;font-size:1.1rem;line-height:1.2;color:var(--deep);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+@media(min-width:640px){.stat-val{font-size:1.35rem;}}
+.stat-lbl{font-size:.6875rem;color:rgba(10,79,72,.7);margin-top:.15rem;line-height:1.25;}
+@media(min-width:640px){.stat-lbl{font-size:.75rem;margin-top:.2rem;}}
+
+/* ===== MAIN SECTION & COMPACT TAB SWITCHER ===== */
+.section-main{padding:2rem 0 5rem;}
+@media(min-width:640px){.section-main{padding:2.5rem 0 5rem;}}
+.tab-container{background:var(--mist3);border:1px solid var(--mist2);border-radius:1.15rem;padding:.45rem;display:flex;flex-direction:column;align-items:stretch;gap:.75rem;margin-bottom:1.75rem;}
+@media(min-width:768px){.tab-container{flex-direction:row;align-items:center;justify-content:space-between;border-radius:1.25rem;padding:.5rem;margin-bottom:2rem;}}
+.tab-switcher{display:inline-flex;background:#fff;border:1px solid var(--mist2);border-radius:999px;padding:.25rem;gap:.25rem;width:100%;}
+@media(min-width:768px){.tab-switcher{width:auto;max-width:32rem;}}
+.tab-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.55rem .75rem;border-radius:999px;font-size:.8125rem;font-weight:600;color:var(--ever2);transition:all .25s ease;}
+@media(min-width:640px){.tab-btn{gap:.5rem;padding:.65rem 1.2rem;font-size:.875rem;}}
+.tab-btn:hover:not(.active){background:var(--mist3);color:var(--deep);}
+.tab-btn.active{background:var(--ever);color:var(--mist);box-shadow:0 3px 12px -2px rgba(0,59,54,.35);}
+.tab-btn .badge-count{font-size:.6875rem;padding:.1rem .45rem;border-radius:999px;font-weight:700;}
+@media(min-width:640px){.tab-btn .badge-count{font-size:.75rem;padding:.15rem .55rem;}}
+.tab-btn.active .badge-count{background:var(--gold);color:var(--deep);}
+.tab-btn:not(.active) .badge-count{background:var(--mist);color:var(--ever2);}
+.mp-note{font-size:.75rem;line-height:1.6;color:rgba(10,79,72,.7);margin:.5rem .25rem 0;text-align:center;}
+.mp-btn{padding:.55rem .75rem;font-size:.8125rem;}
+@media(min-width:640px){
+  .mp-btn{padding:.65rem 1.2rem;font-size:.875rem;}
+}
+@media(min-width:768px){
+  .tab-container{flex-wrap:wrap;}
+  .mp-note{flex:0 0 100%;text-align:left;margin:.25rem .25rem 0;}
+}
+
+/* Filter & Search Bar */
+.filter-bar{display:flex;flex-direction:column;align-items:stretch;gap:.75rem;margin-bottom:1.5rem;}
+@media(min-width:768px){.filter-bar{flex-direction:row;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;}}
+.search-box{width:100%;position:relative;}
+@media(min-width:768px){.search-box{flex:1;min-width:16rem;max-width:24rem;}}
+.search-box input{width:100%;border:1px solid var(--mist2);border-radius:999px;padding:.65rem 1rem .65rem 2.5rem;font-size:.875rem;background:#fff;transition:border-color .2s,box-shadow .2s;}
+.search-box input:focus{outline:none;border-color:var(--ever3);box-shadow:0 0 0 3px rgba(18,101,92,.18);}
+.search-box > .bx{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:1.2rem;line-height:1;color:rgba(10,79,72,.6);}
+.filter-pills{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.35rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.filter-pills::-webkit-scrollbar{display:none;}
+.pill-filter{white-space:nowrap;border:1px solid var(--mist2);background:#fff;color:var(--ever2);border-radius:999px;padding:.45rem .85rem;font-size:.78rem;font-weight:500;transition:all .2s;}
+@media(min-width:640px){.pill-filter{padding:.5rem 1rem;font-size:.8125rem;}}
+.pill-filter:hover{background:var(--mist);border-color:var(--ever3);}
+.pill-filter.is-active{background:var(--ever);color:var(--mist);border-color:var(--ever);}
+
+/* ===== KARTU PRODUK JUALAN (Seller View) ===== */
+.grid-items{display:grid;grid-template-columns:1fr;gap:1rem;}
+@media(min-width:540px){.grid-items{grid-template-columns:repeat(2,1fr);gap:1.15rem;}}
+@media(min-width:960px){.grid-items{grid-template-columns:repeat(3,1fr);gap:1.25rem;}}
+@media(min-width:1280px){.grid-items{grid-template-columns:repeat(4,1fr);}}
+
+.pcard{width: 100%;position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--mist2);border-radius:1rem;overflow:hidden;box-shadow:var(--sh-card);transition:transform .3s ease,box-shadow .3s ease;animation:fadeInUp .35s ease;}
+.pcard:hover{transform:translateY(-4px);box-shadow:var(--sh-soft);}
+/* Kartu selalu 100% lebar layar & anti-jebol di HP */
+.grid-items > *, .grid-orders > *{min-width:0;}
+.pcard, .order-card{width:100%;max-width:100%;}
+.order-card{overflow:hidden;}
+.order-num{overflow-wrap:anywhere;}
+@media(max-width:539px){
+  .pbody{padding:.9rem 1rem 1rem;}
+  .order-card{padding:.9rem 1rem;}
+  .order-head{gap:.4rem;padding-bottom:.65rem;margin-bottom:.75rem;}
+  .order-progress-peek{font-size:.72rem;}
+}
+.pthumb{position:relative;height:9.5rem;overflow:hidden;background:var(--mist3);}
+@media(min-width:640px){.pthumb{height:10.5rem;}}
+.pthumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.pcard:hover .pthumb img,.pcard:hover .pthumb .thumb-fb{transform:scale(1.05);}
+.pbody{display:flex;flex-direction:column;flex:1;padding:1rem 1.15rem 1.15rem;}
+@media(min-width:640px){.pbody{padding:1.15rem 1.25rem 1.25rem;}}
+.pcat-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem;}
+.pcat{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ever3);}
+.pcond-tag{font-size:.65rem;padding:.15rem .5rem;border-radius:999px;font-weight:600;background:var(--mist);color:var(--ever);}
+.ptitle{font-weight:600;font-size:.95rem;line-height:1.35;color:var(--deep);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;margin-bottom:.45rem;}
+@media(min-width:640px){.ptitle{font-size:1rem;min-height:2.7em;margin-bottom:.5rem;}}
+.pdesc{font-size:.8rem;color:rgba(10,79,72,.75);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.75rem;line-height:1.45;}
+.pprice-stock{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.25rem;margin-bottom:.85rem;padding-top:.5rem;border-top:1px dashed var(--mist2);}
+.pprice{font-family:var(--f-head);font-weight:700;font-size:1.1rem;color:var(--deep);}
+@media(min-width:640px){.pprice{font-size:1.15rem;}}
+.pstock{font-size:.78rem;font-weight:600;display:inline-flex;align-items:center;gap:.3rem;}
+.pstock.in{color:#059669;}
+.pstock.low{color:#D97706;}
+.pstock.out{color:#DC2626;}
+
+.paction-row{margin-top:auto;display:flex;gap:.5rem;}
+.pcard.is-sold-out .pthumb{filter:grayscale(.75);opacity:.85;}
+
+/* ===== KARTU PESANAN PEMBELIAN (Buyer View) ===== */
+.grid-orders{display:grid;grid-template-columns:1fr;gap:1.15rem;}
+@media(min-width:860px){.grid-orders{grid-template-columns:repeat(2,1fr);gap:1.25rem;}}
+
+.order-card{background:#fff;border:1px solid var(--mist2);border-radius:1rem;padding:1rem 1.15rem;box-shadow:var(--sh-card);cursor:pointer;transition:all .25s ease;display:flex;flex-direction:column;position:relative;}
+@media(min-width:640px){.order-card{padding:1.25rem;}}
+.order-card:hover{transform:translateY(-3px);border-color:var(--ever2);box-shadow:var(--sh-soft);}
+.order-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--mist2);margin-bottom:.85rem;}
+.order-num{font-family:var(--f-head);font-weight:600;font-size:.8125rem;color:var(--deep);display:flex;align-items:center;gap:.35rem;}
+@media(min-width:640px){.order-num{font-size:.875rem;gap:.4rem;}}
+.order-date{font-size:.72rem;color:rgba(10,79,72,.65);}
+
+/* Status Badges */
+.badge-status{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .65rem;border-radius:999px;font-size:.72rem;font-weight:600;white-space:nowrap;}
+@media(min-width:640px){.badge-status{padding:.35rem .75rem;font-size:.75rem;}}
+.badge-shipping{background:#E0F2FE;color:#0369A1;border:1px solid #BAE6FD;}
+.badge-processing{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;}
+.badge-delivered{background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0;}
+.badge-cancelled{background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;}
+
+.order-body{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.85rem;}
+@media(min-width:640px){.order-body{gap:1rem;margin-bottom:1rem;}}
+.order-thumb{width:4rem;height:4rem;border-radius:.65rem;overflow:hidden;flex:none;background:var(--mist);}
+@media(min-width:640px){.order-thumb{width:4.75rem;height:4.75rem;border-radius:.75rem;}}
+.order-thumb img{width:100%;height:100%;object-fit:cover;}
+.order-info{flex:1;min-width:0;}
+.order-title{font-weight:600;font-size:.875rem;color:var(--deep);line-height:1.35;margin-bottom:.2rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+@media(min-width:640px){.order-title{font-size:.95rem;margin-bottom:.25rem;}}
+.order-seller{font-size:.75rem;color:rgba(10,79,72,.7);margin-bottom:.3rem;}
+@media(min-width:640px){.order-seller{font-size:.8125rem;margin-bottom:.35rem;}}
+.order-price-row{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;}
+.order-price{font-family:var(--f-head);font-weight:700;font-size:.95rem;color:var(--deep);}
+@media(min-width:640px){.order-price{font-size:1.05rem;}}
+
+.order-progress-peek{background:var(--mist3);border-radius:.65rem;padding:.55rem .75rem;display:flex;align-items:center;gap:.5rem;margin-bottom:.85rem;font-size:.75rem;color:var(--ever2);}
+@media(min-width:640px){.order-progress-peek{border-radius:.75rem;padding:.65rem .85rem;gap:.65rem;margin-bottom:.95rem;font-size:.8125rem;}}
+.order-progress-peek > .bx{color:var(--ever3);flex:none;}
+
+.order-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding-top:.75rem;border-top:1px dashed var(--mist2);font-size:.78rem;}
+@media(min-width:640px){.order-foot{padding-top:.85rem;font-size:.8125rem;}}
+.order-hint{color:var(--ever3);font-weight:600;display:inline-flex;align-items:center;gap:.25rem;}
+
+/* Empty State */
+.empty{display:none;text-align:center;max-width:28rem;margin:2.5rem auto;padding:2rem 1rem;}
+.empty.show{display:block;}
+.empty .ico{width:3.5rem;height:3.5rem;margin:0 auto 1rem;border-radius:.85rem;background:var(--mist);color:var(--ever);display:flex;align-items:center;justify-content:center;font-size:1.65rem;}
+@media(min-width:640px){.empty .ico{width:4rem;height:4rem;border-radius:1rem;margin:0 auto 1.25rem;font-size:1.9rem;}}
+.empty h3{font-weight:600;font-size:1.15rem;margin-bottom:.4rem;}
+@media(min-width:640px){.empty h3{font-size:1.25rem;margin-bottom:.5rem;}}
+.empty p{font-size:.8125rem;color:rgba(10,79,72,.75);margin-bottom:1.25rem;}
+@media(min-width:640px){.empty p{font-size:.875rem;margin-bottom:1.5rem;}}
+
+/* ===== MODAL SYSTEM (Full Responsif Bottom-Sheet / Dialog) ===== */
+.modal-root{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(1,38,34,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:0;transition:opacity .25s ease;}
+.modal-root.open{display:flex;opacity:1;}
+.modal-panel{position:relative;background:#fff;width:90%;max-height:90vh;max-height:90dvh;overflow-y:auto;border-radius:1.25rem;box-shadow:var(--sh-soft);animation:sheetUp .35s cubic-bezier(.2,.8,.2,1);overscroll-behavior:contain;}
+.modal-panel::-webkit-scrollbar {
+  display: none;
+}
+@keyframes sheetUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
+@media(min-width:768px){
+  .modal-root{align-items:center;padding:1.5rem;}
+  .modal-panel{max-width:54rem;border-radius:1.5rem;max-height:90vh;}
+  .modal-panel.sm{max-width:32rem;}
+  .modal-panel.md{max-width:44rem;}
+}
+.modal-head{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:#fff;border-bottom:1px solid var(--mist2);padding:.95rem 1.15rem;}
+@media(min-width:640px){.modal-head{padding:1.15rem 1.5rem;gap:1rem;}}
+.modal-head h2{font-weight:700;font-size:1.1rem;}
+@media(min-width:640px){.modal-head h2{font-size:1.25rem;}}
+.icon-btn{width:2.25rem;height:2.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ever2);transition:background-color .2s;flex:none;}
+@media(min-width:640px){.icon-btn{width:2.5rem;height:2.5rem;}}
+.icon-btn:hover{background:var(--mist);}
+/* Header modal detail pesanan: responsif di HP (badge status turun ke baris bawah) */
+#modalOrderNo{overflow-wrap:anywhere;}
+@media(max-width:639px){
+  #orderDetailModal .modal-head{flex-wrap:wrap;row-gap:.6rem;}
+}
+/* Popup detail pesanan: anti-jebol & lebar aman di HP */
+#orderDetailModal .modal-panel{overflow-x:clip;}
+#orderDetailModal .step-content{min-width:0;overflow-wrap:break-word;}
+#orderDetailModal .space-y-1\.5 > div{gap:.75rem;}
+#orderDetailModal .space-y-1\.5 b{white-space:nowrap;text-align:right;}
+#modalResiCode{overflow-wrap:anywhere;}
+@media(max-width:767px){
+  #orderDetailModal .modal-panel{padding-bottom:env(safe-area-inset-bottom);}
+}
+
+/* Input and Form Fields */
+.fgrid{display:grid;grid-template-columns:1fr;gap:.85rem;}
+@media(min-width:640px){.fgrid{gap:1rem;} .fgrid.two{grid-template-columns:1fr 1fr;}}
+.field label{display:block;font-size:.8125rem;font-weight:600;color:var(--ever2);margin-bottom:.35rem;}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--mist2);background:#fff;border-radius:.75rem;padding:.7rem .85rem;font-size:.875rem;color:var(--deep);transition:border-color .2s,box-shadow .2s;}
+@media(min-width:640px){.field input,.field textarea,.field select{padding:.75rem .9rem;font-size:.9375rem;}}
+.field textarea{resize:vertical;min-height:5rem;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--ever3);box-shadow:0 0 0 3px rgba(18,101,92,.18);}
+.field .err{display:none;font-size:.75rem;color:var(--danger);margin-top:.35rem;}
+.field.bad input,.field.bad textarea,.field.bad select{border-color:var(--danger);}
+.field.bad .err{display:block;}
+
+/* Timeline Stepper (Proses Pesanan Responsif) */
+.timeline-wrap{margin:1rem 0;}
+@media(min-width:640px){.timeline-wrap{margin:1.25rem 0;}}
+.timeline-step{display:grid;grid-template-columns:2rem 1fr;gap:.65rem;position:relative;padding-bottom:1.15rem;}
+@media(min-width:640px){.timeline-step{grid-template-columns:2.5rem 1fr;gap:1rem;padding-bottom:1.5rem;}}
+.timeline-step:last-child{padding-bottom:0;}
+.timeline-step::before{content:'';position:absolute;left:1rem;top:1.8rem;bottom:0;width:2px;background:var(--mist2);}
+@media(min-width:640px){.timeline-step::before{left:1.2rem;top:2.2rem;}}
+.timeline-step:last-child::before{display:none;}
+.timeline-step.done::before{background:var(--ever3);}
+
+.step-circle{width:2rem;height:2rem;border-radius:50%;background:#fff;border:2px solid var(--mist2);color:var(--ever2);display:flex;align-items:center;justify-content:center;font-size:.95rem;position:relative;z-index:2;transition:all .3s ease;}
+@media(min-width:640px){.step-circle{width:2.4rem;height:2.4rem;font-size:1.15rem;}}
+.timeline-step.done .step-circle{background:var(--ever);border-color:var(--ever);color:var(--mist);}
+.timeline-step.active .step-circle{background:#E0F2FE;border-color:#0284C7;color:#0284C7;box-shadow:0 0 0 4px rgba(2,132,199,.15);}
+
+.step-content b{display:block;font-size:.875rem;font-weight:600;color:var(--deep);}
+@media(min-width:640px){.step-content b{font-size:.9375rem;}}
+.step-content p{font-size:.78rem;color:rgba(10,79,72,.75);margin-top:.15rem;line-height:1.4;}
+@media(min-width:640px){.step-content p{font-size:.8125rem;margin-top:.2rem;}}
+.step-content .time{font-size:.72rem;color:rgba(10,79,72,.55);margin-top:.25rem;}
+.step-highlight{background:var(--mist3);border-radius:.55rem;padding:.4rem .65rem;margin-top:.35rem;font-size:.75rem;color:var(--ever);border-left:3px solid var(--ever3);}
+@media(min-width:640px){.step-highlight{border-radius:.6rem;padding:.5rem .75rem;margin-top:.4rem;font-size:.8125rem;}}
+
+/* Toast */
+.toast{position:fixed;bottom:1rem;left:1rem;right:1rem;z-index:300;background:var(--deep);color:var(--mist);padding:.85rem 1rem;border-radius:.75rem;box-shadow:var(--sh-soft);display:flex;align-items:center;gap:.65rem;font-size:.8125rem;animation:fadeInUp .4s ease;transition:opacity .5s,transform .5s;}
+@media(min-width:640px){.toast{bottom:1.5rem;left:1.5rem;right:auto;max-width:24rem;padding:1rem 1.25rem;gap:.75rem;font-size:.875rem;}}
+
+/* Back to top */
+.totop{position:fixed;bottom:1.25rem;right:1.25rem;z-index:50;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--ever);color:var(--mist);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(1rem);transition:all .3s;}
+@media(min-width:640px){.totop{bottom:1.5rem;right:1.5rem;width:3rem;height:3rem;}}
+.totop.show{opacity:1;pointer-events:auto;transform:none;}
+.totop:hover{background:var(--deep);}
+
+/* Print Styles */
+@media print {
+  #navbar, #hero, .stats-float, .tab-container, .filter-bar, #viewSelling, #viewBuying, footer, #backToTopBtn, .toast {
+    display: none !important;
+  }
+  .modal-root {
+    position: static !important;
+    display: block !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  .modal-panel {
+    max-width: 100% !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .modal-head button, #btnCopyResi, #btnChatSeller, #btnPrintInvoice, #btnConfirmDelivered, [data-close] {
+    display: none !important;
+  }
+}
+
+/* ===== Fallback thumbnail Boxicons & ikon timeline ===== */
+.thumb-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .5s ease;}
+.thumb-fb i{font-size:3.5rem;line-height:1;color:rgba(236,229,240,.9);}
+.order-thumb .thumb-fb i,#modalItemThumb .thumb-fb i,#editThumbPreview .thumb-fb i{font-size:1.75rem;}
+.step-circle .bx{font-size:1.1em;line-height:1;}
+</style>
+</head>
+<body>
+
+
+<!-- ==================== NAVBAR ==================== -->
+<header id="navbar">
+  <div class="container nav-inner">
+    <a href="beranda.html" class="brand" aria-label="GreenWise, ke beranda">
+      <img src="assets/img/logo-greenwise.svg" width="40" height="40" alt="">
+      <span class="brand-word">GreenWise</span>
+    </a>
+
+    <nav class="nav-pill" aria-label="Navigasi utama">
+      <a href="beranda.html">Beranda</a>
+      <a href="greenhub.html">Green Hub</a>
+      <a href="marketplace.html">Marketplace</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="profile-wrap">
+        <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false">
+          <img class="avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Foto profil Dwi Anugrah">
+          <span class="profile-txt">
+            <b>Dwi Anugrah</b>
+            <span><i class="bx bxs-star" style="font-size:.7rem" aria-hidden="true"></i> <span id="navPointsTxt">1.240 poin</span></span>
+          </span>
+          <i class="bx bx-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="profileMenu" class="pmenu" role="menu">
+          <div class="pmenu-head"><b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span></div>
+          <a href="dashboard.html" role="menuitem"><i class="bx bx-grid-alt" aria-hidden="true"></i> Dashboard</a>
+          <a href="riwayat.html" role="menuitem"><i class="bx bx-store" aria-hidden="true"></i> Riwayat & Kelola Produk</a>
+          <hr>
+          <a href="#" id="logoutBtn" role="menuitem"><i class="bx bx-log-out" aria-hidden="true"></i> Keluar</a>
+        </div>
+      </div>
+      <button id="burgerBtn" class="burger" aria-label="Buka menu" aria-expanded="false">
+        <i class="bx bx-menu" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="beranda.html">Beranda</a>
+    <a href="greenhub.html">Green Hub</a>
+    <a href="marketplace.html">Marketplace</a>
+  </div>
+</header>
+<div id="overlayBg" class="ov"></div>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section id="hero" class="hero">
+    <div class="hero-in">
+    <span class="hero-eyebrow">
+      <i class='bx bx-leaf'></i> Riwayat Aktivitas Ku
+    </span>
+    <h1>Riwayat & Kelola <em>Produk</em><span style="color:var(--gold)">.</span></h1>
+  </div>
+</section>
+
+<!-- ==================== STATS ROW (Compact Dashboard Overview) ==================== -->
+<div class="stats-float">
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-ico green"><i class='bx bx-store-alt'></i></div>
+      <div>
+        <div class="stat-val" id="statSellingCount">8</div>
+        <div class="stat-lbl">Produk Dijual (Aktif)</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico gold"><i class='bx bx-wallet-alt'></i></div>
+      <div>
+        <div class="stat-val" id="statTotalEarnings">Rp 10.4M</div>
+        <div class="stat-lbl">Total Nilai Penjualan</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico blue"><i class='bx bx-package'></i></div>
+      <div>
+        <div class="stat-val" id="statBoughtCount">6</div>
+        <div class="stat-lbl">Pesanan Dibeli</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ico purple"><i class='bx bx-leaf'></i></div>
+      <div>
+        <div class="stat-val" id="statEcoPoints">1.240</div>
+        <div class="stat-lbl">Green Coins Diperoleh</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MAIN CONTENT SECTION ==================== -->
+<main class="section-main">
+  <div class="container">
+
+    <!-- TAB SWITCHER (Compact Segmented Switcher) -->
+    <div class="tab-container">
+      <div class="tab-switcher" role="tablist" aria-label="Pilih jenis riwayat">
+        <button type="button" class="tab-btn active" id="tabSellBtn" role="tab" aria-selected="true" aria-controls="viewSelling">
+          <i class='bx bx-shopping-bag text-base'></i>
+          <span>Dijual</span>
+          <span class="badge-count" id="badgeSellCount">8</span>
+        </button>
+        <button type="button" class="tab-btn" id="tabBuyBtn" role="tab" aria-selected="false" aria-controls="viewBuying">
+          <i class='bx bx-shopping-bag text-base'></i>
+          <span>Dibeli</span>
+          <span class="badge-count" id="badgeBuyCount">6</span>
+        </button>
+      </div>
+
+      <!-- Action Button (Marketplace) -->
+      <div class="w-full md:w-auto md:shrink-0">
+        <a href="marketplace.html" class="btn btn-line btn-sm mp-btn w-full justify-center">
+          <i class='bx bx-store text-base'></i>
+          <span>Ke Marketplace</span>
+        </a>
+      </div>
+      <p class="mp-note">Untuk menjual produk ke Marketplace, barang bekas harus melalui tahapan proses analisa terlebih dahulu di Dashboard.</p>
+    </div>
+
+    <!-- FILTER & SEARCH BAR -->
+    <div class="filter-bar">
+      <!-- Search Input -->
+      <div class="search-box">
+        <i class="bx bx-search" aria-hidden="true"></i>
+        <input type="search" id="commonSearch" placeholder="Cari nama barang, pesanan, atau kategori...">
+      </div>
+
+      <!-- Filter Pills (Dinamis sesuai Tab Aktif) -->
+      <div id="subFilterRow" class="filter-pills" role="group" aria-label="Filter kategori status">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW 1: PRODUK YANG DIJUAL (Seller Cards) -->
+    <section id="viewSelling" role="tabpanel" aria-labelledby="tabSellBtn">
+      <div id="gridSelling" class="grid-items">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- VIEW 2: PRODUK YANG DIBELI (Buyer Order Cards) -->
+    <section id="viewBuying" role="tabpanel" aria-labelledby="tabBuyBtn" style="display:none;">
+      <div id="gridBuying" class="grid-orders">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyView" class="empty">
+      <div class="ico"><i class='bx bx-search-alt text-3xl'></i></div>
+      <h3 id="emptyTitle">Tidak ada produk ditemukan</h3>
+      <p id="emptyDesc">Coba kata kunci pencarian lain atau pilih filter status yang berbeda.</p>
+      <button type="button" id="resetFilterBtn" class="btn btn-ever">Reset Pencarian</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ==================== MODAL: EDIT PRODUK JUALAN ==================== -->
+<div id="editProductModal" class="modal-root" aria-hidden="true">
+  <div class="modal-panel md" role="dialog" aria-modal="true" aria-labelledby="editProdTitle">
+    <div class="modal-head">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center">
+          <i class="bx bx-edit" style="font-size:1.1em" aria-hidden="true"></i>
+        </div>
+        <h2 id="editProdTitle">Edit Detail Produk Jualan</h2>
+      </div>
+      <button type="button" class="icon-btn" data-close aria-label="Tutup form edit"><i class="bx bx-x" aria-hidden="true"></i></button>
+    </div>
+
+    <form id="editProductForm" class="p-4 sm:p-6 flex flex-col gap-4 sm:gap-5" novalidate>
+      <input type="hidden" id="editId">
+
+      <!-- Preview Header Mini -->
+      <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-none bg-slate-200" id="editThumbPreview"></div>
+        <div class="flex-1 min-w-0">
+          <span class="text-xs uppercase tracking-wider font-semibold text-emerald-700" id="editCatLabel">ELEKTRONIK</span>
+          <h4 class="font-bold text-sm text-slate-800 truncate" id="editNamePreview">Nama Produk</h4>
+          <span class="text-xs text-slate-500">ID Produk: #<span id="editIdPreview">101</span></span>
+        </div>
+      </div>
+
+      <div class="fgrid">
+        <div class="field" data-field="name">
+          <label for="editName">Nama Produk <span class="text-red-500">*</span></label>
+          <input type="text" id="editName" placeholder="Contoh: Laptop ThinkPad T480 i5 8GB/256GB" required>
+          <p class="err">Nama produk wajib diisi minimal 5 karakter.</p>
+        </div>
+      </div>
+
+      <div class="fgrid two">
+        <div class="field" data-field="cat">
+          <label for="editCat">Kategori <span class="text-red-500">*</span></label>
+          <select id="editCat">
+            <option value="Elektronik">Elektronik</option>
+            <option value="Pakaian">Pakaian</option>
+            <option value="Furnitur">Furnitur</option>
+            <option value="Sepatu & Tas">Sepatu & Tas</option>
+            <option value="Buku">Buku</option>
+            <option value="Rumah Tangga">Rumah Tangga</option>
+            <option value="Olahraga">Olahraga</option>
+          </select>
+        </div>
+
+        <div class="field" data-field="cond">
+          <label for="editCond">Kondisi Barang <span class="text-red-500">*</span></label>
+          <select id="editCond">
+            <option value="Seperti baru">Seperti baru</option>
+            <option value="Baik">Baik</option>
+            <option value="Cukup">Cukup</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fgrid two">
+        <div class="field" data-field="price">
+          <label for="editPrice">Harga Jual (Rp) <span class="text-red-500">*</span></label>
+          <input type="number" id="editPrice" min="1000" step="1000" placeholder="Contoh: 4200000" required>
+          <p class="text-xs text-slate-500 mt-1" id="priceDisplayHint">Format: Rp 0</p>
+          <p class="err">Masukkan harga yang valid (minimal Rp 1.000).</p>
+        </div>
+
+        <div class="field" data-field="stock">
+          <label for="editStock">Jumlah Stok Unit <span class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btnStockMinus" class="w-11 h-11 rounded-xl border border-slate-300 flex items-center justify-center font-bold text-lg hover:bg-slate-100 transition active:scale-95">-</button>
+            <input type="number" id="editStock" min="0" max="999" class="text-center font-bold h-11" required>
+            <button type="button" id="btnStockPlus" class="w-11 h-11 rounded-xl border border-slate-300 flex items-center justify-center font-bold text-lg hover:bg-slate-100 transition active:scale-95">+</button>
+          </div>
+          <p class="err">Jumlah stok tidak boleh negatif.</p>
+        </div>
+      </div>
+
+      <div class="fgrid">
+        <div class="field" data-field="desc">
+          <label for="editDesc">Detail & Deskripsi Produk</label>
+          <textarea id="editDesc" rows="3" placeholder="Jelaskan kondisi kelengkapan, garansi toko, minus, atau alasan dijual..."></textarea>
+          <p class="err">Deskripsi minimal 10 karakter.</p>
+        </div>
+      </div>
+
+      <div class="fgrid two">
+        <div class="field" data-field="city">
+          <label for="editCity">Lokasi Pengiriman (Kota)</label>
+          <input type="text" id="editCity" placeholder="Contoh: Bandung">
+        </div>
+        <div class="field" data-field="co2">
+          <label for="editCo2">Estimasi CO₂ Dihemat (kg)</label>
+          <input type="number" id="editCo2" min="1" placeholder="Contoh: 180">
+        </div>
+      </div>
+
+      <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-4 border-t border-slate-200">
+        <button type="button" class="btn btn-line w-full sm:w-auto justify-center" data-close>Batal</button>
+        <button type="submit" id="saveProductBtn" class="btn btn-ever w-full sm:w-auto justify-center">
+          <i class="bx bx-check" style="font-size:1.1em" aria-hidden="true"></i>
+          <span>Simpan Perubahan</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DETAIL PESANAN & PROSES PESANAN (POPUP) ==================== -->
+<div id="orderDetailModal" class="modal-root" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalOrderNo">
+    <div class="modal-head">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+        <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center shrink-0">
+          <i class="bx bx-package" style="font-size:1.25em" aria-hidden="true"></i>
+        </div>
+        <div class="min-w-0">
+          <h2 id="modalOrderNo" class="text-sm sm:text-lg">Pesanan #ORD-GW-260928-8421</h2>
+          <span class="text-xs text-slate-500" id="modalOrderDate">Dipesan pada: 28 September 2026, 08:30 WIB</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 sm:p-6 flex flex-col gap-5 sm:gap-6">
+
+      <!-- 1. PROSES PESANAN & TRACKING TIMELINE -->
+      <div class="bg-gradient-to-b from-slate-50 to-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
+            <i class='bx bx-map-pin text-emerald-700 text-lg'></i>
+            <span>Proses Pesanan & Pelacakan</span>
+          </h3>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 w-fit" id="modalCourierInfo">J&T Express · JP82910482910</span>
+        </div>
+
+        <!-- Vertical Stepper Timeline -->
+        <div class="timeline-wrap" id="trackingTimeline">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Live Resi Box -->
+        <div class="mt-4 p-3 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+          <div class="flex items-center gap-2 text-slate-700">
+            <i class="bx bx-truck text-slate-500" aria-hidden="true"></i>
+            <span>No. Resi: <strong class="font-mono text-slate-900" id="modalResiCode">JP82910482910</strong></span>
+          </div>
+          <button type="button" id="btnCopyResi" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-300 hover:bg-slate-100 font-semibold text-slate-700 transition w-full sm:w-auto">
+            <i class="bx bx-copy" style="font-size:.9em" aria-hidden="true"></i>
+            <span>Salin No. Resi</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. DETAIL PRODUK YANG DIBELI -->
+      <div class="border border-slate-200 rounded-2xl p-4 sm:p-5">
+        <h3 class="font-bold text-base text-slate-900 mb-3 flex items-center gap-2">
+          <i class='bx bx-shopping-bag text-emerald-700 text-lg'></i>
+          <span>Rincian Barang yang Dipesan</span>
+        </h3>
+        <div class="flex items-start gap-3 sm:gap-4">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-none bg-slate-100" id="modalItemThumb"></div>
+          <div class="flex-1 min-w-0">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800" id="modalItemCat">ELEKTRONIK</span>
+            <h4 class="font-bold text-sm sm:text-base text-slate-900 mt-1 break-words" id="modalItemTitle">Nama Barang</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Penjual: <span class="font-medium text-slate-800" id="modalSellerName">Ayu (Tangerang)</span></p>
+            <div class="mt-2 flex items-baseline justify-between flex-wrap gap-1">
+              <span class="text-xs text-slate-600">Jumlah: <b id="modalItemQty">1 unit</b></span>
+              <span class="font-bold text-sm sm:text-base text-emerald-800" id="modalItemPrice">Rp 950.000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. ALAMAT PENGIRIMAN & PENERIMA -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+        <div class="border border-slate-200 rounded-xl p-3.5 sm:p-4">
+          <h4 class="font-bold text-xs uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-1.5">
+            <i class="bx bx-map" style="font-size:1.1em" aria-hidden="true"></i>
+            <span>Alamat Pengiriman</span>
+          </h4>
+          <p class="text-sm font-semibold text-slate-800" id="modalBuyerName">Dwi Anugrah</p>
+          <p class="text-xs text-slate-600 mt-0.5" id="modalBuyerPhone">0812-3456-7890</p>
+          <p class="text-xs text-slate-700 mt-1 leading-relaxed" id="modalBuyerAddress">Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142</p>
+        </div>
+
+        <div class="border border-slate-200 rounded-xl p-3.5 sm:p-4 bg-slate-50/50">
+          <h4 class="font-bold text-xs uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-1.5">
+            <i class='bx bx-receipt text-slate-500 text-sm'></i>
+            <span>Rincian Pembayaran</span>
+          </h4>
+          <div class="space-y-1.5 text-xs text-slate-600">
+            <div class="flex justify-between"><span>Harga Barang</span><b id="modalCostSub">Rp 950.000</b></div>
+            <div class="flex justify-between"><span>Ongkos Kirim</span><b id="modalCostShip">Rp 25.000</b></div>
+            <div class="flex justify-between"><span>Biaya Layanan</span><b>Rp 2.000</b></div>
+            <div class="flex justify-between text-emerald-700" id="modalDiscRow"><span>Diskon Green Coins</span><b id="modalCostDisc">-Rp 5.000</b></div>
+            <div class="pt-2 border-t border-slate-200 flex justify-between items-baseline text-sm font-bold text-slate-900">
+              <span>Total Pembayaran</span>
+              <span class="text-base text-emerald-800" id="modalCostTotal">Rp 972.000</span>
+            </div>
+            <div class="pt-1 text-[11px] text-slate-500 flex justify-between flex-wrap gap-x-3 gap-y-1">
+              <span>Metode: <strong id="modalPayMethod">Midtrans (QRIS)</strong></span>
+              <span class="text-emerald-700 font-semibold">+50 Green Coins</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. AKSI INTERAKTIF PESANAN -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-slate-200">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <a id="btnChatSeller" href="#" target="_blank" class="btn btn-line btn-sm flex-1 sm:flex-none justify-center">
+            <i class='bx bxl-whatsapp text-lg text-emerald-600'></i>
+            <span>Hubungi</span>
+          </a>
+          <button type="button" id="btnPrintInvoice" class="btn btn-line btn-sm flex-1 sm:flex-none justify-center">
+            <i class='bx bx-printer text-base'></i>
+            <span>Cetak Invoice</span>
+          </button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto" id="modalActionContainer">
+          <!-- Button 'Konfirmasi Selesai' if status is Shipping -->
+          <button type="button" id="btnConfirmDelivered" class="btn btn-ever btn-sm w-full sm:w-auto justify-center" style="display:none;">
+            <i class="bx bx-check" style="font-size:1.1em" aria-hidden="true"></i>
+            <span>Konfirmasi Barang Diterima</span>
+          </button>
+          <button type="button" class="btn btn-mist btn-sm w-full sm:w-auto justify-center" data-close>Tutup</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <a href="beranda.html" class="f-brand">
+          <img src="assets/img/logo-greenwise.svg" width="38" height="38" alt="">
+          GreenWise
+        </a>
+        <p class="f-about">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><i class="bx bxl-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Facebook"><i class="bx bxl-facebook" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bx bxl-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="TikTok"><i class="bx bxl-tiktok" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>Navigasi</h5>
+        <ul>
+          <li><a href="beranda.html">Beranda</a></li>
+          <li><a href="greenhub.html">Green Hub</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Sumber daya</h5>
+        <ul>
+          <li><a href="greenhub.html">Panduan daur ulang</a></li>
+          <li><a href="#">Blog lingkungan</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Pusat bantuan</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Hubungi kami</h5>
+        <ul>
+          <li class="ic"><i class="bx bx-envelope" aria-hidden="true"></i> halo@greenwises.web.app</li>
+          <li class="ic"><i class="bx bx-phone" aria-hidden="true"></i> +62 812 3456 7890</li>
+          <li class="ic"><i class="bx bx-map" aria-hidden="true"></i> Bogor, Indonesia</li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© 2026 GreenWise. Semua hak dilindungi.</p>
+      <p>Dibuat untuk bumi yang lebih hijau.</p>
+    </div>
+  </div>
+  <div class="f-mark" aria-hidden="true">GreenWise</div>
+  <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas"><i class="bx bx-up-arrow-alt" aria-hidden="true"></i></button>
+</footer>
+
+<!-- ==================== LOGIKA JAVASCRIPT ==================== -->
+<script>
+/* ===================== Helper DOM & Formatter ===================== */
+var $ = function(s, r){ return (r || document).querySelector(s); };
+var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var rp = function(n){ return 'Rp ' + Math.round(Number(n) || 0).toLocaleString('id-ID'); };
+var esc = function(s){ return String(s || '').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+/* ===================== Theme & SVG Thumbnails ===================== */
+var THEME = {
+  'Elektronik':['#0A4F48','#12655C','chip'],
+  'Pakaian':['#003B36','#0A4F48','shirt'],
+  'Furnitur':['#12655C','#0A4F48','chair'],
+  'Sepatu & Tas':['#0A4F48','#003B36','bag'],
+  'Buku':['#012622','#12655C','book'],
+  'Rumah Tangga':['#003B36','#12655C','cup'],
+  'Olahraga':['#12655C','#003B36','ball']
+};
+
+var THEME_ICON = {chip:'bx-chip', shirt:'bxs-t-shirt', chair:'bx-chair', bag:'bx-shopping-bag', book:'bx-book', cup:'bx-home', ball:'bx-football', box:'bx-package'};
+
+function thumbFallbackHTML(cat){
+  var t = THEME[cat] || ['#003B36','#0A4F48','box'];
+  return '<div class="thumb-fb" style="background:linear-gradient(135deg,' + t[0] + ',' + t[1] + ')" aria-hidden="true">' +
+    '<i class="bx ' + (THEME_ICON[t[2]] || 'bx-package') + '"></i></div>';
+}
+function thumbFallback(el){
+  el.outerHTML = thumbFallbackHTML(el.getAttribute('data-cat'));
+}
+function generateThumb(p, prefix){
+  if(p.img){
+    return '<img src="' + p.img + '" alt="' + esc(p.n || p.name || 'Produk') + '" data-cat="' + esc(p.cat || '') + '" loading="lazy" class="w-full h-full" style="object-fit:cover;background:#0A4F48;" onerror="thumbFallback(this)">';
+  }
+  return thumbFallbackHTML(p.cat);
+}
+
+/* ===================== Toast Notifications ===================== */
+function showToast(msg, icon){
+  var old = $('.toast');
+  if(old) old.remove();
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.setAttribute('role', 'status');
+  t.innerHTML = '<i class="bx ' + (icon || 'bx-check-circle') + ' text-xl text-emerald-400"></i><span>' + esc(msg) + '</span>';
+  document.body.appendChild(t);
+  setTimeout(function(){
+    t.style.opacity = '0';
+    t.style.transform = 'translateY(15px)';
+    setTimeout(function(){ t.remove(); }, 500);
+  }, 3000);
+}
+
+/* ===================== Navbar Scroll & Dropdown ===================== */
+var navbar = $('#navbar'), hero = $('#hero');
+function handleNavScroll(){
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}
+window.addEventListener('scroll', handleNavScroll, {passive:true});
+handleNavScroll();
+
+var burgerBtn = $('#burgerBtn'), mobileMenu = $('#mobileMenu');
+burgerBtn.addEventListener('click', function(){
+  var open = mobileMenu.classList.toggle('open');
+  burgerBtn.setAttribute('aria-expanded', open);
+  burgerBtn.innerHTML = '<i class="bx bx-' + (open ? 'x' : 'menu') + '" aria-hidden="true"></i>';
+  if(open) navbar.classList.add('scrolled'); else handleNavScroll();
+});
+
+var profileBtn = $('#profileBtn'), profileMenu = $('#profileMenu'), overlayBg = $('#overlayBg');
+function toggleProfile(show){
+  profileMenu.classList.toggle('open', show);
+  overlayBg.classList.toggle('show', show);
+  profileBtn.setAttribute('aria-expanded', show);
+}
+profileBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleProfile(!profileMenu.classList.contains('open')); });
+overlayBg.addEventListener('click', function(){ toggleProfile(false); });
+$('#logoutBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  toggleProfile(false);
+  showToast('Kamu telah keluar dari sesi demo GreenWise.', 'bx-log-out');
+});
+
+/* ===================== DATA INITIALIZATION & LOCALSTORAGE ===================== */
+var STORAGE_KEY_SELLING = 'gw_products_selling_v2';
+var STORAGE_KEY_ORDERS  = 'gw_products_orders_v2';
+
+var DEFAULT_SELLING = [
+  {
+    id: 101,
+    name: 'Sneakers Air Max ukuran 42',
+    cat: 'Sepatu & Tas',
+    price: 780000,
+    stock: 2,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 24,
+    soldCount: 3,
+    img: 'assets/img/marketplace/sepatu.jpg',
+    desc: 'Sol masih tebal dan empuk, upper bersih tanpa sobek, nyaman untuk harian maupun olahraga ringan.'
+  },
+  {
+    id: 102,
+    name: 'Rice cooker 1,8 liter',
+    cat: 'Rumah Tangga',
+    price: 120000,
+    stock: 1,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 14,
+    soldCount: 2,
+    img: 'assets/img/marketplace/ricecooker.jpg',
+    desc: 'Fungsi masak dan penghangat normal, panci anti lengket mulus, lengkap sendok dan gelas takar.'
+  },
+  {
+    id: 103,
+    name: 'Tas selempang kulit sintetis',
+    cat: 'Sepatu & Tas',
+    price: 145000,
+    stock: 4,
+    cond: 'Seperti baru',
+    city: 'Bandung',
+    co2: 10,
+    soldCount: 7,
+    img: 'assets/img/marketplace/dompetatautas.jpg',
+    desc: 'Kulit sintetis mulus tanpa retak, resleting lancar, tali panjang bisa diatur, nyaris seperti baru.'
+  },
+  {
+    id: 104,
+    name: 'Kipas angin berdiri 16 inci',
+    cat: 'Rumah Tangga',
+    price: 165000,
+    stock: 2,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 18,
+    soldCount: 1,
+    img: 'assets/img/marketplace/kipasangin.jpg',
+    desc: 'Angin kencang 3 kecepatan, putaran stabil tidak berisik, tinggi bisa diatur, baling-baling bersih.'
+  },
+  {
+    id: 105,
+    name: 'Sepeda lipat 20 inci',
+    img: 'assets/img/marketplace/sepeda.jpg',
+    cat: 'Olahraga',
+    price: 1800000,
+    stock: 0,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 120,
+    soldCount: 4,
+    desc: 'Lipatan engsel aman dan kokoh, rem cakram responsif, ban Kenda masih tebal siap gowes santai maupun komuter.'
+  },
+  {
+    id: 106,
+    name: 'Blender 1,5 liter',
+    img: 'assets/img/marketplace/blender.jpg',
+    cat: 'Rumah Tangga',
+    price: 175000,
+    stock: 3,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 12,
+    soldCount: 5,
+    desc: 'Tabung kaca tebal mulus tanpa retak, pisau bergerigi tajam stainless steel, motor bertenaga dengan 5 pilihan kecepatan.'
+  },
+  {
+    id: 107,
+    name: 'Tas ransel outdoor 35 liter',
+    img: 'assets/img/marketplace/dompetatautas.jpg',
+    cat: 'Sepatu & Tas',
+    price: 260000,
+    stock: 1,
+    cond: 'Baik',
+    city: 'Bandung',
+    co2: 13,
+    soldCount: 3,
+    desc: 'Bahan cordura tahan gores dan cipratan air, bantalan punggung berongga busa empuk, sudah termasuk raincover bawaan.'
+  },
+  {
+    id: 108,
+    name: 'Tas dari kemasan minuman instan',
+    cat: 'Sepatu & Tas',
+    price: 95000,
+    stock: 2,
+    cond: 'Seperti baru',
+    city: 'Bandung',
+    co2: 25,
+    soldCount: 8,
+    img: 'assets/img/marketplace/tasdarikemasan.jpg',
+    desc: 'Tas anyaman kemasan minuman yang kuat dan unik, jahitan rapi, cocok untuk belanja harian.'
+  }
+];
+
+var DEFAULT_ORDERS = [
+  {
+    orderId: 'ORD-GW-260928-8421',
+    dateStr: '28 Sep 2026, 08:30 WIB',
+    status: 'Sedang Dikirim', // 'Diproses' | 'Sedang Dikirim' | 'Selesai'
+    statusKey: 'shipping',
+    product: {
+      id: 29,
+      name: 'Raket badminton 2 pcs + tas',
+      cat: 'Olahraga',
+      price: 320000,
+      qty: 1,
+      seller: 'Oscar',
+      city: 'Surabaya',
+      phone: '0813-8821-9011',
+      img: 'assets/img/marketplace/rakte-bulutangkis.jpg'
+    },
+    shipping: {
+      courier: 'J&T Express',
+      resi: 'JP82910482910',
+      service: 'Reguler (1-2 hari)',
+      fee: 25000
+    },
+    payment: {
+      subtotal: 320000,
+      shippingFee: 25000,
+      serviceFee: 2000,
+      coinDiscount: 5000,
+      total: 342000,
+      method: 'Midtrans · QRIS (GoPay/BCA)'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Pesanan berhasil dikonfirmasi oleh sistem', time: '28 Sep 2026, 08:30 WIB', done: true },
+      { step: 'Pembayaran Terverifikasi', note: 'Pembayaran diverifikasi via Midtrans QRIS', time: '28 Sep 2026, 08:32 WIB', done: true },
+      { step: 'Diserahkan ke Kurir', note: 'Barang telah di-pickup oleh kurir J&T Express', time: '28 Sep 2026, 14:15 WIB', done: true },
+      { step: 'Dalam Perjalanan Ekspedisi', note: 'Paket sedang transit di Gateway Bandung [Hub Barat]', time: '28 Sep 2026, 19:40 WIB', done: true, active: true },
+      { step: 'Pesanan Diterima', note: 'Estimasi tiba 29 Sep 2026 ke alamat tujuan', time: 'Estimasi: 29 Sep 2026', done: false }
+    ]
+  },
+  {
+    orderId: 'ORD-GW-260927-5192',
+    dateStr: '27 Sep 2026, 16:15 WIB',
+    status: 'Diproses',
+    statusKey: 'processing',
+    product: {
+      id: 30,
+      name: 'Bola basket ukuran 7',
+      cat: 'Olahraga',
+      price: 150000,
+      qty: 1,
+      seller: 'Putri',
+      city: 'Depok',
+      phone: '0818-4491-0231',
+      img: 'assets/img/marketplace/basket.jpg'
+    },
+    shipping: {
+      courier: 'SiCepat Cargo',
+      resi: 'SC9918234812',
+      service: 'GOKIL Cargo',
+      fee: 40000
+    },
+    payment: {
+      subtotal: 150000,
+      shippingFee: 40000,
+      serviceFee: 2000,
+      coinDiscount: 0,
+      total: 192000,
+      method: 'Transfer Manual · Rekening BCA'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Checkout pesanan berhasil dilakukan', time: '27 Sep 2026, 16:15 WIB', done: true },
+      { step: 'Pembayaran Diverifikasi', note: 'Bukti transfer dicek dan disetujui penjual', time: '27 Sep 2026, 16:45 WIB', done: true },
+      { step: 'Penjual Mengemas Barang', note: 'Penjual sedang mengemas bola dengan bubble wrap tebal', time: '28 Sep 2026, 09:00 WIB', done: true, active: true },
+      { step: 'Penjemputan Kurir', note: 'Menunggu kurir SiCepat melakukan pickup', time: 'Dijadwalkan hari ini', done: false },
+      { step: 'Pesanan Selesai', note: 'Konfirmasi penerimaan oleh pembeli', time: 'Menunggu barang sampai', done: false }
+    ]
+  },
+  {
+    orderId: 'ORD-GW-260922-3810',
+    dateStr: '22 Sep 2026, 11:20 WIB',
+    status: 'Selesai',
+    statusKey: 'delivered',
+    product: {
+      id: 17,
+      name: 'Sepatu pantofel kulit ukuran 41',
+      cat: 'Sepatu & Tas',
+      price: 210000,
+      qty: 2,
+      seller: 'Doni',
+      city: 'Bekasi',
+      phone: '0857-1920-3341',
+      img: 'assets/img/marketplace/sepatu.jpg'
+    },
+    shipping: {
+      courier: 'JNE Reguler',
+      resi: 'JNE019283481',
+      service: 'JNE REG',
+      fee: 18000
+    },
+    payment: {
+      subtotal: 420000,
+      shippingFee: 18000,
+      serviceFee: 2000,
+      coinDiscount: 0,
+      total: 440000,
+      method: 'Midtrans · ShopeePay'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Pesanan terverifikasi', time: '22 Sep 2026, 11:20 WIB', done: true },
+      { step: 'Pembayaran Berhasil', note: 'ShopeePay auto-settled', time: '22 Sep 2026, 11:21 WIB', done: true },
+      { step: 'Barang Dikirim', note: 'Resi JNE telah diterbitkan', time: '23 Sep 2026, 10:00 WIB', done: true },
+      { step: 'Dalam Pengiriman Kurir', note: 'Kurir menuju alamat pengantaran', time: '25 Sep 2026, 09:30 WIB', done: true },
+      { step: 'Pesanan Diterima', note: 'Diterima oleh Dwi Anugrah (Ybs). Transaksi selesai.', time: '25 Sep 2026, 14:10 WIB', done: true, active: false }
+    ]
+  },
+  {
+    orderId: 'ORD-GW-260918-1928',
+    dateStr: '18 Sep 2026, 14:05 WIB',
+    status: 'Selesai',
+    statusKey: 'delivered',
+    product: {
+      id: 28,
+      name: 'Matras yoga dan dumbbell set',
+      img: 'assets/img/marketplace/yoga.jpg',
+      cat: 'Olahraga',
+      price: 145000,
+      qty: 1,
+      seller: 'Nino',
+      city: 'Solo',
+      phone: '0812-9988-1122'
+    },
+    shipping: {
+      courier: 'Anteraja Reguler',
+      resi: 'ANT88219482',
+      service: 'Anteraja REG',
+      fee: 20000
+    },
+    payment: {
+      subtotal: 145000,
+      shippingFee: 20000,
+      serviceFee: 2000,
+      coinDiscount: 0,
+      total: 167000,
+      method: 'Midtrans · Mandiri Virtual Account'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Pesanan terverifikasi', time: '18 Sep 2026, 14:05 WIB', done: true },
+      { step: 'Pembayaran Dikonfirmasi', note: 'VA Mandiri Lunas', time: '18 Sep 2026, 14:15 WIB', done: true },
+      { step: 'Paket Diserahkan', note: 'Drop di agen Anteraja Solo', time: '19 Sep 2026, 11:00 WIB', done: true },
+      { step: 'Dalam Perjalanan Kurir', note: 'Paket keluar dari sortir Bandung', time: '20 Sep 2026, 21:00 WIB', done: true },
+      { step: 'Pesanan Diterima', note: 'Barang diterima dalam kondisi prima', time: '21 Sep 2026, 16:30 WIB', done: true }
+    ]
+  },
+  {
+    orderId: 'ORD-GW-260915-7721',
+    dateStr: '15 Sep 2026, 09:40 WIB',
+    status: 'Selesai',
+    statusKey: 'delivered',
+    product: {
+      id: 32,
+      name: 'Tempat pensil dari kaleng bekas',
+      cat: 'Rumah Tangga',
+      price: 35000,
+      qty: 1,
+      seller: 'Budi',
+      city: 'Yogyakarta',
+      phone: '0817-2233-4455',
+      img: 'assets/img/marketplace/tempatpensil.jpg'
+    },
+    shipping: {
+      courier: 'SiCepat REG',
+      resi: 'SC119028347',
+      service: 'SiCepat Reguler',
+      fee: 15000
+    },
+    payment: {
+      subtotal: 35000,
+      shippingFee: 15000,
+      serviceFee: 2000,
+      coinDiscount: 0,
+      total: 52000,
+      method: 'Midtrans · QRIS'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Pesanan dibuat oleh pembeli', time: '15 Sep 2026, 09:40 WIB', done: true },
+      { step: 'Pembayaran Selesai', note: 'QRIS diverifikasi', time: '15 Sep 2026, 09:42 WIB', done: true },
+      { step: 'Paket Dikirim', note: 'Diproses agen Yogyakarta', time: '15 Sep 2026, 16:00 WIB', done: true },
+      { step: 'Dalam Pengantaran', note: 'Kurir SiCepat menuju lokasi', time: '17 Sep 2026, 10:15 WIB', done: true },
+      { step: 'Pesanan Diterima', note: 'Paket diterima di alamat tujuan', time: '17 Sep 2026, 13:20 WIB', done: true }
+    ]
+  },
+  {
+    orderId: 'ORD-GW-260910-4491',
+    dateStr: '10 Sep 2026, 13:10 WIB',
+    status: 'Selesai',
+    statusKey: 'delivered',
+    product: {
+      id: 25,
+      name: 'Set panci stainless 6 pcs',
+      img: 'assets/img/marketplace/panci.jpg',
+      cat: 'Rumah Tangga',
+      price: 230000,
+      qty: 1,
+      seller: 'Kiki',
+      city: 'Bandung',
+      phone: '0811-9922-3344'
+    },
+    shipping: {
+      courier: 'GoSend Instant',
+      resi: 'GOSEND-83921',
+      service: 'Instant (2 Jam)',
+      fee: 10000
+    },
+    payment: {
+      subtotal: 230000,
+      shippingFee: 10000,
+      serviceFee: 2000,
+      coinDiscount: 0,
+      total: 242000,
+      method: 'Midtrans · GoPay'
+    },
+    buyer: {
+      name: 'Dwi Anugrah',
+      phone: '0812-3456-7890',
+      address: 'Jl. Ciumbuleuit No. 42, RT 03/RW 05, Cidadap, Kota Bandung, 40142'
+    },
+    timeline: [
+      { step: 'Pesanan Dibuat', note: 'Pesanan berhasil dibuat', time: '10 Sep 2026, 13:10 WIB', done: true },
+      { step: 'Pembayaran Dikonfirmasi', note: 'GoPay terpotong', time: '10 Sep 2026, 13:11 WIB', done: true },
+      { step: 'Driver Menjemput Paket', note: 'Driver GoSend mengambil paket di seller', time: '10 Sep 2026, 14:15 WIB', done: true },
+      { step: 'Dalam Pengiriman Instan', note: 'Driver meluncur menuju alamat', time: '10 Sep 2026, 14:40 WIB', done: true },
+      { step: 'Pesanan Diterima', note: 'Paket diserahkan langsung ke penerima', time: '10 Sep 2026, 15:45 WIB', done: true }
+    ]
+  }
+];
+
+function loadSellingData(){
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY_SELLING);
+    if(raw) return JSON.parse(raw);
+  } catch(e){}
+  return DEFAULT_SELLING;
+}
+
+function saveSellingData(data){
+  try {
+    localStorage.setItem(STORAGE_KEY_SELLING, JSON.stringify(data));
+  } catch(e){}
+}
+
+function loadOrdersData(){
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY_ORDERS);
+    if(raw) return JSON.parse(raw);
+  } catch(e){}
+  return DEFAULT_ORDERS;
+}
+
+function saveOrdersData(data){
+  try {
+    localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(data));
+  } catch(e){}
+}
+
+var state = {
+  activeTab: 'selling', // 'selling' | 'buying'
+  searchQuery: '',
+  sellFilter: 'all',    // 'all' | 'Elektronik' | 'Pakaian' | 'Furnitur' | dll atau 'in_stock' | 'out_of_stock'
+  buyFilter: 'all'      // 'all' | 'processing' | 'shipping' | 'delivered'
+};
+
+var sellingList = loadSellingData();
+var ordersList = loadOrdersData();
+
+/* ===================== Modal Handler Helpers ===================== */
+function openModal(modalEl){
+  if(!modalEl) return;
+  modalEl.classList.add('open');
+  modalEl.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('lock');
+}
+
+function closeModal(modalEl){
+  if(!modalEl) return;
+  modalEl.classList.remove('open');
+  modalEl.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('lock');
+}
+
+$$('.modal-root').forEach(function(m){
+  m.addEventListener('click', function(e){
+    if(e.target === m || e.target.closest('[data-close]')){
+      closeModal(m);
+    }
+  });
+});
+
+window.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    var openM = $('.modal-root.open');
+    if(openM) closeModal(openM);
+  }
+});
+
+/* ===================== RENDER FILTER PILLS ===================== */
+var subFilterRow = $('#subFilterRow');
+
+function renderSubFilters(){
+  subFilterRow.innerHTML = '';
+  if(state.activeTab === 'selling'){
+    var options = [
+      { id: 'all', label: 'Semua Produk' },
+      { id: 'in_stock', label: 'Tersedia' },
+      { id: 'low_stock', label: 'Stok Menipis (≤2)' },
+      { id: 'out_of_stock', label: 'Habis (0)' },
+      { id: 'Elektronik', label: 'Elektronik' },
+      { id: 'Pakaian', label: 'Pakaian' },
+      { id: 'Furnitur', label: 'Furnitur' }
+    ];
+    options.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pill-filter' + (state.sellFilter === opt.id ? ' is-active' : '');
+      btn.textContent = opt.label;
+      btn.addEventListener('click', function(){
+        state.sellFilter = opt.id;
+        renderSubFilters();
+        renderMainView();
+      });
+      subFilterRow.appendChild(btn);
+    });
+  } else {
+    var optionsBuy = [
+      { id: 'all', label: 'Semua Pesanan (' + ordersList.length + ')' },
+      { id: 'shipping', label: 'Sedang Dikirim (' + ordersList.filter(function(o){ return o.statusKey === 'shipping'; }).length + ')' },
+      { id: 'processing', label: 'Diproses (' + ordersList.filter(function(o){ return o.statusKey === 'processing'; }).length + ')' },
+      { id: 'delivered', label: 'Selesai (' + ordersList.filter(function(o){ return o.statusKey === 'delivered'; }).length + ')' }
+    ];
+    optionsBuy.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pill-filter' + (state.buyFilter === opt.id ? ' is-active' : '');
+      btn.textContent = opt.label;
+      btn.addEventListener('click', function(){
+        state.buyFilter = opt.id;
+        renderSubFilters();
+        renderMainView();
+      });
+      subFilterRow.appendChild(btn);
+    });
+  }
+}
+
+/* ===================== RENDER SELLER CARDS (PRODUK DIJUAL) ===================== */
+var gridSelling = $('#gridSelling');
+
+function renderSellingItems(){
+  var q = state.searchQuery.trim().toLowerCase();
+  var filtered = sellingList.filter(function(p){
+    var matchQ = !q || (p.name + ' ' + p.cat + ' ' + p.cond + ' ' + (p.desc || '')).toLowerCase().indexOf(q) > -1;
+    if(!matchQ) return false;
+
+    if(state.sellFilter === 'in_stock') return p.stock > 0;
+    if(state.sellFilter === 'low_stock') return p.stock > 0 && p.stock <= 2;
+    if(state.sellFilter === 'out_of_stock') return p.stock === 0;
+    if(state.sellFilter !== 'all') return p.cat === state.sellFilter;
+    return true;
+  });
+
+  $('#badgeSellCount').textContent = sellingList.length;
+  $('#statSellingCount').textContent = sellingList.filter(function(x){ return x.stock > 0; }).length;
+
+  var totalEarn = sellingList.reduce(function(acc, item){ return acc + (item.price * (item.soldCount || 1)); }, 0);
+
+  if(filtered.length === 0){
+    gridSelling.innerHTML = '';
+    $('#emptyView').classList.add('show');
+    $('#emptyTitle').textContent = 'Tidak Ada Produk Dijual';
+    $('#emptyDesc').textContent = 'Produk yang Anda cari tidak cocok dengan filter atau kata kunci saat ini.';
+    return;
+  }
+
+  $('#emptyView').classList.remove('show');
+  gridSelling.innerHTML = filtered.map(function(p){
+    var stockClass = p.stock === 0 ? 'out' : (p.stock <= 2 ? 'low' : 'in');
+    var stockText = p.stock === 0 ? 'Stok Habis' : 'Sisa ' + p.stock + ' unit';
+    var isSoldOut = p.stock === 0;
+
+    return '<article class="pcard ' + (isSoldOut ? 'is-sold-out' : '') + '">' +
+      '<div class="pthumb">' +
+        generateThumb(p, 'sel') +
+        '<span class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm text-xs font-semibold text-slate-800 px-2.5 py-0.5 rounded-full shadow-sm">' + esc(p.cond) + '</span>' +
+        (isSoldOut ? '<span class="absolute top-2.5 right-2.5 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">HABIS</span>' : '') +
+      '</div>' +
+      '<div class="pbody">' +
+        '<div class="pcat-row">' +
+          '<span class="pcat">' + esc(p.cat) + '</span>' +
+          '<span class="text-[11px] text-slate-500 font-medium">Terjual ' + (p.soldCount || 0) + '</span>' +
+        '</div>' +
+        '<h3 class="ptitle" title="' + esc(p.name) + '">' + esc(p.name) + '</h3>' +
+        '<p class="pdesc">' + esc(p.desc || 'Barang berkualitas siap kirim dari Bandung.') + '</p>' +
+        '<div class="pprice-stock">' +
+          '<div class="pprice">' + rp(p.price) + '</div>' +
+          '<div class="pstock ' + stockClass + '">' +
+            '<i class="bx ' + (p.stock === 0 ? 'bx-x-circle' : 'bx-check-circle') + '"></i>' +
+            '<span>' + stockText + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="paction-row">' +
+          '<button type="button" class="btn btn-line btn-sm flex-1 edit-prod-btn" data-id="' + p.id + '">' +
+            '<i class="bx bx-edit" style="font-size:1em" aria-hidden="true"></i>' +
+            '<span>Edit Produk</span>' +
+          '</button>' +
+          '<a href="marketplace.html?q=' + encodeURIComponent(p.name) + '" class="btn btn-mist btn-sm px-3" title="Lihat di Marketplace">' +
+            '<i class="bx bx-show text-base"></i>' +
+          '</a>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+
+  // Pasang event listener edit
+  $$('.edit-prod-btn', gridSelling).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = parseInt(btn.getAttribute('data-id'), 10);
+      openEditModal(id);
+    });
+  });
+}
+
+/* ===================== RENDER BUYER CARDS (PRODUK DIBELI) ===================== */
+var gridBuying = $('#gridBuying');
+
+function renderBuyingOrders(){
+  var q = state.searchQuery.trim().toLowerCase();
+  var filtered = ordersList.filter(function(o){
+    var matchQ = !q || (o.orderId + ' ' + o.product.name + ' ' + o.product.seller + ' ' + o.status).toLowerCase().indexOf(q) > -1;
+    if(!matchQ) return false;
+    if(state.buyFilter !== 'all') return o.statusKey === state.buyFilter;
+    return true;
+  });
+
+  $('#badgeBuyCount').textContent = ordersList.length;
+  $('#statBoughtCount').textContent = ordersList.length;
+
+  if(filtered.length === 0){
+    gridBuying.innerHTML = '';
+    $('#emptyView').classList.add('show');
+    $('#emptyTitle').textContent = 'Tidak Ada Riwayat Pembelian';
+    $('#emptyDesc').textContent = 'Tidak ada pesanan pembelian yang sesuai dengan filter atau kata kunci saat ini.';
+    return;
+  }
+
+  $('#emptyView').classList.remove('show');
+  gridBuying.innerHTML = filtered.map(function(o){
+    var badgeClass = 'badge-processing';
+    var badgeIcon = 'bx-time-five';
+    if(o.statusKey === 'shipping'){ badgeClass = 'badge-shipping'; badgeIcon = 'bx-truck'; }
+    if(o.statusKey === 'delivered'){ badgeClass = 'badge-delivered'; badgeIcon = 'bx-check-double'; }
+
+    var latestStep = o.timeline.filter(function(t){ return t.done; }).slice(-1)[0] || o.timeline[0];
+
+    return '<div class="order-card" data-order="' + esc(o.orderId) + '" tabindex="0" role="button" aria-label="Buka detail pesanan ' + esc(o.orderId) + '">' +
+      '<div class="order-head">' +
+        '<div class="min-w-0">' +
+          '<div class="order-num">' +
+            '<i class="bx bx-receipt text-emerald-800"></i>' +
+            '<span>' + esc(o.orderId) + '</span>' +
+          '</div>' +
+          '<div class="order-date">' + esc(o.dateStr) + '</div>' +
+        '</div>' +
+        '<span class="badge-status ' + badgeClass + '">' +
+          '<i class="bx ' + badgeIcon + '"></i>' +
+          '<span>' + esc(o.status) + '</span>' +
+        '</span>' +
+      '</div>' +
+
+      '<div class="order-body">' +
+        '<div class="order-thumb">' +
+          generateThumb(o.product, 'buy') +
+        '</div>' +
+        '<div class="order-info">' +
+          '<h3 class="order-title">' + esc(o.product.name) + '</h3>' +
+          '<div class="order-seller">Penjual: <b>' + esc(o.product.seller) + '</b> (' + esc(o.product.city) + ')</div>' +
+          '<div class="order-price-row">' +
+            '<span class="text-xs text-slate-500">' + o.product.qty + ' barang</span>' +
+            '<div class="order-price">' + rp(o.payment.total) + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="order-progress-peek">' +
+        '<i class="bx bx-trip text-lg"></i>' +
+        '<div class="truncate flex-1">' +
+          '<span class="font-medium text-slate-700">' + esc(latestStep.step) + ':</span> ' +
+          '<span class="text-slate-500">' + esc(latestStep.note) + '</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="order-foot">' +
+        '<span class="text-xs text-slate-500">Kurir: <b>' + esc(o.shipping.courier) + '</b></span>' +
+        '<span class="order-hint">Lihat Detail & Lacak Pesanan <i class="bx bx-chevron-right text-base"></i></span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Pasang click listener di seluruh order-card
+  $$('.order-card', gridBuying).forEach(function(card){
+    var ordId = card.getAttribute('data-order');
+    card.addEventListener('click', function(){
+      openOrderDetailModal(ordId);
+    });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openOrderDetailModal(ordId);
+      }
+    });
+  });
+}
+
+/* ===================== RENDER MAIN VIEW ===================== */
+function renderMainView(){
+  if(state.activeTab === 'selling'){
+    $('#viewSelling').style.display = 'block';
+    $('#viewBuying').style.display = 'none';
+    renderSellingItems();
+  } else {
+    $('#viewSelling').style.display = 'none';
+    $('#viewBuying').style.display = 'block';
+    renderBuyingOrders();
+  }
+}
+
+/* Tab Switcher Event */
+$('#tabSellBtn').addEventListener('click', function(){
+  state.activeTab = 'selling';
+  $('#tabSellBtn').classList.add('active');
+  $('#tabSellBtn').setAttribute('aria-selected', 'true');
+  $('#tabBuyBtn').classList.remove('active');
+  $('#tabBuyBtn').setAttribute('aria-selected', 'false');
+  renderSubFilters();
+  renderMainView();
+});
+
+$('#tabBuyBtn').addEventListener('click', function(){
+  state.activeTab = 'buying';
+  $('#tabBuyBtn').classList.add('active');
+  $('#tabBuyBtn').setAttribute('aria-selected', 'true');
+  $('#tabSellBtn').classList.remove('active');
+  $('#tabSellBtn').setAttribute('aria-selected', 'false');
+  renderSubFilters();
+  renderMainView();
+});
+
+/* Search Input */
+$('#commonSearch').addEventListener('input', function(){
+  state.searchQuery = this.value;
+  renderMainView();
+});
+
+$('#resetFilterBtn').addEventListener('click', function(){
+  state.searchQuery = '';
+  $('#commonSearch').value = '';
+  state.sellFilter = 'all';
+  state.buyFilter = 'all';
+  renderSubFilters();
+  renderMainView();
+});
+
+/* ===================== EDIT PRODUCT MODAL LOGIC ===================== */
+var editModal = $('#editProductModal');
+var editForm = $('#editProductForm');
+
+function openEditModal(prodId){
+  var item = sellingList.filter(function(x){ return x.id === prodId; })[0];
+  if(!item) return;
+
+  $('#editId').value = item.id;
+  $('#editIdPreview').textContent = item.id;
+  $('#editName').value = item.name;
+  $('#editNamePreview').textContent = item.name;
+  $('#editCat').value = item.cat;
+  $('#editCatLabel').textContent = item.cat;
+  $('#editCond').value = item.cond;
+  $('#editPrice').value = item.price;
+  $('#priceDisplayHint').textContent = 'Format: ' + rp(item.price);
+  $('#editStock').value = item.stock;
+  $('#editDesc').value = item.desc || '';
+  $('#editCity').value = item.city || 'Bandung';
+  $('#editCo2').value = item.co2 || 10;
+  $('#editThumbPreview').innerHTML = generateThumb(item, 'edt');
+
+  // Bersihkan error style
+  $$('.field.bad', editForm).forEach(function(f){ f.classList.remove('bad'); });
+
+  openModal(editModal);
+}
+
+// Live update format harga
+$('#editPrice').addEventListener('input', function(){
+  var val = parseFloat(this.value) || 0;
+  $('#priceDisplayHint').textContent = 'Format: ' + rp(val);
+});
+
+// Live update preview nama & kategori
+$('#editName').addEventListener('input', function(){
+  $('#editNamePreview').textContent = this.value || 'Nama Produk';
+});
+$('#editCat').addEventListener('change', function(){
+  $('#editCatLabel').textContent = this.value;
+  var mock = { id: parseInt($('#editId').value, 10), cat: this.value };
+  $('#editThumbPreview').innerHTML = generateThumb(mock, 'edt');
+});
+
+// Stock +/- buttons
+$('#btnStockMinus').addEventListener('click', function(){
+  var cur = parseInt($('#editStock').value, 10) || 0;
+  if(cur > 0) $('#editStock').value = cur - 1;
+});
+$('#btnStockPlus').addEventListener('click', function(){
+  var cur = parseInt($('#editStock').value, 10) || 0;
+  $('#editStock').value = cur + 1;
+});
+
+// Submit Form Edit Produk
+editForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  var id = parseInt($('#editId').value, 10);
+  var name = $('#editName').value.trim();
+  var cat = $('#editCat').value;
+  var cond = $('#editCond').value;
+  var price = parseFloat($('#editPrice').value);
+  var stock = parseInt($('#editStock').value, 10);
+  var desc = $('#editDesc').value.trim();
+  var city = $('#editCity').value.trim() || 'Bandung';
+  var co2 = parseInt($('#editCo2').value, 10) || 10;
+
+  var hasError = false;
+  if(name.length < 5){
+    $('[data-field="name"]', editForm).classList.add('bad');
+    hasError = true;
+  } else {
+    $('[data-field="name"]', editForm).classList.remove('bad');
+  }
+
+  if(isNaN(price) || price < 1000){
+    $('[data-field="price"]', editForm).classList.add('bad');
+    hasError = true;
+  } else {
+    $('[data-field="price"]', editForm).classList.remove('bad');
+  }
+
+  if(isNaN(stock) || stock < 0){
+    $('[data-field="stock"]', editForm).classList.add('bad');
+    hasError = true;
+  } else {
+    $('[data-field="stock"]', editForm).classList.remove('bad');
+  }
+
+  if(hasError) return;
+
+  // Update item di array
+  for(var i = 0; i < sellingList.length; i++){
+    if(sellingList[i].id === id){
+      sellingList[i].name = name;
+      sellingList[i].cat = cat;
+      sellingList[i].cond = cond;
+      sellingList[i].price = price;
+      sellingList[i].stock = stock;
+      sellingList[i].desc = desc;
+      sellingList[i].city = city;
+      sellingList[i].co2 = co2;
+      break;
+    }
+  }
+
+  saveSellingData(sellingList);
+  renderSellingItems();
+  closeModal(editModal);
+  showToast('Detail produk "' + name.substring(0, 24) + '..." berhasil diperbarui!', 'bx-check');
+});
+
+/* ===================== ORDER DETAIL & PROSES PESANAN MODAL ===================== */
+var orderModal = $('#orderDetailModal');
+var currentActiveOrder = null;
+
+function openOrderDetailModal(orderId){
+  var order = ordersList.filter(function(o){ return o.orderId === orderId; })[0];
+  if(!order) return;
+  currentActiveOrder = order;
+
+  $('#modalOrderNo').textContent = 'Pesanan #' + order.orderId;
+  $('#modalOrderDate').textContent = 'Dipesan pada: ' + order.dateStr;
+
+  $('#modalCourierInfo').textContent = order.shipping.courier + ' · ' + order.shipping.resi;
+  $('#modalResiCode').textContent = order.shipping.resi;
+
+  // Render Timeline
+  var timelineEl = $('#trackingTimeline');
+  timelineEl.innerHTML = order.timeline.map(function(step, idx){
+    var stepClass = step.done ? 'done' : '';
+    if(step.active) stepClass += ' active';
+    var iconHtml = step.done ? '<i class="bx bx-check" style="font-size:1.1em" aria-hidden="true"></i>' : (step.active ? '<i class="bx bx-truck" style="font-size:1.1em" aria-hidden="true"></i>' : '<i class="bx bx-time-five" style="font-size:1.1em" aria-hidden="true"></i>');
+
+    return '<div class="timeline-step ' + stepClass + '">' +
+      '<div class="step-circle">' + iconHtml + '</div>' +
+      '<div class="step-content">' +
+        '<b>' + esc(step.step) + '</b>' +
+        '<p>' + esc(step.note) + '</p>' +
+        '<div class="time">' + esc(step.time) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Rincian Barang
+  $('#modalItemThumb').innerHTML = generateThumb(order.product, 'mdl');
+  $('#modalItemCat').textContent = order.product.cat;
+  $('#modalItemTitle').textContent = order.product.name;
+  $('#modalSellerName').textContent = order.product.seller + ' (' + order.product.city + ')';
+  $('#modalItemQty').textContent = order.product.qty + ' unit';
+  $('#modalItemPrice').textContent = rp(order.product.price * order.product.qty);
+
+  // Alamat & Pembeli
+  $('#modalBuyerName').textContent = order.buyer.name;
+  $('#modalBuyerPhone').textContent = order.buyer.phone;
+  $('#modalBuyerAddress').textContent = order.buyer.address;
+
+  // Biaya
+  $('#modalCostSub').textContent = rp(order.payment.subtotal);
+  $('#modalCostShip').textContent = rp(order.payment.shippingFee);
+  if(order.payment.coinDiscount > 0){
+    $('#modalDiscRow').style.display = 'flex';
+    $('#modalCostDisc').textContent = '-' + rp(order.payment.coinDiscount);
+  } else {
+    $('#modalDiscRow').style.display = 'none';
+  }
+  $('#modalCostTotal').textContent = rp(order.payment.total);
+  $('#modalPayMethod').textContent = order.payment.method;
+
+  // WhatsApp Penjual link
+  var waPhone = (order.product.phone || '08123456789').replace(/[^0-9]/g, '');
+  var waMsg = encodeURIComponent('Halo ' + order.product.seller + ', saya menanyakan status pesanan #' + order.orderId + ' untuk barang ' + order.product.name);
+  $('#btnChatSeller').href = 'https://wa.me/62' + waPhone.substring(1) + '?text=' + waMsg;
+
+  // Tombol aksi konfirmasi selesai jika status masih shipping
+  var confirmBtn = $('#btnConfirmDelivered');
+  if(order.statusKey === 'shipping'){
+    confirmBtn.style.display = 'inline-flex';
+  } else {
+    confirmBtn.style.display = 'none';
+  }
+
+  openModal(orderModal);
+}
+
+// Salin Nomor Resi
+$('#btnCopyResi').addEventListener('click', function(){
+  if(!currentActiveOrder) return;
+  var resi = currentActiveOrder.shipping.resi;
+  navigator.clipboard.writeText(resi).then(function(){
+    showToast('Nomor resi ' + resi + ' berhasil disalin!', 'bx-copy');
+  }).catch(function(){
+    showToast('Resi: ' + resi, 'bx-info-circle');
+  });
+});
+
+// Cetak Invoice
+$('#btnPrintInvoice').addEventListener('click', function(){
+  window.print();
+});
+
+// Konfirmasi Barang Diterima
+$('#btnConfirmDelivered').addEventListener('click', function(){
+  if(!currentActiveOrder) return;
+  var conf = confirm('Apakah Anda yakin barang pesanan #' + currentActiveOrder.orderId + ' sudah sampai dan diterima dengan baik?');
+  if(!conf) return;
+
+  currentActiveOrder.status = 'Selesai';
+  currentActiveOrder.statusKey = 'delivered';
+  currentActiveOrder.timeline.forEach(function(t){
+    t.done = true;
+    t.active = false;
+  });
+  currentActiveOrder.timeline[4].note = 'Telah diterima oleh pembeli. Transaksi dinyatakan selesai.';
+  currentActiveOrder.timeline[4].time = new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'}) + ' WIB';
+
+  saveOrdersData(ordersList);
+  renderBuyingOrders();
+  closeModal(orderModal);
+  showToast('Pesanan selesai! Kamu mendapatkan +50 Green Coins.', 'bx-badge-check');
+});
+
+/* ===================== INIT & SCROLL TO TOP ===================== */
+var toTop = $('#backToTopBtn');
+window.addEventListener('scroll', function(){
+  toTop.classList.toggle('show', window.scrollY > 400);
+}, {passive:true});
+toTop.addEventListener('click', function(){
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// URL Query Param Check (misal ?tab=buy)
+var urlParams = new URLSearchParams(window.location.search);
+if(urlParams.get('tab') === 'buy'){
+  $('#tabBuyBtn').click();
+} else {
+  renderSubFilters();
+  renderMainView();
+}
+</script>
+</body>
+</html>

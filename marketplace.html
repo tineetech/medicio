@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marketplace — Barang Bekas Layak Pakai | GreenWise</title>
 <meta name="description" content="Marketplace GreenWise: beli barang bekas layak pakai dengan kondisi yang sudah dinilai, harga terjangkau, dan dampak lingkungan yang terukur.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo-greenwise.svg">
 
 <!-- Boxicons -->
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
@@ -28,41 +28,18 @@
     }
   }
 </script>
+
+<!-- Global CSS -->
+<link rel="stylesheet" href="assets/global.css">
 <style>
 /* =====================================================
-   GreenWise — Marketplace (tanpa CDN, tanpa library)
-   Semua style, ikon, dan gambar dibuat langsung di file ini.
+   GreenWise — Marketplace
+   Khusus halaman7 (token, reset, navbar, footer,
+   reveal, scrollbar & keyframes global di assets/global.css)
    ===================================================== */
-:root{
-  --deep:#012622; --ever:#003B36; --ever2:#0A4F48; --ever3:#12655C;
-  --mist:#ECE5F0; --mist2:#DCD2E4; --mist3:#F6F2F8;
-  --gold:#FACC15; --danger:#B42318;
-  --f-head:'Lexend','Poppins','Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;
-  --f-body:'DM Sans','Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;
-  --sh-card:0 4px 20px -6px rgba(1,38,34,.15);
-  --sh-soft:0 18px 36px -14px rgba(1,38,34,.28);
-}
+html{-webkit-text-size-adjust:100%;}
 
-/* ===== Reset ringan ===== */
-*,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-body,h1,h2,h3,h4,h5,p,ul,ol,figure,fieldset,legend{margin:0;padding:0;}
-ul,ol{list-style:none;}
-body{font-family:var(--f-body);background:#fff;color:var(--deep);line-height:1.5;-webkit-font-smoothing:antialiased;}
-body.lock{overflow:hidden;}
-h1,h2,h3,h4,h5{font-family:var(--f-head);}
-a{color:inherit;text-decoration:none;}
-button,input,select,textarea{font:inherit;color:inherit;}
-button{background:none;border:0;padding:0;cursor:pointer;}
-img,svg{display:block;max-width:100%;}
-::selection{background:var(--mist);color:var(--deep);}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
-:focus-visible{outline:2px solid var(--ever3);outline-offset:3px;}
-.container{width:100%;max-width:80rem;margin:0 auto;padding:0 1.25rem;}
-@media(min-width:1024px){.container{padding:0 2rem;}}
-.scroll-mt{scroll-margin-top:6rem;}
-
-/* ===== Ikon SVG inline ===== */
+/* ===== Ikon (Boxicons) ===== */
 .i{width:1.25em;height:1.25em;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .i-fill{fill:currentColor;stroke:none;}
 
@@ -74,55 +51,7 @@ img,svg{display:block;max-width:100%;}
 .btn-block{width:100%;}
 .btn:disabled{opacity:.55;cursor:not-allowed;}
 
-/* ===== Reveal on scroll ===== */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);}
-.reveal.active{opacity:1;transform:none;}
 
-/* ===== NAVBAR ===== */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;border-bottom:1px solid transparent;transition:all .3s ease;}
-#navbar.scrolled{background:rgba(255,255,255,.75);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--mist2);box-shadow:0 6px 24px -14px rgba(1,38,34,.4);}
-.nav-inner{height:5rem;display:flex;align-items:center;justify-content:space-between;}
-.brand{display:flex;align-items:center;gap:.75rem;}
-.brand-word{font-family:var(--f-head);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;color:var(--mist);transition:color .3s;}
-#navbar.scrolled .brand-word{color:var(--deep);}
-.nav-pill{display:none;align-items:center;gap:.25rem;background:rgba(236,229,240,.10);border-radius:999px;padding:.375rem .5rem;transition:background-color .3s;}
-.nav-pill a{padding:.5rem 1.25rem;border-radius:999px;font-size:.875rem;font-weight:500;color:rgba(236,229,240,.75);transition:all .3s;}
-.nav-pill a:hover{color:#fff;}
-.nav-pill a.is-active{background:var(--ever);color:var(--mist);font-weight:600;}
-#navbar.scrolled .nav-pill{background:var(--mist);}
-#navbar.scrolled .nav-pill a{color:var(--ever2);}
-#navbar.scrolled .nav-pill a.is-active{background:#fff;color:var(--deep);}
-@media(min-width:1024px){.nav-pill{display:flex;}}
-.nav-right{display:flex;align-items:center;gap:.75rem;}
-.profile-wrap{position:relative;}
-.profile-btn{display:flex;align-items:center;gap:.6rem;padding:.375rem .75rem .375rem .375rem;border-radius:999px;border:1px solid rgba(236,229,240,.28);color:var(--mist);transition:all .3s;}
-#navbar.scrolled .profile-btn{border-color:var(--mist2);color:var(--deep);}
-.avatar{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--ever);color:var(--mist);display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:700;font-size:.875rem;}
-.profile-txt{display:none;flex-direction:column;align-items:flex-start;line-height:1.2;text-align:left;}
-.profile-txt b{font-size:.875rem;font-weight:600;}
-.profile-txt span{font-size:.6875rem;display:flex;align-items:center;gap:.25rem;opacity:.7;}
-@media(min-width:640px){.profile-txt{display:flex;}}
-.profile-btn>.i{opacity:.7;}
-.pmenu{position:absolute;right:0;top:100%;margin-top:.75rem;width:16rem;background:#fff;color:var(--deep);border:1px solid var(--mist2);border-radius:1rem;box-shadow:var(--sh-soft);padding:.5rem;opacity:0;transform:scale(.95);transform-origin:top right;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;}
-.pmenu.open{opacity:1;transform:none;pointer-events:auto;}
-.pmenu-head{padding:.75rem;border-bottom:1px solid var(--mist2);margin-bottom:.25rem;}
-.pmenu-head b{font-family:var(--f-head);font-size:.875rem;font-weight:600;display:block;}
-.pmenu-head span{font-size:.75rem;color:rgba(10,79,72,.7);}
-.pmenu a{display:flex;align-items:center;gap:.75rem;padding:.65rem .75rem;border-radius:.75rem;font-size:.875rem;font-weight:500;transition:background-color .2s;}
-.pmenu a:hover{background:var(--mist);}
-.pmenu a .i{color:var(--ever);font-size:1.1rem;}
-.pmenu hr{border:0;height:1px;background:var(--mist2);margin:.25rem 0;}
-.burger{width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(236,229,240,.28);color:var(--mist);display:flex;align-items:center;justify-content:center;transition:all .3s;}
-#navbar.scrolled .burger{border-color:var(--mist2);color:var(--deep);}
-.burger .i{font-size:1.5rem;}
-@media(min-width:1024px){.burger{display:none;}}
-.mobile-menu{display:none;flex-direction:column;gap:.25rem;padding:.75rem 1.25rem 1.25rem;background:#fff;border-top:1px solid var(--mist2);}
-.mobile-menu.open{display:flex;}
-.mobile-menu a{padding:.75rem 1rem;border-radius:.75rem;font-size:.875rem;font-weight:500;color:var(--ever2);}
-.mobile-menu a.is-active{background:var(--mist);color:var(--deep);font-weight:600;}
-@media(min-width:1024px){.mobile-menu,.mobile-menu.open{display:none;}}
-.ov{position:fixed;inset:0;background:rgba(1,38,34,.25);z-index:40;display:none;}
-.ov.show{display:block;}
 
 /* ===== HERO compact (pola halaman2) ===== */
 .hero{position:relative;overflow:hidden;background:var(--deep);}
@@ -149,6 +78,7 @@ img,svg{display:block;max-width:100%;}
 .search{display:flex;align-items:center;gap:.5rem;background:#fff;border-radius:999px;padding:.5rem .5rem .5rem 1.25rem;box-shadow:var(--sh-soft);transition:box-shadow .3s;}
 .search:focus-within{box-shadow:0 0 0 4px rgba(236,229,240,.25),var(--sh-soft);}
 .search>.i{font-size:1.2rem;color:rgba(10,79,72,.6);}
+.search>i.bx{display:inline-block!important;visibility:visible!important;font-size:1.2rem;line-height:1;flex:none;color:rgba(10,79,72,.6);}
 .search input{flex:1;min-width:0;border:0;background:transparent;padding:.65rem 0;font-size:.9375rem;color:var(--deep);}
 .search input::placeholder{color:rgba(10,79,72,.5);}
 .search input:focus-visible{outline:none;}
@@ -159,9 +89,6 @@ img,svg{display:block;max-width:100%;}
 .suggest-row>span{font-size:.75rem;color:rgba(10,79,72,.5);margin-right:.25rem;}
 .suggest{font-size:.75rem;background:#fff;color:rgba(10,79,72,.7);border:1px solid var(--mist2);border-radius:999px;padding:.375rem 1rem;transition:all .3s;}
 .suggest:hover{border-color:var(--ever2);background:var(--mist);}
-
-@keyframes bounceSlow{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
-
 
 /* ===== Section umum ===== */
 .section{padding:5rem 0;}
@@ -176,11 +103,22 @@ img,svg{display:block;max-width:100%;}
 /* ===== Kontrol: sort/filter ===== */
 .list-top{display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2rem;}
 @media(min-width:1024px){.list-top{flex-direction:row;align-items:flex-end;justify-content:space-between;}}
-.controls{display:flex;flex-wrap:wrap;gap:.75rem;}
-.sel{position:relative;}
-.sel select{appearance:none;-webkit-appearance:none;background:#fff;border:1px solid var(--mist2);border-radius:999px;padding:.65rem 2.5rem .65rem 1rem;font-size:.875rem;font-weight:500;color:var(--deep);cursor:pointer;max-width:100%;}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem;}
+.sel{position:relative;flex:1 1 100%;min-width:0;}
+.sel select{width:100%;appearance:none;-webkit-appearance:none;background:#fff;border:1px solid var(--mist2);border-radius:999px;padding:.65rem 2.4rem .65rem 1rem;font-size:.875rem;font-weight:500;color:var(--deep);cursor:pointer;max-width:100%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+/* Mobile: Kondisi & Harga tiap 50%, Urutkan 100% di baris sendiri */
+@media(max-width:639px){
+  .controls .sel:nth-child(1),
+  .controls .sel:nth-child(2){flex-basis:calc(50% - .3rem);}
+  .controls .sel:nth-child(3){flex-basis:100%;}
+}
+/* Desktop & tablet: ketiga filter berjejer satu baris */
+@media(min-width:640px){
+  .controls{flex-wrap:nowrap;}
+  .sel{flex:1 1 0;}
+}
 .sel select:hover{border-color:var(--ever3);}
-.sel .i{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);color:rgba(10,79,72,.7);pointer-events:none;}
+.sel>.bx{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);font-size:1.15rem;line-height:1;color:rgba(10,79,72,.7);pointer-events:none;}
 .chip-row{display:flex;gap:.5rem;overflow-x:auto;margin:0 -1.25rem 2.5rem;padding:0 1.25rem .5rem;scrollbar-width:none;}
 .chip-row::-webkit-scrollbar{display:none;}
 @media(min-width:1024px){.chip-row{flex-wrap:wrap;margin:0 0 2.5rem;padding:0 0 .5rem;overflow:visible;}}
@@ -196,8 +134,9 @@ img,svg{display:block;max-width:100%;}
 .pcard:hover{transform:translateY(-6px);box-shadow:var(--sh-soft);}
 .pcard:focus-within{outline:2px solid var(--ever3);outline-offset:3px;}
 .pthumb{position:relative;height:12rem;overflow:hidden;}
-.pthumb svg{width:100%;height:100%;transition:transform .6s ease;}
-.pcard:hover .pthumb svg{transform:scale(1.07);}
+.pthumb .thumb-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .6s ease;}
+.pcard:hover .pthumb .thumb-fb{transform:scale(1.07);}
+.thumb-fb i{font-size:4rem;line-height:1;color:rgba(236,229,240,.9);}
 .badge{position:absolute;top:1rem;left:1rem;background:rgba(255,255,255,.92);color:var(--deep);font-size:.75rem;font-weight:600;padding:.375rem .75rem;border-radius:999px;}
 .badge.right{left:auto;right:1rem;background:var(--gold);}
 .badge.sold{left:auto;right:1rem;background:var(--deep);color:var(--mist);}
@@ -208,9 +147,12 @@ img,svg{display:block;max-width:100%;}
 .pfoot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:.75rem;}
 .pprice{font-family:var(--f-head);font-weight:700;font-size:1.25rem;color:var(--deep);}
 .pco2{display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:var(--ever3);margin-top:.2rem;}
-.buy{position:static;background:var(--ever);color:var(--mist);font-size:.875rem;font-weight:600;padding:.65rem 1.4rem;border-radius:999px;transition:background-color .3s;}
+.buy{display:inline-flex;align-items:center;gap:.35rem;position:static;background:var(--ever);color:var(--mist);font-size:.875rem;font-weight:600;padding:.65rem 1.4rem;border-radius:999px;transition:background-color .3s;white-space:nowrap;}
 .buy::after{content:'';position:absolute;inset:0;z-index:1;}
 .buy:hover{background:var(--deep);}
+.buy-bullet{display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border-radius:999px;background:var(--mist);color:var(--ever);flex:none;}
+.buy-bullet i{font-size:.85rem;line-height:1;transform:rotate(45deg);}
+.buy:hover .buy-bullet{background:#fff;}
 .buy:disabled{background:var(--mist2);color:var(--ever2);cursor:not-allowed;}
 .buy:disabled::after{display:none;}
 .pcard.is-sold .pthumb{filter:grayscale(.85);opacity:.8;}
@@ -248,12 +190,13 @@ img,svg{display:block;max-width:100%;}
 .row p{font-size:.875rem;color:rgba(10,79,72,.72);margin-top:.25rem;line-height:1.6;}
 @media(min-width:640px){.row{grid-template-columns:3.5rem 1fr;padding:1.75rem 1rem;gap:1.5rem;}.row .ico{width:3.5rem;height:3.5rem;}}
 
-/* ===== Statistik ===== */
+/* ===== Statistik (ukuran angka ikut halaman1: text-3xl → sm:text-4xl) ===== */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;border-top:1px solid rgba(236,229,240,.15);padding-top:2.5rem;text-align:center;}
 @media(min-width:1024px){.stats{grid-template-columns:repeat(4,1fr);}}
-.stats b{display:block;font-family:var(--f-head);font-weight:700;font-size:1.875rem;color:var(--mist);}
+.stats b{display:block;font-family:var(--f-head);font-weight:700;font-size:1.875rem;color:var(--mist);letter-spacing:-.02em;}
 @media(min-width:640px){.stats b{font-size:2.25rem;}}
-.stats span{display:block;font-size:.875rem;color:rgba(236,229,240,.65);margin-top:.25rem;}
+.stats b .counter{font-size:inherit;}
+.stats > div > span{display:block;font-size:.875rem;color:rgba(236,229,240,.65);margin-top:.25rem;}
 
 /* ===== CTA jual ===== */
 .cta{position:relative;overflow:hidden;background:var(--deep);padding:7rem 0;}
@@ -264,37 +207,17 @@ img,svg{display:block;max-width:100%;}
 @media(min-width:640px){.cta h3{font-size:1.875rem;}}
 .cta p{color:rgba(236,229,240,.75);max-width:36rem;margin:0 auto 2rem;}
 
-/* ===== Footer ===== */
-footer{position:relative;background:var(--deep);color:var(--mist);overflow:hidden;}
-.f-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;padding:5rem 0 3rem;border-bottom:1px solid rgba(236,229,240,.1);}
-@media(min-width:640px){.f-grid{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:768px){.f-grid{grid-template-columns:1.4fr 1fr 1fr 1.2fr;}}
-.f-brand{display:flex;align-items:center;gap:.75rem;font-family:var(--f-head);font-weight:700;font-size:1.25rem;margin-bottom:1rem;width:fit-content;}
-.f-about{font-size:.875rem;line-height:1.7;color:rgba(236,229,240,.6);max-width:20rem;margin-bottom:1.5rem;}
-.social{display:flex;gap:.75rem;}
-.social a{width:2.5rem;height:2.5rem;border-radius:50%;background:rgba(236,229,240,.1);display:flex;align-items:center;justify-content:center;transition:all .3s;}
-.social a:hover{background:var(--mist);color:var(--deep);}
-footer h5{font-weight:600;font-size:.875rem;margin-bottom:1rem;}
-footer ul{display:flex;flex-direction:column;gap:.75rem;font-size:.875rem;color:rgba(236,229,240,.6);}
-footer ul a{transition:color .3s;} footer ul a:hover{color:var(--mist);}
-footer ul li.ic{display:flex;align-items:center;gap:.6rem;}
-.f-bottom{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:.75rem;padding:1.5rem 0;font-size:.75rem;color:rgba(236,229,240,.4);}
-@media(min-width:640px){.f-bottom{flex-direction:row;}}
-.f-mark{text-align:center;line-height:1;white-space:nowrap;user-select:none;pointer-events:none;font-family:var(--f-head);font-weight:800;font-size:clamp(3.5rem,15vw,11rem);color:rgba(236,229,240,.07);}
-.totop{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;width:3rem;height:3rem;border-radius:50%;background:var(--ever);color:var(--mist);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform:translateY(1rem);transition:all .3s;}
-.totop.show{opacity:1;pointer-events:auto;transform:none;}
-.totop:hover{background:var(--deep);}
 
-/* ===== Toast ===== */
-.toast{position:fixed;bottom:1.5rem;left:1.5rem;right:1.5rem;z-index:300;background:var(--deep);color:var(--mist);padding:1rem 1.25rem;border-radius:.75rem;box-shadow:var(--sh-soft);display:flex;align-items:center;gap:.75rem;font-size:.875rem;animation:fadeInUp .4s ease;transition:opacity .5s,transform .5s;}
-@media(min-width:640px){.toast{right:auto;max-width:22rem;}}
 
 /* =====================================================
    MODAL
    ===================================================== */
-.modal-root{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;background:rgba(1,38,34,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
+.modal-root{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(1,38,34,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
 .modal-root.open{display:flex;}
-.modal-panel{position:relative;background:#fff;width:100%;max-height:94vh;overflow-y:auto;border-radius:1.5rem 1.5rem 0 0;box-shadow:var(--sh-soft);animation:sheetUp .35s cubic-bezier(.2,.8,.2,1);}
+.modal-panel{position:relative;background:#fff;width:90%;max-height:94vh;overflow-y:auto;border-radius:1.5rem;box-shadow:var(--sh-soft);animation:sheetUp .35s cubic-bezier(.2,.8,.2,1);}
+.modal-panel::-webkit-scrollbar {
+  display: none;
+}
 @keyframes sheetUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
 @media(min-width:768px){
   .modal-root{align-items:center;padding:1.5rem;}
@@ -312,7 +235,8 @@ footer ul li.ic{display:flex;align-items:center;gap:.6rem;}
 @media(min-width:900px){.order-side{border-top:0;border-left:1px solid var(--mist2);}.order-side-in{position:sticky;top:5.5rem;}}
 .mini{display:flex;align-items:center;gap:1rem;padding:1rem;border:1px solid var(--mist2);border-radius:1rem;flex-wrap:wrap;}
 .mini-thumb{width:4.5rem;height:4.5rem;border-radius:.75rem;overflow:hidden;flex:none;}
-.mini-thumb svg{width:100%;height:100%;}
+.mini-thumb .thumb-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.mini-thumb .thumb-fb i{font-size:1.75rem;line-height:1;color:rgba(236,229,240,.9);}
 .mini-info{flex:1;min-width:9rem;}
 .mini-info b{display:block;font-family:var(--f-head);font-weight:600;font-size:.9375rem;line-height:1.35;}
 .mini-info span{font-size:.8125rem;color:rgba(10,79,72,.7);}
@@ -377,15 +301,15 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 .coin span{color:rgba(10,79,72,.7);}
 .coin.off{opacity:.55;cursor:not-allowed;}
 .secure{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.75rem;color:rgba(10,79,72,.7);margin-top:.9rem;}
+/* Samakan ukuran ikon Boxicons (±1.25em seperti .i lama) */
+.pmenu a>.bx,.profile-btn>.bx,.burger>.bx,.icon-btn>.bx,.totop>.bx,.social a>.bx,.qty button>.bx,.pg>.bx,.pill span>.bx,.secure>.bx,.pmeta>.bx,.pco2>.bx,.ic>.bx,.toast>.bx{font-size:1.25em;line-height:1;}
 .spin{width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid rgba(236,229,240,.35);border-top-color:var(--mist);animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
 /* ===== Modal sukses ===== */
 .ok-body{padding:2rem 1.5rem 1.75rem;text-align:center;}
-.ok-ring{width:5rem;height:5rem;margin:0 auto 1.25rem;}
-.ok-ring circle{fill:var(--mist);stroke:none;}
-.ok-ring path{fill:none;stroke:var(--ever);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:drawCheck .6s .2s ease forwards;}
-@keyframes drawCheck{to{stroke-dashoffset:0;}}
+.ok-ring{display:block;font-size:4.5rem;line-height:1;color:var(--ever);margin:0 auto 1.25rem;animation:popIn .45s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:none;}}
 .ok-body h2{font-weight:700;font-size:1.5rem;margin-bottom:.4rem;}
 .ok-body>p{font-size:.9375rem;color:rgba(10,79,72,.8);}
 .ok-list{margin:1.5rem 0;padding:1rem 1.1rem;border-radius:1rem;background:var(--mist3);border:1px solid var(--mist2);display:flex;flex-direction:column;gap:.65rem;font-size:.875rem;text-align:left;}
@@ -397,113 +321,58 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 .ok-actions{display:flex;flex-direction:column;gap:.6rem;}
 @media(min-width:480px){.ok-actions{flex-direction:row;}.ok-actions .btn{flex:1;}}
 
-/* ===== Aksesibilitas gerak ===== */
+/* ===== Aksesibilitas gerak (aturan umum di assets/global.css) ===== */
 @media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
-  .reveal{opacity:1;transform:none;}
-  .ok-ring path{stroke-dashoffset:0;}
+  .ok-ring{animation:none;}
 }
-::-webkit-scrollbar{width:8px;}
-::-webkit-scrollbar-track{background:var(--mist);}
-::-webkit-scrollbar-thumb{background:var(--ever);border-radius:4px;}
 </style>
 </head>
 <body>
 
-<!-- ============ SPRITE IKON (inline, tanpa library) ============ -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
-    <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
-    <symbol id="i-chev-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
-    <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
-    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.8 6.4.7-4.8 4.3 1.4 6.2L12 16.8 6.4 20l1.4-6.2L3 9.5l6.4-.7z"/></symbol>
-    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
-    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 15l4-4 3 3 5-6"/></symbol>
-    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5v16h4"/><path d="M16 8l4 4-4 4"/><path d="M20 12H9"/></symbol>
-    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9l1.5-5h13L20 9"/><path d="M4 9a2.5 2.5 0 005 0 2.5 2.5 0 006 0 2.5 2.5 0 005 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-5h4v5"/></symbol>
-    <symbol id="i-recycle" viewBox="0 0 24 24"><path d="M20 11a8 8 0 00-14.5-4"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0014.5 4"/><path d="M20 20v-4h-4"/></symbol>
-    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
-    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
-    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
-    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
-    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 5-14 15-14 0 9-5 14-13 14"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
-    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3"/><path d="M4 12h16"/></symbol>
-    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
-    <symbol id="i-search-alt" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M8.5 11h5"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></symbol>
-    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
-    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1"/></symbol>
-    <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6"/><path d="M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/></symbol>
-    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
-    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3M14 20h0"/></symbol>
-    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17" cy="7" r=".6"/></symbol>
-    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M15 4h-2.5A3.5 3.5 0 009 7.5V10H7v4h2v6h4v-6h2.2l.6-4H13V7.8c0-.5.3-.8.8-.8H15z"/></symbol>
-    <symbol id="i-twitter" viewBox="0 0 24 24"><path d="M4 4l7 9.5L4.5 20H6l5.7-5.5L16 20h4l-7.3-10L19.5 4H18l-5.3 5L9 4z"/></symbol>
-    <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 4v11a3.5 3.5 0 11-3.5-3.5"/><path d="M14 4c.3 2.5 2 4 4.5 4.2"/></symbol>
-    <!-- ikon kategori produk -->
-    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
-    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 4L3 7l2 4 2-1v10h10V10l2 1 2-4-5-3a4 4 0 01-8 0z"/></symbol>
-    <symbol id="i-chair" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="8" rx="2"/><path d="M5 11h14v4H5zM7 15v6M17 15v6"/></symbol>
-    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
-    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 012-2h12v16H7a2 2 0 00-2 2zm0 0h14"/></symbol>
-    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 8h12v6a5 5 0 01-5 5h-2a5 5 0 01-5-5z"/><path d="M17 10h2a2 2 0 010 4h-2M8 3v2M12 3v2"/></symbol>
-    <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
-  </defs>
-</svg>
+<!-- Ikon memakai Boxicons (CDN di <head>); logo GreenWise tetap SVG inline di bawah -->
 
 <!-- ==================== NAVBAR ==================== -->
 <header id="navbar">
   <div class="container nav-inner">
-    <a href="index.html" class="brand" aria-label="GreenWise, ke beranda">
-      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
-        <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
-        <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
-        <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
-      </svg>
+    <a href="beranda.html" class="brand" aria-label="GreenWise, ke beranda">
+      <img src="assets/img/logo-greenwise.svg" width="40" height="40" alt="">
       <span class="brand-word">GreenWise</span>
     </a>
 
     <nav class="nav-pill" aria-label="Navigasi utama">
-      <a href="index.html">Beranda</a>
-      <a href="halaman2.html">Green Hub</a>
-      <a href="halaman7.html" class="is-active" aria-current="page">Marketplace</a>
-      <!-- <a href="leaderboard.html">Leaderboard</a> -->
+      <a href="beranda.html">Beranda</a>
+      <a href="greenhub.html">Green Hub</a>
+      <a href="marketplace.html" class="is-active" aria-current="page">Marketplace</a>
     </nav>
 
     <div class="nav-right">
       <div class="profile-wrap">
         <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false">
-          <span class="avatar">DA</span>
+          <img class="avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Foto profil Dwi Anugrah">
           <span class="profile-txt">
             <b>Dwi Anugrah</b>
-            <span><svg class="i i-fill" style="font-size:.7rem" aria-hidden="true"><use href="#i-star"/></svg> <span id="pointsTxt">1.240 poin</span></span>
+            <span><i class="bx bxs-star" style="font-size:.7rem" aria-hidden="true"></i> <span id="pointsTxt">1.240 poin</span></span>
           </span>
-          <svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg>
+          <i class="bx bx-chevron-down" aria-hidden="true"></i>
         </button>
         <div id="profileMenu" class="pmenu" role="menu">
           <div class="pmenu-head"><b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span></div>
-          <a href="halaman4 .html" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg> Dashboard</a>
-          <a href="#" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg> Dampak saya</a>
+          <a href="dashboard.html" role="menuitem"><i class="bx bx-grid-alt" aria-hidden="true"></i> Dashboard</a>
+          <a href="riwayat.html" role="menuitem"><i class="bx bx-store" aria-hidden="true"></i> Riwayat & Kelola Produk</a>
           <hr>
-          <a href="#" id="logoutBtn" role="menuitem"><svg class="i" aria-hidden="true"><use href="#i-logout"/></svg> Keluar</a>
+          <a href="#" id="logoutBtn" role="menuitem"><i class="bx bx-log-out" aria-hidden="true"></i> Keluar</a>
         </div>
       </div>
       <button id="burgerBtn" class="burger" aria-label="Buka menu" aria-expanded="false">
-        <svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>
+        <i class="bx bx-menu" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 
   <div id="mobileMenu" class="mobile-menu">
-    <a href="index.html">Beranda</a>
-    <a href="halaman2.html">Green Hub</a>
-    <a href="halaman7.html" class="is-active">Marketplace</a>
-    <a href="leaderboard.html">Leaderboard</a>
+    <a href="beranda.html">Beranda</a>
+    <a href="greenhub.html">Green Hub</a>
+    <a href="marketplace.html" class="is-active">Marketplace</a>
   </div>
 </header>
 <div id="overlayBg" class="ov"></div>
@@ -522,7 +391,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 <!-- Search bar mengambang di tengah border hijau–putih -->
 <div class="search-float">
   <form id="searchForm" role="search" class="search">
-    <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+    <i class='bx bx-search'></i>
     <label for="searchInput" class="sr-only">Cari barang</label>
     <input id="searchInput" type="search" autocomplete="off" placeholder="Cari barang, mis. laptop, jaket, sepeda">
     <button type="submit" class="btn btn-ever">Cari</button>
@@ -554,7 +423,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
             <option value="Baik">Baik</option>
             <option value="Cukup">Cukup</option>
           </select>
-          <svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg>
+          <i class="bx bx-chevron-down" aria-hidden="true"></i>
         </div>
         <div class="sel">
           <label for="priceSelect" class="sr-only">Rentang harga</label>
@@ -565,7 +434,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
             <option value="500-2000">Rp 500.000 – 2 juta</option>
             <option value="gt2000">Di atas Rp 2 juta</option>
           </select>
-          <svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg>
+          <i class="bx bx-chevron-down" aria-hidden="true"></i>
         </div>
         <div class="sel">
           <label for="sortSelect" class="sr-only">Urutkan</label>
@@ -574,7 +443,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
             <option value="low">Harga terendah</option>
             <option value="high">Harga tertinggi</option>
           </select>
-          <svg class="i" aria-hidden="true"><use href="#i-chev-down"/></svg>
+          <i class="bx bx-chevron-down" aria-hidden="true"></i>
         </div>
       </div>
     </div>
@@ -584,7 +453,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
     <div id="cardGrid" class="grid-products"></div>
 
     <div id="emptyState" class="empty">
-      <div class="ico"><svg class="i" aria-hidden="true"><use href="#i-search-alt"/></svg></div>
+      <div class="ico"><i class="bx bx-search-alt" aria-hidden="true"></i></div>
       <h3>Barang tidak ditemukan</h3>
       <p>Coba kata kunci lain atau ubah filter kategori, kondisi, dan harga.</p>
       <button id="resetBtn" class="btn btn-ever">Hapus filter</button>
@@ -619,15 +488,15 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
     </div>
     <div class="rows reveal">
       <div class="row">
-        <div class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <div class="ico"><i class="bx bx-shield-alt" aria-hidden="true"></i></div>
         <div><h3>Kondisi sudah dinilai</h3><p>Setiap barang dinilai dari foto, kelengkapan, dan tanda pemakaian, lalu diberi label kondisi: Seperti baru, Baik, atau Cukup.</p></div>
       </div>
       <div class="row">
-        <div class="ico"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></div>
+        <div class="ico"><i class="bx bx-lock-alt" aria-hidden="true"></i></div>
         <div><h3>Pembayaran aman</h3><p>Bayar lewat Midtrans atau transfer manual. Dana baru diteruskan ke penjual setelah barang kamu terima.</p></div>
       </div>
       <div class="row">
-        <div class="ico"><svg class="i" aria-hidden="true"><use href="#i-leaf"/></svg></div>
+        <div class="ico"><i class="bx bx-leaf" aria-hidden="true"></i></div>
         <div><h3>Dampak lingkungan terhitung</h3><p>Tiap kartu menampilkan estimasi emisi karbon yang dihindari dibanding membeli barang baru.</p></div>
       </div>
     </div>
@@ -653,7 +522,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
   <div class="cta-in">
     <h3>Punya barang yang masih layak pakai?</h3>
     <p>Foto barangmu, GreenWise nilai kondisinya dan sarankan apakah pantas dijual di Marketplace.</p>
-    <a href="index.html#tindakan" class="btn btn-mist" style="padding:1rem 2rem"><svg class="i" aria-hidden="true"><use href="#i-scan"/></svg> Cek barangku</a>
+    <a href="beranda.html#tindakan" class="btn btn-mist" style="padding:1rem 2rem"><i class="bx bx-scan" aria-hidden="true"></i> Cek barangku</a>
   </div>
 </section>
 
@@ -662,35 +531,30 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
   <div class="container">
     <div class="f-grid">
       <div>
-        <a href="index.html" class="f-brand">
-          <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="4" y="4" width="58" height="58" rx="18" fill="#003B36"/>
-            <rect x="38" y="38" width="58" height="58" rx="18" fill="#ECE5F0"/>
-            <path d="M42 90 Q64 50 94 45 Q79 75 42 90Z" fill="#003B36" opacity="0.45"/>
-          </svg>
+        <a href="beranda.html" class="f-brand">
+          <img src="assets/img/logo-greenwise.svg" width="38" height="38" alt="">
           GreenWise
         </a>
         <p class="f-about">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
         <div class="social">
-          <a href="#" aria-label="Instagram"><svg class="i" aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg class="i" aria-hidden="true"><use href="#i-facebook"/></svg></a>
-          <a href="#" aria-label="Twitter"><svg class="i" aria-hidden="true"><use href="#i-twitter"/></svg></a>
-          <a href="#" aria-label="TikTok"><svg class="i" aria-hidden="true"><use href="#i-tiktok"/></svg></a>
+          <a href="#" aria-label="Instagram"><i class="bx bxl-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Facebook"><i class="bx bxl-facebook" aria-hidden="true"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bx bxl-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="TikTok"><i class="bx bxl-tiktok" aria-hidden="true"></i></a>
         </div>
       </div>
       <div>
         <h5>Navigasi</h5>
         <ul>
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="halaman2.html">Green Hub</a></li>
-          <li><a href="halaman7.html">Marketplace</a></li>
-          <li><a href="leaderboard.html">Leaderboard</a></li>
+          <li><a href="beranda.html">Beranda</a></li>
+          <li><a href="greenhub.html">Green Hub</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
         </ul>
       </div>
       <div>
         <h5>Sumber daya</h5>
         <ul>
-          <li><a href="halaman2.html">Panduan daur ulang</a></li>
+          <li><a href="greenhub.html">Panduan daur ulang</a></li>
           <li><a href="#">Blog lingkungan</a></li>
           <li><a href="#">FAQ</a></li>
           <li><a href="#">Pusat bantuan</a></li>
@@ -699,16 +563,16 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
       <div>
         <h5>Hubungi kami</h5>
         <ul>
-          <li class="ic"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg> halo@greenwise.id</li>
-          <li class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg> +62 812 3456 7890</li>
-          <li class="ic"><svg class="i" aria-hidden="true"><use href="#i-map"/></svg> Bandung, Indonesia</li>
+          <li class="ic"><i class="bx bx-envelope" aria-hidden="true"></i> halo@greenwises.web.app</li>
+          <li class="ic"><i class="bx bx-phone" aria-hidden="true"></i> +62 812 3456 7890</li>
+          <li class="ic"><i class="bx bx-map" aria-hidden="true"></i> Bogor, Indonesia</li>
         </ul>
       </div>
     </div>
     <div class="f-bottom"><p>© 2026 GreenWise. Semua hak dilindungi.</p><p>Dibuat untuk bumi yang lebih hijau.</p></div>
   </div>
   <div class="f-mark" aria-hidden="true">GreenWise</div>
-  <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas"><svg class="i" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
+  <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas"><i class="bx bx-up-arrow-alt" aria-hidden="true"></i></button>
 </footer>
 
 <!-- ============ MODAL: FORM PEMESANAN ============ -->
@@ -716,7 +580,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
     <div class="modal-head">
       <h2 id="orderTitle">Form pemesanan</h2>
-      <button type="button" class="icon-btn" data-close aria-label="Tutup form pemesanan"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+      <button type="button" class="icon-btn" data-close aria-label="Tutup form pemesanan"><i class="bx bx-x" aria-hidden="true"></i></button>
     </div>
 
     <form id="orderForm" class="order-grid" novalidate>
@@ -726,9 +590,9 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
           <div class="mini-thumb" id="mThumb"></div>
           <div class="mini-info"><b id="mName">-</b><span id="mMeta">-</span></div>
           <div class="qty" role="group" aria-label="Jumlah">
-            <button type="button" id="qMinus" aria-label="Kurangi jumlah"><svg class="i" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+            <button type="button" id="qMinus" aria-label="Kurangi jumlah"><i class="bx bx-minus" aria-hidden="true"></i></button>
             <output id="qVal" aria-live="polite">1</output>
-            <button type="button" id="qPlus" aria-label="Tambah jumlah"><svg class="i" aria-hidden="true"><use href="#i-plus"/><path d="M12 6v12M6 12h12"/></svg></button>
+            <button type="button" id="qPlus" aria-label="Tambah jumlah"><i class="bx bx-plus" aria-hidden="true"></i></button>
           </div>
         </div>
 
@@ -767,9 +631,9 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
         <fieldset>
           <legend>Pengiriman</legend>
           <div class="opts">
-            <label class="opt"><input type="radio" name="ship" value="reg" checked><span class="opt-body"><span class="opt-ico"><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg></span><span class="opt-txt"><b>Reguler</b><span>Tiba 2–4 hari kerja</span></span><span class="opt-price">Rp 15.000</span><span class="radio-dot"></span></span></label>
-            <label class="opt"><input type="radio" name="ship" value="exp"><span class="opt-body"><span class="opt-ico"><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg></span><span class="opt-txt"><b>Kilat</b><span>Tiba 1 hari kerja</span></span><span class="opt-price">Rp 30.000</span><span class="radio-dot"></span></span></label>
-            <label class="opt"><input type="radio" name="ship" value="pick"><span class="opt-body"><span class="opt-ico"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="opt-txt"><b>Ambil di tempat</b><span>Janjian dengan penjual</span></span><span class="opt-price">Gratis</span><span class="radio-dot"></span></span></label>
+            <label class="opt"><input type="radio" name="ship" value="reg" checked><span class="opt-body"><span class="opt-ico"><i class="bx bx-package" aria-hidden="true"></i></span><span class="opt-txt"><b>Reguler</b><span>Tiba 2–4 hari kerja</span></span><span class="opt-price">Rp 15.000</span><span class="radio-dot"></span></span></label>
+            <label class="opt"><input type="radio" name="ship" value="exp"><span class="opt-body"><span class="opt-ico"><i class="bx bx-rocket" aria-hidden="true"></i></span><span class="opt-txt"><b>Kilat</b><span>Tiba 1 hari kerja</span></span><span class="opt-price">Rp 30.000</span><span class="radio-dot"></span></span></label>
+            <label class="opt"><input type="radio" name="ship" value="pick"><span class="opt-body"><span class="opt-ico"><i class="bx bx-store" aria-hidden="true"></i></span><span class="opt-txt"><b>Ambil di tempat</b><span>Janjian dengan penjual</span></span><span class="opt-price">Gratis</span><span class="radio-dot"></span></span></label>
           </div>
         </fieldset>
 
@@ -777,17 +641,17 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
         <fieldset>
           <legend>Metode pembayaran</legend>
           <div class="opts two">
-            <label class="opt"><input type="radio" name="pay" value="midtrans" checked><span class="opt-body"><span class="opt-ico"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg></span><span class="opt-txt"><b>Midtrans</b><span>QRIS, e-wallet, VA, kartu</span></span><span class="radio-dot"></span></span></label>
-            <label class="opt"><input type="radio" name="pay" value="manual"><span class="opt-body"><span class="opt-ico"><svg class="i" aria-hidden="true"><use href="#i-bank"/></svg></span><span class="opt-txt"><b>Transfer manual</b><span>Transfer ke rekening GreenWise</span></span><span class="radio-dot"></span></span></label>
+            <label class="opt"><input type="radio" name="pay" value="midtrans" checked><span class="opt-body"><span class="opt-ico"><i class="bx bx-wallet" aria-hidden="true"></i></span><span class="opt-txt"><b>Midtrans</b><span>QRIS, e-wallet, VA, kartu</span></span><span class="radio-dot"></span></span></label>
+            <label class="opt"><input type="radio" name="pay" value="manual"><span class="opt-body"><span class="opt-ico"><i class="bx bxs-bank" aria-hidden="true"></i></span><span class="opt-txt"><b>Transfer manual</b><span>Transfer ke rekening GreenWise</span></span><span class="radio-dot"></span></span></label>
           </div>
 
           <div id="mtBox" class="sub">
             <p class="t">Pilih cara bayar lewat Midtrans</p>
             <div class="pills">
-              <label class="pill"><input type="radio" name="mt" value="QRIS" checked><span><svg class="i" aria-hidden="true"><use href="#i-qr"/></svg> QRIS</span></label>
-              <label class="pill"><input type="radio" name="mt" value="GoPay"><span><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg> GoPay</span></label>
-              <label class="pill"><input type="radio" name="mt" value="Virtual Account"><span><svg class="i" aria-hidden="true"><use href="#i-bank"/></svg> Virtual Account</span></label>
-              <label class="pill"><input type="radio" name="mt" value="Kartu kredit/debit"><span><svg class="i" aria-hidden="true"><use href="#i-card"/></svg> Kartu</span></label>
+              <label class="pill"><input type="radio" name="mt" value="QRIS" checked><span><i class="bx bx-qr-scan" aria-hidden="true"></i> QRIS</span></label>
+              <label class="pill"><input type="radio" name="mt" value="GoPay"><span><i class="bx bx-wallet" aria-hidden="true"></i> GoPay</span></label>
+              <label class="pill"><input type="radio" name="mt" value="Virtual Account"><span><i class="bx bxs-bank" aria-hidden="true"></i> Virtual Account</span></label>
+              <label class="pill"><input type="radio" name="mt" value="Kartu kredit/debit"><span><i class="bx bx-credit-card" aria-hidden="true"></i> Kartu</span></label>
             </div>
           </div>
 
@@ -829,7 +693,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
           <div class="total"><span>Total bayar</span><b id="sTotal">-</b></div>
 
           <button type="submit" id="payBtn" class="btn btn-ever btn-block" style="margin-top:1.25rem;padding:1rem 1.5rem;font-size:.9375rem">Bayar sekarang</button>
-          <p class="secure"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg> Simulasi pembayaran, tidak ada dana yang berpindah.</p>
+          <p class="secure"><i class="bx bx-lock-alt" aria-hidden="true"></i> Simulasi pembayaran, tidak ada dana yang berpindah.</p>
         </div>
       </aside>
     </form>
@@ -840,7 +704,7 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
 <div id="successModal" class="modal-root" aria-hidden="true">
   <div class="modal-panel sm" role="dialog" aria-modal="true" aria-labelledby="okTitle">
     <div class="ok-body">
-      <svg class="ok-ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="38"/><path d="M24 41l11 11 21-24"/></svg>
+      <i class="bx bxs-check-circle ok-ring" aria-hidden="true"></i>
       <h2 id="okTitle">Pembayaran berhasil</h2>
       <p>Pesananmu sudah kami teruskan ke penjual.</p>
 
@@ -851,12 +715,12 @@ legend{font-family:var(--f-head);font-weight:600;font-size:1rem;margin-bottom:.9
         <div><span>Total dibayar</span><b id="oTotal">-</b></div>
       </div>
 
-      <p class="ok-earn"><svg class="i i-fill" aria-hidden="true"><use href="#i-star"/></svg> <span id="oEarn">+50 Green Coins</span></p>
+      <p class="ok-earn"><i class="bx bxs-star" aria-hidden="true"></i> <span id="oEarn">+50 Green Coins</span></p>
       <p class="ok-note" id="oNote">Ini hanya simulasi. Tidak ada uang sungguhan yang dipindahkan.</p>
 
       <div class="ok-actions">
         <button type="button" class="btn btn-line" data-close>Lanjut belanja</button>
-        <a href="halaman2.html" class="btn btn-ever">Pelajari daur ulang</a>
+        <a href="riwayat.html?tab=buy" class="btn btn-ever">Lacak di Riwayat Pesanan</a>
       </div>
     </div>
   </div>
@@ -868,7 +732,8 @@ var $ = function(s, r){ return (r || document).querySelector(s); };
 var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 var rp = function(n){ return 'Rp ' + Math.round(n).toLocaleString('id-ID'); };
 var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
-var ic = function(name, cls){ return '<svg class="i ' + (cls || '') + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>'; };
+var BX = {'pin':'bx-map','leaf':'bx-leaf','chev-left':'bx-chevron-left','chev-right':'bx-chevron-right','shield':'bx-shield-alt','logout':'bx-log-out','menu':'bx-menu','x':'bx-x'};
+var ic = function(name, cls){ return '<i class="bx ' + (BX[name] || 'bx-circle') + (cls ? ' ' + cls : '') + '" aria-hidden="true"></i>'; };
 
 /* ===================== Navbar, menu, profil ===================== */
 var navbar = $('#navbar'), hero = $('#hero');
@@ -884,7 +749,7 @@ var burgerBtn = $('#burgerBtn'), mobileMenu = $('#mobileMenu');
 burgerBtn.addEventListener('click', function(){
   var open = mobileMenu.classList.toggle('open');
   burgerBtn.setAttribute('aria-expanded', open);
-  burgerBtn.innerHTML = '<svg class="i" aria-hidden="true"><use href="#i-' + (open ? 'x' : 'menu') + '"/></svg>';
+  burgerBtn.innerHTML = '<i class="bx bx-' + (open ? 'x' : 'menu') + '" aria-hidden="true"></i>';
   if(open) navbar.classList.add('scrolled'); else updateNavbar();
 });
 
@@ -918,7 +783,7 @@ var THEME = {
   'Rumah Tangga':['#003B36','#12655C','cup'],
   'Olahraga':['#12655C','#003B36','ball']
 };
-function P(id, n, cat, p, cond, city, seller, co2, stock){ return {id:id, n:n, cat:cat, p:p, cond:cond, city:city, seller:seller, co2:co2, stock:stock}; }
+function P(id, n, cat, p, cond, city, seller, co2, stock, img){ return {id:id, n:n, cat:cat, p:p, cond:cond, city:city, seller:seller, co2:co2, stock:stock, img:img || null}; }
 var PRODUCTS = [
   P(1,'Laptop ThinkPad T480 i5 8GB/256GB','Elektronik',4200000,'Baik','Bandung','Rani',180,1),
   P(2,'Smartphone Samsung A52 128GB','Elektronik',2350000,'Seperti baru','Jakarta','Bagas',62,2),
@@ -934,34 +799,39 @@ var PRODUCTS = [
   P(12,'Kursi kerja ergonomis jaring','Furnitur',450000,'Baik','Jakarta','Hendra',34,2),
   P(13,'Rak buku kayu 5 tingkat','Furnitur',380000,'Cukup','Semarang','Lina',40,1),
   P(14,'Sofa 2 dudukan kain abu','Furnitur',1250000,'Baik','Surabaya','Yoga',85,1),
-  P(15,'Sneakers Air Max ukuran 42','Sepatu & Tas',780000,'Baik','Jakarta','Reza',24,1),
-  P(16,'Tas ransel outdoor 35 liter','Sepatu & Tas',260000,'Baik','Bandung','Mira',13,2),
-  P(17,'Sepatu pantofel kulit ukuran 41','Sepatu & Tas',210000,'Cukup','Bekasi','Doni',16,1),
-  P(18,'Tas selempang kulit sintetis','Sepatu & Tas',145000,'Seperti baru','Yogyakarta','Citra',10,3),
+  P(15,'Sneakers Air Max ukuran 42','Sepatu & Tas',780000,'Baik','Jakarta','Reza',24,1,'assets/img/marketplace/sepatu.jpg'),
+  P(16,'Tas ransel outdoor 35 liter','Sepatu & Tas',260000,'Baik','Bandung','Mira',13,2,'assets/img/marketplace/dompetatautas.jpg'),
+  P(17,'Sepatu pantofel kulit ukuran 41','Sepatu & Tas',210000,'Cukup','Bekasi','Doni',16,1,'assets/img/marketplace/sepatu.jpg'),
+  P(18,'Tas selempang kulit sintetis','Sepatu & Tas',145000,'Seperti baru','Yogyakarta','Citra',10,3,'assets/img/marketplace/dompetatautas.jpg'),
   P(19,'Paket 5 novel fiksi populer','Buku',90000,'Baik','Malang','Eko',4,3),
   P(20,'Buku kalkulus edisi 9','Buku',110000,'Baik','Bandung','Farah',3,1),
   P(21,'Komik anak 12 jilid','Buku',130000,'Baik','Depok','Gilang',5,2),
   P(22,'Ensiklopedia sains anak 10 jilid','Buku',240000,'Baik','Jakarta','Hana',6,1),
-  P(23,'Blender 1,5 liter','Rumah Tangga',175000,'Baik','Tangerang','Indah',12,2),
-  P(24,'Rice cooker 1,8 liter','Rumah Tangga',120000,'Baik','Bogor','Joko',14,2),
-  P(25,'Set panci stainless 6 pcs','Rumah Tangga',230000,'Seperti baru','Bandung','Kiki',20,1),
-  P(26,'Kipas angin berdiri 16 inci','Rumah Tangga',165000,'Baik','Semarang','Lutfi',18,2),
-  P(27,'Sepeda lipat 20 inci','Olahraga',1800000,'Baik','Jakarta','Maya',120,1),
-  P(28,'Matras yoga dan dumbbell set','Olahraga',145000,'Seperti baru','Solo','Nino',8,2),
-  P(29,'Raket badminton 2 pcs + tas','Olahraga',320000,'Baik','Surabaya','Oscar',7,1),
-  P(30,'Bola basket ukuran 7','Olahraga',150000,'Cukup','Depok','Putri',6,0)
+  P(23,'Blender 1,5 liter','Rumah Tangga',175000,'Baik','Tangerang','Indah',12,2,'assets/img/marketplace/blender.jpg'),
+  P(24,'Rice cooker 1,8 liter','Rumah Tangga',120000,'Baik','Bogor','Joko',14,2,'assets/img/marketplace/ricecooker.jpg'),
+  P(25,'Set panci stainless 6 pcs','Rumah Tangga',230000,'Seperti baru','Bandung','Kiki',20,1,'assets/img/marketplace/panci.jpg'),
+  P(26,'Kipas angin berdiri 16 inci','Rumah Tangga',165000,'Baik','Semarang','Lutfi',18,2,'assets/img/marketplace/kipasangin.jpg'),
+  P(27,'Sepeda lipat 20 inci','Olahraga',1800000,'Baik','Jakarta','Maya',120,1,'assets/img/marketplace/sepeda.jpg'),
+  P(28,'Matras yoga dan dumbbell set','Olahraga',145000,'Seperti baru','Solo','Nino',8,2,'assets/img/marketplace/yoga.jpg'),
+  P(29,'Raket badminton 2 pcs + tas','Olahraga',320000,'Baik','Surabaya','Oscar',7,1,'assets/img/marketplace/rakte-bulutangkis.jpg'),
+  P(30,'Bola basket ukuran 7','Olahraga',150000,'Cukup','Depok','Putri',6,0,'assets/img/marketplace/basket.jpg'),
+  P(31,'Tas dari kemasan minuman instan','Sepatu & Tas',95000,'Seperti baru','Bandung','Sari',25,2,'assets/img/marketplace/tasdarikemasan.jpg'),
+  P(32,'Tempat pensil dari kaleng bekas','Rumah Tangga',35000,'Baik','Yogyakarta','Budi',8,4,'assets/img/marketplace/tempatpensil.jpg')
 ];
 
-/* ===================== Gambar produk (SVG buatan sendiri) ===================== */
+/* ===================== Gambar produk (foto asli, fallback Boxicons) ===================== */
 function thumb(p, pre){
-  var t = THEME[p.cat], seed = p.id * 37, gid = 'g' + pre + p.id;
-  return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' +
-    '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + t[0] + '"/><stop offset="1" stop-color="' + t[1] + '"/></linearGradient></defs>' +
-    '<rect width="400" height="300" fill="url(#' + gid + ')"/>' +
-    '<circle cx="' + (60 + seed % 280) + '" cy="' + (40 + seed % 90) + '" r="' + (90 + seed % 50) + '" fill="#ECE5F0" fill-opacity=".07"/>' +
-    '<circle cx="' + (340 - seed % 200) + '" cy="' + (260 - seed % 60) + '" r="' + (70 + seed % 40) + '" fill="#ECE5F0" fill-opacity=".09"/>' +
-    '<use href="#i-' + t[2] + '" x="140" y="90" width="120" height="120" fill="none" stroke="#ECE5F0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</svg>';
+  if(p.img){
+    return '<img src="' + p.img + '" alt="' + esc(p.n) + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML=thumbSVG(' + p.id + ')">';
+  }
+  return thumbSVG(p.id);
+}
+function thumbSVG(id){
+  var p = PRODUCTS.filter(function(x){ return x.id === id; })[0];
+  var t = THEME[p.cat];
+  var icons = {'chip':'bx-chip','shirt':'bxs-t-shirt','chair':'bx-chair','bag':'bx-shopping-bag','book':'bx-book','cup':'bx-home','ball':'bx-football'};
+  return '<div class="thumb-fb" style="background:linear-gradient(135deg,' + t[0] + ',' + t[1] + ')" aria-hidden="true">' +
+    '<i class="bx ' + (icons[t[2]] || 'bx-image') + '"></i></div>';
 }
 
 /* ===================== State, filter, render ===================== */
@@ -1007,7 +877,7 @@ function cardHTML(p){
       '<p class="pmeta">' + ic('pin') + esc(p.city) + ' · ' + esc(p.seller) + '</p>' +
       '<div class="pfoot">' +
         '<div><p class="pprice">' + rp(p.p) + '</p><p class="pco2">' + ic('leaf') + 'Hemat ± ' + p.co2 + ' kg CO₂</p></div>' +
-        '<button type="button" class="buy" data-id="' + p.id + '"' + (sold ? ' disabled' : '') + ' aria-label="' + (sold ? 'Terjual: ' : 'Beli ') + esc(p.n) + '">' + (sold ? 'Habis' : 'Beli') + '</button>' +
+        '<button type="button" class="buy" data-id="' + p.id + '"' + (sold ? ' disabled' : '') + ' aria-label="' + (sold ? 'Terjual: ' : 'Beli ') + esc(p.n) + '">' + (sold ? 'Habis' : 'Beli') + (sold ? '' : ' <span class="buy-bullet"><i class="bx bx-up-arrow-alt"></i></span>') + '</button>' +
       '</div>' +
     '</div></article>';
 }
@@ -1195,6 +1065,14 @@ function validate(){
   return errs;
 }
 ['fName','fPhone','fCity','fAddr'].forEach(function(id){ document.getElementById(id).addEventListener('input', function(){ setBad(id, false); }); });
+
+// Nomor WhatsApp: hanya angka yang boleh diinput (huruf/simbol liar otomatis dibuang, termasuk saat paste)
+document.getElementById('fPhone').addEventListener('input', function(){
+  var v = this.value;
+  var hasPlus = v.charAt(0) === '+';
+  v = v.replace(/[^0-9\s\-.()]/g, '').replace(/\+/g, '');
+  this.value = (hasPlus ? '+' : '') + v;
+});
 
 var payBtn = $('#payBtn');
 form.addEventListener('submit', function(e){

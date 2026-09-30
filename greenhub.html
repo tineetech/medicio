@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Hub — Edukasi Sampah & Barang Bekas | GreenWise</title>
+    <meta
+      name="description"
+      content="Green Hub: kumpulan materi edukasi tentang pemilahan sampah, daur ulang, guna ulang, dan cara memakai GreenWise."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/logo-greenwise.svg" />
+
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Lexend:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              deep: "#012622",
+              ever: "#003B36",
+              mist: "#ECE5F0",
+              ever2: "#0A4F48",
+              ever3: "#12655C",
+              mist2: "#DCD2E4",
+              mist3: "#F6F2F8",
+            },
+            fontFamily: {
+              lexend: ["Lexend", "sans-serif"],
+              poppins: ["Poppins", "sans-serif"],
+              dmsans: ['"DM Sans"', "sans-serif"],
+            },
+            boxShadow: {
+              card: "0 4px 20px -6px rgba(1,38,34,0.15)",
+              soft: "0 18px 36px -14px rgba(1,38,34,0.28)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/global.css" />
+
+    <style>
+      /* ===== Khusus halaman2 (tidak dipakai halaman1/3) ===== */
+      .scroll-mt-nav {
+        scroll-margin-top: 6rem;
+      }
+
+      /* ===== Hero decor (lingkaran halus) ===== */
+      .hero-ring {
+        position: absolute;
+        border-radius: 9999px;
+        border: 1px solid rgba(236, 229, 240, 0.1);
+        pointer-events: none;
+      }
+      .hero-glow {
+        position: absolute;
+        pointer-events: none;
+        border-radius: 9999px;
+        filter: blur(80px);
+        background: radial-gradient(
+          circle,
+          rgba(18, 101, 92, 0.55),
+          transparent 70%
+        );
+      }
+
+      /* ===== Search ===== */
+      .search-box {
+        transition:
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+      .search-box:focus-within {
+        box-shadow: 0 0 0 4px rgba(236, 229, 240, 0.25);
+      }
+      .search-box input:focus-visible {
+        outline: none;
+      }
+      .search-box input::-webkit-search-cancel-button {
+        display: none;
+      }
+      .search-box>i.bx-search{display:inline-block!important;visibility:visible!important;font-size:1.5rem;line-height:1;flex:none;color:#0A4F48;opacity:.6;}
+
+      /* ===== Chips kategori ===== */
+      .chip {
+        white-space: nowrap;
+        border: 1px solid #dcd2e4;
+        background: #fff;
+        color: #0a4f48;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .chip:hover {
+        background: #ece5f0;
+      }
+      .chip.is-active {
+        background: #003b36;
+        color: #ece5f0;
+        border-color: #003b36;
+      }
+      .chip-scroll {
+        scrollbar-width: none;
+      }
+      .chip-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ===== Suggest pills (samakan border dengan chip kategori) ===== */
+      .suggest{border:1px solid #dcd2e4;background:#fff;}
+
+      /* ===== Kartu artikel ===== */
+      .art-card {
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .art-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 36px -14px rgba(1, 38, 34, 0.28);
+      }
+      .art-card .art-img {
+        transition: transform 0.6s ease;
+      }
+      .art-card:hover .art-img {
+        transform: scale(1.07);
+      }
+      .art-card .art-arrow {
+        transition: transform 0.3s ease;
+      }
+      .art-card:hover .art-arrow {
+        transform: translateX(4px);
+      }
+      .art-thumb {
+        background: linear-gradient(135deg, #0a4f48, #12655c);
+      }
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* ===== Pagination ===== */
+      .pg-btn {
+        min-width: 2.75rem;
+        height: 2.75rem;
+        border: 1px solid #dcd2e4;
+        background: #fff;
+        color: #0a4f48;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          opacity 0.25s ease;
+      }
+      .pg-btn:hover:not(:disabled):not(.is-active) {
+        background: #ece5f0;
+      }
+      .pg-btn.is-active {
+        background: #003b36;
+        color: #ece5f0;
+        border-color: #003b36;
+      }
+      .pg-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+
+      /* ===== Accordion FAQ ===== */
+      .faq-item .faq-body {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s ease;
+      }
+      .faq-item.open .faq-body {
+        grid-template-rows: 1fr;
+      }
+      .faq-item .faq-body > div {
+        overflow: hidden;
+      }
+      .faq-item .faq-icon {
+        transition: transform 0.3s ease;
+      }
+      .faq-item.open .faq-icon {
+        transform: rotate(45deg);
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- ==================== NAVBAR ==================== -->
+    <!-- ==================== NAVBAR (standar global) ==================== -->
+    <header id="navbar">
+      <div class="container nav-inner">
+        <a href="beranda.html" class="brand" aria-label="GreenWise, ke beranda">
+          <img src="assets/img/logo-greenwise.svg" width="40" height="40" alt="">
+          <span class="brand-word">GreenWise</span>
+        </a>
+
+        <nav class="nav-pill" aria-label="Navigasi utama">
+          <a href="beranda.html">Beranda</a>
+          <a href="greenhub.html" class="is-active" aria-current="page">Green Hub</a>
+          <a href="marketplace.html">Marketplace</a>
+        </nav>
+
+        <div class="nav-right">
+          <div class="profile-wrap">
+            <button
+              id="profileBtn"
+              class="profile-btn"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                class="avatar"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80"
+                alt="Foto profil Dwi Anugrah"
+              />
+              <span class="profile-txt">
+                <b>Dwi Anugrah</b>
+                <span
+                  ><i
+                    class="bx bxs-star"
+                    style="font-size: 0.7rem"
+                    aria-hidden="true"
+                  ></i>
+                  1.240 poin</span
+                >
+              </span>
+              <i class="bx bx-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div id="profileMenu" class="pmenu" role="menu">
+              <div class="pmenu-head">
+                <b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span>
+              </div>
+              <a href="dashboard.html" role="menuitem"
+                ><i class="bx bx-grid-alt" aria-hidden="true"></i> Dashboard</a
+              >
+              <a href="riwayat.html" role="menuitem"
+                ><i class="bx bx-store" aria-hidden="true"></i> Riwayat & Kelola
+                Produk</a
+              >
+              <hr />
+              <a href="#" id="logoutBtn" role="menuitem"
+                ><i class="bx bx-log-out" aria-hidden="true"></i> Keluar</a
+              >
+            </div>
+          </div>
+          <button
+            id="burgerBtn"
+            class="burger"
+            aria-label="Buka menu"
+            aria-expanded="false"
+          >
+            <i class="bx bx-menu" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu">
+        <a href="beranda.html">Beranda</a>
+        <a href="greenhub.html" class="is-active">Green Hub</a>
+        <a href="marketplace.html">Marketplace</a>
+      </div>
+    </header>
+
+    <div id="overlayBg" class="ov"></div>
+
+    <!-- ============ A. HERO (compact + search di border) ============ -->
+    <section id="hero" class="relative overflow-hidden bg-deep">
+      <div
+        class="hero-glow w-[360px] h-[360px] -top-20 -left-20"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="hero-glow w-[300px] h-[300px] top-10 -right-16"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="hero-ring w-[440px] h-[440px] -top-32 -right-32 hidden sm:block"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Teks hero (lebih compact) -->
+      <div
+        class="relative z-10 w-full max-w-2xl mx-auto px-5 lg:px-8 pt-28 pb-12 text-center"
+      >
+        <span
+          class="inline-flex items-center gap-2 text-xs font-dmsans font-semibold text-yellow-400/80 uppercase tracking-widest mb-4"
+        >
+          <i class="bx bx-leaf"></i> Green Hub Edukasi
+        </span>
+        <h1
+          class="font-lexend font-bold text-3xl sm:text-4xl leading-[1.2] text-white mb-4"
+        >
+          Belajar kelola barang bekas <br class="hidden sm:block" />dari
+          <span class="text-yellow-400">Green Hub.</span>
+        </h1>
+        <!-- <p class="text-sm sm:text-base text-mist/65 font-dmsans leading-relaxed max-w-lg mx-auto">
+      Panduan memilah, mendaur ulang, dan memakai GreenWise — singkat dan langsung bisa dipraktikkan.
+    </p> -->
+      </div>
+    </section>
+
+    <!-- Search box mengambang di tengah border hijau–putih -->
+    <div class="relative z-20 -mt-7 px-5 lg:px-8 max-w-5xl mx-auto">
+      <form
+        id="searchForm"
+        role="search"
+        class="search-box flex items-center gap-2 bg-white rounded-full pl-5 pr-2 py-2 shadow-soft"
+      >
+        <i class="bx bx-search text-2xl text-ever2/60 shrink-0"></i>
+        <label for="searchInput" class="sr-only">Cari materi edukasi</label>
+        <input
+          id="searchInput"
+          type="search"
+          autocomplete="off"
+          placeholder="Cari materi, mis. cara memilah sampah plastik"
+          class="flex-1 min-w-0 bg-transparent text-deep placeholder:text-ever2/50 font-dmsans text-sm sm:text-base py-2.5"
+        />
+        <button
+          type="submit"
+          class="shrink-0 inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-5 sm:px-7 py-3 rounded-full transition-colors duration-300"
+        >
+          Cari
+        </button>
+      </form>
+
+      <!-- Suggest chips -->
+      <div class="flex flex-wrap justify-center items-center gap-2 mt-4">
+        <!-- <span class="text-ever2/50 text-xs font-dmsans mr-1">Populer:</span> -->
+        <button
+          type="button"
+          data-suggest="plastik"
+          class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white"
+        >
+          plastik
+        </button>
+        <button
+          type="button"
+          data-suggest="elektronik"
+          class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white"
+        >
+          elektronik
+        </button>
+        <button
+          type="button"
+          data-suggest="pakaian"
+          class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white"
+        >
+          pakaian
+        </button>
+        <button
+          type="button"
+          data-suggest="green coins"
+          class="suggest text-xs font-dmsans text-ever2/70 border border-mist2 hover:bg-primary hover:bg-mist rounded-full px-4 py-1.5 transition-colors bg-white"
+        >
+          green coins
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ B. DAFTAR MATERI ============ -->
+    <section id="materi" class="pt-16 pb-20 sm:pb-24 bg-white scroll-mt-nav">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div
+          class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal"
+        >
+          <div class="max-w-xl">
+            <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep">
+              Semua materi edukasi
+            </h2>
+            <p
+              id="resultInfo"
+              class="text-ever2/80 font-dmsans mt-3"
+              aria-live="polite"
+            >
+              Menampilkan semua materi.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <label for="sortSelect" class="text-sm font-dmsans text-ever2/70"
+              >Urutkan</label
+            >
+            <div class="relative">
+              <select
+                id="sortSelect"
+                class="appearance-none bg-white border border-mist2 rounded-full pl-4 pr-10 py-2.5 text-sm font-dmsans font-medium text-deep cursor-pointer"
+              >
+                <option value="new">Terbaru</option>
+                <option value="short">Bacaan tersingkat</option>
+                <option value="az">Judul A–Z</option>
+              </select>
+              <i
+                class="bx bx-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-ever2/70 pointer-events-none"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter kategori -->
+        <div
+          id="chipRow"
+          class="chip-scroll flex gap-2 overflow-x-auto -mx-5 px-5 lg:mx-0 lg:px-0 lg:flex-wrap pb-2 mb-10"
+          role="tablist"
+          aria-label="Kategori materi"
+        ></div>
+
+        <!-- Grid kartu -->
+        <div
+          id="cardGrid"
+          class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        ></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="hidden text-center py-16 max-w-md mx-auto">
+          <div
+            class="w-16 h-16 mx-auto rounded-2xl bg-mist text-ever flex items-center justify-center text-3xl mb-5"
+          >
+            <i class="bx bx-search-alt"></i>
+          </div>
+          <h3 class="font-lexend font-semibold text-xl text-deep mb-2">
+            Materi tidak ditemukan
+          </h3>
+          <p class="text-ever2/75 font-dmsans text-sm mb-6">
+            Coba kata kunci lain atau ganti kategori. Kamu juga bisa menghapus
+            filter untuk melihat semua materi.
+          </p>
+          <button
+            id="resetBtn"
+            class="inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-6 py-3 rounded-full transition-colors"
+          >
+            Hapus filter
+          </button>
+        </div>
+
+        <!-- Pagination -->
+        <nav
+          id="pagination"
+          class="flex flex-wrap items-center justify-center gap-2 mt-14"
+          aria-label="Halaman materi"
+        ></nav>
+      </div>
+    </section>
+
+    <!-- ============ C. PANDUAN CEPAT GREENWISE ============ -->
+    <section id="panduan" class="py-24 sm:py-28 bg-mist3 scroll-mt-nav">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="grid lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-start">
+          <div class="reveal lg:sticky lg:top-28">
+            <span
+              class="text-ever font-semibold font-dmsans text-sm uppercase tracking-widest"
+              >Baru di GreenWise?</span
+            >
+            <h2
+              class="font-lexend font-bold text-3xl sm:text-4xl text-deep mt-3 mb-5"
+            >
+              Mulai dalam tiga menit
+            </h2>
+            <p class="text-ever2/80 font-dmsans leading-relaxed mb-8">
+              Kamu tidak perlu paham istilah daur ulang untuk mulai. Ikuti
+              urutan singkat ini, lalu baca materi di atas kapan pun kamu butuh
+              detailnya.
+            </p>
+            <a
+              href="beranda.html#tindakan"
+              class="inline-flex items-center gap-2 bg-ever hover:bg-deep text-mist font-dmsans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300"
+            >
+              <i class="bx bx-scan text-base"></i> Cek barangku
+            </a>
+          </div>
+
+          <ol class="space-y-4">
+            <li
+              class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold"
+              >
+                1
+              </div>
+              <div>
+                <h3 class="font-lexend font-semibold text-lg text-deep">
+                  Foto barang bekasmu
+                </h3>
+                <p
+                  class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed"
+                >
+                  Ambil foto dari beberapa sisi dengan cahaya cukup. Semakin
+                  jelas, semakin akurat pembacaan kondisinya.
+                </p>
+              </div>
+            </li>
+            <li
+              class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold"
+              >
+                2
+              </div>
+              <div>
+                <h3 class="font-lexend font-semibold text-lg text-deep">
+                  Baca rekomendasinya
+                </h3>
+                <p
+                  class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed"
+                >
+                  GreenWise menyarankan satu dari tiga jalan: jual di
+                  marketplace, daur ulang, atau buang dengan benar.
+                </p>
+              </div>
+            </li>
+            <li
+              class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold"
+              >
+                3
+              </div>
+              <div>
+                <h3 class="font-lexend font-semibold text-lg text-deep">
+                  Jalankan dan kumpulkan poin
+                </h3>
+                <p
+                  class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed"
+                >
+                  Setiap aksi yang selesai menambah poin dan Green Coins, lalu
+                  masuk ke catatan dampakmu.
+                </p>
+              </div>
+            </li>
+            <li
+              class="reveal flex gap-5 bg-white rounded-2xl p-6 border border-mist2"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-xl bg-ever text-mist flex items-center justify-center text-lg font-lexend font-bold"
+              >
+                4
+              </div>
+              <div>
+                <h3 class="font-lexend font-semibold text-lg text-deep">
+                  Belajar lebih dalam
+                </h3>
+                <p
+                  class="text-sm text-ever2/80 mt-1.5 font-dmsans leading-relaxed"
+                >
+                  Buka materi di Green Hub yang sesuai jenis barangmu untuk tahu
+                  cara menyiapkannya sebelum diserahkan.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ D. TOPIK PILIHAN (chip cepat) + FAQ ============ -->
+    <section id="faq" class="py-24 sm:py-28 bg-white scroll-mt-nav">
+      <div class="max-w-4xl mx-auto px-5 lg:px-8">
+        <div class="text-center mb-12 reveal">
+          <h2 class="font-lexend font-bold text-3xl sm:text-4xl text-deep">
+            Pertanyaan yang sering muncul
+          </h2>
+          <p class="text-ever2/80 font-dmsans mt-4">
+            Jawaban singkat sebelum kamu membaca materi lengkapnya.
+          </p>
+        </div>
+
+        <div class="reveal border-t border-mist2">
+          <div class="faq-item border-b border-mist2">
+            <button
+              class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5"
+              aria-expanded="false"
+            >
+              <span
+                class="font-lexend font-semibold text-deep text-base sm:text-lg"
+                >Apakah sampah harus dicuci sebelum didaur ulang?</span
+              >
+              <i class="bx bx-plus text-2xl text-ever faq-icon shrink-0"></i>
+            </button>
+            <div class="faq-body">
+              <div>
+                <p
+                  class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed"
+                >
+                  Cukup dibilas agar sisa makanan atau cairan tidak tertinggal.
+                  Kemasan yang kotor bisa membuat satu batch material gagal
+                  diproses.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item border-b border-mist2">
+            <button
+              class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5"
+              aria-expanded="false"
+            >
+              <span
+                class="font-lexend font-semibold text-deep text-base sm:text-lg"
+                >Bagaimana cara GreenWise menilai kondisi barang?</span
+              >
+              <i class="bx bx-plus text-2xl text-ever faq-icon shrink-0"></i>
+            </button>
+            <div class="faq-body">
+              <div>
+                <p
+                  class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed"
+                >
+                  Sistem membaca foto yang kamu unggah untuk mengenali jenis,
+                  kelengkapan, dan tanda kerusakan, lalu mencocokkannya dengan
+                  pilihan tindakan yang paling masuk akal.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item border-b border-mist2">
+            <button
+              class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5"
+              aria-expanded="false"
+            >
+              <span
+                class="font-lexend font-semibold text-deep text-base sm:text-lg"
+                >Apa itu Green Coins dan untuk apa?</span
+              >
+              <i class="bx bx-plus text-2xl text-ever faq-icon shrink-0"></i>
+            </button>
+            <div class="faq-body">
+              <div>
+                <p
+                  class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed"
+                >
+                  Green Coins adalah poin yang kamu dapat dari setiap aksi yang
+                  selesai, misalnya menjual atau menyerahkan barang ke mitra
+                  daur ulang. Poin ini ikut menentukan posisimu di Leaderboard.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item border-b border-mist2">
+            <button
+              class="faq-toggle w-full flex items-center justify-between gap-4 text-left py-5"
+              aria-expanded="false"
+            >
+              <span
+                class="font-lexend font-semibold text-deep text-base sm:text-lg"
+                >Barang elektronik rusak boleh dibuang ke tempat sampah
+                biasa?</span
+              >
+              <i class="bx bx-plus text-2xl text-ever faq-icon shrink-0"></i>
+            </button>
+            <div class="faq-body">
+              <div>
+                <p
+                  class="pb-5 text-sm sm:text-base text-ever2/80 font-dmsans leading-relaxed"
+                >
+                  Sebaiknya tidak. Baterai dan komponen elektronik mengandung
+                  bahan berbahaya. Serahkan ke titik pengumpulan e-waste yang
+                  direkomendasikan GreenWise.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA — background image + parallax (sama seperti halaman1) ============ -->
+    <section class="parallax-wrap py-32 sm:py-40">
+      <div
+        class="parallax-bg"
+        data-speed="0.35"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1600&q=80&quot;);
+        "
+      ></div>
+      <div class="absolute inset-0 bg-deep" style="opacity: 0.78"></div>
+      <div class="relative z-10 max-w-3xl mx-auto px-5 lg:px-8 text-center">
+        <h3 class="font-lexend font-bold text-2xl sm:text-3xl text-white mb-4">
+          Siap ubah barang bekasmu jadi cerita baru?
+        </h3>
+        <p class="text-mist/75 font-dmsans mb-8 max-w-xl mx-auto">
+          Cukup satu foto, GreenWise bantu kamu ambil keputusan paling bijak
+          untuk barangmu dan bumi.
+        </p>
+        <a
+          href="beranda.html#tindakan"
+          class="inline-flex items-center gap-2 bg-mist hover:bg-white text-deep font-dmsans font-semibold px-8 py-4 rounded-full transition-colors duration-300"
+        >
+          <i class="bx bx-scan text-lg"></i> Mulai sekarang, gratis
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <div class="container">
+        <div class="f-grid">
+          <div>
+            <a href="beranda.html" class="f-brand">
+              <img src="assets/img/logo-greenwise.svg" width="38" height="38" alt="">
+              GreenWise
+            </a>
+            <p class="f-about">Sistem cerdas yang membantumu mengambil keputusan bijak untuk barang bekas, demi bumi yang lebih hijau.</p>
+            <div class="social">
+              <a href="#" aria-label="Instagram"><i class="bx bxl-instagram" aria-hidden="true"></i></a>
+              <a href="#" aria-label="Facebook"><i class="bx bxl-facebook" aria-hidden="true"></i></a>
+              <a href="#" aria-label="Twitter"><i class="bx bxl-twitter" aria-hidden="true"></i></a>
+              <a href="#" aria-label="TikTok"><i class="bx bxl-tiktok" aria-hidden="true"></i></a>
+            </div>
+          </div>
+          <div>
+            <h5>Navigasi</h5>
+            <ul>
+              <li><a href="beranda.html">Beranda</a></li>
+              <li><a href="greenhub.html">Green Hub</a></li>
+              <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Sumber daya</h5>
+            <ul>
+              <li><a href="greenhub.html">Panduan daur ulang</a></li>
+              <li><a href="#">Blog lingkungan</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Pusat bantuan</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Hubungi kami</h5>
+            <ul>
+              <li class="ic"><i class="bx bx-envelope" aria-hidden="true"></i> halo@greenwises.web.app</li>
+              <li class="ic"><i class="bx bx-phone" aria-hidden="true"></i> +62 812 3456 7890</li>
+              <li class="ic"><i class="bx bx-map" aria-hidden="true"></i> Bogor, Indonesia</li>
+            </ul>
+          </div>
+        </div>
+        <div class="f-bottom"><p>© 2026 GreenWise. Semua hak dilindungi.</p><p>Dibuat untuk bumi yang lebih hijau.</p></div>
+      </div>
+      <div class="f-mark" aria-hidden="true">GreenWise</div>
+      <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas"><i class="bx bx-up-arrow-alt" aria-hidden="true"></i></button>
+    </footer>
+
+    <script>
+      /* ================= NAVBAR, PROFIL, MENU ================= */
+      const navbar = document.getElementById("navbar");
+      const hero = document.getElementById("hero");
+
+      function updateNavbar() {
+        var limit = hero
+          ? Math.min(hero.offsetHeight - 100, window.innerHeight - 100)
+          : 60;
+        navbar.classList.toggle(
+          "scrolled",
+          window.scrollY > Math.max(limit, 40),
+        );
+      }
+      updateNavbar();
+      window.addEventListener("scroll", updateNavbar, { passive: true });
+      window.addEventListener("resize", updateNavbar);
+
+      const burgerBtn = document.getElementById("burgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener("click", () => {
+          const open = mobileMenu.classList.toggle("open");
+          burgerBtn.setAttribute("aria-expanded", open);
+          burgerBtn.innerHTML =
+            '<i class="bx bx-' +
+            (open ? "x" : "menu") +
+            '" aria-hidden="true"></i>';
+          if (open) navbar.classList.add("scrolled");
+          else updateNavbar();
+        });
+      }
+
+      const profileBtn = document.getElementById("profileBtn");
+      const profileMenu = document.getElementById("profileMenu");
+      const overlayBg = document.getElementById("overlayBg");
+
+      function setProfile(open) {
+        profileMenu.classList.toggle("open", open);
+        overlayBg.classList.toggle("show", open);
+        profileBtn.setAttribute("aria-expanded", open);
+      }
+      if (profileBtn && profileMenu) {
+        profileBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setProfile(!profileMenu.classList.contains("open"));
+        });
+      }
+      if (overlayBg) overlayBg.addEventListener("click", () => setProfile(false));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setProfile(false);
+      });
+
+      function showToast(msg, icon) {
+        const toast = document.createElement("div");
+        toast.className =
+          "fixed bottom-6 left-6 right-6 sm:right-auto z-[9999] bg-deep text-mist pl-4 pr-5 py-4 rounded-xl shadow-soft flex items-center gap-3 font-dmsans text-sm animate-fade-in sm:max-w-xs";
+        toast.innerHTML =
+          "<i class='bx " +
+          (icon || "bx-check-circle") +
+          " text-xl shrink-0'></i><span>" +
+          msg +
+          "</span>";
+        document.body.appendChild(toast);
+        setTimeout(function () {
+          toast.style.transition = "opacity .5s ease, transform .5s ease";
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(20px)";
+          setTimeout(function () {
+            toast.remove();
+          }, 500);
+        }, 2600);
+      }
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          setProfile(false);
+          showToast("Kamu keluar dari GreenWise (demo).", "bx-log-out");
+        });
+      }
+
+      /* ================= DATA MATERI ================= */
+      const U = (id, w) =>
+        "https://images.unsplash.com/photo-" +
+        id +
+        "?auto=format&fit=crop&w=" +
+        (w || 700) +
+        "&q=80";
+      const IMG = {
+        pilah: "assets/img/dapur.jpg",
+        ulang: "assets/img/plastik.jpg",
+        elek: "assets/img/laptop.jpg",
+        tongSampah: "assets/img/tongsampah.jpg",
+        tekstil: "assets/img/pakaian.jpg",
+        besar: U("1586023492125-27b2c045efd7"),
+        hidup: "assets/img/kompos.jpg",
+        jual: "assets/img/panduan.jpg",
+        sepatu: "assets/img/coint.jpg",
+        donasi: "assets/img/tas.jpg",
+        kriya: "assets/img/botol-kaca.jpg",
+      };
+
+      const CATEGORIES = [
+        "Semua",
+        "Pemilahan",
+        "Daur ulang",
+        "Guna ulang",
+        "Elektronik",
+        "Tekstil",
+        "Panduan GreenWise",
+        "Gaya hidup",
+      ];
+
+      // date: YYYY-MM-DD, mins: menit baca
+      const ARTICLES = [
+        {
+          t: "Organik, anorganik, B3: cara memilah dari dapur",
+          c: "Pemilahan",
+          m: 5,
+          d: "2026-09-14",
+          i: IMG.pilah,
+          x: "Tiga wadah sederhana di rumah sudah cukup untuk memisahkan sampah sejak awal, lengkap dengan contoh benda yang sering salah tempat.",
+        },
+        {
+          t: "Cara memakai GreenWise: dari foto sampai rekomendasi",
+          c: "Panduan GreenWise",
+          m: 4,
+          d: "2026-09-13",
+          i: IMG.jual,
+          x: "Panduan langkah demi langkah mengunggah foto, membaca hasil analisis, dan memilih tindakan yang disarankan.",
+        },
+        {
+          t: "Plastik nomor 1 sampai 7: mana yang laku didaur ulang",
+          c: "Daur ulang",
+          m: 6,
+          d: "2026-09-11",
+          i: IMG.ulang,
+          x: "Kode segitiga di dasar kemasan menunjukkan jenis plastik. Kenali yang mudah diterima mitra daur ulang dan yang tidak.",
+        },
+        {
+          t: "Laptop dan ponsel lama: hapus data dulu, baru serahkan",
+          c: "Elektronik",
+          m: 5,
+          d: "2026-09-09",
+          i: IMG.elek,
+          x: "Urutan aman menyiapkan perangkat lama, dari cadangan data, reset pabrik, sampai melepas baterai.",
+        },
+        {
+          t: "Pakaian tidak terpakai: jual, donasi, atau jadikan lap?",
+          c: "Tekstil",
+          m: 4,
+          d: "2026-09-07",
+          i: IMG.tekstil,
+          x: "Panduan memutuskan nasib pakaian berdasarkan kondisi kain, jahitan, dan kelayakan pakainya.",
+        },
+        {
+          t: "Lima ide guna ulang botol kaca untuk rumah",
+          c: "Guna ulang",
+          m: 3,
+          d: "2026-09-05",
+          i: IMG.kriya,
+          x: "Dari wadah bumbu sampai vas, ide praktis yang tidak butuh peralatan khusus.",
+        },
+        {
+          t: "Apa itu Green Coins dan cara mengumpulkannya",
+          c: "Panduan GreenWise",
+          m: 3,
+          d: "2026-09-03",
+          i: IMG.sepatu,
+          x: "Penjelasan sistem poin, aksi yang memberi Green Coins, dan cara poin memengaruhi Leaderboard.",
+        },
+        {
+          t: "Baterai bekas: kenapa tidak boleh masuk tong sampah",
+          c: "Elektronik",
+          m: 4,
+          d: "2026-09-01",
+          i: IMG.tongSampah,
+          x: "Bahan kimia dalam baterai bisa mencemari tanah dan air. Ini cara menyimpan dan menyerahkannya dengan aman.",
+        },
+        {
+          t: "Kompos sederhana di rumah tanpa bau",
+          c: "Pemilahan",
+          m: 6,
+          d: "2026-08-29",
+          i: IMG.hidup,
+          x: "Perbandingan bahan hijau dan cokelat, wadah yang cocok untuk rumah kecil, dan tanda kompos yang gagal.",
+        },
+        {
+          t: "Kardus dan kertas: kapan masih bernilai, kapan tidak",
+          c: "Daur ulang",
+          m: 4,
+          d: "2026-08-27",
+          i: IMG.pilah,
+          x: "Kertas basah atau berminyak sulit diproses. Pelajari cara menyimpannya agar tetap layak setor.",
+        },
+        {
+          t: "Foto barang yang bagus supaya cepat laku di marketplace",
+          c: "Panduan GreenWise",
+          m: 5,
+          d: "2026-08-25",
+          i: IMG.jual,
+          x: "Tips pencahayaan, sudut, dan latar sederhana agar kondisi barang terbaca jelas oleh pembeli dan sistem.",
+        },
+        {
+          t: "Furnitur lama tidak muat di tempat sampah: harus bagaimana?",
+          c: "Guna ulang",
+          m: 5,
+          d: "2026-08-23",
+          i: IMG.besar,
+          x: "Opsi perbaikan, jual, hibah, dan penjemputan barang besar sebelum memilih membuangnya.",
+        },
+        {
+          t: "Fast fashion dan limbah tekstil: dampak yang jarang dibahas",
+          c: "Tekstil",
+          m: 7,
+          d: "2026-08-21",
+          i: IMG.tekstil,
+          x: "Mengapa satu potong pakaian murah bisa berdampak besar, dan kebiasaan belanja yang bisa mengurangi limbah.",
+        },
+        {
+          t: "Kabel dan charger lama: dibuang, disimpan, atau diserahkan?",
+          c: "Elektronik",
+          m: 3,
+          d: "2026-08-19",
+          i: IMG.elek,
+          x: "Kabel tembaga masih punya nilai. Cara memilah kabel yang layak pakai dan yang harus didaur ulang.",
+        },
+        {
+          t: "Belanja tanpa kemasan sekali pakai: mulai dari mana",
+          c: "Gaya hidup",
+          m: 5,
+          d: "2026-08-17",
+          i: IMG.hidup,
+          x: "Langkah kecil yang realistis: tas belanja, wadah sendiri, dan memilih produk isi ulang.",
+        },
+        {
+          t: "Botol PET jadi apa setelah didaur ulang?",
+          c: "Daur ulang",
+          m: 4,
+          d: "2026-08-15",
+          i: IMG.ulang,
+          x: "Ikuti perjalanan satu botol dari tempat pengumpulan sampai menjadi serat kain dan kemasan baru.",
+        },
+        {
+          t: "Sepatu bekas: cek kelayakan sebelum dijual",
+          c: "Guna ulang",
+          m: 3,
+          d: "2026-08-13",
+          i: IMG.sepatu,
+          x: "Daftar periksa sol, bagian dalam, dan bau agar sepatu bekasmu tetap layak dan dipercaya pembeli.",
+        },
+        {
+          t: "Membaca Leaderboard: cara poin dihitung",
+          c: "Panduan GreenWise",
+          m: 3,
+          d: "2026-08-11",
+          i: IMG.jual,
+          x: "Bobot poin tiap jenis aksi dan cara naik peringkat tanpa harus membuang barang berlebihan.",
+        },
+        {
+          t: "Sedotan, kantong, dan kemasan saset: sampah kecil, masalah besar",
+          c: "Pemilahan",
+          m: 5,
+          d: "2026-08-09",
+          i: IMG.pilah,
+          x: "Sampah kecil sering lolos dari pemilahan. Ini cara mengumpulkan dan menyetorkannya.",
+        },
+        {
+          t: "Rutinitas hemat energi yang bisa dimulai hari ini",
+          c: "Gaya hidup",
+          m: 4,
+          d: "2026-08-07",
+          i: IMG.hidup,
+          x: "Kebiasaan sederhana di rumah yang mengurangi jejak karbon sekaligus tagihan listrik.",
+        },
+        {
+          t: "Kerajinan dari kain perca untuk pemula",
+          c: "Guna ulang",
+          m: 6,
+          d: "2026-08-05",
+          i: IMG.tekstil,
+          x: "Tiga proyek jahit tangan yang bisa selesai dalam satu sore memakai sisa kain di rumah.",
+        },
+        {
+          t: "Mengapa kaleng dan aluminium sangat dicari pengepul",
+          c: "Daur ulang",
+          m: 4,
+          d: "2026-08-03",
+          i: IMG.ulang,
+          x: "Aluminium bisa didaur ulang berulang kali tanpa kehilangan mutu, dan hemat energi dibanding produksi baru.",
+        },
+        {
+          t: "Donasi barang bekas: cara memastikan tepat sasaran",
+          c: "Gaya hidup",
+          m: 4,
+          d: "2026-08-01",
+          i: IMG.donasi,
+          x: "Menyiapkan, memilah, dan memilih penerima donasi supaya barangmu benar-benar terpakai.",
+        },
+        {
+          t: "Televisi dan monitor tabung: penanganan khusus",
+          c: "Elektronik",
+          m: 5,
+          d: "2026-07-30",
+          i: IMG.elek,
+          x: "Layar lama memuat komponen yang perlu penanganan khusus. Kenali risikonya dan titik serah yang tepat.",
+        },
+        {
+          t: "Kasur, sofa, lemari: menyiapkan barang besar untuk dijemput",
+          c: "Pemilahan",
+          m: 4,
+          d: "2026-07-28",
+          i: IMG.besar,
+          x: "Ukur, foto, dan bongkar bila perlu agar penjemputan barang besar berjalan lancar.",
+        },
+        {
+          t: "Kain katun, poliester, dan campuran: cara mengenalinya",
+          c: "Tekstil",
+          m: 5,
+          d: "2026-07-26",
+          i: IMG.tekstil,
+          x: "Label perawatan membantu menentukan apakah pakaianmu bisa didaur ulang menjadi serat baru.",
+        },
+        {
+          t: "Kebiasaan hijau 30 hari: tantangan kecil untuk pemula",
+          c: "Gaya hidup",
+          m: 6,
+          d: "2026-07-24",
+          i: IMG.kriya,
+          x: "Satu tantangan per hari selama sebulan, dari membawa botol minum sampai memilah sampah tepat waktu.",
+        },
+      ];
+
+      /* ================= STATE ================= */
+      const PER_PAGE = 9;
+      const state = { q: "", cat: "Semua", sort: "new", page: 1 };
+
+      const grid = document.getElementById("cardGrid");
+      const pager = document.getElementById("pagination");
+      const chipRow = document.getElementById("chipRow");
+      const info = document.getElementById("resultInfo");
+      const empty = document.getElementById("emptyState");
+      const searchInput = document.getElementById("searchInput");
+      const sortSelect = document.getElementById("sortSelect");
+
+      const fmtDate = (s) =>
+        new Date(s + "T00:00:00").toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      const esc = (s) =>
+        s.replace(
+          /[&<>"']/g,
+          (ch) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[ch],
+        );
+
+      function getFiltered() {
+        const q = state.q.trim().toLowerCase();
+        let list = ARTICLES.filter((a) => {
+          const okCat = state.cat === "Semua" || a.c === state.cat;
+          const okQ =
+            !q || (a.t + " " + a.x + " " + a.c).toLowerCase().includes(q);
+          return okCat && okQ;
+        });
+        if (state.sort === "new") list.sort((a, b) => b.d.localeCompare(a.d));
+        if (state.sort === "short")
+          list.sort((a, b) => a.m - b.m || b.d.localeCompare(a.d));
+        if (state.sort === "az")
+          list.sort((a, b) => a.t.localeCompare(b.t, "id"));
+        return list;
+      }
+
+      function renderChips() {
+        chipRow.innerHTML = CATEGORIES.map((c) => {
+          const active = c === state.cat;
+          return (
+            "<button type='button' role='tab' aria-selected='" +
+            active +
+            "' data-cat='" +
+            c +
+            "' class='chip " +
+            (active ? "is-active " : "") +
+            "rounded-full px-5 py-2.5 text-sm font-dmsans font-medium'>" +
+            c +
+            "</button>"
+          );
+        }).join("");
+      }
+
+      function cardHTML(a) {
+        return (
+          "" +
+          "<a href='detailgreenhubedu.html?id=" +
+          ARTICLES.indexOf(a) +
+          "' class='art-card animate-fade-in group flex flex-col bg-white rounded-2xl border border-mist2 overflow-hidden shadow-card'>" +
+          "<div class='relative h-48 overflow-hidden art-thumb'>" +
+          "<img class='art-img w-full h-full object-cover' src='" +
+          a.i +
+          "' alt='' loading='lazy' onerror=\"this.style.display='none'\">" +
+          "<div class='absolute inset-0 bg-deep/20'></div>" +
+          "<span class='absolute top-4 left-4 bg-white/90 text-deep text-xs font-dmsans font-semibold px-3 py-1.5 rounded-full'>" +
+          a.c +
+          "</span>" +
+          "</div>" +
+          "<div class='flex flex-col flex-1 p-6'>" +
+          "<div class='flex items-center gap-3 text-xs text-ever2/60 font-dmsans mb-3'>" +
+          "<span class='inline-flex items-center gap-1'><i class='bx bx-time-five'></i> " +
+          a.m +
+          " menit baca</span>" +
+          "<span class='w-1 h-1 rounded-full bg-mist2'></span>" +
+          "<span>" +
+          fmtDate(a.d) +
+          "</span>" +
+          "</div>" +
+          "<h3 class='font-lexend font-semibold text-deep text-lg leading-snug line-clamp-2 mb-2'>" +
+          esc(a.t) +
+          "</h3>" +
+          "<p class='text-sm text-ever2/75 font-dmsans leading-relaxed line-clamp-3 mb-5'>" +
+          esc(a.x) +
+          "</p>" +
+          "<span class='mt-auto inline-flex items-center gap-1 text-sm font-dmsans font-semibold text-ever'>Baca materi <i class='bx bx-right-arrow-alt text-xl art-arrow'></i></span>" +
+          "</div>" +
+          "</a>"
+        );
+      }
+
+      function pageList(cur, total) {
+        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+        const out = [1];
+        if (cur > 3) out.push("…");
+        for (
+          let p = Math.max(2, cur - 1);
+          p <= Math.min(total - 1, cur + 1);
+          p++
+        )
+          out.push(p);
+        if (cur < total - 2) out.push("…");
+        out.push(total);
+        return out;
+      }
+
+      function renderPager(total) {
+        if (total <= 1) {
+          pager.innerHTML = "";
+          return;
+        }
+        let html =
+          "<button type='button' class='pg-btn rounded-full px-3 inline-flex items-center justify-center' data-go='" +
+          (state.page - 1) +
+          "' aria-label='Halaman sebelumnya'" +
+          (state.page === 1 ? " disabled" : "") +
+          "><i class='bx bx-chevron-left text-xl'></i></button>";
+        pageList(state.page, total).forEach((p) => {
+          if (p === "…")
+            html += "<span class='px-1 text-ever2/50 font-dmsans'>…</span>";
+          else
+            html +=
+              "<button type='button' class='pg-btn rounded-full px-3 font-dmsans font-semibold text-sm " +
+              (p === state.page ? "is-active" : "") +
+              "' data-go='" +
+              p +
+              "'" +
+              (p === state.page ? " aria-current='page'" : "") +
+              ">" +
+              p +
+              "</button>";
+        });
+        html +=
+          "<button type='button' class='pg-btn rounded-full px-3 inline-flex items-center justify-center' data-go='" +
+          (state.page + 1) +
+          "' aria-label='Halaman berikutnya'" +
+          (state.page === total ? " disabled" : "") +
+          "><i class='bx bx-chevron-right text-xl'></i></button>";
+        pager.innerHTML = html;
+      }
+
+      function render() {
+        const list = getFiltered();
+        const total = Math.max(1, Math.ceil(list.length / PER_PAGE));
+        if (state.page > total) state.page = total;
+
+        renderChips();
+
+        if (list.length === 0) {
+          grid.innerHTML = "";
+          empty.classList.remove("hidden");
+          pager.innerHTML = "";
+          info.textContent = "Tidak ada materi yang cocok.";
+          return;
+        }
+        empty.classList.add("hidden");
+
+        const start = (state.page - 1) * PER_PAGE;
+        const slice = list.slice(start, start + PER_PAGE);
+        grid.innerHTML = slice.map(cardHTML).join("");
+
+        const from = start + 1,
+          to = start + slice.length;
+        let txt =
+          "Menampilkan " + from + "–" + to + " dari " + list.length + " materi";
+        if (state.cat !== "Semua") txt += " di kategori " + state.cat;
+        if (state.q.trim()) txt += " untuk “" + state.q.trim() + "”";
+        info.textContent = txt + ".";
+
+        renderPager(total);
+      }
+
+      function scrollToList() {
+        const el = document.getElementById("materi");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      /* ================= EVENTS ================= */
+      chipRow.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-cat]");
+        if (!b) return;
+        state.cat = b.dataset.cat;
+        state.page = 1;
+        render();
+      });
+
+      pager.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-go]");
+        if (!b || b.disabled) return;
+        state.page = parseInt(b.dataset.go, 10);
+        render();
+        scrollToList();
+      });
+
+      searchInput.addEventListener("input", () => {
+        state.q = searchInput.value;
+        state.page = 1;
+        render();
+      });
+
+      document.getElementById("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        state.q = searchInput.value;
+        state.page = 1;
+        render();
+        scrollToList();
+      });
+
+      document.querySelectorAll(".suggest").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          searchInput.value = btn.dataset.suggest;
+          state.q = btn.dataset.suggest;
+          state.cat = "Semua";
+          state.page = 1;
+          render();
+          scrollToList();
+        });
+      });
+
+      sortSelect.addEventListener("change", () => {
+        state.sort = sortSelect.value;
+        state.page = 1;
+        render();
+      });
+
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        state.q = "";
+        state.cat = "Semua";
+        state.sort = "new";
+        state.page = 1;
+        searchInput.value = "";
+        sortSelect.value = "new";
+        render();
+      });
+
+      /* FAQ */
+      document.querySelectorAll(".faq-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = btn.closest(".faq-item");
+          const open = item.classList.toggle("open");
+          btn.setAttribute("aria-expanded", open);
+        });
+      });
+
+      /* Reveal on scroll */
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => revealObserver.observe(el));
+
+      /* Back to top */
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      window.addEventListener(
+        "scroll",
+        function () {
+          backToTopBtn.classList.toggle("show", window.scrollY > 600);
+        },
+        { passive: true },
+      );
+      backToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* Init (dukung ?q=kata dari halaman lain) */
+      const params = new URLSearchParams(location.search);
+      if (params.get("q")) {
+        state.q = params.get("q");
+        searchInput.value = state.q;
+      }
+      render();
+    </script>
+  </body>
+</html>

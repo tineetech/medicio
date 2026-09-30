@@ -1,0 +1,2274 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Materi — Green Hub | GreenWise</title>
+    <meta
+      id="metaDesc"
+      name="description"
+      content="Materi edukasi Green Hub: panduan pemilahan sampah, daur ulang, guna ulang, dan cara memakai GreenWise."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/logo-greenwise.svg" />
+
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/global.css" />
+
+    <style>
+      /* =====================================================
+   GreenWise — Detail Edukasi (Green Hub)
+   Khusus halaman3 (token, navbar, footer, reveal, scrollbar
+   sudah pindah ke assets/global.css).
+   ===================================================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      p,
+      ul,
+      ol,
+      figure {
+        margin: 0;
+        padding: 0;
+      }
+      ul,
+      ol {
+        list-style: none;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font-family: var(--f-body);
+        background: #fff;
+        color: var(--deep);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: var(--f-head);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .container {
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+      @media (min-width: 1024px) {
+        .container {
+          padding: 0 2rem;
+        }
+      }
+      .scroll-mt {
+        scroll-margin-top: 6rem;
+      }
+
+      .btn > .bx,
+      .dmeta .bx,
+      .ameta .bx,
+      .fb-btn .bx,
+      .callout .bx,
+      .toast > .bx,
+      .pmenu a > .bx,
+      .profile-btn > .bx,
+      .burger > .bx,
+      .totop > .bx,
+      .social a > .bx,
+      .ic > .bx {
+        font-size: 1.25em;
+        line-height: 1;
+        flex: none;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border-radius: 999px;
+        padding: 0.85rem 1.75rem;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease,
+          opacity 0.3s ease;
+        white-space: nowrap;
+      }
+      .btn-mist {
+        background: var(--mist);
+        color: var(--deep);
+      }
+      .btn-mist:hover {
+        background: #fff;
+      }
+      .btn-ever {
+        background: var(--ever);
+        color: var(--mist);
+      }
+      .btn-ever:hover {
+        background: var(--deep);
+      }
+      .btn-line {
+        border: 1px solid var(--mist2);
+        color: var(--ever);
+        background: #fff;
+      }
+      .btn-line:hover {
+        background: var(--mist);
+      }
+      .btn-ghost {
+        border: 1px solid rgba(236, 229, 240, 0.3);
+        color: var(--mist);
+      }
+      .btn-ghost:hover {
+        background: rgba(236, 229, 240, 0.12);
+      }
+      .btn-block {
+        width: 100%;
+      }
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      /* ===== Progress baca ===== */
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: var(--gold);
+        z-index: 70;
+        transition: width 0.1s linear;
+      }
+
+      /* ===== HERO DETAIL ===== */
+      .dhero {
+        position: relative;
+        overflow: hidden;
+        background: var(--deep);
+        padding: 8.5rem 0 8rem;
+      }
+      .dhero::before,
+      .dhero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        pointer-events: none;
+        background: radial-gradient(
+          circle,
+          rgba(18, 101, 92, 0.55),
+          transparent 70%
+        );
+      }
+      .dhero::before {
+        width: 26rem;
+        height: 26rem;
+        top: -8rem;
+        left: -6rem;
+      }
+      .dhero::after {
+        width: 24rem;
+        height: 24rem;
+        bottom: -10rem;
+        right: -4rem;
+      }
+      .ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(236, 229, 240, 0.1);
+        pointer-events: none;
+        display: none;
+      }
+      @media (min-width: 640px) {
+        .ring {
+          display: block;
+        }
+      }
+      .ring.r1 {
+        width: 32rem;
+        height: 32rem;
+        top: -11rem;
+        right: -10rem;
+      }
+      .ring.r2 {
+        width: 21rem;
+        height: 21rem;
+        bottom: -12rem;
+        left: 3rem;
+      }
+      .dhero-in {
+        position: relative;
+        z-index: 2;
+        max-width: 72rem;
+      }
+      .crumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8125rem;
+        color: rgba(236, 229, 240, 0.6);
+        margin-bottom: 1.5rem;
+      }
+      .crumbs a {
+        transition: color 0.2s;
+      }
+      .crumbs a:hover {
+        color: #fff;
+      }
+      .crumbs .bx {
+        font-size: 0.9rem;
+        line-height: 1;
+        opacity: 0.6;
+      }
+      .crumbs [aria-current] {
+        color: rgba(236, 229, 240, 0.9);
+      }
+      .tag {
+        display: inline-block;
+        background: rgba(236, 229, 240, 0.12);
+        color: var(--mist);
+        border: 1px solid rgba(236, 229, 240, 0.2);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        padding: 0.375rem 0.9rem;
+        border-radius: 999px;
+        margin-bottom: 1.25rem;
+      }
+      .dhero h1 {
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        font-size: 1.9rem;
+        max-width: 48rem;
+      }
+      @media (min-width: 640px) {
+        .dhero h1 {
+          font-size: 2.75rem;
+        }
+      }
+      .dmeta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin-top: 1.5rem;
+        font-size: 0.875rem;
+        color: rgba(236, 229, 240, 0.7);
+      }
+      .dmeta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      /* ===== Cover & layout ===== */
+      .dwrap {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+      @media (min-width: 1024px) {
+        .dwrap {
+          padding: 0 2rem;
+        }
+      }
+      .cover {
+        position: relative;
+        margin-top: -5rem;
+        z-index: 3;
+        height: clamp(13rem, 42vw, 30rem);
+        border-radius: 1.5rem;
+        overflow: hidden;
+        box-shadow: var(--sh-soft);
+        background: linear-gradient(135deg, var(--ever2), var(--ever3));
+      }
+      .cover img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cover .fb {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 6rem;
+        line-height: 1;
+        color: rgba(236, 229, 240, 0.55);
+      }
+      .cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(1, 38, 34, 0.25),
+          transparent 40%
+        );
+        pointer-events: none;
+      }
+      .dgrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 3rem 0 5rem;
+      }
+      @media (min-width: 1024px) {
+        .dgrid {
+          grid-template-columns: minmax(0, 1fr) 19rem;
+          gap: 4rem;
+        }
+      }
+
+      /* ===== Isi artikel ===== */
+      .prose {
+        max-width: 44rem;
+      }
+      .prose .lead {
+        font-size: 1.1875rem;
+        line-height: 1.7;
+        color: var(--ever2);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .prose .lead {
+          font-size: 1.3125rem;
+        }
+      }
+      .prose h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 2.5rem 0 0.9rem;
+        line-height: 1.3;
+        scroll-margin-top: 6rem;
+      }
+      .prose p {
+        font-size: 1.0625rem;
+        line-height: 1.85;
+        color: rgba(1, 38, 34, 0.86);
+      }
+      .callout {
+        margin-top: 2.5rem;
+        background: var(--mist3);
+        border: 1px solid var(--mist2);
+        border-left: 4px solid var(--ever3);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        scroll-margin-top: 6rem;
+      }
+      .callout h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 1.0625rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .callout h3 .bx {
+        color: var(--ever3);
+      }
+      .callout ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .callout li {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+      }
+      .callout li .bx {
+        color: var(--ever3);
+        margin-top: 0.2rem;
+      }
+      .fb-box {
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--mist2);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .fb-box p {
+        font-weight: 600;
+        font-family: var(--f-head);
+        font-size: 0.9375rem;
+      }
+      .fb-btns {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .fb-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid var(--mist2);
+        border-radius: 999px;
+        padding: 0.6rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ever2);
+        transition: all 0.25s;
+      }
+      .fb-btn:hover {
+        background: var(--mist);
+      }
+      .fb-btn.on {
+        background: var(--ever);
+        color: var(--mist);
+        border-color: var(--ever);
+      }
+      .fb-btn.down .bx {
+        transform: rotate(180deg);
+      }
+
+      /* ===== Sidebar ===== */
+      .side-in {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      @media (min-width: 1024px) {
+        .side-in {
+          position: sticky;
+          top: 6.5rem;
+        }
+      }
+      .scard {
+        border: 1px solid var(--mist2);
+        border-radius: 1rem;
+        padding: 1.25rem;
+        background: #fff;
+      }
+      .scard h4 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        margin-bottom: 0.9rem;
+      }
+      .scard.dark {
+        background: var(--ever);
+        border-color: var(--ever);
+        color: var(--mist);
+      }
+      .scard.dark h4 {
+        color: #fff;
+      }
+      .scard.dark p {
+        font-size: 0.875rem;
+        color: rgba(236, 229, 240, 0.75);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      .toc-card {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        .toc-card {
+          display: block;
+        }
+      }
+      .toc a {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        border-left: 2px solid var(--mist2);
+        font-size: 0.875rem;
+        line-height: 1.4;
+        color: rgba(10, 79, 72, 0.75);
+        transition: all 0.2s;
+      }
+      .toc a:hover {
+        color: var(--deep);
+        background: var(--mist3);
+      }
+      .toc a.is-active {
+        border-left-color: var(--ever);
+        color: var(--deep);
+        font-weight: 600;
+        background: var(--mist3);
+      }
+      .share {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      /* ===== Rangkuman AI ===== */
+      .section {
+        padding: 5rem 0;
+      }
+      @media (min-width: 640px) {
+        .section {
+          padding: 6rem 0;
+        }
+      }
+      .bg-mist3 {
+        background: var(--mist3);
+      }
+      /* Rangkuman AI: simpel, satu paragraf di dalam isi artikel */
+      .ai-sum {
+        margin-top: 1.25rem;
+        background: var(--mist3);
+        border: 1px solid var(--mist2);
+        border-left: 4px solid var(--ever3);
+        border-radius: 0.85rem;
+        padding: 1rem 1.25rem;
+        font-size: 0.9375rem;
+        line-height: 1.7;
+        color: rgba(1, 38, 34, 0.85);
+      }
+      .ai-sum strong {
+        color: var(--ever);
+      }
+      .fade-in {
+        animation: fadeInUp 0.4s ease;
+      }
+
+      /* ===== Rekomendasi ===== */
+      .sec-head h2 {
+        font-weight: 700;
+        font-size: 1.875rem;
+        color: var(--deep);
+        line-height: 1.2;
+      }
+      @media (min-width: 640px) {
+        .sec-head h2 {
+          font-size: 2.25rem;
+        }
+      }
+      .sec-head p {
+        color: rgba(10, 79, 72, 0.8);
+        margin-top: 0.75rem;
+      }
+      .rec-top {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .rec-top {
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: space-between;
+        }
+      }
+      .link-under {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--ever);
+        font-weight: 600;
+        border-bottom: 2px solid var(--ever);
+        padding-bottom: 0.25rem;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .link-under:hover {
+        color: var(--ever2);
+        border-color: var(--ever2);
+      }
+      .grid-cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      @media (min-width: 640px) {
+        .grid-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .grid-cards {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .acard {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border: 1px solid var(--mist2);
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: var(--sh-card);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .acard:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--sh-soft);
+      }
+      .athumb {
+        position: relative;
+        height: 12rem;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--ever2), var(--ever3));
+      }
+      .athumb img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .acard:hover .athumb img {
+        transform: scale(1.07);
+      }
+      .athumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(1, 38, 34, 0.2);
+      }
+      .athumb .fb {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3.5rem;
+        line-height: 1;
+        color: rgba(236, 229, 240, 0.55);
+      }
+      .abadge {
+        position: absolute;
+        z-index: 2;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--deep);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.375rem 0.75rem;
+        border-radius: 999px;
+      }
+      .abody {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1.5rem;
+      }
+      .ameta {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        color: rgba(10, 79, 72, 0.6);
+        margin-bottom: 0.75rem;
+      }
+      .ameta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .ameta i {
+        width: 0.25rem;
+        height: 0.25rem;
+        border-radius: 50%;
+        background: var(--mist2);
+      }
+      .atitle {
+        font-weight: 600;
+        font-size: 1.125rem;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+      }
+      .aexc {
+        font-size: 0.875rem;
+        line-height: 1.65;
+        color: rgba(10, 79, 72, 0.75);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+      .amore {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ever);
+      }
+      .amore .bx {
+        font-size: 1.25rem;
+        line-height: 1;
+        transition: transform 0.3s;
+      }
+      .acard:hover .amore .bx {
+        transform: translateX(4px);
+      }
+
+      /* ===== Not found ===== */
+      .nf {
+        text-align: center;
+        max-width: 30rem;
+        margin: 0 auto;
+        padding: 6rem 1.25rem;
+      }
+      .nf .ico {
+        width: 4rem;
+        height: 4rem;
+        margin: 0 auto 1.25rem;
+        border-radius: 1rem;
+        background: var(--mist);
+        color: var(--ever);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.9rem;
+      }
+      .nf h2 {
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 0.6rem;
+      }
+      .nf p {
+        color: rgba(10, 79, 72, 0.75);
+        margin-bottom: 1.75rem;
+      }
+
+      /* ===== CTA ===== */
+      .cta {
+        position: relative;
+        overflow: hidden;
+        background: var(--deep);
+        padding: 7rem 0;
+      }
+      .cta::before {
+        content: "";
+        position: absolute;
+        width: 28rem;
+        height: 28rem;
+        border-radius: 50%;
+        top: -10rem;
+        left: -8rem;
+        background: radial-gradient(
+          circle,
+          rgba(18, 101, 92, 0.5),
+          transparent 70%
+        );
+        filter: blur(70px);
+      }
+      .cta .ring {
+        display: block;
+      }
+      .cta-in {
+        position: relative;
+        z-index: 2;
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+        text-align: center;
+      }
+      .cta h3 {
+        font-weight: 700;
+        font-size: 1.625rem;
+        color: #fff;
+        margin-bottom: 1rem;
+      }
+      @media (min-width: 640px) {
+        .cta h3 {
+          font-size: 1.875rem;
+        }
+      }
+      .cta p {
+        color: rgba(236, 229, 240, 0.75);
+        max-width: 36rem;
+        margin: 0 auto 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header id="navbar">
+      <div class="container nav-inner">
+        <a href="beranda.html" class="brand" aria-label="GreenWise, ke beranda">
+          <img src="assets/img/logo-greenwise.svg" width="40" height="40" alt="">
+          <span class="brand-word">GreenWise</span>
+        </a>
+
+        <nav class="nav-pill" aria-label="Navigasi utama">
+          <a href="beranda.html">Beranda</a>
+          <a href="greenhub.html" class="is-active" aria-current="page"
+            >Green Hub</a
+          >
+          <a href="marketplace.html">Marketplace</a>
+        </nav>
+
+        <div class="nav-right">
+          <div class="profile-wrap">
+            <button
+              id="profileBtn"
+              class="profile-btn"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                class="avatar"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80"
+                alt="Foto profil Dwi Anugrah"
+              />
+              <span class="profile-txt">
+                <b>Dwi Anugrah</b>
+                <span
+                  ><i
+                    class="bx bxs-star"
+                    style="font-size: 0.7rem"
+                    aria-hidden="true"
+                  ></i>
+                  1.240 poin</span
+                >
+              </span>
+              <i class="bx bx-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div id="profileMenu" class="pmenu" role="menu">
+              <div class="pmenu-head">
+                <b>Dwi Anugrah</b><span>dwi.anugrah@email.com</span>
+              </div>
+              <a href="dashboard.html" role="menuitem"
+                ><i class="bx bx-grid-alt" aria-hidden="true"></i> Dashboard</a
+              >
+              <a href="riwayat.html" role="menuitem"
+                ><i class="bx bx-store" aria-hidden="true"></i> Riwayat & Kelola
+                Produk</a
+              >
+              <hr />
+              <a href="#" id="logoutBtn" role="menuitem"
+                ><i class="bx bx-log-out" aria-hidden="true"></i> Keluar</a
+              >
+            </div>
+          </div>
+          <button
+            id="burgerBtn"
+            class="burger"
+            aria-label="Buka menu"
+            aria-expanded="false"
+          >
+            <i class="bx bx-menu" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu">
+        <a href="beranda.html">Beranda</a>
+        <a href="greenhub.html" class="is-active">Green Hub</a>
+        <a href="marketplace.html">Marketplace</a>
+      </div>
+    </header>
+    <div id="overlayBg" class="ov"></div>
+
+    <main>
+      <!-- ============ HERO DETAIL ============ -->
+      <section id="hero" class="dhero">
+        <div class="container">
+          <div class="dhero-in">
+            <nav class="crumbs" aria-label="Breadcrumb">
+              <a href="beranda.html">Beranda</a>
+              <i class="bx bx-chevron-right" aria-hidden="true"></i>
+              <a href="greenhub.html">Green Hub</a>
+              <i class="bx bx-chevron-right" aria-hidden="true"></i>
+              <a id="crumbCat" href="greenhub.html">Materi</a>
+            </nav>
+            <h1 id="dTitle">Memuat materi…</h1>
+            <div class="dmeta" id="dMeta"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DETAIL ============ -->
+      <div id="detail">
+        <div class="dwrap">
+          <figure class="cover" id="cover"></figure>
+
+          <div class="dgrid">
+            <article
+              class="prose"
+              id="articleBody"
+              aria-label="Isi materi"
+            ></article>
+
+            <aside class="side" aria-label="Info tambahan">
+              <div class="side-in">
+                <div class="scard toc-card">
+                  <h4>Di halaman ini</h4>
+                  <nav class="toc" id="toc" aria-label="Daftar isi"></nav>
+                </div>
+                <div class="scard">
+                  <h4>Bagikan materi</h4>
+                  <div class="share">
+                    <button
+                      type="button"
+                      id="copyLink"
+                      class="btn btn-line btn-block"
+                    >
+                      <i class="bx bx-link" aria-hidden="true"></i> Salin tautan
+                    </button>
+                    <a
+                      id="waShare"
+                      class="btn btn-line btn-block"
+                      href="#"
+                      target="_blank"
+                      rel="noopener"
+                      ><i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                      Kirim via WhatsApp</a
+                    >
+                  </div>
+                </div>
+                <div class="scard dark">
+                  <h4>Punya barang bekas?</h4>
+                  <p>
+                    Foto barangnya, GreenWise sarankan langkah paling bijak
+                    untuk barang itu.
+                  </p>
+                  <a href="beranda.html#tindakan" class="btn btn-mist btn-block"
+                    ><i class="bx bx-scan" aria-hidden="true"></i> Cek
+                    barangku</a
+                  >
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- ============ MATERI LAINNYA ============ -->
+        <section id="lainnya" class="section scroll-mt">
+          <div class="container">
+            <div class="rec-top reveal">
+              <div class="sec-head" style="max-width: 36rem">
+                <h2>Materi lainnya untukmu</h2>
+                <p>Pilihan yang berkaitan dengan topik yang baru kamu baca.</p>
+              </div>
+              <a href="greenhub.html" class="link-under"
+                >Lihat semua materi
+                <i class="bx bx-right-arrow-alt" aria-hidden="true"></i
+              ></a>
+            </div>
+            <div class="grid-cards" id="recGrid"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ NOT FOUND ============ -->
+      <section id="notFound" hidden>
+        <div class="nf">
+          <div class="ico">
+            <i class="bx bx-search-alt" aria-hidden="true"></i>
+          </div>
+          <h2>Materi tidak ditemukan</h2>
+          <p>
+            Tautan yang kamu buka mungkin salah atau materinya sudah
+            dipindahkan. Kembali ke Green Hub untuk melihat semua materi.
+          </p>
+          <a href="greenhub.html" class="btn btn-ever"
+            ><i class="bx bx-left-arrow-alt" aria-hidden="true"></i> Kembali ke
+            Green Hub</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta">
+      <span class="ring r1" aria-hidden="true"></span>
+      <div class="cta-in">
+        <h3>Sudah paham? Saatnya praktik dengan barangmu.</h3>
+        <p>
+          Cukup satu foto, GreenWise bantu kamu memilih langkah paling bijak
+          untuk barangmu dan bumi.
+        </p>
+        <a
+          href="beranda.html#tindakan"
+          class="btn btn-mist"
+          style="padding: 1rem 2rem"
+          ><i class="bx bx-scan" aria-hidden="true"></i> Mulai sekarang,
+          gratis</a
+        >
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <div class="container">
+        <div class="f-grid">
+          <div>
+            <a href="beranda.html" class="f-brand">
+              <img src="assets/img/logo-greenwise.svg" width="38" height="38" alt="">
+              GreenWise
+            </a>
+            <p class="f-about">
+              Sistem cerdas yang membantumu mengambil keputusan bijak untuk
+              barang bekas, demi bumi yang lebih hijau.
+            </p>
+            <div class="social">
+              <a href="#" aria-label="Instagram"
+                ><i class="bx bxl-instagram" aria-hidden="true"></i
+              ></a>
+              <a href="#" aria-label="Facebook"
+                ><i class="bx bxl-facebook" aria-hidden="true"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="bx bxl-twitter" aria-hidden="true"></i
+              ></a>
+              <a href="#" aria-label="TikTok"
+                ><i class="bx bxl-tiktok" aria-hidden="true"></i
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h5>Navigasi</h5>
+            <ul>
+              <li><a href="beranda.html">Beranda</a></li>
+              <li><a href="greenhub.html">Green Hub</a></li>
+              <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Sumber daya</h5>
+            <ul>
+              <li><a href="greenhub.html">Panduan daur ulang</a></li>
+              <li><a href="#">Blog lingkungan</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Pusat bantuan</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Hubungi kami</h5>
+            <ul>
+              <li class="ic">
+                <i class="bx bx-envelope" aria-hidden="true"></i>
+                halo@greenwises.web.app
+              </li>
+              <li class="ic">
+                <i class="bx bx-phone" aria-hidden="true"></i> +62 812 3456 7890
+              </li>
+              <li class="ic">
+                <i class="bx bx-map" aria-hidden="true"></i> Bogor, Indonesia
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="f-bottom">
+          <p>© 2026 GreenWise. Semua hak dilindungi.</p>
+          <p>Dibuat untuk bumi yang lebih hijau.</p>
+        </div>
+      </div>
+      <div class="f-mark" aria-hidden="true">GreenWise</div>
+      <button id="backToTopBtn" class="totop" aria-label="Kembali ke atas">
+        <i class="bx bx-up-arrow-alt" aria-hidden="true"></i>
+      </button>
+    </footer>
+
+    <script>
+      /* ===================== Konfigurasi tautan =====================
+   Sesuaikan dengan nama file di proyekmu. */
+      var HUB_URL = "greenhub.html"; // halaman Green Hub (daftar materi)
+      var DETAIL_URL = "detailgreenhubedu.html"; // halaman ini (isi konten dummy)
+
+      /* ===================== Helper ===================== */
+      var $ = function (s, r) {
+        return (r || document).querySelector(s);
+      };
+      var $$ = function (s, r) {
+        return Array.prototype.slice.call((r || document).querySelectorAll(s));
+      };
+      var esc = function (s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[c];
+        });
+      };
+      var BX = {
+        "chev-down": "bx-chevron-down",
+        "chev-right": "bx-chevron-right",
+        "arrow-right": "bx-right-arrow-alt",
+        "arrow-left": "bx-left-arrow-alt",
+        "arrow-up": "bx-up-arrow-alt",
+        menu: "bx-menu",
+        x: "bx-x",
+        star: "bxs-star",
+        grid: "bx-grid-alt",
+        store: "bx-store",
+        logout: "bx-log-out",
+        clock: "bx-time-five",
+        calendar: "bx-calendar",
+        user: "bx-user",
+        link: "bx-link",
+        copy: "bx-copy",
+        check: "bx-check",
+        sparkle: "bx-star",
+        thumb: "bx-like",
+        bulb: "bx-bulb",
+        info: "bx-info-circle",
+        "search-alt": "bx-search-alt",
+        scan: "bx-scan",
+        leaf: "bx-leaf",
+        recycle: "bx-recycle",
+        trash: "bx-trash",
+        box: "bx-package",
+        chip: "bx-chip",
+        shirt: "bxs-t-shirt",
+      };
+      var ic = function (name, cls) {
+        return (
+          '<i class="bx ' +
+          (BX[name] || "bx-circle") +
+          (cls ? " " + cls : "") +
+          '" aria-hidden="true"></i>'
+        );
+      };
+      var reduceMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var fmtDate = function (s) {
+        return new Date(s + "T00:00:00").toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+      };
+      var fmtShort = function (s) {
+        return new Date(s + "T00:00:00").toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      };
+
+      /* ===================== Navbar, menu, profil ===================== */
+      var navbar = $("#navbar"),
+        heroEl = $("#hero");
+      function updateNavbar() {
+        navbar.classList.toggle(
+          "scrolled",
+          window.scrollY > Math.max(heroEl.offsetHeight - 140, 40),
+        );
+      }
+      updateNavbar();
+      window.addEventListener("scroll", updateNavbar, { passive: true });
+      window.addEventListener("resize", updateNavbar);
+
+      var burgerBtn = $("#burgerBtn"),
+        mobileMenu = $("#mobileMenu");
+      burgerBtn.addEventListener("click", function () {
+        var open = mobileMenu.classList.toggle("open");
+        burgerBtn.setAttribute("aria-expanded", open);
+        burgerBtn.innerHTML =
+          '<i class="bx bx-' +
+          (open ? "x" : "menu") +
+          '" aria-hidden="true"></i>';
+        if (open) navbar.classList.add("scrolled");
+        else updateNavbar();
+      });
+      var profileBtn = $("#profileBtn"),
+        profileMenu = $("#profileMenu"),
+        overlayBg = $("#overlayBg");
+      function setProfile(open) {
+        profileMenu.classList.toggle("open", open);
+        overlayBg.classList.toggle("show", open);
+        profileBtn.setAttribute("aria-expanded", open);
+      }
+      profileBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        setProfile(!profileMenu.classList.contains("open"));
+      });
+      overlayBg.addEventListener("click", function () {
+        setProfile(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") setProfile(false);
+      });
+
+      function showToast(msg, icon) {
+        var t = document.createElement("div");
+        t.className = "toast";
+        t.setAttribute("role", "status");
+        t.innerHTML = ic(icon || "check") + "<span>" + esc(msg) + "</span>";
+        document.body.appendChild(t);
+        setTimeout(function () {
+          t.style.opacity = "0";
+          t.style.transform = "translateY(20px)";
+          setTimeout(function () {
+            t.remove();
+          }, 500);
+        }, 2600);
+      }
+      $("#logoutBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        setProfile(false);
+        showToast("Kamu keluar dari GreenWise (demo).", "logout");
+      });
+
+      /* ===================== Data materi =====================
+   Urutan array HARUS sama dengan ARTICLES di halaman Green Hub,
+   karena ?id= adalah nomor urut (dimulai dari 0).
+   s = bagian isi [judul, paragraf] · k = langkah praktis · r = ringkasan */
+      var U = function (id, w) {
+        return (
+          "https://images.unsplash.com/photo-" +
+          id +
+          "?auto=format&fit=crop&w=" +
+          (w || 700) +
+          "&q=80"
+        );
+      };
+      var IMG = {
+        pilah: "1532996122724-e3c354a0b15b",
+        ulang: "1610701596007-11502861dcfa",
+        elek: "1550009158-9ebf69173e03",
+        tekstil: "1523381210434-271e8be1f52b",
+        besar: "1586023492125-27b2c045efd7",
+        hidup: "1542601906990-b4d3fb778b09",
+        jual: "1607083206968-13611e3d76db",
+        sepatu: "1542291026-7eec264c27ff",
+        donasi: "1584992236310-6edddc08acff",
+        kriya: "1532995297011-09d169e17b6c",
+      };
+      var CAT_ICON = {
+        Pemilahan: "trash",
+        "Daur ulang": "recycle",
+        "Guna ulang": "box",
+        Elektronik: "chip",
+        Tekstil: "shirt",
+        "Panduan GreenWise": "scan",
+        "Gaya hidup": "leaf",
+      };
+      function A(t, c, m, d, i, x, r, s, k) {
+        return { t: t, c: c, m: m, d: d, i: i, x: x, r: r, s: s, k: k };
+      }
+
+      var ARTICLES = [
+        A(
+          "Organik, anorganik, B3: cara memilah dari dapur",
+          "Pemilahan",
+          5,
+          "2026-09-14",
+          IMG.pilah,
+          "Tiga wadah sederhana di rumah sudah cukup untuk memisahkan sampah sejak awal, lengkap dengan contoh benda yang sering salah tempat.",
+          "Pisahkan sampah di dapur ke tiga wadah: organik, anorganik, dan B3. Bilas kemasan dan jangan campur B3 dengan sampah lain agar mudah didaur ulang dan aman.",
+          [
+            [
+              "Tiga wadah sudah cukup",
+              "Pemilahan paling efektif dilakukan di sumbernya, yaitu dapur. Siapkan tiga wadah terpisah: satu untuk sampah organik seperti sisa sayur dan kulit buah, satu untuk anorganik seperti plastik, kertas, dan kaleng, dan satu kecil untuk B3 rumah tangga. Wadah yang berbeda warna atau diberi label membuat seluruh anggota rumah cepat terbiasa.",
+            ],
+            [
+              "Benda yang sering salah tempat",
+              "Struk kertas termal, tisu bekas, dan kemasan berminyak sering dianggap kertas biasa padahal sulit didaur ulang. Sebaliknya, botol bekas kecap atau saus bisa didaur ulang setelah dibilas. Baterai, lampu, obat kedaluwarsa, dan kaleng aerosol termasuk B3 dan tidak boleh bercampur dengan sampah lain.",
+            ],
+          ],
+          [
+            "Beri label pada tiga wadah dan letakkan berdekatan.",
+            "Bilas kemasan sebelum masuk wadah anorganik.",
+            "Simpan B3 di wadah tertutup sampai bisa diserahkan ke titik pengumpulan.",
+          ],
+        ),
+
+        A(
+          "Cara memakai GreenWise: dari foto sampai rekomendasi",
+          "Panduan GreenWise",
+          4,
+          "2026-09-13",
+          IMG.jual,
+          "Panduan langkah demi langkah mengunggah foto, membaca hasil analisis, dan memilih tindakan yang disarankan.",
+          "Foto barangmu dengan jelas, baca rekomendasi GreenWise (jual, daur ulang, atau buang dengan benar), lalu selesaikan tindakannya agar poin dan dampakmu tercatat.",
+          [
+            [
+              "Mulai dari foto yang jelas",
+              "Langkah pertama adalah memotret barang dari beberapa sisi dengan cahaya yang cukup. Foto yang tajam membantu sistem mengenali jenis barang, kelengkapan, dan tanda kerusakan. Hindari latar berantakan agar barang terlihat utuh.",
+            ],
+            [
+              "Membaca hasil dan memilih tindakan",
+              "GreenWise menampilkan rekomendasi salah satu dari tiga jalan: jual di marketplace, daur ulang, atau buang dengan benar. Setiap rekomendasi disertai alasan, sehingga kamu bisa menyesuaikannya jika tahu kondisi barang lebih detail. Setelah tindakan selesai, poin dan dampakmu tercatat otomatis.",
+            ],
+          ],
+          [
+            "Foto barang dari minimal tiga sisi.",
+            "Baca alasan di balik rekomendasi sebelum memutuskan.",
+            "Selesaikan tindakan agar poin dan dampakmu tercatat.",
+          ],
+        ),
+
+        A(
+          "Plastik nomor 1 sampai 7: mana yang laku didaur ulang",
+          "Daur ulang",
+          6,
+          "2026-09-11",
+          IMG.ulang,
+          "Kode segitiga di dasar kemasan menunjukkan jenis plastik. Kenali yang mudah diterima mitra daur ulang dan yang tidak.",
+          "Kode angka pada kemasan menunjukkan jenis plastik. Nomor 1 dan 2 paling mudah didaur ulang, sedangkan 3, 6, 7, dan saset berlapis sulit diterima.",
+          [
+            [
+              "Arti kode segitiga",
+              "Angka di dalam segitiga panah pada kemasan adalah kode jenis resin plastik, bukan jaminan bahwa plastik itu pasti didaur ulang. Nomor 1 (PET) pada botol minum dan nomor 2 (HDPE) pada botol sampo atau galon paling mudah diterima pengepul.",
+            ],
+            [
+              "Yang sulit diterima",
+              "Plastik nomor 3, 6, dan 7 biasanya sulit diproses karena jenisnya beragam atau bercampur. Kemasan saset berlapis juga jarang diterima. Untuk yang sulit didaur ulang, mengurangi pemakaian lebih efektif daripada mencari tempat setor.",
+            ],
+          ],
+          [
+            "Cek kode angka di dasar kemasan sebelum menyetor.",
+            "Lepas tutup dan label bila jenis plastiknya berbeda.",
+            "Kumpulkan plastik nomor 1 dan 2 secara terpisah.",
+          ],
+        ),
+
+        A(
+          "Laptop dan ponsel lama: hapus data dulu, baru serahkan",
+          "Elektronik",
+          5,
+          "2026-09-09",
+          IMG.elek,
+          "Urutan aman menyiapkan perangkat lama, dari cadangan data, reset pabrik, sampai melepas baterai.",
+          "Cadangkan dan hapus data sebelum menyerahkan perangkat lama. Lepas baterai yang menggembung, lalu jual perangkat yang masih hidup atau serahkan yang rusak ke titik e-waste.",
+          [
+            [
+              "Amankan data lebih dulu",
+              "Sebelum diserahkan, cadangkan data penting lalu keluar dari semua akun. Lakukan reset pabrik agar data pribadi tidak bisa dipulihkan orang lain. Untuk laptop, pastikan penyimpanan sudah terhapus atau dienkripsi terlebih dulu.",
+            ],
+            [
+              "Lepas baterai dan serahkan dengan benar",
+              "Baterai lithium yang menggembung berbahaya bila tertekan atau terbakar, jadi lepaskan bila bisa dilepas dan simpan terpisah. Perangkat yang masih menyala bisa dijual di marketplace, sedangkan yang rusak sebaiknya diserahkan ke titik pengumpulan e-waste.",
+            ],
+          ],
+          [
+            "Cadangkan data, lalu reset pabrik.",
+            "Cabut kartu SIM dan kartu memori.",
+            "Pisahkan baterai yang menggembung dan serahkan ke titik e-waste.",
+          ],
+        ),
+
+        A(
+          "Pakaian tidak terpakai: jual, donasi, atau jadikan lap?",
+          "Tekstil",
+          4,
+          "2026-09-07",
+          IMG.tekstil,
+          "Panduan memutuskan nasib pakaian berdasarkan kondisi kain, jahitan, dan kelayakan pakainya.",
+          "Pakaian yang masih rapi bisa dijual atau didonasikan. Yang sudah sobek dijadikan lap atau diserahkan ke pengumpul tekstil.",
+          [
+            [
+              "Nilai kondisinya dulu",
+              "Pakaian yang masih rapi, tidak luntur, dan tidak berlubang layak dijual atau didonasikan. Merek dan ukuran yang jelas membuat barang lebih cepat menemukan pemilik baru.",
+            ],
+            [
+              "Untuk yang sudah tidak layak pakai",
+              "Kain yang sobek atau menipis masih bisa dijadikan lap, alas pot, atau bahan kerajinan. Jika benar-benar tidak terpakai, serahkan ke pengumpul tekstil yang mengolahnya menjadi serat atau bahan pengisi.",
+            ],
+          ],
+          [
+            "Cuci bersih sebelum dijual atau didonasikan.",
+            "Pisahkan pakaian layak pakai dari yang sudah sobek.",
+            "Potong kain rusak menjadi lap agar tidak langsung jadi sampah.",
+          ],
+        ),
+
+        A(
+          "Lima ide guna ulang botol kaca untuk rumah",
+          "Guna ulang",
+          3,
+          "2026-09-05",
+          IMG.kriya,
+          "Dari wadah bumbu sampai vas, ide praktis yang tidak butuh peralatan khusus.",
+          "Botol kaca bersih bisa jadi wadah bumbu, tempat minum, atau vas. Lepas label dengan air hangat dan pastikan botol kering sebelum diisi makanan.",
+          [
+            [
+              "Dari dapur sampai meja kerja",
+              "Botol kaca bersih bisa menjadi wadah bumbu, tempat minyak, atau vas bunga. Botol berleher panjang cocok untuk menyimpan air minum di kulkas, sedangkan botol bermulut lebar pas untuk menyimpan granola atau kacang.",
+            ],
+            [
+              "Cara menyiapkannya",
+              "Rendam botol dalam air hangat agar label mudah dilepas, lalu gosok sisa perekat dengan minyak dan soda kue. Pastikan botol benar-benar kering sebelum diisi bahan makanan.",
+            ],
+          ],
+          [
+            "Rendam botol agar label mudah terlepas.",
+            "Gunakan botol bermulut lebar untuk bahan kering.",
+            "Jangan pakai botol yang retak atau gompal untuk makanan.",
+          ],
+        ),
+
+        A(
+          "Apa itu Green Coins dan cara mengumpulkannya",
+          "Panduan GreenWise",
+          3,
+          "2026-09-03",
+          IMG.sepatu,
+          "Penjelasan sistem poin, aksi yang memberi Green Coins, dan cara poin memengaruhi Leaderboard.",
+          "Green Coins adalah poin dari setiap aksi yang selesai di GreenWise. Poin bisa dipakai untuk potongan di Marketplace dan memengaruhi posisimu di Leaderboard.",
+          [
+            [
+              "Poin dari setiap aksi",
+              "Green Coins adalah poin yang kamu dapat setiap menyelesaikan aksi di GreenWise, seperti menjual barang atau menyerahkan barang ke mitra daur ulang. Semakin bermanfaat aksinya, semakin besar poin yang diberikan.",
+            ],
+            [
+              "Dipakai untuk apa",
+              "Poin dipakai untuk potongan belanja di Marketplace dan menentukan posisimu di Leaderboard. Poin dicatat bersama dampak lingkunganmu, sehingga kamu bisa melihat kontribusi nyata dari kebiasaanmu.",
+            ],
+          ],
+          [
+            "Selesaikan aksi sampai tuntas agar poin masuk.",
+            "Gunakan poin untuk potongan di Marketplace.",
+            "Pantau dampakmu di halaman Dampak saya.",
+          ],
+        ),
+
+        A(
+          "Baterai bekas: kenapa tidak boleh masuk tong sampah",
+          "Elektronik",
+          4,
+          "2026-09-01",
+          IMG.elek,
+          "Bahan kimia dalam baterai bisa mencemari tanah dan air. Ini cara menyimpan dan menyerahkannya dengan aman.",
+          "Baterai bekas mengandung bahan kimia dan berisiko terbakar, jadi jangan dibuang ke tong sampah. Simpan di wadah tertutup dan serahkan ke titik B3.",
+          [
+            [
+              "Kenapa tidak boleh ke tong sampah",
+              "Baterai mengandung logam berat dan bahan kimia yang bisa mencemari tanah dan air tanah bila pecah di tempat pembuangan. Baterai lithium juga berisiko terbakar bila tertekan di truk sampah atau mesin pemadat.",
+            ],
+            [
+              "Menyimpan dan menyerahkannya",
+              "Kumpulkan baterai bekas di wadah plastik atau kaleng tertutup, jauh dari panas dan benda logam. Untuk baterai lithium, tutup kutubnya dengan selotip. Serahkan ke titik pengumpulan B3 atau e-waste yang direkomendasikan GreenWise.",
+            ],
+          ],
+          [
+            "Simpan di wadah tertutup, jauh dari panas.",
+            "Tutup kutub baterai lithium dengan selotip.",
+            "Serahkan ke titik pengumpulan B3 resmi.",
+          ],
+        ),
+
+        A(
+          "Kompos sederhana di rumah tanpa bau",
+          "Pemilahan",
+          6,
+          "2026-08-29",
+          IMG.hidup,
+          "Perbandingan bahan hijau dan cokelat, wadah yang cocok untuk rumah kecil, dan tanda kompos yang gagal.",
+          "Kompos sehat butuh campuran bahan hijau dan cokelat sekitar 1:2. Aduk seminggu sekali dan jaga kelembapan agar tidak berbau.",
+          [
+            [
+              "Seimbangkan bahan hijau dan cokelat",
+              "Kompos yang sehat butuh campuran bahan hijau (sisa sayur, kulit buah) dan bahan cokelat (daun kering, kardus sobek). Perbandingan kasarnya satu bagian hijau berbanding dua bagian cokelat. Campuran ini menjaga kelembapan dan mencegah bau.",
+            ],
+            [
+              "Wadah dan perawatan",
+              "Untuk rumah kecil, gunakan ember berlubang atau komposter tertutup. Aduk seminggu sekali dan jaga agar isinya lembap, tidak becek. Jika berbau busuk, tambahkan bahan cokelat; bila terlalu kering, percikkan sedikit air.",
+            ],
+          ],
+          [
+            "Hindari daging, minyak, dan susu di kompos rumahan.",
+            "Aduk seminggu sekali agar udara masuk.",
+            "Tambahkan daun kering bila mulai berbau.",
+          ],
+        ),
+
+        A(
+          "Kardus dan kertas: kapan masih bernilai, kapan tidak",
+          "Daur ulang",
+          4,
+          "2026-08-27",
+          IMG.pilah,
+          "Kertas basah atau berminyak sulit diproses. Pelajari cara menyimpannya agar tetap layak setor.",
+          "Kardus dan kertas kering bernilai bagi pengepul. Kertas basah atau berminyak tidak layak, jadi pisahkan sejak awal.",
+          [
+            [
+              "Kertas yang bernilai",
+              "Kardus bergelombang, kertas HVS, koran, dan majalah yang kering biasanya diterima pengepul. Ratakan kardus agar hemat ruang dan lepas selotip besar sebelum menyetor.",
+            ],
+            [
+              "Yang tidak layak",
+              "Kertas yang basah, berminyak, atau bercampur sisa makanan, seperti kotak pizza yang berlemak, sulit diproses. Kertas berlapis plastik atau foil juga umumnya tidak diterima.",
+            ],
+          ],
+          [
+            "Simpan kertas di tempat kering.",
+            "Ratakan kardus dan lepas selotip besar.",
+            "Pisahkan kertas berminyak dari kertas bersih.",
+          ],
+        ),
+
+        A(
+          "Foto barang yang bagus supaya cepat laku di marketplace",
+          "Panduan GreenWise",
+          5,
+          "2026-08-25",
+          IMG.jual,
+          "Tips pencahayaan, sudut, dan latar sederhana agar kondisi barang terbaca jelas oleh pembeli dan sistem.",
+          "Foto dengan cahaya alami dan latar polos dari beberapa sisi, sertakan foto dekat pada cacat. Kejujuran soal kondisi membuat barang lebih cepat laku.",
+          [
+            [
+              "Cahaya dan latar",
+              "Cahaya alami dari jendela membuat warna barang tampak jujur. Gunakan latar polos seperti dinding putih atau kain netral agar perhatian tertuju pada barang.",
+            ],
+            [
+              "Sudut yang meyakinkan",
+              "Ambil foto tampak depan, samping, dan belakang, lalu tambahkan foto dekat pada bagian yang cacat. Kejujuran soal kondisi membangun kepercayaan pembeli dan membantu sistem GreenWise menilai barang dengan tepat.",
+            ],
+          ],
+          [
+            "Bersihkan barang sebelum difoto.",
+            "Sertakan foto dekat pada cacat atau goresan.",
+            "Gunakan cahaya alami, hindari lampu kilat langsung.",
+          ],
+        ),
+
+        A(
+          "Furnitur lama tidak muat di tempat sampah: harus bagaimana?",
+          "Guna ulang",
+          5,
+          "2026-08-23",
+          IMG.besar,
+          "Opsi perbaikan, jual, hibah, dan penjemputan barang besar sebelum memilih membuangnya.",
+          "Furnitur lama bisa diperbaiki, dijual, atau dihibahkan sebelum dibuang. Untuk yang rusak parah, gunakan penjemputan barang besar.",
+          [
+            [
+              "Perbaiki atau jual dulu",
+              "Furnitur kayu yang goyah sering hanya butuh sekrup baru atau lem kayu. Pengamplasan dan pelapisan ulang bisa membuat meja lama terlihat baru. Jika masih kokoh, jual di Marketplace dengan foto yang jelas.",
+            ],
+            [
+              "Hibah dan penjemputan",
+              "Kalau tidak sempat memperbaiki, tawarkan sebagai hibah ke tetangga, komunitas, atau panti. Untuk furnitur yang benar-benar rusak, minta penjemputan barang besar agar tidak dibuang sembarangan ke pinggir jalan.",
+            ],
+          ],
+          [
+            "Cek engsel, sekrup, dan sambungan sebelum memutuskan.",
+            "Ukur dimensi barang untuk penjemputan atau pengiriman.",
+            "Bongkar bagian yang bisa dilepas agar mudah diangkut.",
+          ],
+        ),
+
+        A(
+          "Fast fashion dan limbah tekstil: dampak yang jarang dibahas",
+          "Tekstil",
+          7,
+          "2026-08-21",
+          IMG.tekstil,
+          "Mengapa satu potong pakaian murah bisa berdampak besar, dan kebiasaan belanja yang bisa mengurangi limbah.",
+          "Fast fashion menumpuk limbah karena pakaian murah cepat dibuang. Beli lebih sedikit, rawat, perbaiki, dan pertimbangkan pakaian bekas berkualitas.",
+          [
+            [
+              "Masalah di balik harga murah",
+              "Pakaian yang diproduksi cepat dan murah cenderung dipakai sebentar lalu dibuang. Produksi kain membutuhkan banyak air dan energi, dan banyak serat sintetis yang lama terurai. Akibatnya limbah tekstil menumpuk di tempat pembuangan.",
+            ],
+            [
+              "Kebiasaan yang bisa mengubah",
+              "Beli lebih sedikit tetapi pilih yang awet, rawat pakaian sesuai label, dan perbaiki sebelum membuang. Membeli pakaian bekas berkualitas di Marketplace juga memperpanjang umur pakai dan menekan permintaan produksi baru.",
+            ],
+          ],
+          [
+            "Tanyakan pada diri sendiri: akan dipakai minimal 30 kali?",
+            "Perbaiki kancing atau jahitan yang lepas.",
+            "Pertimbangkan pakaian bekas sebelum membeli baru.",
+          ],
+        ),
+
+        A(
+          "Kabel dan charger lama: dibuang, disimpan, atau diserahkan?",
+          "Elektronik",
+          3,
+          "2026-08-19",
+          IMG.elek,
+          "Kabel tembaga masih punya nilai. Cara memilah kabel yang layak pakai dan yang harus didaur ulang.",
+          "Uji kabel dan charger lama dulu; yang masih baik bisa dipakai atau dijual. Yang rusak punya nilai tembaga, jadi serahkan ke e-waste dan jangan dibakar.",
+          [
+            [
+              "Masih berguna atau tidak",
+              "Kabel dan charger yang masih berfungsi bisa dipakai kembali atau dijual bersama perangkat. Uji dulu dengan perangkat lain untuk memastikan tidak terlalu panas atau putus-nyambung.",
+            ],
+            [
+              "Kabel rusak punya nilai",
+              "Di dalam kabel ada tembaga yang bernilai bagi pengepul logam. Gulung kabel rusak dengan rapi dan serahkan ke titik e-waste atau pengepul, jangan dibakar untuk mengambil tembaganya karena asapnya beracun.",
+            ],
+          ],
+          [
+            "Uji kabel sebelum memutuskan membuangnya.",
+            "Kumpulkan kabel rusak dalam satu wadah.",
+            "Jangan membakar kabel untuk mengambil tembaga.",
+          ],
+        ),
+
+        A(
+          "Belanja tanpa kemasan sekali pakai: mulai dari mana",
+          "Gaya hidup",
+          5,
+          "2026-08-17",
+          IMG.hidup,
+          "Langkah kecil yang realistis: tas belanja, wadah sendiri, dan memilih produk isi ulang.",
+          "Bawa tas dan botol sendiri, pilih produk isi ulang, dan tolak kemasan yang tak perlu untuk mengurangi sampah sekali pakai.",
+          [
+            [
+              "Mulai dari tas dan wadah sendiri",
+              "Bawa tas belanja dan botol minum sendiri setiap keluar rumah. Simpan satu tas lipat di tas kerja agar tidak lupa saat belanja mendadak.",
+            ],
+            [
+              "Pilih produk isi ulang",
+              "Sabun, minyak, dan bahan kering sering tersedia dalam sistem isi ulang atau curah. Membawa wadah sendiri ke toko yang menyediakannya mengurangi kemasan yang berakhir sebagai sampah.",
+            ],
+          ],
+          [
+            "Simpan tas lipat di tas atau motor.",
+            "Pilih produk isi ulang bila tersedia.",
+            "Tolak sedotan dan kantong yang tidak perlu.",
+          ],
+        ),
+
+        A(
+          "Botol PET jadi apa setelah didaur ulang?",
+          "Daur ulang",
+          4,
+          "2026-08-15",
+          IMG.ulang,
+          "Ikuti perjalanan satu botol dari tempat pengumpulan sampai menjadi serat kain dan kemasan baru.",
+          "Botol PET dipilah, dicuci, dicacah, lalu diolah menjadi serat atau kemasan baru. Botol bening lebih bernilai, jadi pisahkan dari yang berwarna.",
+          [
+            [
+              "Dari pengumpulan sampai serpihan",
+              "Botol PET yang dikumpulkan dipilah menurut warna, dicuci, lalu dicacah menjadi serpihan kecil. Serpihan ini dilelehkan atau dipintal menjadi bahan baku baru.",
+            ],
+            [
+              "Menjadi produk baru",
+              "Hasil olahannya bisa berupa serat untuk kain dan karpet, atau kemasan baru. Botol bening lebih bernilai karena mudah diolah menjadi berbagai warna, jadi pisahkan dari botol berwarna.",
+            ],
+          ],
+          [
+            "Kosongkan dan bilas botol sebelum disetor.",
+            "Pisahkan botol bening dan berwarna.",
+            "Remas botol agar hemat tempat.",
+          ],
+        ),
+
+        A(
+          "Sepatu bekas: cek kelayakan sebelum dijual",
+          "Guna ulang",
+          3,
+          "2026-08-13",
+          IMG.sepatu,
+          "Daftar periksa sol, bagian dalam, dan bau agar sepatu bekasmu tetap layak dan dipercaya pembeli.",
+          "Periksa sol dan bagian dalam sepatu, bersihkan, lalu keringkan di tempat teduh. Foto dan deskripsi jujur membuat pembeli percaya.",
+          [
+            [
+              "Periksa bagian penting",
+              "Cek sol apakah masih tebal dan tidak terkelupas, lalu periksa bagian dalam dari robekan atau bau tak sedap. Sepatu yang solnya lepas atau bagian atasnya sobek besar sebaiknya diperbaiki dulu.",
+            ],
+            [
+              "Bersihkan sebelum dijual",
+              "Sikat bagian luar, cuci sol, dan keringkan di tempat teduh. Sepatu yang bersih dan wangi terlihat lebih terawat serta lebih dipercaya pembeli.",
+            ],
+          ],
+          [
+            "Foto bagian sol dan bagian dalam sepatu.",
+            "Keringkan di tempat teduh, bukan di bawah terik matahari.",
+            "Sebutkan ukuran dan kondisi dengan jujur.",
+          ],
+        ),
+
+        A(
+          "Membaca Leaderboard: cara poin dihitung",
+          "Panduan GreenWise",
+          3,
+          "2026-08-11",
+          IMG.jual,
+          "Bobot poin tiap jenis aksi dan cara naik peringkat tanpa harus membuang barang berlebihan.",
+          "Poin Leaderboard dihitung dari jenis aksi, dengan bobot lebih besar untuk aksi berdampak tinggi. Konsistensi lebih penting daripada menumpuk barang.",
+          [
+            [
+              "Bagaimana poin dihitung",
+              "Setiap jenis aksi memiliki bobot poin yang berbeda. Aksi yang memberi dampak lingkungan lebih besar, seperti menyerahkan barang ke mitra daur ulang, memberi poin lebih banyak dibanding aksi ringan.",
+            ],
+            [
+              "Naik peringkat dengan bijak",
+              "Konsisten menyelesaikan aksi lebih berpengaruh daripada mengejar jumlah barang. Kamu tidak perlu membuang barang berlebihan; menjual atau menyerahkan barang yang memang sudah tidak terpakai sudah cukup.",
+            ],
+          ],
+          [
+            "Selesaikan aksi secara rutin.",
+            "Prioritaskan aksi yang berdampak besar.",
+            "Jangan menumpuk barang hanya demi poin.",
+          ],
+        ),
+
+        A(
+          "Sedotan, kantong, dan kemasan saset: sampah kecil, masalah besar",
+          "Pemilahan",
+          5,
+          "2026-08-09",
+          IMG.pilah,
+          "Sampah kecil sering lolos dari pemilahan. Ini cara mengumpulkan dan menyetorkannya.",
+          "Sampah kecil seperti sedotan dan saset mudah lolos dan mencemari saluran air. Kumpulkan dalam satu wadah kering lalu setor ke bank sampah.",
+          [
+            [
+              "Kenapa sampah kecil bermasalah",
+              "Sedotan, kantong plastik, dan saset mudah lolos dari mesin pemilah dan terbang tertiup angin. Karena ringan dan kecil, sampah ini sering berakhir di selokan dan sungai.",
+            ],
+            [
+              "Cara mengumpulkannya",
+              "Masukkan sampah kecil ke dalam satu botol atau kantong besar yang bersih dan kering, lalu setor ke bank sampah atau titik pengumpulan plastik fleksibel. Wadah khusus membuat sampah kecil tidak tercecer di rumah.",
+            ],
+          ],
+          [
+            "Sediakan satu wadah khusus sampah plastik kecil.",
+            "Pastikan isinya kering sebelum dimasukkan.",
+            "Setor ke bank sampah yang menerima plastik fleksibel.",
+          ],
+        ),
+
+        A(
+          "Rutinitas hemat energi yang bisa dimulai hari ini",
+          "Gaya hidup",
+          4,
+          "2026-08-07",
+          IMG.hidup,
+          "Kebiasaan sederhana di rumah yang mengurangi jejak karbon sekaligus tagihan listrik.",
+          "Matikan dan cabut perangkat yang tidak dipakai, ganti lampu ke LED, dan rawat AC untuk menghemat listrik sekaligus jejak karbon.",
+          [
+            [
+              "Matikan yang tidak dipakai",
+              "Lampu dan perangkat yang menyala tanpa dipakai membuang listrik. Cabut charger dari stopkontak setelah selesai, karena banyak perangkat tetap menarik daya dalam mode siaga.",
+            ],
+            [
+              "Ganti dengan pilihan hemat",
+              "Lampu LED memakai daya jauh lebih rendah daripada lampu pijar. Mengatur pendingin ruangan di suhu sedang dan membersihkan filternya berkala juga menghemat listrik.",
+            ],
+          ],
+          [
+            "Cabut charger setelah selesai dipakai.",
+            "Ganti lampu lama dengan LED.",
+            "Bersihkan filter AC secara berkala.",
+          ],
+        ),
+
+        A(
+          "Kerajinan dari kain perca untuk pemula",
+          "Guna ulang",
+          6,
+          "2026-08-05",
+          IMG.kriya,
+          "Tiga proyek jahit tangan yang bisa selesai dalam satu sore memakai sisa kain di rumah.",
+          "Kain perca katun bisa dijahit menjadi sarung bantal, tempat pensil, atau tas serut. Mulai dari jahitan lurus sederhana.",
+          [
+            [
+              "Bahan dan alat sederhana",
+              "Sisa kain, benang, jarum, dan gunting sudah cukup untuk memulai. Pilih kain katun karena mudah dijahit dan tidak licin saat dipegang.",
+            ],
+            [
+              "Tiga proyek pemula",
+              "Coba sarung bantal kecil, tempat pensil, atau tas serut. Ketiganya hanya butuh jahitan lurus dan bisa selesai dalam satu sore. Kain yang terlalu kecil bisa disambung menjadi patchwork.",
+            ],
+          ],
+          [
+            "Cuci kain perca sebelum dijahit agar tidak menyusut.",
+            "Mulai dengan jahitan lurus sebelum mencoba pola rumit.",
+            "Simpan sisa terkecil untuk isian atau lap.",
+          ],
+        ),
+
+        A(
+          "Mengapa kaleng dan aluminium sangat dicari pengepul",
+          "Daur ulang",
+          4,
+          "2026-08-03",
+          IMG.ulang,
+          "Aluminium bisa didaur ulang berulang kali tanpa kehilangan mutu, dan hemat energi dibanding produksi baru.",
+          "Aluminium bisa didaur ulang berulang kali dengan energi jauh lebih hemat. Bilas, remas, dan pisahkan dari kaleng baja dengan magnet.",
+          [
+            [
+              "Nilai aluminium",
+              "Aluminium bisa didaur ulang berkali-kali tanpa kehilangan mutu, dan proses daur ulangnya memakai energi jauh lebih sedikit dibanding membuat aluminium baru dari bijih. Karena itu pengepul selalu mencarinya.",
+            ],
+            [
+              "Cara menyiapkan",
+              "Kosongkan kaleng, bilas, lalu remas agar hemat tempat. Pisahkan kaleng aluminium dari kaleng baja. Magnet biasanya menempel pada baja tetapi tidak pada aluminium.",
+            ],
+          ],
+          [
+            "Bilas kaleng agar tidak berbau dan mengundang serangga.",
+            "Uji dengan magnet untuk memisahkan baja dan aluminium.",
+            "Remas kaleng agar hemat ruang.",
+          ],
+        ),
+
+        A(
+          "Donasi barang bekas: cara memastikan tepat sasaran",
+          "Gaya hidup",
+          4,
+          "2026-08-01",
+          IMG.donasi,
+          "Menyiapkan, memilah, dan memilih penerima donasi supaya barangmu benar-benar terpakai.",
+          "Donasikan hanya barang yang bersih dan berfungsi. Tanyakan kebutuhan penerima dan pilih lembaga yang transparan.",
+          [
+            [
+              "Pastikan barang layak",
+              "Donasikan barang yang masih bersih, berfungsi, dan lengkap. Barang rusak yang dikirim sebagai donasi justru membebani penerima karena harus dibuang lagi.",
+            ],
+            [
+              "Pilih penerima yang tepat",
+              "Tanyakan lebih dulu apa yang sedang dibutuhkan penerima, apakah pakaian, buku, atau perabot. Lembaga yang dikelola jelas dan menyediakan bukti penerimaan lebih dapat dipercaya.",
+            ],
+          ],
+          [
+            "Tanyakan kebutuhan penerima sebelum mengirim.",
+            "Bersihkan dan kemas barang dengan rapi.",
+            "Simpan bukti penerimaan donasi.",
+          ],
+        ),
+
+        A(
+          "Televisi dan monitor tabung: penanganan khusus",
+          "Elektronik",
+          5,
+          "2026-07-30",
+          IMG.elek,
+          "Layar lama memuat komponen yang perlu penanganan khusus. Kenali risikonya dan titik serah yang tepat.",
+          "TV dan monitor tabung mengandung komponen berbahaya sehingga jangan dibongkar sendiri. Serahkan ke pengumpul e-waste resmi bila sudah rusak.",
+          [
+            [
+              "Komponen yang perlu hati-hati",
+              "Televisi dan monitor tabung (CRT) memuat kaca tebal dengan lapisan yang mengandung timbal, serta komponen listrik yang bisa menyimpan muatan. Karena itu jangan dibongkar sendiri.",
+            ],
+            [
+              "Titik serah yang tepat",
+              "Serahkan ke pengumpul e-waste resmi yang punya pengolahan khusus. Bila perangkat masih menyala, tawarkan dulu ke Marketplace atau donasi karena masih bisa dipakai.",
+            ],
+          ],
+          [
+            "Jangan membongkar layar tabung sendiri.",
+            "Angkut dengan hati-hati agar kaca tidak pecah.",
+            "Serahkan ke pengumpul e-waste resmi.",
+          ],
+        ),
+
+        A(
+          "Kasur, sofa, lemari: menyiapkan barang besar untuk dijemput",
+          "Pemilahan",
+          4,
+          "2026-07-28",
+          IMG.besar,
+          "Ukur, foto, dan bongkar bila perlu agar penjemputan barang besar berjalan lancar.",
+          "Ukur dan foto barang besar, bongkar bagian yang bisa dilepas, dan bebaskan jalur keluar agar penjemputan lancar.",
+          [
+            [
+              "Ukur dan foto",
+              "Catat panjang, lebar, dan tinggi barang, lalu foto dari beberapa sisi. Data ini membantu petugas atau pembeli memperkirakan kendaraan dan tenaga yang dibutuhkan.",
+            ],
+            [
+              "Bongkar dan siapkan akses",
+              "Lepas bagian yang bisa dilepas seperti kaki sofa atau pintu lemari, dan simpan sekrup dalam kantong. Pastikan jalur keluar dari rumah bebas hambatan agar penjemputan berjalan cepat.",
+            ],
+          ],
+          [
+            "Catat dimensi dan berat perkiraan barang.",
+            "Simpan sekrup dalam satu kantong berlabel.",
+            "Bebaskan jalur keluar dari rumah.",
+          ],
+        ),
+
+        A(
+          "Kain katun, poliester, dan campuran: cara mengenalinya",
+          "Tekstil",
+          5,
+          "2026-07-26",
+          IMG.tekstil,
+          "Label perawatan membantu menentukan apakah pakaianmu bisa didaur ulang menjadi serat baru.",
+          "Label perawatan memberi tahu komposisi serat. Kain satu jenis serat paling mudah didaur ulang, sedangkan campuran lebih sulit.",
+          [
+            [
+              "Baca label perawatan",
+              "Label di dalam pakaian menyebutkan komposisi serat, misalnya 100% katun atau 65% poliester. Komposisi ini menentukan bagaimana kain bisa diolah kembali.",
+            ],
+            [
+              "Kenapa campuran menyulitkan",
+              "Serat alami dan sintetis yang menyatu sulit dipisahkan, sehingga kain campuran lebih sulit didaur ulang menjadi serat baru. Kain dengan satu jenis serat, terutama katun murni, paling mudah diproses.",
+            ],
+          ],
+          [
+            "Cek label komposisi sebelum menyerahkan ke pengumpul.",
+            "Pisahkan kain satu jenis serat dari kain campuran.",
+            "Utamakan pakaian berbahan tunggal saat membeli.",
+          ],
+        ),
+
+        A(
+          "Kebiasaan hijau 30 hari: tantangan kecil untuk pemula",
+          "Gaya hidup",
+          6,
+          "2026-07-24",
+          IMG.hidup,
+          "Satu tantangan per hari selama sebulan, dari membawa botol minum sampai memilah sampah tepat waktu.",
+          "Bangun kebiasaan hijau lewat satu langkah kecil per hari selama 30 hari. Catat progres dan lanjutkan saja jika terlewat sehari.",
+          [
+            [
+              "Satu kebiasaan kecil per hari",
+              "Perubahan besar biasanya berawal dari kebiasaan kecil yang diulang. Tantangan 30 hari memecahnya menjadi langkah sederhana, seperti membawa botol minum, mematikan lampu, atau memilah sampah tepat waktu.",
+            ],
+            [
+              "Menjaga konsistensi",
+              "Catat setiap hari yang berhasil di kalender agar kemajuanmu terlihat. Jika terlewat satu hari, lanjutkan saja keesokan harinya tanpa mengulang dari awal.",
+            ],
+          ],
+          [
+            "Mulai dengan satu kebiasaan yang paling mudah.",
+            "Catat progres harian di kalender.",
+            "Ajak teman atau keluarga agar lebih semangat.",
+          ],
+        ),
+      ];
+
+      /* ===================== Ambil materi (konten dummy) =====================
+   Tanpa parameter: selalu menampilkan materi pertama dari ARTICLES. */
+      var params = new URLSearchParams(location.search);
+      var idx = parseInt(params.get("id"), 10);
+      if (isNaN(idx) || idx < 0 || idx >= ARTICLES.length) idx = 0;
+      var art = ARTICLES[idx] || null;
+
+      function imgTag(a, w, cls) {
+        return (
+          '<img src="' +
+          U(a.i, w) +
+          '" alt="' +
+          (cls === "cover" ? esc(a.t) : "") +
+          '" loading="' +
+          (cls === "cover" ? "eager" : "lazy") +
+          '" onerror="this.remove()">'
+        );
+      }
+
+      /* ===================== Render detail ===================== */
+      function renderDetail(a) {
+        document.title = a.t + " — Green Hub | GreenWise";
+        $("#metaDesc").setAttribute("content", a.x);
+
+        $("#crumbCat").textContent = a.c;
+        $("#crumbCat").setAttribute(
+          "href",
+          HUB_URL + "?q=" + encodeURIComponent(a.c),
+        );
+        $("#dTitle").textContent = a.t;
+        $("#dMeta").innerHTML =
+          "<span>" +
+          ic("clock") +
+          a.m +
+          " menit baca</span>" +
+          "<span>" +
+          ic("calendar") +
+          fmtDate(a.d) +
+          "</span>" +
+          "<span>" +
+          ic("user") +
+          "Tim GreenWise</span>";
+
+        // Gambar utama (ada fallback gradient + ikon kategori bila gambar gagal dimuat)
+        $("#cover").innerHTML =
+          ic(CAT_ICON[a.c] || "leaf", "fb") + imgTag(a, 1400, "cover");
+
+        // Isi artikel (rangkuman AI disajikan simpel sebagai paragraf di dalam konten)
+        var html = '<p class="lead">' + esc(a.x) + "</p>";
+        html +=
+          '<p class="ai-sum"><strong>Rangkuman AI:</strong> ' +
+          esc(a.r) +
+          "</p>";
+        a.s.forEach(function (sec, i) {
+          html +=
+            '<h2 id="sec-' +
+            i +
+            '">' +
+            esc(sec[0]) +
+            "</h2><p>" +
+            esc(sec[1]) +
+            "</p>";
+        });
+        html +=
+          '<aside class="callout" id="sec-tips"><h3>' +
+          ic("bulb") +
+          "Yang bisa kamu lakukan hari ini</h3><ul>" +
+          a.k
+            .map(function (t) {
+              return "<li>" + ic("check") + "<span>" + esc(t) + "</span></li>";
+            })
+            .join("") +
+          "</ul></aside>";
+        html +=
+          '<div class="fb-box"><p>Apakah materi ini membantu?</p><div class="fb-btns">' +
+          '<button type="button" class="fb-btn up" data-fb="up">' +
+          ic("thumb") +
+          "Ya</button>" +
+          '<button type="button" class="fb-btn down" data-fb="down">' +
+          ic("thumb") +
+          "Belum</button></div></div>";
+        $("#articleBody").innerHTML = html;
+
+        // Daftar isi
+        var toc = a.s.map(function (sec, i) {
+          return { id: "sec-" + i, label: sec[0] };
+        });
+        toc.push(
+          { id: "sec-tips", label: "Yang bisa kamu lakukan" },
+          { id: "lainnya", label: "Materi lainnya" },
+        );
+        $("#toc").innerHTML = toc
+          .map(function (t) {
+            return '<a href="#' + t.id + '">' + esc(t.label) + "</a>";
+          })
+          .join("");
+
+        // Bagikan
+        $("#waShare").setAttribute(
+          "href",
+          "https://wa.me/?text=" +
+            encodeURIComponent(a.t + " " + location.href),
+        );
+
+        // Feedback
+        $$(".fb-btn").forEach(function (b) {
+          b.addEventListener("click", function () {
+            $$(".fb-btn").forEach(function (x) {
+              x.classList.remove("on");
+            });
+            b.classList.add("on");
+            showToast(
+              b.getAttribute("data-fb") === "up"
+                ? "Terima kasih! Senang materinya membantu."
+                : "Terima kasih, masukanmu kami catat (demo).",
+              "check",
+            );
+          });
+        });
+
+        renderRecs(a);
+      }
+
+      /* ===================== Rekomendasi ===================== */
+      function renderRecs(a) {
+        var same = [],
+          other = [];
+        ARTICLES.forEach(function (x, i) {
+          if (i === idx) return;
+          (x.c === a.c ? same : other).push(i);
+        });
+        var pick = same.concat(other).slice(0, 3);
+        $("#recGrid").innerHTML = pick
+          .map(function (i) {
+            var r = ARTICLES[i];
+            return (
+              '<a class="acard" href="' +
+              DETAIL_URL +
+              "?id=" +
+              i +
+              '">' +
+              '<div class="athumb">' +
+              ic(CAT_ICON[r.c] || "leaf", "fb") +
+              imgTag(r, 700) +
+              '<span class="abadge">' +
+              esc(r.c) +
+              "</span></div>" +
+              '<div class="abody">' +
+              '<div class="ameta"><span>' +
+              ic("clock") +
+              r.m +
+              " menit baca</span><i></i><span>" +
+              fmtShort(r.d) +
+              "</span></div>" +
+              '<h3 class="atitle">' +
+              esc(r.t) +
+              "</h3>" +
+              '<p class="aexc">' +
+              esc(r.x) +
+              "</p>" +
+              '<span class="amore">Baca materi ' +
+              ic("arrow-right") +
+              "</span>" +
+              "</div></a>"
+            );
+          })
+          .join("");
+      }
+
+      /* ===================== Salin teks ===================== */
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy") ? resolve() : reject();
+          } catch (e) {
+            reject(e);
+          }
+          ta.remove();
+        });
+      }
+
+      /* ===================== Aksi sidebar ===================== */
+      $("#copyLink").addEventListener("click", function () {
+        copyText(location.href).then(
+          function () {
+            showToast("Tautan disalin.", "link");
+          },
+          function () {
+            showToast("Gagal menyalin tautan.", "info");
+          },
+        );
+      });
+
+      /* ===================== TOC aktif + progress baca ===================== */
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var body = $("#articleBody");
+          if (body && !$("#detail").hidden) {
+            var r = body.getBoundingClientRect(),
+              total = r.height - window.innerHeight * 0.4;
+            var p =
+              total > 0
+                ? Math.min(
+                    Math.max((-r.top + window.innerHeight * 0.3) / total, 0),
+                    1,
+                  )
+                : 0;
+            $("#progress").style.width = p * 100 + "%";
+          }
+          var links = $$("#toc a");
+          if (links.length) {
+            var cur = links[0];
+            links.forEach(function (l) {
+              var el = document.getElementById(l.getAttribute("href").slice(1));
+              if (el && el.getBoundingClientRect().top < 160) cur = l;
+            });
+            links.forEach(function (l) {
+              l.classList.toggle("is-active", l === cur);
+            });
+          }
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+
+      /* ===================== Reveal, back-to-top ===================== */
+      var revealObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add("active");
+              revealObs.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      $$(".reveal").forEach(function (el) {
+        revealObs.observe(el);
+      });
+
+      var toTop = $("#backToTopBtn");
+      window.addEventListener(
+        "scroll",
+        function () {
+          toTop.classList.toggle("show", window.scrollY > 600);
+        },
+        { passive: true },
+      );
+      toTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* ===================== Init ===================== */
+      if (art) {
+        renderDetail(art);
+        onScroll();
+      } else {
+        document.title = "Materi tidak ditemukan — Green Hub | GreenWise";
+        $("#crumbCat").textContent = "Tidak ditemukan";
+        $("#dCat").textContent = "Green Hub";
+        $("#dTitle").textContent = "Materi tidak ditemukan";
+        $("#detail").hidden = true;
+        $("#notFound").hidden = false;
+      }
+    </script>
+  </body>
+</html>
